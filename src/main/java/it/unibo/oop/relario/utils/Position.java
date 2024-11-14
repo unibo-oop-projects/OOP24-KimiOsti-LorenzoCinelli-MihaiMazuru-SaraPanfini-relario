@@ -19,4 +19,10 @@ public interface Position {
      * @param newX the destination value for the x coordinate.
      */
     void setX(int newX);
+
+    /**
+     * Sets the new y coordinate of the position.
+     * @param newY the destination value for the y coordinate.
+     */
+    void setY(int newY);
 }
