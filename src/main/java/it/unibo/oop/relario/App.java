@@ -8,7 +8,7 @@ public class App {
      * The main method of the application, from which execution starts.
      * @param args are ignored.
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         
     }
 }
