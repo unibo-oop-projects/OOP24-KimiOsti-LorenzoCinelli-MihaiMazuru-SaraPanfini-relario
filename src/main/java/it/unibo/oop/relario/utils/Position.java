@@ -13,4 +13,10 @@ public interface Position {
      * @return the y coordinate of the current position.
      */
     int getY();
+
+    /**
+     * Sets the new x coordinate of the position.
+     * @param newX the destination value for the x coordinate.
+     */
+    void setX(int newX);
 }
