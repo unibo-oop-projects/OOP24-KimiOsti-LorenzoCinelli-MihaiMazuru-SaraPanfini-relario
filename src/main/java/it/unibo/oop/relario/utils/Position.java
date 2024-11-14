@@ -7,10 +7,10 @@ public interface Position {
     /**
      * @return the x coordinate of the current position.
      */
-    public int getX();
+    int getX();
 
     /**
      * @return the y coordinate of the current position.
      */
-    public int getY();
+    int getY();
 }
