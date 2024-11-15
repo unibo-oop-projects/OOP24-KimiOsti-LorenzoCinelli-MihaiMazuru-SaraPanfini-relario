@@ -9,6 +9,5 @@ public class App {
      * @param args are ignored.
      */
     public static void main(final String[] args) {
-        
     }
 }
