@@ -1,6 +1,6 @@
 package it.unibo.oop.relario.Model.InventoryItems;
 
-public abstract class InventoryItemImpl implements InventoryItem {
+public class InventoryItemImpl implements InventoryItem {
 
     private final String name;
     private final String description;
