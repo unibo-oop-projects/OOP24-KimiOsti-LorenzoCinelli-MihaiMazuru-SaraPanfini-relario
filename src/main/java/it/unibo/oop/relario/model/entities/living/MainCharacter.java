@@ -7,7 +7,7 @@ import it.unibo.oop.relario.utils.impl.Direction;
 /**
  * Interface to interact with main character.
  */
-public interface MainCharacher {
+public interface MainCharacter {
     /**
      * Reveals the current player position.
      * @return the current position of the player.
