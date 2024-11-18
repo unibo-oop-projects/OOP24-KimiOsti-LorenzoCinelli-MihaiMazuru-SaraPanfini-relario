@@ -51,31 +51,32 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
         switch (type) {
             case SWORD:
                 return new EquippableItem("Spada", "Spada affilata, perfetta per attacchi rapidi e precisi", 
-                    InventoryItemType.SWORD.getEffect(), 10, 10);
+                    InventoryItemType.SWORD.getEffect(), ItemAttributes.SWORD_INTENSITY, ItemAttributes.SWORD_DURABILITY);
             case BOW:
                 return new EquippableItem("Arco", "Arco leggero e preciso, ideale per attacchi a lunga distanza", 
-                    InventoryItemType.BOW.getEffect(), 8, 5);
+                    InventoryItemType.BOW.getEffect(), ItemAttributes.BOW_INTENSITY, ItemAttributes.BOW_DURABILITY);
             case DAGGER:
                 return new EquippableItem("Pugnale", "Un'arma leggera e affilata, perfetta per attacchi rapidi e furtivi", 
-                    InventoryItemType.DAGGER.getEffect(), 5, 3);
+                    InventoryItemType.DAGGER.getEffect(), ItemAttributes.DAGGER_INTENSITY, ItemAttributes.DAGGER_DURABILITY);
             case HAMMER:
                 return new EquippableItem("Martello", "Un'arma pesante e devastante, progettata per infliggere danni enormi", 
-                    InventoryItemType.HAMMER.getEffect(), 15, 8);
+                    InventoryItemType.HAMMER.getEffect(), ItemAttributes.HAMMER_INTENSITY, ItemAttributes.HAMMER_DURABILITY);
             case SHIELD:
                 return new EquippableItem("Scudo", "Uno scudo robusto e affidabile, capace di bloccare colpi potenti", 
-                    InventoryItemType.SHIELD.getEffect(), 10, 5);
+                    InventoryItemType.SHIELD.getEffect(), ItemAttributes.SHIELD_INTENSITY, ItemAttributes.SHIELD_DURABILITY);
             case BASICARMOR:
                 return new EquippableItem("Armatura semplice", "Un'armatura leggera che offre protezione di base", 
-                    InventoryItemType.BASICARMOR.getEffect(), 5, 3);
+                    InventoryItemType.BASICARMOR.getEffect(), ItemAttributes.BASICARMOR_INTENSITY, 
+                    ItemAttributes.BASICARMOR_DURABILITY);
             case POTION:
                 return new EquippableItem("Pozione", "Un liquido rosso che ripristina rapidamente la salute", 
-                    InventoryItemType.POTION.getEffect(), 10, 1);
+                    InventoryItemType.POTION.getEffect(), ItemAttributes.POTION_INTENSITY, ItemAttributes.POTION_DURABILITY);
             case APPLE:
                 return new EquippableItem("Mela", "Una mela fresca e succosa, perfetta per recuperare un po' di energia", 
-                    InventoryItemType.APPLE.getEffect(), 3, 1);
+                    InventoryItemType.APPLE.getEffect(), ItemAttributes.APPLE_INTENSITY, ItemAttributes.APPLE_DURABILITY);
             case AMULET:
                 return new EquippableItem("Amuleto", "Un ciondolo antico e luminoso che emana un'aura di guarigione", 
-                    InventoryItemType.AMULET.getEffect(), 15, 1);
+                    InventoryItemType.AMULET.getEffect(), ItemAttributes.AMULET_INTENSITY, ItemAttributes.AMULET_DURABILITY);
             case COIN:
                 return new InventoryItemImpl("Moneta", "Una moneta luccicante", 
                     InventoryItemType.COIN.getEffect());
