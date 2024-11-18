@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class InventoryItemFactoryImpl implements InventoryItemFactory {
 
+    private final Random random = new Random();
     private final Map<InventoryItemType, Supplier<InventoryItem>> itemCreator = Arrays.stream(InventoryItemType.values())
         .collect(Collectors.toMap(type -> type, type -> () -> createItemByType(type)));
 
@@ -28,14 +29,11 @@ public class InventoryItemFactoryImpl implements InventoryItemFactory {
 
     @Override
     public InventoryItem createRandomItem() {
-        final Random random = new Random();
-
         return itemCreator.get(InventoryItemType.values()[random.nextInt(InventoryItemType.values().length)]).get();
     }
 
     @Override
     public InventoryItem createRandomItemByEffect(final EffectType effect) {
-        final Random random = new Random();
         final List<InventoryItemType> matchingTypes = itemCreator.keySet().stream()
             .filter(type -> type.getEffect().equals(effect)).toList();
 
