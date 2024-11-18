@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.Model.InventoryItems;
+package it.unibo.oop.relario.model.inventoryitems;
 
 public interface InventoryItem {
 
@@ -7,5 +7,5 @@ public interface InventoryItem {
     String getDescription();
 
     EffectType getEffect();
-    
+
 }

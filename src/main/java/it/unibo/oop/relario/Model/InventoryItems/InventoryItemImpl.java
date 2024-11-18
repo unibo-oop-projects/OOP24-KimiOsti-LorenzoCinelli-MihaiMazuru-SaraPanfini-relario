@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.Model.InventoryItems;
+package it.unibo.oop.relario.model.inventoryitems;
 
 public class InventoryItemImpl implements InventoryItem {
 
@@ -26,5 +26,5 @@ public class InventoryItemImpl implements InventoryItem {
     public EffectType getEffect() {
         return this.effect;
     }
-    
+
 }

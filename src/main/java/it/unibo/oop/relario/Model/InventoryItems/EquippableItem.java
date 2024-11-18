@@ -1,11 +1,12 @@
-package it.unibo.oop.relario.Model.InventoryItems;
+package it.unibo.oop.relario.model.inventoryitems;
 
 public class EquippableItem extends InventoryItemImpl {
 
     private final int intensity;
     private int durability;
 
-    public EquippableItem(final String name, final String description, final EffectType effect, final int intensity, final int durability) {
+    public EquippableItem(final String name, final String description, final EffectType effect, 
+    final int intensity, final int durability) {
         super(name, description, effect);
         this.intensity = intensity;
         this.durability = durability;
@@ -29,5 +30,4 @@ public class EquippableItem extends InventoryItemImpl {
         return this.durability > 0;
     }
     */
-    
 }
