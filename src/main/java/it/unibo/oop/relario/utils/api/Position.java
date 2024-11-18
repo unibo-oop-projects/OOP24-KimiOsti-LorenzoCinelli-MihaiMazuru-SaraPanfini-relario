@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.utils;
+package it.unibo.oop.relario.utils.api;
 
 /**
  * Interface to handle positions throughout the game.
