@@ -7,7 +7,14 @@ import java.util.Random;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class InventoryItemFactoryImpl implements InventoryItemFactory {
+/**
+ * Implementation of the item factory. 
+ * This class provides the logic to create different types of inventory items.
+ * It has a Random object to generate random items and a map that associates each inventory item type
+ * with its corresponding creation logic.
+ */
+
+public final class InventoryItemFactoryImpl implements InventoryItemFactory {
 
     private final Random random = new Random();
     private final Map<InventoryItemType, Supplier<InventoryItem>> itemCreator = Arrays.stream(InventoryItemType.values())
