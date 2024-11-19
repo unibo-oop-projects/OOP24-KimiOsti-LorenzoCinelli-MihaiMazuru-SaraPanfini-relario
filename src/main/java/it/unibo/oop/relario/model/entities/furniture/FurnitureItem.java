@@ -7,7 +7,7 @@ import it.unibo.oop.relario.utils.api.Position;
  */
 public interface FurnitureItem {
     /**
-     * Restrives the position of the furniture.
+     * Retrives the position of the furniture.
      * @return the position of the furniture in the map.
      */
     Position getPosition();
@@ -17,4 +17,10 @@ public interface FurnitureItem {
      * @return true if the furniture is walkable, false otherwise.
      */
     boolean isWalkable();
+
+    /**
+     * Retrives the name of the furniture.
+     * @return the name of the furniture item.
+     */
+    String getName();
 }
