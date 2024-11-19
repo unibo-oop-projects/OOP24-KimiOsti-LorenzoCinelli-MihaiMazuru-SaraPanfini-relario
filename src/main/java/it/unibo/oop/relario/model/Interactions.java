@@ -22,4 +22,14 @@ public final class Interactions {
         return false;
     }
 
+    /**
+     * Checks if the next position is interactive.
+     * @param pos the position of the entity.
+     * @param dir the direction the entity is facing.
+     * @return true if the position is interactive, false otherwise.
+     */
+    public static boolean canInteract(final Position pos, final Direction dir) {
+        return false;
+    }
+
 }
