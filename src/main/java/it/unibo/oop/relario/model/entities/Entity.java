@@ -11,6 +11,6 @@ public interface Entity {
      * Reveals the current entity position.
      * @return the current position of the entity. 
      */
-    public Position getPosition();
+    Position getPosition();
 
 }
