@@ -28,7 +28,7 @@ public final class FurnitureItemImpl implements FurnitureItem {
         return this.walkable;
     }
 
-    @Ovveride
+    @Override
     public String getName() {
         return this.name;
     }
