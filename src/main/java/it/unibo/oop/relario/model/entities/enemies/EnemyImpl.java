@@ -68,5 +68,10 @@ public class EnemyImpl implements Enemy {
         this.life -= playerDamage;
         return this.life > 0;
     }
+
+    @Override
+    public void update() {
+        
+    }
     
 }
