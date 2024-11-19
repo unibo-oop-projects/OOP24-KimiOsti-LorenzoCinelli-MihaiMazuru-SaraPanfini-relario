@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.model.furniture;
+package it.unibo.oop.relario.model.entities.furniture;
 
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.PositionImpl;

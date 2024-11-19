@@ -1,9 +1,9 @@
-package it.unibo.oop.relario.model.furniture;
+package it.unibo.oop.relario.model.entities.furniture;
 
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
- * Interface for heandling Furniture items.
+ * Interface for handling Furniture items.
  */
 public interface FurnitureItem {
     /**
