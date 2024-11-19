@@ -15,7 +15,7 @@ public final class PositionImpl implements Position {
      * @param x the initial x coordinate.
      * @param y the initial y coordinate.
      */
-    PositionImpl(final int x, final int y) {
+    public PositionImpl(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
