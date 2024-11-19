@@ -3,6 +3,7 @@ package it.unibo.oop.relario.model.entities.enemies;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
+import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
  * This class implements the Enemy interface and represents an enemy, providing its details.
@@ -21,7 +22,7 @@ public final class EnemyImpl implements Enemy {
     private final InventoryItem reward;
     private final boolean merciful;
     private Direction direction;
-    private int counter = 0;
+    private int counter;
 
     /**
      * Constructs a new instance of enemy.
@@ -36,12 +37,13 @@ public final class EnemyImpl implements Enemy {
         final DifficultyLevel difficulty, final InventoryItem reward, final boolean merciful) {
         this.name = name;
         this.description = description;
-        this.position = position;
+        this.position = new PositionImpl(position.getX(), position.getY());
         this.difficulty = difficulty;
         this.life = difficulty.getLife();
         this.reward = reward;
         this.merciful = merciful;
         this.direction = Direction.RIGHT;
+        this.counter = 0;
     }
 
     @Override
@@ -51,7 +53,7 @@ public final class EnemyImpl implements Enemy {
 
     @Override
     public Position getPosition() {
-        return this.position;
+        return new PositionImpl(this.position.getX(), this.position.getY());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package it.unibo.oop.relario.model.entities.enemies;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -19,7 +19,7 @@ import it.unibo.oop.relario.utils.api.Position;
 
 public final class EnemyFactoryImpl implements EnemyFactory {
 
-    private final Map<EnemyType, EnemyConfig> enemiesData = new HashMap<>();
+    private final Map<EnemyType, EnemyConfig> enemiesData = new EnumMap<>(EnemyType.class);
     private final Random random = new Random();
     private final InventoryItemFactory itemFactory;
 
@@ -42,8 +42,8 @@ public final class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public Enemy createRandomEnemy(final Position position) {
-        EnemyType randomType = EnemyType.values()[random.nextInt(EnemyType.values().length)];
-        InventoryItem randomReward = itemFactory.createRandomItemByEffect(randomType.getEffect());
+        final EnemyType randomType = EnemyType.values()[random.nextInt(EnemyType.values().length)];
+        final InventoryItem randomReward = itemFactory.createRandomItemByEffect(randomType.getEffect());
         return createEnemy(position, randomType, randomReward);
     }
 
@@ -60,7 +60,7 @@ public final class EnemyFactoryImpl implements EnemyFactory {
     }
 
     private Enemy createEnemy(final Position position, final EnemyType type, final InventoryItem reward) {
-        EnemyConfig config = enemiesData.get(type);
+        final EnemyConfig config = enemiesData.get(type);
         return new EnemyImpl(config.name(), config.description(), position, config.difficulty, reward, random.nextBoolean());
     }
 
