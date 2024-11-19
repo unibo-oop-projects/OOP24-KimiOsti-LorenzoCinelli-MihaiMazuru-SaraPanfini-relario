@@ -1,11 +1,9 @@
 package it.unibo.oop.relario.model.entities;
 
-import it.unibo.oop.relario.utils.api.Position;
-
-public interface LivingBeing {
+public interface LivingBeing extends Entity {
 
     String getName();
 
-    Position getPosition();
+    void update();
     
 }

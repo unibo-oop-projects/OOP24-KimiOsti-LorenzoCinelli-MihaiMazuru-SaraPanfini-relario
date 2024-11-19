@@ -18,6 +18,5 @@ public interface Enemy extends LivingBeing {
     boolean isMerciful();
 
     boolean attacked(int playerDamage);
-    
-    void update();
+
 }
