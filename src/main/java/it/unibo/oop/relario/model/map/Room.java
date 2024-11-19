@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.model.map;
 
+import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.utils.api.Position;
 
 public interface Room {
