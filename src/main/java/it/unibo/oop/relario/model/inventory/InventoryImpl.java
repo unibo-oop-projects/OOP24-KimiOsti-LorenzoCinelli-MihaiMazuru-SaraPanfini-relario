@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.model.inventoryitems;
+package it.unibo.oop.relario.model.inventory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +13,10 @@ public final class InventoryImpl implements Inventory {
     private final List<InventoryItem> items;
     private int occupation;
 
-    InventoryImpl() {
+    /**
+     * Initialises a new empty inventory.
+     */
+    public InventoryImpl() {
         this.items = new LinkedList<>();
         this.occupation = 0;
     }
