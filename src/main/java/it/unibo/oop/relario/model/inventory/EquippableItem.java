@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.model.inventoryitems;
+package it.unibo.oop.relario.model.inventory;
 
 /** 
  * This class represents an equippable item, extending the InventoryItemImpl class.
