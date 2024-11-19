@@ -1,5 +1,8 @@
 package it.unibo.oop.relario.model;
 
+import java.util.Optional;
+
+import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
 
@@ -10,6 +13,10 @@ public final class Interactions {
 
     private Interactions() {
         throw new UnsupportedOperationException();
+    }
+
+    private static Optional<Entity> getNextCellContent(final Position pos, final Direction dir) {
+        return Optional.empty();
     }
 
     /**
