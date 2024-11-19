@@ -13,7 +13,10 @@ public final class InventoryImpl implements Inventory {
     private final List<InventoryItem> items;
     private int occupation;
 
-    InventoryImpl() {
+    /**
+     * Initialises a new empty inventory.
+     */
+    public InventoryImpl() {
         this.items = new LinkedList<>();
         this.occupation = 0;
     }
