@@ -15,6 +15,12 @@ public interface MainCharacter {
     Position getPosition();
 
     /**
+     * Sets the player's position. Used when initialising the map.
+     * @param position the player's initial position on map.
+     */
+    void setPosition(Position position);
+
+    /**
      * Reveals the current player direction.
      * @return the current direction the player is facing.
      */
