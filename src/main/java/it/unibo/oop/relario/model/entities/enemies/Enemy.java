@@ -1,7 +1,7 @@
 package it.unibo.oop.relario.model.entities.enemies;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
-import it.unibo.oop.relario.model.inventoryitems.InventoryItem;
+import it.unibo.oop.relario.model.inventory.InventoryItem;
 
 public interface Enemy extends LivingBeing {
 
