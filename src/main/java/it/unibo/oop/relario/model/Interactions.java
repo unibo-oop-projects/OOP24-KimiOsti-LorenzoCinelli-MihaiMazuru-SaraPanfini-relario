@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.model;
 
 import it.unibo.oop.relario.utils.api.Position;
+import it.unibo.oop.relario.utils.impl.Direction;
 
 /**
  * Static class for handling interactions and collision between player and map's elements. 
