@@ -34,7 +34,12 @@ public enum Direction {
         this.deltaY = y; 
     }
 
-    public Position move(Position position) {
+    /**
+     * Moves the position in the current direction.
+     * @param position the initial position
+     * @return the new position after the movement
+     */
+    public Position move(final Position position) {
         return new PositionImpl(position.getX() + deltaX, position.getY() + deltaY);
     }
 }
