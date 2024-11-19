@@ -60,4 +60,10 @@ public interface MainCharacter {
      * @return true if the player survives the attack, false otherwise.
      */
     boolean attacked(int damage);
+
+    /**
+     * Handles the player's attack power.
+     * @return the damage inflicted each attack by the player.
+     */
+    int getAttack();
 }
