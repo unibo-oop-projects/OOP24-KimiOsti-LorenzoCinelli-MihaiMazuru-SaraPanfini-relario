@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.model.inventoryitems;
+package it.unibo.oop.relario.model.inventory;
 
 /**
  * Enum representing the effects that an inventory item can have.

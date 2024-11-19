@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.model.inventoryitems;
+package it.unibo.oop.relario.model.inventory;
 
 /**
  * Enum representing different types of inventory items.

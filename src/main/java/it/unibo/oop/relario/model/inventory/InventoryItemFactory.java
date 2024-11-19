@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.model.inventoryitems;
+package it.unibo.oop.relario.model.inventory;
 
 /**
  * An interface modelling a factory of inventory items.

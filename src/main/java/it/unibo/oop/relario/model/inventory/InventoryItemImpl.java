@@ -1,4 +1,4 @@
-package it.unibo.oop.relario.model.inventoryitems;
+package it.unibo.oop.relario.model.inventory;
 
 /**
  * This class implements the InventoryItem interface and represents an inventory item,

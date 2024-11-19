@@ -1,8 +1,8 @@
 package it.unibo.oop.relario.model.entities.living;
 
 import it.unibo.oop.relario.model.Interactions;
-import it.unibo.oop.relario.model.inventoryitems.Inventory;
-import it.unibo.oop.relario.model.inventoryitems.InventoryImpl;
+import it.unibo.oop.relario.model.inventory.Inventory;
+import it.unibo.oop.relario.model.inventory.InventoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.Direction;
