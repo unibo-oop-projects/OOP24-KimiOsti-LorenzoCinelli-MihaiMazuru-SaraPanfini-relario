@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.utils.api.Position;
+import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
  * Implementation of the Walkable furniture items.
@@ -21,33 +22,33 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
      * @param enemy is the enemy that can be inside the furniture item.
      */
     public WalkableFurnitureImpl(final Position pos, final String name, final Entity enemy) {
-        this.pos = pos;
+        this.pos = new PositionImpl(pos.getX(), pos.getY());
         this.name = name;
         this.enemy = Optional.of(enemy);
     }
 
     @Override
-    public Position getPosition() {
-        return this.pos;
+    public final Position getPosition() {
+        return new PositionImpl(this.pos.getX(), this.pos.getY());
     }
 
     @Override
-    public boolean isWalkable() {
+    public final boolean isWalkable() {
         return true;
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return this.name;
     }
 
     @Override
-    public boolean hasEnemy() {
-        return (!enemy.isEmpty());
+    public final boolean hasEnemy() {
+        return !enemy.isEmpty();
     }
 
     @Override
-    public void addEnemy(final Entity enemy) {
+    public final void addEnemy(final Entity enemy) {
         this.enemy = Optional.of(enemy);
     }
 }
