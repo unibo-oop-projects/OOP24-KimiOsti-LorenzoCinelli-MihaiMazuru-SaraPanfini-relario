@@ -2,16 +2,21 @@ package it.unibo.oop.relario.model.entities.enemies;
 
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
+import it.unibo.oop.relario.utils.impl.Direction;
 
 public class EnemyImpl implements Enemy {
 
+    public static final int DIRECTION_RANGE = 2;
+
     private final String name;
     private final String description;
-    private final Position position;
+    private Position position;
     private int life;
     private final DifficultyLevel difficulty;
     private final InventoryItem reward;
     private final boolean merciful;
+    private Direction direction;
+    private int counter = 0;
 
     public EnemyImpl(final String name, final String description, final Position position, final DifficultyLevel difficulty, final InventoryItem reward, final boolean merciful) {
         this.name = name;
@@ -21,6 +26,7 @@ public class EnemyImpl implements Enemy {
         this.life = difficulty.getLife();
         this.reward = reward;
         this.merciful = merciful;
+        this.direction = Direction.RIGHT;
     }
 
     @Override
@@ -71,7 +77,16 @@ public class EnemyImpl implements Enemy {
 
     @Override
     public void update() {
-        
+        counter++;
+        if (counter > DIRECTION_RANGE) {
+            this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
+            counter = 1;
+        } 
+        setPosition(this.direction.move(position));        
+    }
+
+    private void setPosition(Position position) {
+        this.position = position;
     }
     
 }
