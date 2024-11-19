@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.utils.impl;
 
+import it.unibo.oop.relario.utils.api.Position;
+
 /**
  * Enumeration to handle direction in game movements.
  */
@@ -7,20 +9,32 @@ public enum Direction {
     /**
      * Towards north.
      */
-    UP,
+    UP(0, -1),
 
     /**
      * Towards south.
      */
-    DOWN,
+    DOWN(0, 1),
 
     /**
      * Towards west.
      */
-    LEFT,
+    LEFT(-1, 0),
 
     /**
      * Towards east.
      */
-    RIGHT
+    RIGHT(1, 0);
+
+    private final int deltaX;
+    private final int deltaY;
+
+    Direction(final int x, final int y) {
+        this.deltaX = x;
+        this.deltaY = y; 
+    }
+
+    public Position move(Position position) {
+        return new PositionImpl(position.getX() + deltaX, position.getY() + deltaY);
+    }
 }
