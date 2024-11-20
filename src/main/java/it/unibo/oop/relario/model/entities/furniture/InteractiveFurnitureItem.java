@@ -16,11 +16,20 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
     /**
      * Initialises a new empty interactive furniture item.
      * @param pos is the position of the furniture item in the map.
-     * @param name is the name of the furniture item.
      */
     public InteractiveFurnitureItem(final Position pos) {
         super(pos);
         this.loot = Optional.empty();
+    }
+
+    /**
+     * Initialises a new interactive furniture item.
+     * @param pos is the position of the furniture item in the map.
+     * @param loot is the loot inside the furniture item.
+     */
+    public InteractiveFurnitureItem(final Position pos, final InventoryItem loot) {
+        this(pos);
+        this.loot = Optional.of(loot);
     }
 
     /**

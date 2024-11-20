@@ -15,13 +15,21 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
     private Optional<Enemy> enemy;
 
     /**
+     * Initialises a new empty walkable furniture item.
+     * @param pos is the position of the furniture item in the map.
+     */
+    public WalkableFurnitureImpl(final Position pos) {
+        this.pos = new PositionImpl(pos.getX(), pos.getY());
+        this.enemy = Optional.empty();
+    }
+
+    /**
      * Initialises a new walkable furniture item.
      * @param pos is the position of the furniture item in the map.
-     * @param name is the name of the furniture item.
-     * @param enemy is the enemy that can be inside the furniture item.
+     * @param enemy is the enemy inside the furniture item.
      */
     public WalkableFurnitureImpl(final Position pos, final Enemy enemy) {
-        this.pos = new PositionImpl(pos.getX(), pos.getY());
+        this(pos);
         this.enemy = Optional.of(enemy);
     }
 

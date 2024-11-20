@@ -8,20 +8,32 @@ import it.unibo.oop.relario.utils.api.Position;
 public interface FurnitureItemFactory {
     
     /**
+     * Creates a new empty walkable furniture item.
+     * @return a furniture item.
+     */
+    FurnitureItem createWalkableFurnitureItemEmpty(Position pos);
+
+    /**
      * Creates a new walkable furniture item.
      * @return a furniture item.
      */
     FurnitureItem createWalkableFurnitureItem(Position pos);
 
     /**
-     * Creates a new obstructing furniture item
-     * @return a furnture item.
+     * Creates a new empty interactive furniture item.
+     * @return a new furniture item.
      */
-    FurnitureItem createObstructingFurnitureItem(Position pos);
+    FurnitureItem createInteractiveFurnitureItemEmpty(Position pos);
 
     /**
      * Creates a new interactive furniture item.
      * @return a new furniture item.
      */
     FurnitureItem createInteractiveFurnitureItem(Position pos);
+
+    /**
+     * Creates a new obstructing furniture item
+     * @return a furnture item.
+     */
+    FurnitureItem createObstructingFurnitureItem(Position pos);
 }
