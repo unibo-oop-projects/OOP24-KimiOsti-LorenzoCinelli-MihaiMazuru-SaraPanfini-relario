@@ -2,7 +2,7 @@ package it.unibo.oop.relario.model.entities.furniture;
 
 import java.util.Optional;
 
-import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
@@ -12,7 +12,7 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 public class WalkableFurnitureImpl implements WalkableFurniture {
 
     private final Position pos;
-    private Optional<Entity> enemy;
+    private Optional<Enemy> enemy;
 
     /**
      * Initialises a new walkable furniture item.
@@ -20,7 +20,7 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
      * @param name is the name of the furniture item.
      * @param enemy is the enemy that can be inside the furniture item.
      */
-    public WalkableFurnitureImpl(final Position pos, final Entity enemy) {
+    public WalkableFurnitureImpl(final Position pos, final Enemy enemy) {
         this.pos = new PositionImpl(pos.getX(), pos.getY());
         this.enemy = Optional.of(enemy);
     }
@@ -41,7 +41,12 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
     }
 
     @Override
-    public final void addEnemy(final Entity enemy) {
+    public final void addEnemy(final Enemy enemy) {
         this.enemy = Optional.of(enemy);
+    }
+
+    @Override
+    public void removeEnemy() {
+        this.enemy = Optional.empty();
     }
 }

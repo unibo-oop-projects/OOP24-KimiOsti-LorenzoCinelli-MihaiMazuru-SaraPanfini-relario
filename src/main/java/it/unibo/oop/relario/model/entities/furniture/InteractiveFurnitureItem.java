@@ -2,7 +2,8 @@ package it.unibo.oop.relario.model.entities.furniture;
 
 import java.util.Optional;
 
-import it.unibo.oop.relario.model.inventory.EquippableItem;
+import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.model.inventory.InventoryItemImpl;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -10,14 +11,14 @@ import it.unibo.oop.relario.utils.api.Position;
  */
 public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
 
-    private Optional<EquippableItem> loot;
+    private Optional<InventoryItem> loot;
 
     /**
      * Initialises a new empty interactive furniture item.
      * @param pos is the position of the furniture item in the map.
      * @param name is the name of the furniture item.
      */
-    public InteractiveFurnitureItem(final Position pos, final String name) {
+    public InteractiveFurnitureItem(final Position pos) {
         super(pos);
         this.loot = Optional.empty();
     }
@@ -26,9 +27,9 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
      * Retrieves the equippable item inside the furniture item.
      * @return an equippable item if there is any inside the furniture item, an optional empty otherwise.
      */
-    public EquippableItem dropLoot() {
-        final EquippableItem lootCopy = new EquippableItem(this.loot.get().getName(), this.loot.get().getName(), 
-        this.loot.get().getEffect(), this.loot.get().getIntensity(), this.loot.get().getDurability());
+    public InventoryItem dropLoot() {
+        final InventoryItem lootCopy = new InventoryItemImpl(this.loot.get().getName(),
+        this.loot.get().getDescription(), this.loot.get().getEffect());
         this.loot = Optional.empty();
         return lootCopy;
     }
@@ -44,7 +45,7 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
     /**
      * Adds a new loot to the furniture item.
      */
-    public void addLoot(final EquippableItem loot) {
+    public void addLoot(final InventoryItem loot) {
         this.loot = Optional.of(loot);
     }
 }

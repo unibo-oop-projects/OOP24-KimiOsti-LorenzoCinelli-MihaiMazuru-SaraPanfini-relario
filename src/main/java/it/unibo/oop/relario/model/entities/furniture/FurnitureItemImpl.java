@@ -11,7 +11,7 @@ public final class FurnitureItemImpl implements FurnitureItem {
     private final Position pos;
     private final boolean walkable;
 
-    FurnitureItemImpl(final Position pos, final boolean walkable, final String name) {
+    FurnitureItemImpl(final Position pos, final boolean walkable) {
         this.pos = pos;
         this.walkable = walkable;
     }

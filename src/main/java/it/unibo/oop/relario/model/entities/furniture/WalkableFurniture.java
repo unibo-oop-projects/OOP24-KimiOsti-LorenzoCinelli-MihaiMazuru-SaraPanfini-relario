@@ -1,6 +1,6 @@
 package it.unibo.oop.relario.model.entities.furniture;
 
-import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.entities.enemies.Enemy;
 
 /**
  * Interface for handling walkable furniture items.
@@ -16,5 +16,10 @@ public interface WalkableFurniture extends FurnitureItem {
      * Adds an enemy into the furniture.
      * @param enemy is the enemy to add to the furniture.
      */
-    void addEnemy(Entity enemy);
+    void addEnemy(Enemy enemy);
+
+    /**
+     * Removes the enemy from inside the walkable furniture item.
+     */
+    void removeEnemy();
 }
