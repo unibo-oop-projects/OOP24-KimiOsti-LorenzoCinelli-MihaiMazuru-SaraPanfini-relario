@@ -10,12 +10,10 @@ public final class FurnitureItemImpl implements FurnitureItem {
 
     private final Position pos;
     private final boolean walkable;
-    private final String name;
 
     FurnitureItemImpl(final Position pos, final boolean walkable, final String name) {
         this.pos = pos;
         this.walkable = walkable;
-        this.name = name;
     }
 
     @Override
@@ -26,10 +24,5 @@ public final class FurnitureItemImpl implements FurnitureItem {
     @Override
     public boolean isWalkable() {
         return this.walkable;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
     }
 }

@@ -17,10 +17,4 @@ public interface FurnitureItem {
      * @return true if the furniture is walkable, false otherwise.
      */
     boolean isWalkable();
-
-    /**
-     * Retrives the name of the furniture.
-     * @return the name of the furniture item.
-     */
-    String getName();
 }

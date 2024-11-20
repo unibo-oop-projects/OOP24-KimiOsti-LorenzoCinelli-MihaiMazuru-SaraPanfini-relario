@@ -18,7 +18,7 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
      * @param name is the name of the furniture item.
      */
     public InteractiveFurnitureItem(final Position pos, final String name) {
-        super(pos, name);
+        super(pos);
         this.loot = Optional.empty();
     }
 
