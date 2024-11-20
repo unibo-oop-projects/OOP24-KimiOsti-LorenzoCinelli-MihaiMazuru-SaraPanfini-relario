@@ -53,6 +53,7 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
 
     /**
      * Adds a new loot to the furniture item.
+     * @param loot is the inventory item to add to the furnite.
      */
     public void addLoot(final InventoryItem loot) {
         this.loot = Optional.of(loot);

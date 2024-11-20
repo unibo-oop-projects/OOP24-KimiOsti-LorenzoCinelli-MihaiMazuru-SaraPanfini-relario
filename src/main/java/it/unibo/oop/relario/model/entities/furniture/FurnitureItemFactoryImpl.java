@@ -9,9 +9,7 @@ import it.unibo.oop.relario.utils.api.Position;
 /**
  * Factory used to create different types of furniture.
  */
-public class FurnitureItemFactoryImpl implements FurnitureItemFactory {
-
-    FurnitureItemFactoryImpl() {}
+public final class FurnitureItemFactoryImpl implements FurnitureItemFactory {
 
     @Override
     public FurnitureItem createWalkableFurnitureItemEmpty(final Position pos) {
@@ -19,7 +17,7 @@ public class FurnitureItemFactoryImpl implements FurnitureItemFactory {
     }
 
     @Override
-    public FurnitureItem createWalkableFurnitureItem(Position pos) {
+    public FurnitureItem createWalkableFurnitureItem(final Position pos) {
         final EnemyFactory enemy = new EnemyFactoryImpl();
         return new WalkableFurnitureImpl(pos, enemy.createRandomEnemy(pos));
     }
@@ -30,7 +28,7 @@ public class FurnitureItemFactoryImpl implements FurnitureItemFactory {
     }
 
     @Override
-    public FurnitureItem createInteractiveFurnitureItem(Position pos) {
+    public FurnitureItem createInteractiveFurnitureItem(final Position pos) {
         final InventoryItemFactory loot = new InventoryItemFactoryImpl();
         return new InteractiveFurnitureItem(pos, loot.createRandomItem());
     }
