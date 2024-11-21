@@ -24,4 +24,10 @@ public interface InventoryItem {
      */
     EffectType getEffect();
 
+    /**
+     * Retrieves the intensity of the equippable item.
+     * @return the intensity of the item
+     */
+    int getIntensity();
+
 }
