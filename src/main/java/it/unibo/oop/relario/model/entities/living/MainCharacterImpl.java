@@ -71,7 +71,7 @@ public final class MainCharacterImpl implements MainCharacter {
 
     @Override
     public Inventory handleInventory() {
-        return this.inventory;
+        return null;
     }
 
     @Override
