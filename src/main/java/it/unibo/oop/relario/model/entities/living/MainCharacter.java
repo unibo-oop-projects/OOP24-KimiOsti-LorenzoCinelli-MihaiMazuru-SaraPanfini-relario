@@ -1,19 +1,12 @@
 package it.unibo.oop.relario.model.entities.living;
-
-import it.unibo.oop.relario.model.inventory.Inventory;
+import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
 
 /**
  * Interface to interact with main character.
  */
-public interface MainCharacter {
-    /**
-     * Reveals the current player position.
-     * @return the current position of the player.
-     */
-    Position getPosition();
-
+public interface MainCharacter extends LivingBeing {
     /**
      * Sets the player's position. Used when initialising the map.
      * @param position the player's initial position on map.
@@ -42,17 +35,6 @@ public interface MainCharacter {
      * Stops the player movement.
      */
     void stop();
-
-    /**
-     * Updates the player's state, to be called at each unit of time.
-     */
-    void update();
-
-    /**
-     * Handles the player's inventory.
-     * @return the player's inventory.
-     */
-    Inventory handleInventory();
 
     /**
      * Inflicts some damage to the player.
