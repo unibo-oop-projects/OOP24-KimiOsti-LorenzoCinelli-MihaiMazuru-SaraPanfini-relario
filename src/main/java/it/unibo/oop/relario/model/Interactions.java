@@ -9,7 +9,7 @@ import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
 
 /**
- * Static class for handling interactions and collision between player and map's elements. 
+ * Static class for handling interactions and collision between moving entities and map's elements. 
  */
 public final class Interactions {
 
@@ -30,6 +30,11 @@ public final class Interactions {
         return furnitureMap.get(pos).isEmpty() || furnitureMap.get(pos).get().isWalkable();
     }
 
+    private static boolean isPositionWithInteractivFurniture(final Position pos, 
+    final Map<Position, Optional<FurnitureItem>> furnitureMap) {
+        return furnitureMap.get(pos).isPresent() && furnitureMap.get(pos).get().isInteractive();
+    }
+
     /**
      * Checks if the next position is available.
      * @param pos the initial position of the entity.
@@ -38,7 +43,7 @@ public final class Interactions {
      * @param width the width of the room
      * @param entityMap position-entity map
      * @param furnitureMap position-furniture map
-     * @return true if the position is available, false otherwise.
+     * @return true if the next position is available, false otherwise.
      */
     public static boolean canMove(final Position pos, final Direction dir, final int depth, final int width, 
     final Map<Position, Optional<LivingBeing>> entityMap, final Map<Position, Optional<FurnitureItem>> furnitureMap) {
@@ -54,11 +59,13 @@ public final class Interactions {
      * @param dir the direction the entity is facing.
      * @param entityMap position-entity map
      * @param furnitureMap position-furniture map
-     * @return true if the position is interactive, false otherwise.
+     * @return true if the next position is interactive, false otherwise.
      */
     public static boolean canInteract(final Position pos, final Direction dir, 
     final Map<Position, Optional<LivingBeing>> entityMap, final Map<Position, Optional<FurnitureItem>> furnitureMap) {
-        return false;
+        final Position nextPos = dir.move(pos);
+        return !isPositionWithoutEntity(nextPos, entityMap)
+        || isPositionWithInteractivFurniture(nextPos, furnitureMap);
     }
 
 }
