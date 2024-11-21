@@ -1,6 +1,5 @@
 package it.unibo.oop.relario.model.entities.living;
 
-import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.inventory.Inventory;
 import it.unibo.oop.relario.model.inventory.InventoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
@@ -16,7 +15,7 @@ public final class MainCharacterImpl implements MainCharacter {
     private int life;
     private final int atk;
     private final Inventory inventory;
-    private final Position position;
+    private Position position;
     private boolean moving;
     private Direction direction;
 
@@ -63,39 +62,16 @@ public final class MainCharacterImpl implements MainCharacter {
         moving = false;
     }
 
-    private void move(final Direction direction) {
-        switch (direction) {
-            case UP:
-                this.position.setY(this.position.getY() - 1); break;
-
-            case DOWN:
-                this.position.setY(this.position.getY() + 1); break;
-
-            case RIGHT:
-                this.position.setX(this.position.getX() + 1); break;
-
-            case LEFT:
-                this.position.setX(this.position.getX() - 1); break;
-
-            default:
-                throw new IllegalArgumentException();
-        }
-    }
-
     @Override
     public void update() {
         if (moving) {
-            if (Interactions.canMove(this.getPosition(), this.getDirection())) {
-                this.move(this.direction);
-            } else {
-                this.stop();
-            }
+            this.position = direction.move(position);
         }
     }
 
     @Override
     public Inventory handleInventory() {
-        return this.inventory;
+        return null;
     }
 
     @Override
