@@ -32,17 +32,12 @@ public class EquippableItem extends InventoryItemImpl {
     }
 
     /**
-     * Sets the durability of the equippable item.
-     * @param durability new durability of the item
+     * Deacreses equippable item's durability when it's used.
+     * @return true when the item is still usable, false otherwise
      */
-    public void setDurability(final int durability) {
-        this.durability = durability;
-    } 
-
-    /*
     public boolean decreaseDurability() {
         this.durability--;
         return this.durability > 0;
     }
-    */
+    
 }
