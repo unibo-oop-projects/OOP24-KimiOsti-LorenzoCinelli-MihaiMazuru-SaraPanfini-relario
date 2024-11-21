@@ -43,7 +43,7 @@ public final class Interactions {
      * @param width the width of the room
      * @param entityMap position-entity map
      * @param furnitureMap position-furniture map
-     * @return true if the next position is available, false otherwise.
+     * @return true if the position in front is available, false otherwise.
      */
     public static boolean canMove(final Position pos, final Direction dir, final int depth, final int width, 
     final Map<Position, Optional<LivingBeing>> entityMap, final Map<Position, Optional<FurnitureItem>> furnitureMap) {
@@ -59,7 +59,7 @@ public final class Interactions {
      * @param dir the direction the entity is facing.
      * @param entityMap position-entity map
      * @param furnitureMap position-furniture map
-     * @return true if the next position is interactive, false otherwise.
+     * @return true if the position in front is interactive, false otherwise.
      */
     public static boolean canInteract(final Position pos, final Direction dir, 
     final Map<Position, Optional<LivingBeing>> entityMap, final Map<Position, Optional<FurnitureItem>> furnitureMap) {
