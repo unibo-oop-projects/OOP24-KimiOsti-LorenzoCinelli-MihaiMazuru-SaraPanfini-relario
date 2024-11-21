@@ -1,30 +1,38 @@
 package it.unibo.oop.relario.view.api;
 
+import it.unibo.oop.relario.view.impl.*;
+
 /**
  * Interface for View factory.
  */
 public interface ViewFactory {
     /**
+     * Creates the main View.
+     * @return the main View for the game.
+     */
+    View createMainView();
+
+    /**
      * Creates a View for the main menu.
      * @return a View suitable for the main menu.
      */
-    View createMainMenuView();
+    MainMenuView createMainMenuView();
 
     /**
      * Creates the core game View.
      * @return the View that will run during the game.
      */
-    View createGameView();
+    GameView createGameView();
 
     /**
      * Creates an inventory menu View.
      * @return the View used in the inventory menu.
      */
-    View createInventoryMenuView();
+    InventoryView createInventoryMenuView();
 
     /**
      * Creates the combat View.
      * @return the View used during combat.
      */
-    View createCombatView();
+    CombatView createCombatView();
 }
