@@ -17,10 +17,6 @@ public final class Interactions {
         throw new UnsupportedOperationException();
     }
 
-    private static Optional<Entity> getNextCellContent(final Position pos, final Direction dir) {
-        return Optional.empty();
-    }
-
     /**
      * Checks if the next position is available.
      * @param pos the initial position of the entity.
