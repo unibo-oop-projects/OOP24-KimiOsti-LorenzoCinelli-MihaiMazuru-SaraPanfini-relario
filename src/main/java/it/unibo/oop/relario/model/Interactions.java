@@ -27,7 +27,8 @@ public final class Interactions {
      * @param furnitureMap position-furniture map
      * @return true if the position is available, false otherwise.
      */
-    public static boolean canMove(final Position pos, final Direction dir, final int depth, final int width, final Map<Position, Optional<Entity>> entityMap, final Map<Position, Optional<FurnitureItem>> fornitureMap) {
+    public static boolean canMove(final Position pos, final Direction dir, final int depth, final int width, final Map<Position,
+        Optional<Entity>> entityMap, final Map<Position, Optional<FurnitureItem>> furnitureMap) {
         return false;
     }
 
@@ -39,7 +40,8 @@ public final class Interactions {
      * @param furnitureMap position-furniture map
      * @return true if the position is interactive, false otherwise.
      */
-    public static boolean canInteract(final Position pos, final Direction dir, final Map<Position, Optional<Entity>> entityMap, final Map<Position, Optional<FurnitureItem>> fornitureMap) {
+    public static boolean canInteract(final Position pos, final Direction dir, final Map<Position, Optional<Entity>> entityMap,
+        final Map<Position, Optional<FurnitureItem>> furnitureMap) {
         return false;
     }
 
