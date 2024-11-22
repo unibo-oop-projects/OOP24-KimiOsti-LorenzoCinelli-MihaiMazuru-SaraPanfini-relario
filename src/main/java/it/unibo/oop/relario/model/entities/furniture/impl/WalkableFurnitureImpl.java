@@ -58,4 +58,9 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
     public final void removeEnemy() {
         this.enemy = Optional.empty();
     }
+
+    @Override
+    public final boolean isInteractive() {
+        return true;
+    }
 }

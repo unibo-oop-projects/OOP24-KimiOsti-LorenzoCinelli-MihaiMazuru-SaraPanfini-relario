@@ -22,6 +22,11 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
         this.loot = Optional.empty();
     }
 
+    @Override
+    public final boolean isInteractive() {
+        return true;
+    }
+
     /**
      * Initialises a new interactive furniture item.
      * @param pos is the position of the furniture item in the map.
@@ -38,7 +43,7 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
      */
     public InventoryItem dropLoot() {
         final InventoryItem lootCopy = new InventoryItemImpl(this.loot.get().getName(),
-        this.loot.get().getDescription(), this.loot.get().getEffect());
+        this.loot.get().getDescription(), this.loot.get().getEffect(), this.loot.get().getIntensity());
         this.loot = Optional.empty();
         return lootCopy;
     }
