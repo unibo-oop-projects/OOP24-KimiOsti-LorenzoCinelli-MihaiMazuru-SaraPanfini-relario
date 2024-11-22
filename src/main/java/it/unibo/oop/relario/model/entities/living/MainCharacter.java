@@ -1,5 +1,8 @@
 package it.unibo.oop.relario.model.entities.living;
+import java.util.List;
+
 import it.unibo.oop.relario.model.entities.LivingBeing;
+import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
 
@@ -48,4 +51,31 @@ public interface MainCharacter extends LivingBeing {
      * @return the damage inflicted each attack by the player.
      */
     int getAttack();
+
+    /**
+     * Returns the content of the player's inventory.
+     * @return a list containing the player's ivnentory items.
+     */
+    List<InventoryItem> getItems();
+
+    /**
+     * Uses an item from the inventory.
+     * @param item the item to be used.
+     * @return true if it's used correctly, false otherwise.
+     */
+    boolean useItem(InventoryItem item);
+
+    /**
+     * Discards an item from the player's inventory.
+     * @param item the item to be discarded.
+     * @return true if it's removed correctly, false otherwise.
+     */
+    boolean discardItem(InventoryItem item);
+
+    /**
+     * Adds an item to the player's inventory.
+     * @param item the item to be added.
+     * @return true if it's added correctly, false otherwise.
+     */
+    boolean addToInventory(InventoryItem item);
 }
