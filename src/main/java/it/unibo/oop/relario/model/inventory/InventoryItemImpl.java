@@ -13,10 +13,11 @@ public class InventoryItemImpl implements InventoryItem {
     private final int intensity;
 
     /**
-     * Constructs an inventory item, with the specified name, description and effect.
+     * Constructs an inventory item, with the specified name, description, effect and intensity.
      * @param name of the inventory item
      * @param description of the inventory item
      * @param effect of the inventory item
+     * @param intensity of the inventory item
      */
     public InventoryItemImpl(final String name, final String description, final EffectType effect, final int intensity) {
         this.name = name;
@@ -41,7 +42,7 @@ public class InventoryItemImpl implements InventoryItem {
     }
 
     @Override
-    public int getIntensity() {
+    public final int getIntensity() {
         return this.intensity;
     }
 
