@@ -28,4 +28,13 @@ public class ObstructingFurnitureItem implements FurnitureItem {
     public final boolean isWalkable() {
         return false;
     }
+
+    /**
+     * Says if the furniture item is interactive. In this case retrives always false.
+     * @return false.
+     */
+    @Override
+    public boolean isInteractive() {
+        return false;
+    }
 }

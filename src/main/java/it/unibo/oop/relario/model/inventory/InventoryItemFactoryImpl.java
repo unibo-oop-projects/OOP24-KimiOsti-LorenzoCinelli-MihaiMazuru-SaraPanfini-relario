@@ -51,10 +51,11 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
         () -> new EquippableItem("Amuleto", "Un ciondolo antico e luminoso che emana un'aura di guarigione", 
         InventoryItemType.AMULET.getEffect(), ItemAttributes.AMULET_INTENSITY, ItemAttributes.AMULET_DURABILITY));
         this.itemCreator.put(InventoryItemType.COIN, 
-        () -> new InventoryItemImpl("Moneta", "Una moneta luccicante", InventoryItemType.COIN.getEffect()));
+        () -> new InventoryItemImpl("Moneta", "Una moneta luccicante", 
+        InventoryItemType.COIN.getEffect(), ItemAttributes.COIN_INTENSITY));
         this.itemCreator.put(InventoryItemType.GEMSTONE, 
         () -> new InventoryItemImpl("Pietra preziosa", "Una gemma scintillante di rara bellezza", 
-        InventoryItemType.GEMSTONE.getEffect()));
+        InventoryItemType.GEMSTONE.getEffect(), ItemAttributes.GEMSTONE_INTENSITY));
     }
 
     @Override
