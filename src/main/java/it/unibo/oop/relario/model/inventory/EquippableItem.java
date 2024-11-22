@@ -7,7 +7,6 @@ package it.unibo.oop.relario.model.inventory;
 
 public class EquippableItem extends InventoryItemImpl {
 
-    private final int intensity;
     private int durability;
 
     /**
@@ -20,17 +19,8 @@ public class EquippableItem extends InventoryItemImpl {
      */
     public EquippableItem(final String name, final String description, final EffectType effect, 
     final int intensity, final int durability) {
-        super(name, description, effect);
-        this.intensity = intensity;
+        super(name, description, effect, intensity);
         this.durability = durability;
-    }
-
-    /**
-     * Retrieves the intensity of the equippable item.
-     * @return the intensity of the item
-     */
-    public int getIntensity() {
-        return this.intensity;
     }
 
     /**
@@ -42,17 +32,12 @@ public class EquippableItem extends InventoryItemImpl {
     }
 
     /**
-     * Sets the durability of the equippable item.
-     * @param durability new durability of the item
+     * Deacreses equippable item's durability when it's used.
+     * @return true when the item is still usable, false otherwise
      */
-    public void setDurability(final int durability) {
-        this.durability = durability;
-    } 
-
-    /*
     public boolean decreaseDurability() {
         this.durability--;
         return this.durability > 0;
     }
-    */
+    
 }
