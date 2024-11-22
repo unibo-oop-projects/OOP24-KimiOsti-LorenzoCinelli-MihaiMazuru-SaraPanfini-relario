@@ -5,5 +5,5 @@ import javax.swing.JPanel;
 /**
  * View implementation for the combat phase of the game.
  */
-public class CombatView extends JPanel{
+public class CombatView extends JPanel {
 }
