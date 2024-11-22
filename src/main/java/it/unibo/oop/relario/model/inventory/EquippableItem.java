@@ -39,5 +39,5 @@ public class EquippableItem extends InventoryItemImpl {
         this.durability--;
         return this.durability > 0;
     }
-    
+
 }
