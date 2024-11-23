@@ -1,6 +1,10 @@
 package it.unibo.oop.relario.view.api;
 
-import it.unibo.oop.relario.view.impl.*;
+import it.unibo.oop.relario.view.impl.CombatView;
+import it.unibo.oop.relario.view.impl.GameView;
+import it.unibo.oop.relario.view.impl.InventoryView;
+import it.unibo.oop.relario.view.impl.MainMenuView;
+import it.unibo.oop.relario.view.impl.View;
 
 /**
  * Interface for View factory.
