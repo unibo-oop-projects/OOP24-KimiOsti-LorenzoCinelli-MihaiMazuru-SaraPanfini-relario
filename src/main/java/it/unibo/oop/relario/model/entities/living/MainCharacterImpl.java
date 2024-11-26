@@ -70,36 +70,35 @@ public final class MainCharacterImpl implements MainCharacter {
 
     @Override
     public void setMovement(final Direction direction) {
-        moving = true;
+        this.moving = true;
         this.direction = direction;
     }
 
     @Override
     public void stop() {
-        moving = false;
+        this.moving = false;
     }
 
     @Override
     public void update() {
-        if (moving) {
+        if (this.moving) {
             this.position = direction.move(position);
         }
     }
 
     @Override
     public boolean attacked(final int damage) {
-        if (damage >= life) {
-            life = 0;
-            return false;
-        } else {
-            life = life - damage;
-            return true;
+        this.life = this.life + (this.armor.isEmpty() ? 0 : this.armor.get().getIntensity()) >= damage
+            ? this.life - damage + (this.armor.isEmpty() ? 0 : this.armor.get().getIntensity()) : 0;
+        if (!this.armor.isEmpty()) {
+            this.armor.get().decreaseDurability();
         }
+        return this.life > 0;
     }
 
     @Override
     public int getAttack() {
-        return this.atk;
+        return this.weapon.isEmpty() ? this.atk : this.weapon.get().getIntensity() + this.atk;
     }
 
     @Override
@@ -109,16 +108,15 @@ public final class MainCharacterImpl implements MainCharacter {
 
     @Override
     public boolean useItem(final InventoryItem item) {
-        if (this.inventory.useItem(item)) {
+        if (this.inventory.removeItem(item)) {
             if (item instanceof EquippableItem) {
                 this.equip((EquippableItem) item);
             } else {
                 if (item.getEffect() == EffectType.HEALING) {
-                    if (this.life + item.getIntensity() >= Constants.DEFAULT_PLAYER_LIFE) {
-                        this.life = Constants.DEFAULT_PLAYER_LIFE;
-                    } else {
-                        this.life += item.getIntensity();
-                    }
+                    this.life = 
+                        item.getIntensity() + this.life >= Constants.DEFAULT_PLAYER_LIFE 
+                        ? Constants.DEFAULT_PLAYER_LIFE
+                        : this.life + item.getIntensity();
                 }
             }
             return true;
@@ -129,7 +127,7 @@ public final class MainCharacterImpl implements MainCharacter {
 
     @Override
     public boolean discardItem(final InventoryItem item) {
-        return this.inventory.dropItem(item);
+        return this.inventory.removeItem(item);
     }
 
     @Override
