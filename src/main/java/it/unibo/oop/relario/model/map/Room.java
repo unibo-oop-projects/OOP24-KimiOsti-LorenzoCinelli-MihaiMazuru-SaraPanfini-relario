@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.model.map;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,12 +31,16 @@ public interface Room {
 
     boolean isCellAvailable(Position position);
 
-    boolean addFurniture(Position position, FurnitureItem furniture);
+    void addFurniture(Position position, FurnitureItem furniture);
 
-    boolean addCharacter(Position position, LivingBeing character);
+    void addCharacter(Position position, LivingBeing character);
 
     void removeEntity(Position position);
 
-    Room getNextRoom();
+    List<Position> getPerimeter();
+
+    List<Position> getInnerCells();
+
+    boolean isPositionValid(Position position);
 
 }
