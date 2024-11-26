@@ -18,9 +18,10 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  */
 public final class MainCharacterImpl implements MainCharacter {
 
-    private final String name;
-    private final int atk;
     private final Inventory inventory;
+    private final String name;
+    private final int initialLife;
+    private final int atk;
     private int life;
     private Position position;
     private boolean moving;
@@ -34,7 +35,8 @@ public final class MainCharacterImpl implements MainCharacter {
      */
     public MainCharacterImpl(final Position initialPosition) {
         this.name = "Relano";
-        this.life = Constants.DEFAULT_PLAYER_LIFE;
+        this.initialLife = Constants.DEFAULT_PLAYER_LIFE;
+        this.life = this.initialLife;
         this.atk = Constants.DEFAULT_PLAYER_ATK;
         this.inventory = new InventoryImpl();
         this.position = new PositionImpl(initialPosition.getX(), initialPosition.getY());
@@ -114,8 +116,8 @@ public final class MainCharacterImpl implements MainCharacter {
             } else {
                 if (item.getEffect() == EffectType.HEALING) {
                     this.life = 
-                        item.getIntensity() + this.life >= Constants.DEFAULT_PLAYER_LIFE 
-                        ? Constants.DEFAULT_PLAYER_LIFE
+                        item.getIntensity() + this.life >= this.initialLife 
+                        ? this.initialLife
                         : this.life + item.getIntensity();
                 }
             }
