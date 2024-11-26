@@ -16,7 +16,7 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
     private Optional<Enemy> enemy;
 
     /**
-     * Initialises a new empty walkable furniture item.
+     * Initializes a new empty walkable furniture item.
      * @param pos is the position of the furniture item in the map.
      */
     public WalkableFurnitureImpl(final Position pos) {
@@ -25,7 +25,7 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
     }
 
     /**
-     * Initialises a new walkable furniture item.
+     * Initializes a new walkable furniture item.
      * @param pos is the position of the furniture item in the map.
      * @param enemy is the enemy inside the furniture item.
      */

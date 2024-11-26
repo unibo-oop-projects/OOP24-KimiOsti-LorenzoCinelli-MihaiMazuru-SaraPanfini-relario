@@ -7,18 +7,11 @@ import java.util.List;
  */
 public interface Inventory {
     /**
-     * Uses the selected item.
-     * @param item the item to use.
-     * @return true if the item is consumed correctly, false otherwise.
+     * Removes an item from the player's inventory.
+     * @param item the item to be removed.
+     * @return true if it's removed correcly, false otherwise.
      */
-    boolean useItem(InventoryItem item);
-
-    /**
-     * Drops an item, removing it from the inventory.
-     * @param item the item to drop.
-     * @return true if it's dropped correctly, false otherwise.
-     */
-    boolean dropItem(InventoryItem item);
+    boolean removeItem(InventoryItem item);
 
     /**
      * Adds an item to the player's inventory.

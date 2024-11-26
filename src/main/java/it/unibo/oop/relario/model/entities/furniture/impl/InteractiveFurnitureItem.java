@@ -14,7 +14,7 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
     private Optional<InventoryItem> loot;
 
     /**
-     * Initialises a new empty interactive furniture item.
+     * Initializes a new empty interactive furniture item.
      * @param pos is the position of the furniture item in the map.
      */
     public InteractiveFurnitureItem(final Position pos) {
@@ -28,7 +28,7 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
     }
 
     /**
-     * Initialises a new interactive furniture item.
+     * Initializes a new interactive furniture item.
      * @param pos is the position of the furniture item in the map.
      * @param loot is the loot inside the furniture item.
      */
