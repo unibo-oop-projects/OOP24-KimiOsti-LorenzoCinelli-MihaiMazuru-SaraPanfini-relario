@@ -12,7 +12,7 @@ public class ObstructingFurnitureItem implements FurnitureItem {
     private final Position pos;
 
     /**
-     * Initialises a new obstructing furniture item.
+     * Initializes a new obstructing furniture item.
      * @param pos is the position of the furniture item in the map.
      */
     public ObstructingFurnitureItem(final Position pos) {

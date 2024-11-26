@@ -45,7 +45,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.relario.App")
+    mainClass.set("it.unibo.oop.relario.App")
 }
 
 tasks.test {
