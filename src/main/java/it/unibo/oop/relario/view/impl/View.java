@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import it.unibo.oop.relario.utils.impl.MoveKeyListener;
+
 /**
  * Base class for View.
  */
-public class View extends JFrame {
+public final class View extends JFrame {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -19,5 +21,6 @@ public class View extends JFrame {
         this.setLayout(new BorderLayout());
         this.setLocationByPlatform(true);
         this.setFocusable(true);
+        this.addKeyListener(new MoveKeyListener());
     }
 }
