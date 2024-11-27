@@ -8,6 +8,7 @@ import it.unibo.oop.relario.view.impl.MainView;
  * Implementation of the main menu controller.
  */
 public final class MainMenuControllerImpl implements MainMenuController {
+
     private final MainView myFrame; 
 
     /**
