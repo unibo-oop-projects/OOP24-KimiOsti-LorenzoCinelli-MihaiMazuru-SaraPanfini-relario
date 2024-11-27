@@ -19,7 +19,7 @@ public final class MainMenuView extends JPanel {
      * Initializes the main menu.
      */
     public MainMenuView() {
-        final View myFrame = new View();
+        final MainView myFrame = new MainView();
         final JPanel myPanel = new JPanel(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
         c.gridy = 0;

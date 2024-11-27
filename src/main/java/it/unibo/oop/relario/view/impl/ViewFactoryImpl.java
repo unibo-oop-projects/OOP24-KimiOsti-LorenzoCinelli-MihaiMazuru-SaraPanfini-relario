@@ -8,7 +8,7 @@ import it.unibo.oop.relario.view.api.ViewFactory;
 public final class ViewFactoryImpl implements ViewFactory {
 
     @Override
-    public View createMainView() {
+    public MainView createMainView() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createMainView'");
     }
