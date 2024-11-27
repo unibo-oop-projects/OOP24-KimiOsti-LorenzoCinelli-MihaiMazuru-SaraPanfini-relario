@@ -22,13 +22,13 @@ public final class InventoryImpl implements Inventory {
     }
 
     @Override
-    public boolean useItem(final InventoryItem item) {
-        return this.removeItem(item);
-    }
-
-    @Override
-    public boolean dropItem(final InventoryItem item) {
-        return this.removeItem(item);
+    public boolean removeItem(final InventoryItem item) {
+        if (items.remove(item)) {
+            occupation--;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -43,14 +43,5 @@ public final class InventoryImpl implements Inventory {
     @Override
     public List<InventoryItem> getItemsList() {
         return List.copyOf(items);
-    }
-
-    private boolean removeItem(final InventoryItem item) {
-        if (items.remove(item)) {
-            occupation--;
-            return true;
-        } else {
-            return false;
-        }
     }
 }
