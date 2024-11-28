@@ -18,6 +18,8 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  */
 public final class MainCharacterImpl implements MainCharacter {
 
+    private static final int DEFAULT_INITIAL_POSITION = 0;
+
     private final Inventory inventory;
     private final String name;
     private final int initialLife;
@@ -39,7 +41,7 @@ public final class MainCharacterImpl implements MainCharacter {
         this.life = this.initialLife;
         this.atk = Constants.DEFAULT_PLAYER_ATK;
         this.inventory = new InventoryImpl();
-        this.position = new PositionImpl(0,0);
+        this.position = new PositionImpl(DEFAULT_INITIAL_POSITION, DEFAULT_INITIAL_POSITION);
         this.armor = Optional.empty();
         this.weapon = Optional.empty();
     }
