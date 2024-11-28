@@ -6,11 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.view.api.MainView;
 
 /**
  * Main container for View.
  */
-public final class MainViewImpl {
+public final class MainViewImpl implements MainView {
 
     private final JFrame frame;
     private final JPanel mainMenu;
