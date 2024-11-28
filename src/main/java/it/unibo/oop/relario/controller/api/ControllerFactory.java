@@ -9,23 +9,23 @@ public interface ControllerFactory {
      * Creates the main menu controller.
      * @return a controller handling main menu events.
      */
-    Controller createMainMenuController();
+    MainMenuController createMainMenuController();
 
     /**
      * Creates the game controller.
      * @return a controller handling standard game events.
      */
-    Controller createGameController();
+    GameController createGameController();
 
     /**
      * Creates the inventory menu controller.
      * @return a controller handling inventory menu events.
      */
-    Controller createInventoryMenuController();
+    InventoryController createInventoryController();
 
     /**
      * Creates the combat controller.
      * @return a controller handling combat interface events.
      */
-    Controller createCombatController();
+    CombatController createCombatController();
 }

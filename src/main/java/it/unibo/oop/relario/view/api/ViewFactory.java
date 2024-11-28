@@ -4,7 +4,7 @@ import it.unibo.oop.relario.view.impl.CombatView;
 import it.unibo.oop.relario.view.impl.GameView;
 import it.unibo.oop.relario.view.impl.InventoryView;
 import it.unibo.oop.relario.view.impl.MainMenuView;
-import it.unibo.oop.relario.view.impl.View;
+import it.unibo.oop.relario.view.impl.MainView;
 
 /**
  * Interface for View factory.
@@ -14,7 +14,7 @@ public interface ViewFactory {
      * Creates the main View.
      * @return the main View for the game.
      */
-    View createMainView();
+    MainView createMainView();
 
     /**
      * Creates a View for the main menu.

@@ -1,6 +1,9 @@
 package it.unibo.oop.relario.controller.impl;
 
-import it.unibo.oop.relario.controller.api.Controller;
+import it.unibo.oop.relario.controller.api.GameController;
+import it.unibo.oop.relario.controller.api.InventoryController;
+import it.unibo.oop.relario.controller.api.MainMenuController;
+import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.ControllerFactory;
 
 /**
@@ -9,25 +12,25 @@ import it.unibo.oop.relario.controller.api.ControllerFactory;
 public final class ControllerFactoryImpl implements ControllerFactory {
 
     @Override
-    public Controller createMainMenuController() {
+    public MainMenuController createMainMenuController() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createMainMenuController'");
     }
 
     @Override
-    public Controller createGameController() {
+    public GameController createGameController() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createGameController'");
     }
 
     @Override
-    public Controller createInventoryMenuController() {
+    public InventoryController createInventoryController() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createInventoryMenuController'");
     }
 
     @Override
-    public Controller createCombatController() {
+    public CombatController createCombatController() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createCombatController'");
     }
