@@ -1,10 +1,10 @@
 package it.unibo.oop.relario.view.impl;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * View implementations for the exploration phase of the game.
  */
-public class GameView extends JFrame {
+public final class GameView extends JPanel {
     private static final long serialVersionUID = 1L;
 }
