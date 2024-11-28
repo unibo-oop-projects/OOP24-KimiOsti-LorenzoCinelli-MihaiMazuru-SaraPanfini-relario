@@ -5,6 +5,7 @@ import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.MainMenuController;
+import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
 
@@ -15,6 +16,7 @@ public class MainControllerImpl implements MainController {
     private final InventoryController inventory;
     private final MainMenuController mainMenu;
     private final MainView view;
+    private Room curRoom;
 
     public MainControllerImpl() {
         this.combat = null;
