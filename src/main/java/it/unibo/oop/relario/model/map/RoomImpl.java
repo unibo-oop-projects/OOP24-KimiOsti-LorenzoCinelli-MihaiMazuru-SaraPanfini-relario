@@ -107,6 +107,14 @@ public class RoomImpl implements Room {
         return position.getX() >= 0 && position.getX() < this.dimension.getWidth()
             && position.getY() >= 0 && position.getY() < this.dimension.getHeight();
     }
+
+    /* public boolean canExit() {
+        return this.player.getPosition().equals(this.exit);
+    } */
+
+    public Position getExit() {
+        return this.exit;
+    }
     
     private Set<Position> adjacentCells(Position position, Entity entity) {
         int rangeX = entity instanceof FurnitureItem ? EXCLUSION_RANGE : ENEMIES_EXCLUSION_RANGE;

@@ -43,4 +43,5 @@ public interface Room {
 
     boolean isPositionValid(Position position);
 
+    Position getExit();
 }
