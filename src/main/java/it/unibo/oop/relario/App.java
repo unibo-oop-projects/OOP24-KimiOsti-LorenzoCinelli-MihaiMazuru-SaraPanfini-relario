@@ -1,6 +1,6 @@
 package it.unibo.oop.relario;
 
-import it.unibo.oop.relario.view.impl.MainMenuView;
+import it.unibo.oop.relario.controller.impl.MainControllerImpl;
 
 /**
  * The main class of the application, which starts its execution.
@@ -15,6 +15,6 @@ public final class App {
      * @param args are ignored.
      */
     public static void main(final String[] args) {
-        new MainMenuView();
+        new MainControllerImpl();
     }
 }
