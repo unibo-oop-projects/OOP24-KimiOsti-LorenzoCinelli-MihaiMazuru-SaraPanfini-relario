@@ -33,13 +33,13 @@ public final class MainCharacterImpl implements MainCharacter {
      * Initialises the main character.
      * @param initialPosition the initial player position.
      */
-    public MainCharacterImpl(final Position initialPosition) {
+    public MainCharacterImpl() {
         this.name = "Relano";
         this.initialLife = Constants.DEFAULT_PLAYER_LIFE;
         this.life = this.initialLife;
         this.atk = Constants.DEFAULT_PLAYER_ATK;
         this.inventory = new InventoryImpl();
-        this.position = new PositionImpl(initialPosition.getX(), initialPosition.getY());
+        this.position = new PositionImpl(0,0);
         this.armor = Optional.empty();
         this.weapon = Optional.empty();
     }
