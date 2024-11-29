@@ -1,28 +1,20 @@
 package it.unibo.oop.relario.model.entities.enemies;
 
+import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
-import it.unibo.oop.relario.utils.impl.Direction;
-import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
  * This class implements the Enemy interface and represents an enemy, providing its details.
  */
 
-public final class EnemyImpl implements Enemy {
+public final class EnemyImpl extends LivingBeingImpl implements Enemy {
 
-    /** The number of updates after which the enemy changes direction. */
-    public static final int DIRECTION_RANGE = 2;
-
-    private final String name;
     private final String description;
-    private Position position;
     private int life;
     private final DifficultyLevel difficulty;
     private final InventoryItem reward;
     private final boolean merciful;
-    private Direction direction;
-    private int counter;
 
     /**
      * Constructs a new instance of enemy.
@@ -35,25 +27,12 @@ public final class EnemyImpl implements Enemy {
      */
     public EnemyImpl(final String name, final String description, final Position position,
         final DifficultyLevel difficulty, final InventoryItem reward, final boolean merciful) {
-        this.name = name;
+        super(name, position);
         this.description = description;
-        this.position = new PositionImpl(position.getX(), position.getY());
         this.difficulty = difficulty;
         this.life = difficulty.getLife();
         this.reward = reward;
         this.merciful = merciful;
-        this.direction = Direction.RIGHT;
-        this.counter = 0;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public Position getPosition() {
-        return new PositionImpl(this.position.getX(), this.position.getY());
     }
 
     @Override
@@ -90,20 +69,6 @@ public final class EnemyImpl implements Enemy {
     public boolean attacked(final int playerDamage) {
         this.life -= playerDamage;
         return this.life > 0;
-    }
-
-    @Override
-    public void update() {
-        counter++;
-        if (counter > DIRECTION_RANGE) {
-            this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
-            counter = 1;
-        } 
-        setPosition(this.direction.move(position));
-    }
-
-    private void setPosition(final Position position) {
-        this.position = position;
     }
 
 }

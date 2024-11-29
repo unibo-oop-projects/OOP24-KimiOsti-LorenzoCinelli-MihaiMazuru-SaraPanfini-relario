@@ -2,10 +2,11 @@ package it.unibo.oop.relario.model.entities.npc;
 
 import java.util.Optional;
 
+import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
 
-public class InteractiveNpc extends NpcImpl {
+public class InteractiveNpc extends LivingBeingImpl implements Npc {
 
     private final DialoguesGenerator dialoguesGenerator;
     private final InventoryItem loot;

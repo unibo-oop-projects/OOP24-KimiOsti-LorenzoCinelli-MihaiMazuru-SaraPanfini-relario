@@ -1,10 +1,15 @@
-package it.unibo.oop.relario.model.entities.npc;
+package it.unibo.oop.relario.model.entities;
 
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
 
-public abstract class NpcImpl implements Npc {
-    
+/**
+ * This class represents all living beings of the game and their common properties.
+*/
+
+public abstract class LivingBeingImpl implements LivingBeing {
+
+    /** The number of updates after which the character changes direction. */
     public static final int DIRECTION_RANGE = 2;
 
     private final String name;
@@ -12,11 +17,21 @@ public abstract class NpcImpl implements Npc {
     private Direction direction;
     private int counter;
 
-    public NpcImpl(final String name, final Position position) {
+    /**
+     * Constructs a new instance of living being.
+     * @param name of the living being
+     * @param position where the living being has to be set
+     */
+    public LivingBeingImpl(final String name, final Position position) {
         this.name = name;
         this.position = position;
         this.direction = Direction.RIGHT;
         this.counter = 0;
+    }
+
+    @Override
+    public Position getPosition() {
+        return this.position;
     }
 
     @Override
@@ -32,11 +47,6 @@ public abstract class NpcImpl implements Npc {
             counter = 1;
         } 
         setPosition(this.direction.move(position));
-    }
-
-    @Override
-    public Position getPosition() {
-        return this.position;
     }
 
     private void setPosition(final Position position) {
