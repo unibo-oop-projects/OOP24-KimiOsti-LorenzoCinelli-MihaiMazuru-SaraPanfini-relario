@@ -25,4 +25,10 @@ public final class GameControllerImpl implements GameController {
         this.view = view;
     }
 
+    @Override
+    public void run() {
+        this.view.showGameView();
+        //[TODO] - starts the main loop.
+    }
+
 }
