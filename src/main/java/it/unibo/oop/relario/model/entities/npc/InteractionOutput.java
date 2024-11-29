@@ -18,7 +18,7 @@ public class InteractionOutput {
     }
 
     public Optional<InventoryItem> getItem() {
-        return this.item.isPresent() ? this.item : Optional.empty();
+        return this.item;
     }
     
 }
