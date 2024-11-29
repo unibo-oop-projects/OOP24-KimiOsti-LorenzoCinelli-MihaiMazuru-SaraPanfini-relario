@@ -12,14 +12,29 @@ import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureItemFactoryIm
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
+/**
+ * This class generates and places different types of furniture in the room.
+ * Each furniture item is placed in an available and valid position.
+ * Each walkable item occupies an area of the room.
+ */
 public final class FurnitureGenerator {
+
+    /** The number of furniture items that have to be placed. */
     public static final int FURNITURE_ITEMS_NUMBER = 21;
+
+    /** The number of walkable items that have to be placed. */
     public static final int WALKABLE_ITEMS_NUMBER = 4;
+
+    /** The size of the walkable items' area. */
     public static final int WALKABLE_ITEMS_SIZE = 3;
 
     private final Random random = new Random();
     private final FurnitureItemFactory furnitureFactory = new FurnitureItemFactoryImpl();
 
+    /**
+     * Generates and places all the items in the room randomly.
+     * @param room where the items are placed
+     */
     public void generateFurniture(final Room room) {
         final int obstructiveItems = random.nextInt(FURNITURE_ITEMS_NUMBER / 3) + 2;
         final int interactiveItems = FURNITURE_ITEMS_NUMBER - obstructiveItems;
