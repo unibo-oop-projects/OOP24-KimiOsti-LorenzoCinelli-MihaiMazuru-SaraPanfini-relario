@@ -33,7 +33,6 @@ public final class MainCharacterImpl implements MainCharacter {
 
     /**
      * Initialises the main character.
-     * @param initialPosition the initial player position.
      */
     public MainCharacterImpl() {
         this.name = "Relano";
