@@ -14,6 +14,11 @@ public final class GameControllerImpl implements GameController {
     private final Room curRoom;
     private final MainView view;
 
+    /**
+     * Constructor for the game controller.
+     * @param controller its own container class, used to access the Model.
+     * @param view the main View of the application, used to access the Game View.
+     */
     public GameControllerImpl(final MainController controller, final MainView view) {
         this.controller = controller;
         this.curRoom = controller.getCurRoom();
