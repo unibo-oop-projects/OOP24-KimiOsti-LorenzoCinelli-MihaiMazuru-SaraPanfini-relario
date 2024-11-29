@@ -2,6 +2,7 @@ package it.unibo.oop.relario.model.entities;
 
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
+import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
  * This class represents all living beings of the game and their common properties.
@@ -24,23 +25,23 @@ public abstract class LivingBeingImpl implements LivingBeing {
      */
     public LivingBeingImpl(final String name, final Position position) {
         this.name = name;
-        this.position = position;
+        this.position = new PositionImpl(position.getX(), position.getY());
         this.direction = Direction.RIGHT;
         this.counter = 0;
     }
 
     @Override
-    public Position getPosition() {
-        return this.position;
+    public final Position getPosition() {
+        return new PositionImpl(this.position.getX(), this.position.getY());
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return this.name;
     }
 
     @Override
-    public void update() {
+    public final void update() {
         counter++;
         if (counter > DIRECTION_RANGE) {
             changeDirection();
@@ -56,5 +57,5 @@ public abstract class LivingBeingImpl implements LivingBeing {
     private void changeDirection() {
         this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
     }
-    
+
 }
