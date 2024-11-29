@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import it.unibo.oop.relario.utils.api.Position;
 
-public class NonInteractiveNpc extends NpcImpl {
+public class NotInteractiveNpc extends NpcImpl {
 
     private final DialoguesGenerator dialoguesGenerator;
 
-    public NonInteractiveNpc(String name, Position position, DialoguesGenerator dialoguesGenerator) {
+    public NotInteractiveNpc(String name, Position position, DialoguesGenerator dialoguesGenerator) {
         super(name, position);
         this.dialoguesGenerator = dialoguesGenerator;
     }

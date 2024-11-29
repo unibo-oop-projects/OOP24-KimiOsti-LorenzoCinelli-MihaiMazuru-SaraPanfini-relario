@@ -28,7 +28,7 @@ public abstract class NpcImpl implements Npc {
     public void update() {
         counter++;
         if (counter > DIRECTION_RANGE) {
-            this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
+            changeDirection();
             counter = 1;
         } 
         setPosition(this.direction.move(position));
@@ -41,6 +41,10 @@ public abstract class NpcImpl implements Npc {
 
     private void setPosition(final Position position) {
         this.position = position;
+    }
+
+    private void changeDirection() {
+        this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
     }
     
 }
