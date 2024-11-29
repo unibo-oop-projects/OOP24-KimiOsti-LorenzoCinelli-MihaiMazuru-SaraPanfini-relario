@@ -22,6 +22,7 @@ public final class MainViewImpl implements MainView {
 
     /**
      * Inizializes the frame of the main view.
+     * @param controller The Controller container instance used to access Controllers.
      */
     public MainViewImpl(final MainController controller) {
         this.frame = new JFrame();
