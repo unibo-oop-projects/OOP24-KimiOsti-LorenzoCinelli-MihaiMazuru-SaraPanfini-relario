@@ -6,6 +6,9 @@ import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
 
+/**
+ * Implementation of the NPCs' factory, that creates different types of NPCs.
+ */
 public final class NpcFactoryImpl implements NpcFactory {
 
     private final DialoguesGenerator dialoguesGenerator = new DialoguesGenerator();
