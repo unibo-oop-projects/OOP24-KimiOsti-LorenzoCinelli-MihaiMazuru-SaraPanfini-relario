@@ -19,11 +19,12 @@ public class MainControllerImpl implements MainController {
     private Room curRoom;
 
     public MainControllerImpl() {
+        this.view = new MainViewImpl(this);
+        //[TODO] - room initialisation
         this.combat = null;
-        this.game = null;
+        this.game = new GameControllerImpl(this, this.view);
         this.inventory = null;
         this.mainMenu = null;
-        this.view = new MainViewImpl(this);
     }
 
     @Override
@@ -44,5 +45,16 @@ public class MainControllerImpl implements MainController {
     @Override
     public MainMenuController getMainMenuController() {
         return this.mainMenu;
+    }
+
+    @Override
+    public Room getCurRoom() {
+        return this.curRoom;
+    }
+
+    @Override
+    public Room moveToNextRoom() {
+        //[TODO] - moves to the next room.
+        return this.curRoom;
     }
 }
