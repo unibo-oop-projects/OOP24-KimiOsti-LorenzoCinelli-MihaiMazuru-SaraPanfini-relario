@@ -38,6 +38,11 @@ public final class MainViewImpl implements MainView {
         this.controller = controller;
     }
 
+    @Override
+    public void showGameView() {
+        //[TODO] - implementation of the show game view method.
+    }
+
     private void frameSetup() {
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
