@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 
-public class InteractionOutput {
+public final class InteractionOutput {
     private final String dialogue;
     private final Optional<InventoryItem> item;
 
@@ -20,5 +20,5 @@ public class InteractionOutput {
     public Optional<InventoryItem> getItem() {
         return this.item;
     }
-    
+
 }

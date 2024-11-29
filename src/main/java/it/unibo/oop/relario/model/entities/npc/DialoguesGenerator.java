@@ -3,7 +3,7 @@ package it.unibo.oop.relario.model.entities.npc;
 import java.util.List;
 import java.util.Random;
 
-public class DialoguesGenerator {
+public final class DialoguesGenerator {
 
     private final List<String> defaultDialogues;
     private final List<String> lootDialogues;
@@ -31,5 +31,5 @@ public class DialoguesGenerator {
     public String getNoLootDialogue() {
         return this.noLootDialogues.get(random.nextInt(this.noLootDialogues.size()));
     }
-    
+
 }

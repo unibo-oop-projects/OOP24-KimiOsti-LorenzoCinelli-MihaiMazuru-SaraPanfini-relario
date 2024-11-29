@@ -6,28 +6,29 @@ import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
 
-public class NpcFactoryImpl implements NpcFactory {
+public final class NpcFactoryImpl implements NpcFactory {
 
     private final DialoguesGenerator dialoguesGenerator = new DialoguesGenerator();
+    private final Random random = new Random();
 
     @Override
-    public Npc createRandomNpc(Position position) {
-        return new Random().nextBoolean() ? this.createInteractiveNpc(position) : this.createNotInteractiveNpc(position);
+    public Npc createRandomNpc(final Position position) {
+        return random.nextBoolean() ? this.createInteractiveNpc(position) : this.createNotInteractiveNpc(position);
     }
 
     @Override
-    public Npc createNotInteractiveNpc(Position position) {
+    public Npc createNotInteractiveNpc(final Position position) {
         return new NotInteractiveNpc("", position, this.dialoguesGenerator);
     }
 
     @Override
-    public Npc createInteractiveNpc(Position position) {
+    public Npc createInteractiveNpc(final Position position) {
         return this.createNpcWithLoot(position, new InventoryItemFactoryImpl().createRandomItem());
     }
 
     @Override
-    public Npc createNpcWithLoot(Position position, InventoryItem loot) {
+    public Npc createNpcWithLoot(final Position position, final InventoryItem loot) {
         return new InteractiveNpc("", position, loot, dialoguesGenerator);
     }
-    
+
 }
