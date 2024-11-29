@@ -4,7 +4,7 @@ import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.impl.DimensionImpl;
 
-public class RoomGenerator {
+public final class RoomGenerator {
 
     public static final Dimension DEFAULT_DIMENSION = new DimensionImpl(0, 0);
 
@@ -15,9 +15,9 @@ public class RoomGenerator {
         this.furnitureGenerator = new FurnitureGenerator();
         this.livingBeingsGenerator = new LivingBeingsGenerator();
     }
-    
-    public Room createNewRoom(MainCharacter player) {
-        Room newRoom = new RoomImpl(DEFAULT_DIMENSION, player);
+
+    public Room createNewRoom(final MainCharacter player) {
+        final Room newRoom = new RoomImpl(DEFAULT_DIMENSION, player);
         this.furnitureGenerator.generateFurniture(newRoom);
         this.livingBeingsGenerator.generateLivingBeings(newRoom);
         return newRoom;

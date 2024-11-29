@@ -19,19 +19,19 @@ import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
-public class RoomImpl implements Room {
+public final class RoomImpl implements Room {
 
     public static final int EXCLUSION_RANGE = 2;
     public static final int ENEMIES_EXCLUSION_RANGE = EnemyImpl.DIRECTION_RANGE + EXCLUSION_RANGE;
     public static final int BORDER = 2;
 
     private final Dimension dimension;
-    private Map<Position, LivingBeing> population = new HashMap<>();
-    private Map<Position, FurnitureItem> furniture = new HashMap<>();
+    private final Map<Position, LivingBeing> population = new HashMap<>();
+    private final Map<Position, FurnitureItem> furniture = new HashMap<>();
     private final MainCharacter player;
     private final Position entry;
     private final Position exit;
-    private Set<Position> unavailableCells = new HashSet<>();
+    private final Set<Position> unavailableCells = new HashSet<>();
     private final List<Position> perimeter;
     private final List<Position> innerCells;
     // private final Optional<Quest> quest;
@@ -55,39 +55,39 @@ public class RoomImpl implements Room {
 
     @Override
     public Map<Position, LivingBeing> getPopulation() {
-        return this.population;
+        return Map.copyOf(this.population);
     }
 
     @Override
     public Map<Position, FurnitureItem> getFurniture() {
-        return this.furniture;
+        return Map.copyOf(this.furniture);
     }
 
     @Override
-    public Optional<Entity> getCellContent(Position position) {
+    public Optional<Entity> getCellContent(final Position position) {
         return this.population.containsKey(position) ? Optional.of(this.population.get(position))
-        : (this.furniture.containsKey(position) ? Optional.of(this.furniture.get(position)) : Optional.empty());
+        : this.furniture.containsKey(position) ? Optional.of(this.furniture.get(position)) : Optional.empty();
     }
 
     @Override
-    public boolean isCellAvailable(Position position) {
+    public boolean isCellAvailable(final Position position) {
         return !unavailableCells.contains(position);
     }
 
     @Override
-    public void addFurniture(Position position, FurnitureItem furniture) {
+    public void addFurniture(final Position position, final FurnitureItem furniture) {
         this.furniture.put(position, furniture);
         this.unavailableCells.addAll(adjacentCells(position, furniture));
     }
 
     @Override
-    public void addCharacter(Position position, LivingBeing character) {
+    public void addCharacter(final Position position, final LivingBeing character) {
         this.population.put(position, character);
         this.unavailableCells.addAll(adjacentCells(position, character));
     }
 
     @Override
-    public void removeEntity(Position position) {
+    public void removeEntity(final Position position) {
         if (population.containsKey(position)) {
             this.population.remove(position);
         } else if (furniture.containsKey(position)) {
@@ -95,14 +95,17 @@ public class RoomImpl implements Room {
         }
     }
 
+    @Override
     public List<Position> getPerimeter() {
-        return this.perimeter;
+        return List.copyOf(this.perimeter);
     }
 
+    @Override
     public List<Position> getInnerCells() {
-        return this.innerCells;
+        return List.copyOf(this.innerCells);
     }
 
+    @Override
     public boolean isPositionValid(final Position position) {
         return position.getX() >= 0 && position.getX() < this.dimension.getWidth()
             && position.getY() >= 0 && position.getY() < this.dimension.getHeight();
@@ -112,21 +115,22 @@ public class RoomImpl implements Room {
         return this.player.getPosition().equals(this.exit);
     } */
 
+    @Override
     public Position getExit() {
-        return this.exit;
+        return new PositionImpl(this.exit.getX(), this.exit.getY());
     }
-    
-    private Set<Position> adjacentCells(Position position, Entity entity) {
-        int rangeX = entity instanceof FurnitureItem ? EXCLUSION_RANGE : ENEMIES_EXCLUSION_RANGE;
-        int rangeY = EXCLUSION_RANGE;
+
+    private Set<Position> adjacentCells(final Position position, final Entity entity) {
+        final int rangeX = entity instanceof FurnitureItem ? EXCLUSION_RANGE : ENEMIES_EXCLUSION_RANGE;
+        final int rangeY = EXCLUSION_RANGE;
 
         return IntStream.rangeClosed(position.getX() - rangeX, position.getX() + rangeX)
         .boxed().flatMap(x -> IntStream.rangeClosed(position.getY() - rangeY, position.getY() + rangeY)
-        .mapToObj(y -> new PositionImpl(x, y))).filter(p -> isPositionValid(p)).collect(Collectors.toSet());
+        .mapToObj(y -> new PositionImpl(x, y))).filter(this::isPositionValid).collect(Collectors.toSet());
     }
 
     private List<Position> perimeterPositions() {
-        List<Position> perimeter = new ArrayList<>();
+        final List<Position> perimeter = new ArrayList<>();
 
         for (int x = 0; x < this.dimension.getWidth(); x++) {
             perimeter.add(new PositionImpl(x, 0));
@@ -141,7 +145,7 @@ public class RoomImpl implements Room {
     }
 
     private List<Position> innerCells() {
-        List<Position> innerCells = new ArrayList<>();
+        final List<Position> innerCells = new ArrayList<>();
 
         for (int x = BORDER; x < this.dimension.getWidth() - BORDER; x++) {
             for (int y = BORDER; y < this.dimension.getHeight() - BORDER; y++) {

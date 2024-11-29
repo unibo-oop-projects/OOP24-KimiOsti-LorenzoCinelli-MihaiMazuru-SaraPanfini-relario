@@ -6,7 +6,7 @@ import it.unibo.oop.relario.utils.api.Dimension;
  * Implementation of Dimension interface.
  */
 
-public class DimensionImpl implements Dimension {
+public final class DimensionImpl implements Dimension {
 
     private final int height;
     private final int width;
@@ -30,5 +30,5 @@ public class DimensionImpl implements Dimension {
     public int getWidth() {
         return this.width;
     }
-    
+
 }
