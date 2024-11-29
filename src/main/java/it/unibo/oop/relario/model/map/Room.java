@@ -1,8 +1,13 @@
 package it.unibo.oop.relario.model.map;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.entities.LivingBeing;
+import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
+import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -11,6 +16,12 @@ import it.unibo.oop.relario.utils.api.Position;
 
 public interface Room {
 
+    Dimension getDimension();
+
+    Map<Position, LivingBeing> getPopulation();
+
+    Map<Position, FurnitureItem> getFurniture();
+
     /**
      * Retrieves the content of a specific cell of the room.
      * @param position of the cell that has to be checked
@@ -18,4 +29,19 @@ public interface Room {
      */
     Optional<Entity> getCellContent(Position position);
 
+    boolean isCellAvailable(Position position);
+
+    void addFurniture(Position position, FurnitureItem furniture);
+
+    void addCharacter(Position position, LivingBeing character);
+
+    void removeEntity(Position position);
+
+    List<Position> getPerimeter();
+
+    List<Position> getInnerCells();
+
+    boolean isPositionValid(Position position);
+
+    Position getExit();
 }
