@@ -16,7 +16,6 @@ public final class CombatControllerImpl implements CombatController {
 
     /**
      * Create a new combat view.
-     * @param myFrame is the main frame where the new view will be added.
      * @param controller is the controller of the main game.
      * @param enemy is the of the two fughters.
      * @param player is the other one of the two fighters.

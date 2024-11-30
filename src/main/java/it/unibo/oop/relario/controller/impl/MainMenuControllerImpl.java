@@ -9,7 +9,6 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
     /**
      * Create a new view for the main menu.
-     * @param myFrame is the main frame where the new view will be added.
      */
     public MainMenuControllerImpl() {
     }

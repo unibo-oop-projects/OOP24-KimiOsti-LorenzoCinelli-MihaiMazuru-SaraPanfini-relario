@@ -18,6 +18,9 @@ public class MainControllerImpl implements MainController {
     private final MainView view;
     private Room curRoom;
 
+    /**
+     * Initializes all the controllers and the main view.
+     */
     public MainControllerImpl() {
         this.combat = null;
         this.game = null;

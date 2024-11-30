@@ -19,7 +19,6 @@ public final class MainMenuView extends JPanel {
 
     /**
      * Initializes the main menu.
-     * @param myFrame is the frame where this panel will be added.
      * @param controller is the controller of the main menu.
      */
     public MainMenuView(final MainMenuController controller) {
