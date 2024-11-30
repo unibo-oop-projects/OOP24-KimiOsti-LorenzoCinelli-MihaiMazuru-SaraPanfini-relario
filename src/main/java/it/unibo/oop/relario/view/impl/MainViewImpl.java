@@ -28,7 +28,7 @@ public final class MainViewImpl implements MainView {
         this.controller = controller;
         this.frame = new JFrame();
         this.frameSetup();
-        this.mainMenu = new MainMenuView(this.controller);
+        this.mainMenu = new MainMenuView(this.controller.getMainMenuController());
         this.panelSetup(this.mainMenu);
         this.game = new GameView();
         this.panelSetup(this.game);
