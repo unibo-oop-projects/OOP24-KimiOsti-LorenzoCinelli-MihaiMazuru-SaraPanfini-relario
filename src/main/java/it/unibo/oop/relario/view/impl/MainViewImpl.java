@@ -50,4 +50,24 @@ public final class MainViewImpl implements MainView {
         this.frame.add(panel);
         panel.setVisible(false);
     }
+
+    @Override
+    public void showCombatView() {
+        this.combat.setVisible(true);
+    }
+
+    @Override
+    public void showGameView() {
+        this.game.setVisible(true);
+    }
+
+    @Override
+    public void showInventoryView() {
+        this.inventory.setVisible(true);
+    }
+
+    @Override
+    public void showMainMenuView() {
+        this.mainMenu.setVisible(true);
+    }
 }
