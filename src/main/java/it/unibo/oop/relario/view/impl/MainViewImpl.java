@@ -52,22 +52,22 @@ public final class MainViewImpl implements MainView {
     }
 
     @Override
-    public void showCombatView() {
+    public final void showCombatView() {
         this.combat.setVisible(true);
     }
 
     @Override
-    public void showGameView() {
+    public final void showGameView() {
         this.game.setVisible(true);
     }
 
     @Override
-    public void showInventoryView() {
+    public final void showInventoryView() {
         this.inventory.setVisible(true);
     }
 
     @Override
-    public void showMainMenuView() {
+    public final void showMainMenuView() {
         this.mainMenu.setVisible(true);
     }
 }
