@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.MainController;
-import it.unibo.oop.relario.controller.api.MainMenuController;
 
 /**
  * View implementation for the main menu.

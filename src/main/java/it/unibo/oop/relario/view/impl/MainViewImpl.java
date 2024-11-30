@@ -25,9 +25,10 @@ public final class MainViewImpl implements MainView {
      * @param controller The Controller container instance used to access Controllers.
      */
     public MainViewImpl(final MainController controller) {
+        this.controller = controller;
         this.frame = new JFrame();
         this.frameSetup();
-        this.mainMenu = new MainMenuView();
+        this.mainMenu = new MainMenuView(this.controller);
         this.panelSetup(this.mainMenu);
         this.game = new GameView();
         this.panelSetup(this.game);
@@ -35,7 +36,6 @@ public final class MainViewImpl implements MainView {
         this.panelSetup(this.inventory);
         this.combat = new CombatView();
         this.panelSetup(this.combat);
-        this.controller = controller;
     }
 
     private void frameSetup() {
