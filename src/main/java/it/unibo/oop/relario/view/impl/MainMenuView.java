@@ -8,6 +8,7 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.MainMenuController;
 
 /**
@@ -15,18 +16,15 @@ import it.unibo.oop.relario.controller.api.MainMenuController;
  */
 public final class MainMenuView extends JPanel {
     private static final long serialVersionUID = 1L;
-    private final MainView myFrame;
-    private final transient MainMenuController controller;
+    private final transient MainController controller;
 
     /**
      * Initializes the main menu.
      * @param myFrame is the frame where this panel will be added.
      * @param controller is the controller of the main menu.
      */
-    public MainMenuView(final MainView myFrame, final MainMenuController controller) {
-        this.myFrame = myFrame;
+    public MainMenuView(final MainController controller) {
         this.controller = controller;
-
         final JPanel myPanel = new JPanel(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
         c.gridy = 0;
@@ -38,7 +36,7 @@ public final class MainMenuView extends JPanel {
         c.gridy++;
 
         play.addActionListener(e -> { 
-            this.controller.progress(this.myFrame); 
+            this.controller.getMainMenuController().progress(); 
         });
 
         final JButton quit = new JButton("QUIT");
@@ -46,13 +44,10 @@ public final class MainMenuView extends JPanel {
         c.gridy++;
 
         quit.addActionListener(e -> { 
-            this.controller.exit(); 
+            this.controller.getMainMenuController().exit(); 
         });
 
         this.setLayout(new BorderLayout());
         this.add(myPanel, BorderLayout.CENTER);
-
-        this.myFrame.add(this, BorderLayout.CENTER);
-        this.myFrame.setVisible(true);
     }
 }
