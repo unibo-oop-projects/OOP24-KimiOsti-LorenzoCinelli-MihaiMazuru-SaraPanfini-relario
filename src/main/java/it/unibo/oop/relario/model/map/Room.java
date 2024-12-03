@@ -23,6 +23,8 @@ public interface Room {
      */
     MainCharacter getPlayer();
 
+    Room getRoom();
+
     /**
      * Retrieves the dimension of the room.
      * @return the dimension of the room
