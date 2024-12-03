@@ -14,6 +14,7 @@ import it.unibo.oop.relario.controller.api.MainMenuController;
  * View implementation for the main menu.
  */
 public final class MainMenuView extends JPanel {
+
     private static final long serialVersionUID = 1L;
     private final transient MainMenuController controller;
 
