@@ -1,11 +1,15 @@
 package it.unibo.oop.relario.controller.impl;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.MainMenuController;
+import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
 import it.unibo.oop.relario.model.map.Room;
+import it.unibo.oop.relario.model.map.RoomGenerator;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
 
@@ -19,14 +23,18 @@ public final class MainControllerImpl implements MainController {
     private final InventoryController inventory;
     private final MainMenuController mainMenu;
     private final MainView view;
-    private Room curRoom;
+    private final RoomGenerator roomGenerator;
+    private Optional<Room> curRoom;
+    private final int roomIndex;
 
     /**
      * Initializes all the controllers and the main view.
      */
     public MainControllerImpl() {
         this.view = new MainViewImpl(this);
-        //[TODO] - room initialisation
+        this.roomIndex = 0;
+        this.roomGenerator = new RoomGenerator();
+        this.curRoom = this.roomGenerator.createNewRoom(this.roomIndex);
         this.combat = null;
         this.game = new GameControllerImpl(this, this.view);
         this.inventory = null;
@@ -54,13 +62,13 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public Room getCurRoom() {
+    public Optional<Room> getCurRoom() {
         return this.curRoom;
     }
 
     @Override
-    public Room moveToNextRoom() {
-        //[TODO] - moves to the next room.
-        return this.curRoom;
+    public void moveToNextRoom() {
+        this.roomIndex++;
+        this.curRoom = this.roomGenerator.createNewRoom(this.roomIndex);
     }
 }
