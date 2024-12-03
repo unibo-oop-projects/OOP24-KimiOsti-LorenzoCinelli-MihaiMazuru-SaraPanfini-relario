@@ -29,13 +29,15 @@ public final class MainViewImpl implements MainView {
         this.frame = new JFrame();
         this.frameSetup();
         this.mainMenu = new MainMenuView(this.controller.getMainMenuController());
-        this.panelSetup(this.mainMenu);
+        this.frame.add(this.mainMenu);
+        this.showMainMenuView();
         this.game = new GameView();
         this.panelSetup(this.game);
         this.inventory = new InventoryView();
         this.panelSetup(this.inventory);
         this.combat = new CombatView();
         this.panelSetup(this.combat);
+        this.frame.setVisible(true);
     }
 
     private void frameSetup() {
