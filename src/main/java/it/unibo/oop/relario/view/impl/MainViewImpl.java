@@ -22,19 +22,22 @@ public final class MainViewImpl implements MainView {
 
     /**
      * Inizializes the frame of the main view.
+     * @param controller The Controller container instance used to access Controllers.
      */
     public MainViewImpl(final MainController controller) {
+        this.controller = controller;
         this.frame = new JFrame();
         this.frameSetup();
-        this.mainMenu = new MainMenuView();
-        this.panelSetup(this.mainMenu);
+        this.mainMenu = new MainMenuView(this.controller.getMainMenuController());
+        this.frame.add(this.mainMenu);
+        this.showMainMenuView();
         this.game = new GameView();
         this.panelSetup(this.game);
         this.inventory = new InventoryView();
         this.panelSetup(this.inventory);
         this.combat = new CombatView();
         this.panelSetup(this.combat);
-        this.controller = controller;
+        this.frame.setVisible(true);
     }
 
     private void frameSetup() {
@@ -48,5 +51,25 @@ public final class MainViewImpl implements MainView {
     private void panelSetup(final JPanel panel) {
         this.frame.add(panel);
         panel.setVisible(false);
+    }
+
+    @Override
+    public void showCombatView() {
+        this.combat.setVisible(true);
+    }
+
+    @Override
+    public void showGameView() {
+        this.game.setVisible(true);
+    }
+
+    @Override
+    public void showInventoryView() {
+        this.inventory.setVisible(true);
+    }
+
+    @Override
+    public void showMainMenuView() {
+        this.mainMenu.setVisible(true);
     }
 }
