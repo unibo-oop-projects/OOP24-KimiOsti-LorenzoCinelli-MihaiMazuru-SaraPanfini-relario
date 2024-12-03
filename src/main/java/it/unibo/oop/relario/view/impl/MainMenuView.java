@@ -8,7 +8,7 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import it.unibo.oop.relario.controller.api.MainMenuController;
+import it.unibo.oop.relario.controller.api.MainController;
 
 /**
  * View implementation for the main menu.
@@ -16,13 +16,13 @@ import it.unibo.oop.relario.controller.api.MainMenuController;
 public final class MainMenuView extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private final transient MainMenuController controller;
+    private final transient MainController controller;
 
     /**
      * Initializes the main menu.
      * @param controller is the controller of the main menu.
      */
-    public MainMenuView(final MainMenuController controller) {
+    public MainMenuView(final MainController controller) {
         this.controller = controller;
         final JPanel myPanel = new JPanel(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
@@ -35,7 +35,7 @@ public final class MainMenuView extends JPanel {
         c.gridy++;
 
         play.addActionListener(e -> { 
-            this.controller.progress(); 
+            this.controller.getMainMenuController().progress(); 
         });
 
         final JButton quit = new JButton("QUIT");
@@ -43,7 +43,7 @@ public final class MainMenuView extends JPanel {
         c.gridy++;
 
         quit.addActionListener(e -> { 
-            this.controller.exit(); 
+            this.controller.getMainMenuController().exit(); 
         });
 
         this.setLayout(new BorderLayout());
