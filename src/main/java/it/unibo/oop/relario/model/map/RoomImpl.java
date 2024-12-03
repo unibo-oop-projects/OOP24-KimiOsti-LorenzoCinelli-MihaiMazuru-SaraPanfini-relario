@@ -63,6 +63,11 @@ public final class RoomImpl implements Room {
     }
 
     @Override
+    public MainCharacter getPlayer() {
+        return this.player;
+    }
+
+    @Override
     public Dimension getDimension() {
         return this.dimension;
     }

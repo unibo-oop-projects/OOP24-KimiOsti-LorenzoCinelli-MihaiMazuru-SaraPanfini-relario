@@ -7,6 +7,7 @@ import java.util.Optional;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
+import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 
@@ -15,6 +16,12 @@ import it.unibo.oop.relario.utils.api.Position;
  */
 
 public interface Room {
+
+    /**
+     * Retrieves the player instance associated with the room.
+     * @return the main character in the room
+     */
+    MainCharacter getPlayer();
 
     /**
      * Retrieves the dimension of the room.
