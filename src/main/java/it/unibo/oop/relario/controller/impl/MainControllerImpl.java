@@ -9,6 +9,9 @@ import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
 
+/**
+ * Implementation of the main controller.
+ */
 public class MainControllerImpl implements MainController {
 
     private final CombatController combat;
