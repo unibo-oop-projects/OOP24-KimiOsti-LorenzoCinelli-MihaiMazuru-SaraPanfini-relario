@@ -15,13 +15,12 @@ public final class MainMenuControllerImpl implements MainMenuController {
      */
     public MainMenuControllerImpl(final MainView view) {
         this.view = view;
-        this.view.showMainMenuView();
+        this.view.showPanel("Menu");
     }
 
     @Override
     public void progress() {
-        //this.view.hideMainMenuView();
-        this.view.showGameView();
+        this.view.showPanel("Game");
     }
 
     @Override

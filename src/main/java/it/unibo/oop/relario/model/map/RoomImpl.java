@@ -68,6 +68,11 @@ public final class RoomImpl implements Room {
     }
 
     @Override
+    public Room getRoom() {
+        return this;
+    }
+
+    @Override
     public Dimension getDimension() {
         return this.dimension;
     }

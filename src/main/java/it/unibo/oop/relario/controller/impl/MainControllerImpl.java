@@ -9,6 +9,9 @@ import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
 
+/**
+ * Implementation of the main controller.
+ */
 public class MainControllerImpl implements MainController {
 
     private final CombatController combat;
@@ -22,10 +25,10 @@ public class MainControllerImpl implements MainController {
      * Initializes all the controllers and the main view.
      */
     public MainControllerImpl() {
+        this.view = new MainViewImpl(this);
         this.combat = null;
         this.game = null;
         this.inventory = null;
-        this.view = new MainViewImpl(this);
         this.mainMenu = new MainMenuControllerImpl(this.view);
     }
 
