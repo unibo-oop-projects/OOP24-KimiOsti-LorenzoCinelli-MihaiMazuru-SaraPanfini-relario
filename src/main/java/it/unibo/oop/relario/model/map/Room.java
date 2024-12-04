@@ -17,13 +17,9 @@ import it.unibo.oop.relario.utils.api.Position;
 
 public interface Room {
 
-    /**
-     * Retrieves the player instance associated with the room.
-     * @return the main character in the room
-     */
-    MainCharacter getPlayer();
-
     Room getRoom();
+
+    MainCharacter getPlayer();
 
     /**
      * Retrieves the dimension of the room.
@@ -101,5 +97,7 @@ public interface Room {
      * @return the exit position
      */
     Position getExit();
+
+    Position getEntry();
 
 }
