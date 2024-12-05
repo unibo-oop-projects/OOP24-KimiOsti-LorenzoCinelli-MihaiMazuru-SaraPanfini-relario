@@ -110,13 +110,20 @@ public final class RoomImpl implements Room {
     }
 
     @Override
-    public void addFurniture(final Position position, final FurnitureItem furniture) {
+    public void addEntity(final Position position, final Entity entity) {
+        if (entity instanceof LivingBeing) {
+            addCharacter(position, (LivingBeing)entity);
+        } else {
+            addFurniture(position, (FurnitureItem)entity);
+        }
+    }
+
+    private void addFurniture(final Position position, final FurnitureItem furniture) {
         this.furniture.put(position, furniture);
         this.unavailableCells.addAll(adjacentCells(position, furniture));
     }
 
-    @Override
-    public void addCharacter(final Position position, final LivingBeing character) {
+    private void addCharacter(final Position position, final LivingBeing character) {
         this.population.put(position, character);
         this.unavailableCells.addAll(adjacentCells(position, character));
     }

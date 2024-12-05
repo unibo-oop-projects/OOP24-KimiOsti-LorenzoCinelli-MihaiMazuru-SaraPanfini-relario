@@ -57,18 +57,11 @@ public interface Room {
     boolean isCellAvailable(Position position);
 
     /**
-     * Adds a specified furniture item in a specified position of the room.
-     * @param position where the furniture item has to be placed
-     * @param furniture that has to be added
+     * Adds a specified entity in a specified position of the room.
+     * @param position where the entity has to be placed
+     * @param entity that has to be added
      */
-    void addFurniture(Position position, FurnitureItem furniture);
-
-    /**
-     * Adds a specified living being in a specified position of the room.
-     * @param position where the living being has to be placed
-     * @param character that has to be added
-     */
-    void addCharacter(Position position, LivingBeing character);
+    void addEntity(Position position, Entity entity);
 
     /**
      * Removes an entity from a specified position.

@@ -65,17 +65,17 @@ public final class RoomGenerator {
      * @param player the main character that is placed in the new room
      * @return a new room
      */
-    private Room createNewRoom(final Optional<Quest> quest) {
+    private Room createNewRoom(final int indexRoom) {
         final Room newRoom = new RoomImpl(this.player, this.dimension, default_entry, default_exit, quest);
-        // newRoom.add(quest.getKeyItem());
+        final Optional<Quest> quest = this.questMap.get(indexRoom);
         this.furnitureGenerator.generateFurniture(newRoom);
         this.livingBeingsGenerator.generateLivingBeings(newRoom);
+        newRoom.addEntity(null, quest.getKeyItem());
         return newRoom;
     }
 
-    public Optional<Room> getNextRoom(final int indexRoom) {
-        final Optional<Quest> quest = this.questMap.get(indexRoom);
-        return indexRoom <= ROOMS_NUMBER ? Optional.of(createNewRoom(quest)) : Optional.empty();
+    public Optional<Room> getNextRoom(final int indexRoom) {        
+        return indexRoom <= ROOMS_NUMBER ? Optional.of(createNewRoom(indexRoom)) : Optional.empty();
     }
 
 }
