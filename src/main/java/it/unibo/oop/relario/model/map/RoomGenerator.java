@@ -53,7 +53,7 @@ public final class RoomGenerator {
 
     private void initializeQuestMap() {
         this.questMap.put(1, Optional.empty());
-        this.questMap.put(2, Optional.of(this.questFactory.createCollectItemQuest(null, player)));
+        this.questMap.put(2, Optional.of(this.questFactory.createCollectItemQuest(player)));
         // this.questFactory.createCollectItemQuest(InventoryItemType.values()[random.nextInt(InventoryItemType.values().length)]
         this.questMap.put(3, Optional.of(this.questFactory.createSolvePuzzleQuest()));
         this.questMap.put(4, Optional.of(this.questFactory.createDefeatEnemyQuest()));
@@ -66,11 +66,13 @@ public final class RoomGenerator {
      * @return a new room
      */
     private Room createNewRoom(final int indexRoom) {
-        final Room newRoom = new RoomImpl(this.player, this.dimension, default_entry, default_exit, quest);
         final Optional<Quest> quest = this.questMap.get(indexRoom);
+        final Room newRoom = new RoomImpl(this.player, this.dimension, default_entry, default_exit, quest);
         this.furnitureGenerator.generateFurniture(newRoom);
         this.livingBeingsGenerator.generateLivingBeings(newRoom);
-        newRoom.addEntity(null, quest.getKeyItem());
+        if (quest.isPresent()) {
+            newRoom.addEntity(null, quest.get().getKeyItem());
+        }
         return newRoom;
     }
 
