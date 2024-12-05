@@ -79,6 +79,11 @@ public final class RoomImpl implements Room {
     }
 
     @Override
+    public Optional<Quest> getQuest() {
+        return this.quest; // forse meglio ritornare direttamente i campi?
+    }
+
+    @Override
     public Dimension getDimension() {
         return this.dimension;
     }

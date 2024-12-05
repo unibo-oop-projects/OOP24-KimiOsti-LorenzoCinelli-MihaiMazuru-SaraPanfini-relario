@@ -30,7 +30,6 @@ public final class RoomGenerator {
     private final FurnitureGenerator furnitureGenerator = new FurnitureGenerator();
     private final LivingBeingsGenerator livingBeingsGenerator = new LivingBeingsGenerator();
     private final MainCharacter player;
-    // private int indexRoom;
     private final Map<Integer, Optional<Quest>> questMap = new HashMap<>();
     private final QuestFactory questFactory = new QuestFactoryImpl();
 

@@ -8,6 +8,7 @@ import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 
@@ -20,6 +21,8 @@ public interface Room {
     Room getRoom();
 
     MainCharacter getPlayer();
+
+    Optional<Quest> getQuest();
 
     /**
      * Retrieves the dimension of the room.
