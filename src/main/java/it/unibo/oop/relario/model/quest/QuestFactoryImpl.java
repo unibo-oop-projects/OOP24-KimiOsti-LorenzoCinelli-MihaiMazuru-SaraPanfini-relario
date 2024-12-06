@@ -1,15 +1,9 @@
 package it.unibo.oop.relario.model.quest;
 
+import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
-import it.unibo.oop.relario.model.map.Room;
 
 public final class QuestFactoryImpl implements QuestFactory {
-
-    private final Room room; //??
-
-    public QuestFactoryImpl(final Room room) {
-        this.room = room.getRoom();
-    }
 
     private QuestImpl createQuest(final String name, final String description, final ObjectiveStrategy... objectives) {
         final QuestImpl quest = new QuestImpl(name, description);
@@ -20,18 +14,18 @@ public final class QuestFactoryImpl implements QuestFactory {
     }
 
     @Override
-    public QuestImpl createCollectItemQuest(final InventoryItem item) {
-        return createQuest("", "", new CollectItemObjective(this.room, item));
+    public Quest createCollectItemQuest(final InventoryItem item, final MainCharacter player) {
+        return createQuest("", "", new CollectItemObjective(player, item));
     }
 
     @Override
-    public QuestImpl createDefeatEnemyQuest() {
+    public Quest createDefeatEnemyQuest() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createDefeatEnemyQuest'");
     }
 
     @Override
-    public QuestImpl createSolvePuzzleQuest() {
+    public Quest createSolvePuzzleQuest() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createSolvePuzzleQuest'");
     }

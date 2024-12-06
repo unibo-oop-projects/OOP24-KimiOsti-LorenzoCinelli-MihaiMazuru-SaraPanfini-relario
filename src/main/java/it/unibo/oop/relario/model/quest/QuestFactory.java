@@ -1,13 +1,14 @@
 package it.unibo.oop.relario.model.quest;
 
+import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 
 public interface QuestFactory {
 
-    QuestImpl createCollectItemQuest(InventoryItem item);
+    Quest createCollectItemQuest(InventoryItem item, MainCharacter player);
 
-    QuestImpl createDefeatEnemyQuest();
+    Quest createDefeatEnemyQuest();
 
-    QuestImpl createSolvePuzzleQuest();
+    Quest createSolvePuzzleQuest();
 
 }

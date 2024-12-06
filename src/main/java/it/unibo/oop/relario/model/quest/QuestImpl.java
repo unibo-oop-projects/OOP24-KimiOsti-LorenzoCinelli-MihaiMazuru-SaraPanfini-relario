@@ -15,18 +15,22 @@ public final class QuestImpl implements Quest {
         this.objectives = new ArrayList<>();
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public String getDescription() {
         return this.description;
     }
 
+    @Override
     public void addObjective(final ObjectiveStrategy objective) {
         this.objectives.add(objective);
     }
 
+    @Override
     public boolean isCompleted() {
         return this.objectives.stream().allMatch(ObjectiveStrategy::check);
     }
