@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.view.impl;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,62 +15,36 @@ import it.unibo.oop.relario.view.api.MainView;
 public final class MainViewImpl implements MainView {
 
     private final JFrame frame;
-    private final JPanel mainMenu;
-    private final JPanel game;
-    private final JPanel inventory;
-    private final JPanel combat;
-    private final MainController controller;
+    private final JPanel mainPanel;
 
     /**
      * Inizializes the frame of the main view.
      * @param controller The Controller container instance used to access Controllers.
      */
-    public MainViewImpl(final MainController controller) {
-        this.controller = controller;
+    public MainViewImpl(final MainController mainController) {
+        final MainController controller = mainController;
         this.frame = new JFrame();
         this.frameSetup();
-        this.mainMenu = new MainMenuView(this.controller.getMainMenuController());
-        this.frame.add(this.mainMenu);
-        this.showMainMenuView();
-        this.game = new GameView();
-        this.panelSetup(this.game);
-        this.inventory = new InventoryView();
-        this.panelSetup(this.inventory);
-        this.combat = new CombatView();
-        this.panelSetup(this.combat);
+        mainPanel = new JPanel(new CardLayout());
+        mainPanel.add(new MainMenuView(controller), "Menu");
+        mainPanel.add(new GameView(), "Game");
+        mainPanel.add(new InventoryView(), "Inventory");
+        mainPanel.add(new CombatView(), "Combat");
+        this.frame.add(mainPanel);
         this.frame.setVisible(true);
     }
-    
+
+    @Override
+    public void showPanel(final String panelName) {
+        CardLayout layout = (CardLayout) this.mainPanel.getLayout();
+        layout.show(mainPanel, panelName);
+    } 
+
     private void frameSetup() {
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setLayout(new BorderLayout());
         this.frame.setLocationByPlatform(true);
         this.frame.setFocusable(true);
-    }
-
-    private void panelSetup(final JPanel panel) {
-        this.frame.add(panel);
-        panel.setVisible(false);
-    }
-
-    @Override
-    public void showCombatView() {
-        this.combat.setVisible(true);
-    }
-
-    @Override
-    public void showGameView() {
-        this.game.setVisible(true);
-    }
-
-    @Override
-    public void showInventoryView() {
-        this.inventory.setVisible(true);
-    }
-
-    @Override
-    public void showMainMenuView() {
-        this.mainMenu.setVisible(true);
     }
 }
