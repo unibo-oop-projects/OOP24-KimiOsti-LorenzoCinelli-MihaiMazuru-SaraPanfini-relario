@@ -2,7 +2,6 @@ package it.unibo.oop.relario.controller.impl;
 
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.MainController;
-import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
@@ -11,7 +10,6 @@ import it.unibo.oop.relario.view.api.MainView;
 public final class GameControllerImpl implements GameController {
 
     private final MainController controller;
-    private final Room curRoom;
     private final MainView view;
 
     /**
@@ -21,14 +19,12 @@ public final class GameControllerImpl implements GameController {
      */
     public GameControllerImpl(final MainController controller, final MainView view) {
         this.controller = controller;
-        this.curRoom = controller.getCurRoom();
         this.view = view;
     }
 
     @Override
     public void run() {
-        this.view.showGameView();
-        //[TODO] - starts the main loop.
+        this.view.showPanel("Game");   
     }
 
 }
