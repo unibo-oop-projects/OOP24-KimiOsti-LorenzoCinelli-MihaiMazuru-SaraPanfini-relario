@@ -5,10 +5,5 @@
 build/
 bin/
 
-# Ignore Idea customizations
-.idea
-
-# Ignore Eclipse settings
-.project
-.settings/
-.classpath
+# Ignore VSCode files
+.vscode/
