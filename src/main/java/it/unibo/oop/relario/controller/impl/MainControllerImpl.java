@@ -51,4 +51,9 @@ public class MainControllerImpl implements MainController {
     public final MainMenuController getMainMenuController() {
         return this.mainMenu;
     }
+
+    @Override
+    public final Room getCurrentRoom() {
+        return this.curRoom;
+    }
 }
