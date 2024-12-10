@@ -1,19 +1,24 @@
 package it.unibo.oop.relario.model.quest;
 
 import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.entities.enemies.Enemy;
 
 public final class DefeatEnemyObjective implements ObjectiveStrategy {
 
+    private final Enemy enemy;
+
+    public DefeatEnemyObjective(final Enemy enemy) {
+        this.enemy = enemy;
+    }
+
     @Override
     public boolean check() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'check'");
+        return this.enemy.getLife() <= 0; // ??
     }
 
     @Override
     public Entity getKeyItem() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getKeyItem'");
+        return this.enemy;
     }
 
 }
