@@ -25,7 +25,7 @@ public final class MainControllerImpl implements MainController {
     private final MainView view;
     private final RoomGenerator roomGenerator;
     private Optional<Room> curRoom;
-    private final int roomIndex;
+    private int roomIndex;
 
     /**
      * Initializes all the controllers and the main view.
