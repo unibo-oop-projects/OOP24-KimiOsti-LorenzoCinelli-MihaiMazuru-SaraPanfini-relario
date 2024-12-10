@@ -71,7 +71,7 @@ public final class RoomGenerator {
         this.furnitureGenerator.generateFurniture(newRoom);
         this.livingBeingsGenerator.generateLivingBeings(newRoom);
         if (quest.isPresent()) {
-            newRoom.addEntity(null, quest.get().getKeyItem());
+            newRoom.addEntity(null, quest.get().getKeyItem()); // ??
         }
         return newRoom;
     }

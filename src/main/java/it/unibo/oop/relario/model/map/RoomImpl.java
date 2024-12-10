@@ -167,6 +167,11 @@ public final class RoomImpl implements Room {
         return new PositionImpl(this.entry.getX(), this.entry.getY());
     }
 
+    @Override
+    public void update() {
+        // ??
+    }
+
     private Set<Position> adjacentCells(final Position position, final Entity entity) {
         final int rangeX = entity instanceof FurnitureItem ? EXCLUSION_RANGE : CHARACTERS_EXCLUSION_RANGE;
         final int rangeY = EXCLUSION_RANGE;

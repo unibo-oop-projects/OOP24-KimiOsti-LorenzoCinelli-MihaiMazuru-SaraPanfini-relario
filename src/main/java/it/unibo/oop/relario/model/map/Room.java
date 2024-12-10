@@ -96,4 +96,6 @@ public interface Room {
 
     Position getEntry();
 
+    void update();
+
 }
