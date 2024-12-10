@@ -52,12 +52,12 @@ public abstract class LivingBeingImpl implements LivingBeing {
         setPosition(this.direction.move(position));
     }
 
-    private void setPosition(final Position position) {
-        this.position = position;
+    public void changeDirection() {
+        this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
     }
 
-    private void changeDirection() {
-        this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
+    private void setPosition(final Position position) {
+        this.position = position;
     }
 
 }
