@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.model.quest;
 
+import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 
@@ -16,6 +17,11 @@ public final class CollectItemObjective implements ObjectiveStrategy {
     @Override
     public boolean check() {
         return this.player.getItems().contains(item);
+    }
+
+    @Override
+    public Entity getKeyItem() {
+        return this.item;
     }
 
 }
