@@ -11,24 +11,22 @@ import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
- * 
+ * Implementation of the inventory controller.
  */
 public final class InventoryControllerImpl implements InventoryController {
 
-    private final MainController mainController;
     private final MainView mainView;
     private final MainCharacter player;
     private List<InventoryItem> inventory;
 
     /**
-     * @param mainController
-     * @param mainView
-     * @param player
+     * Creates a new view for the inventory of the player.
+     * @param mainController the main controller of the game.
+     * @param mainView the main view of the game.
      */
     public InventoryControllerImpl(final MainController mainController, final MainView mainView) {
-        this.mainController = mainController;
         this.mainView = mainView;
-        this.player = mainController.getRoom();
+        this.player = mainController.getCurrentRoom().getPlayer();
         this.inventory = player.getItems();
     }
 
@@ -42,12 +40,11 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public List<String> getItemsNames() {
-        //return Stream.iterate(1, i -> i + 1).map(i -> i+"\n").collect(Collectors.toList());
         List<String> temp = new ArrayList<>();
         for (var item : inventory) {
             temp.add(item.getName());
         }
-        return temp;    //usa gli stream
+        return temp;
     }
 
     @Override
@@ -72,6 +69,6 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public void regress() {
-        //tutta la roba nel foglio
+        mainView.showPreviousPanel();
     }
 }
