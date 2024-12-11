@@ -9,5 +9,5 @@ public interface Quest {
 
     boolean isCompleted();
 
-    Entity getKeyItem();
+    Entity getKeyEntity();
 }
