@@ -1,18 +1,17 @@
 package it.unibo.oop.relario.model.quest;
 
-import java.util.ArrayList;
-import java.util.List;
+import it.unibo.oop.relario.model.entities.Entity;
 
 public final class QuestImpl implements Quest {
 
     private final String name;
     private final String description;
-    private final List<ObjectiveStrategy> objectives; // non necessario
+    private final ObjectiveStrategy objective;
 
-    public QuestImpl(final String name, final String description) {
+    public QuestImpl(final String name, final String description, final ObjectiveStrategy objective) {
         this.name = name;
         this.description = description;
-        this.objectives = new ArrayList<>();
+        this.objective = objective; 
     }
 
     @Override
@@ -26,17 +25,13 @@ public final class QuestImpl implements Quest {
     }
 
     @Override
-    public void addObjective(final ObjectiveStrategy objective) {
-        this.objectives.add(objective);
+    public boolean isCompleted() {
+        return this.objective.check();
     }
 
     @Override
-    public boolean isCompleted() {
-        return this.objectives.stream().allMatch(ObjectiveStrategy::check);
+    public Entity getKeyItem() {
+        return this.objective.getKeyItem();
     }
-
-    /*public List<Entity> getKeyItems() {
-        this.objectives.stream().map(obj -> obj.getKeyItem()).toList();
-    }*/
 
 }
