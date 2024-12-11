@@ -51,7 +51,7 @@ public class InventoryItemImpl implements InventoryItem {
     }
 
     @Override
-    public Optional<Position> getPosition() {
+    public final Optional<Position> getPosition() {
         return Optional.empty();
     }
 
