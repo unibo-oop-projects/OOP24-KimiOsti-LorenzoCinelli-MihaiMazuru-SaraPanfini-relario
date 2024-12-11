@@ -53,7 +53,7 @@ public final class RoomGenerator {
 
     private void initializeQuestMap() {
         this.questMap.put(1, Optional.empty());
-        this.questMap.put(2, Optional.of(this.questFactory.createCollectItemQuest(player)));
+        this.questMap.put(2, Optional.of(null));
         // this.questFactory.createCollectItemQuest(InventoryItemType.values()[random.nextInt(InventoryItemType.values().length)]
         this.questMap.put(3, Optional.of(this.questFactory.createSolvePuzzleQuest()));
         this.questMap.put(4, Optional.of(this.questFactory.createDefeatEnemyQuest()));
@@ -71,7 +71,7 @@ public final class RoomGenerator {
         this.furnitureGenerator.generateFurniture(newRoom);
         this.livingBeingsGenerator.generateLivingBeings(newRoom);
         if (quest.isPresent()) {
-            newRoom.addEntity(null, quest.get().getKeyItem()); // ??
+            newRoom.addEntity(null, null); // ??
         }
         return newRoom;
     }
