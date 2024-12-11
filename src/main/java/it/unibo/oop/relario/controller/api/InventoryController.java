@@ -33,7 +33,7 @@ public interface InventoryController {
     void discardItem(int index);
 
     /**
-     * 
+     * Displays the previous view.
      */
     void regress();
 }
