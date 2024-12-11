@@ -5,20 +5,12 @@ import it.unibo.oop.relario.model.entities.enemies.Enemy;
 
 public final class DefeatEnemyObjective implements ObjectiveStrategy {
 
-    private final Enemy enemy;
-
-    public DefeatEnemyObjective(final Enemy enemy) {
-        this.enemy = enemy;
-    }
-
     @Override
-    public boolean check() {
-        return this.enemy.getLife() <= 0; // ??
-    }
-
-    @Override
-    public Entity getKeyItem() {
-        return this.enemy;
+    public boolean check(final Entity keyEntity) {
+        if (keyEntity instanceof Enemy) {
+            return ((Enemy)keyEntity).getLife() <= 0; // ??
+        }
+        throw new IllegalArgumentException();        
     }
 
 }
