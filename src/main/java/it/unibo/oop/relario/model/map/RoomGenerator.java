@@ -22,10 +22,11 @@ public final class RoomGenerator {
     /** The default dimension of a room. */
     public static final Dimension DEFAULT_DIMENSION = new DimensionImpl(0, 0);
 
+    /** TODO. */
     public static final int ROOMS_NUMBER = 5;
 
-    private final Position default_entry;
-    private final Position default_exit;
+    private final Position defaultEntry;
+    private final Position defaultExit;
     private final Dimension dimension;
     private final FurnitureGenerator furnitureGenerator = new FurnitureGenerator();
     private final LivingBeingsGenerator livingBeingsGenerator = new LivingBeingsGenerator();
@@ -46,8 +47,8 @@ public final class RoomGenerator {
     public RoomGenerator() {
         this.dimension = DEFAULT_DIMENSION;
         this.player = new MainCharacterImpl();
-        this.default_entry = new PositionImpl(this.dimension.getHeight() / 2, 0);
-        this.default_exit = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() / 2);
+        this.defaultEntry = new PositionImpl(this.dimension.getHeight() / 2, 0);
+        this.defaultExit = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() / 2);
         initializeQuestMap();
     }
 
@@ -62,12 +63,12 @@ public final class RoomGenerator {
 
     /**
      * Creates a new room with furniture and living beings.
-     * @param player the main character that is placed in the new room
+     * @param indexRoom TODO
      * @return a new room
      */
     private Room createNewRoom(final int indexRoom) {
         final Optional<Quest> quest = this.questMap.get(indexRoom);
-        final Room newRoom = new RoomImpl(this.player, this.dimension, default_entry, default_exit, quest);
+        final Room newRoom = new RoomImpl(this.player, this.dimension, defaultEntry, defaultExit, quest);
         this.furnitureGenerator.generateFurniture(newRoom);
         this.livingBeingsGenerator.generateLivingBeings(newRoom);
         if (quest.isPresent()) {
@@ -76,7 +77,12 @@ public final class RoomGenerator {
         return newRoom;
     }
 
-    public Optional<Room> getNextRoom(final int indexRoom) {        
+    /**
+     * 
+     * @param indexRoom
+     * @return TODO
+     */
+    public Optional<Room> getNextRoom(final int indexRoom) {
         return indexRoom <= ROOMS_NUMBER ? Optional.of(createNewRoom(indexRoom)) : Optional.empty();
     }
 

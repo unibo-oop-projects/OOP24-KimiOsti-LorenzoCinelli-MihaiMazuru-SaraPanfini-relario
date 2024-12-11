@@ -18,10 +18,22 @@ import it.unibo.oop.relario.utils.api.Position;
 
 public interface Room {
 
+    /**
+     * 
+     * @return TODO
+     */
     Room getRoom();
 
+    /**
+     * 
+     * @return TODO
+     */
     MainCharacter getPlayer();
 
+    /**
+     * 
+     * @return TODO
+     */
     Optional<Quest> getQuest();
 
     /**
@@ -94,8 +106,15 @@ public interface Room {
      */
     Position getExit();
 
+    /**
+     * 
+     * @return TODO
+     */
     Position getEntry();
 
+    /**
+     * 
+     */
     void update();
 
 }
