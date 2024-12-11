@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.model.entities;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
@@ -31,8 +33,8 @@ public abstract class LivingBeingImpl implements LivingBeing {
     }
 
     @Override
-    public final Position getPosition() {
-        return new PositionImpl(this.position.getX(), this.position.getY());
+    public final Optional<Position> getPosition() {
+        return Optional.of(new PositionImpl(this.position.getX(), this.position.getY()));
     }
 
     @Override
@@ -50,12 +52,12 @@ public abstract class LivingBeingImpl implements LivingBeing {
         setPosition(this.direction.move(position));
     }
 
-    private void setPosition(final Position position) {
-        this.position = position;
+    public void changeDirection() {
+        this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
     }
 
-    private void changeDirection() {
-        this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
+    private void setPosition(final Position position) {
+        this.position = position;
     }
 
 }
