@@ -35,8 +35,8 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
     }
 
     @Override
-    public final Position getPosition() {
-        return new PositionImpl(this.pos.getX(), this.pos.getY());
+    public final Optional<Position> getPosition() {
+        return Optional.ofNullable(new PositionImpl(this.pos.getX(), this.pos.getY()));
     }
 
     @Override
