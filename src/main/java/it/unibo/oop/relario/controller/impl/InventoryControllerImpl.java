@@ -30,7 +30,7 @@ public final class InventoryControllerImpl implements InventoryController {
         this.inventory = player.getItems();
     }
 
-    private String getIntensity(InventoryItem item) {
+    private String getIntensity(final InventoryItem item) {
         if (item.getEffect() == EffectType.NONE) {
             return "";
         } else {
@@ -40,8 +40,8 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public List<String> getItemsNames() {
-        List<String> temp = new ArrayList<>();
-        for (var item : inventory) {
+        final List<String> temp = new ArrayList<>();
+        for (final var item : inventory) {
             temp.add(item.getName());
         }
         return temp;
