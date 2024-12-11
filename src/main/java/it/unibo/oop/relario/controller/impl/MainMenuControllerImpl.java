@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.controller.impl;
 
 import it.unibo.oop.relario.controller.api.MainMenuController;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
@@ -15,16 +16,16 @@ public final class MainMenuControllerImpl implements MainMenuController {
      */
     public MainMenuControllerImpl(final MainView view) {
         this.view = view;
-        this.view.showPanel("Menu");
+        this.view.showPanel(GameState.MENU);
     }
 
     @Override
     public void progress() {
-        this.view.showPanel("Game");
+        this.view.showPanel(GameState.GAME);
     }
 
     @Override
     public void exit() {
-        System.exit(0);
+        this.view.showPreviousPanel();
     }
 }
