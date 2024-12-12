@@ -19,4 +19,8 @@ public final class GameState {
 
     /** Initial phase when application is lauched. */
     public static final String NONE = null;
+
+    private GameState() {
+        throw new UnsupportedOperationException();
+    }
 }

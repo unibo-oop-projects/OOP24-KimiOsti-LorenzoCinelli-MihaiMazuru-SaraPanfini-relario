@@ -50,12 +50,16 @@ public final class RoomImpl implements Room {
      * The room has an entry and an exit and the player is placed at the entry.
      * @param dimension of the room
      * @param player that is placed in the room
+     * @param entry TODO
+     * @param exit TODO
+     * @param quest TODO
      */
-    public RoomImpl(final MainCharacter player, final Dimension dimension, final Position entry, final Position exit, final Optional<Quest> quest) {
+    public RoomImpl(final MainCharacter player, final Dimension dimension, final Position entry, 
+    final Position exit, final Optional<Quest> quest) {
         this.player = player;
         this.dimension = dimension;
-        this.entry = entry;
-        this.exit = exit;
+        this.entry = new PositionImpl(entry.getX(), entry.getY());
+        this.exit = new PositionImpl(exit.getX(), exit.getY());
         this.quest = quest;
         initializeRoom();
     }
@@ -112,9 +116,9 @@ public final class RoomImpl implements Room {
     @Override
     public void addEntity(final Position position, final Entity entity) {
         if (entity instanceof LivingBeing) {
-            addCharacter(position, (LivingBeing)entity);
-        } else {
-            addFurniture(position, (FurnitureItem)entity);
+            addCharacter(position, (LivingBeing) entity);
+        } else if (entity instanceof FurnitureItem) {
+            addFurniture(position, (FurnitureItem) entity);
         }
     }
 
