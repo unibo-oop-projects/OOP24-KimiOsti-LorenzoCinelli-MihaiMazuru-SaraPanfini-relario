@@ -22,7 +22,7 @@ public final class MainViewImpl implements MainView {
 
     /**
      * Inizializes the frame of the main view.
-     * @param controller The Controller container instance used to access Controllers.
+     * @param mainController is the controller container instance used to access controllers.
      */
     public MainViewImpl(final MainController mainController) {
         final MainController controller = mainController;
