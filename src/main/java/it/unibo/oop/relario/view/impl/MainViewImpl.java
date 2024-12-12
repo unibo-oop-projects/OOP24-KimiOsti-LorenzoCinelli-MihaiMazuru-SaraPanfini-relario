@@ -22,7 +22,7 @@ public final class MainViewImpl implements MainView {
 
     /**
      * Inizializes the frame of the main view.
-     * @param controller The Controller container instance used to access Controllers.
+     * @param mainController is the controller container instance used to access controllers.
      */
     public MainViewImpl(final MainController mainController) {
         final MainController controller = mainController;
@@ -39,13 +39,14 @@ public final class MainViewImpl implements MainView {
         this.frame.setVisible(true);
     }
 
+    @Override
     public void showPreviousPanel() {
         showPanel(this.previousPanel);
     }
 
     @Override
     public void showPanel(final String panelName) {
-        CardLayout layout = (CardLayout) this.mainPanel.getLayout();
+        final CardLayout layout = (CardLayout) this.mainPanel.getLayout();
         this.previousPanel = this.currentPanel;
         this.currentPanel = panelName;
         layout.show(mainPanel, this.currentPanel);
@@ -57,5 +58,10 @@ public final class MainViewImpl implements MainView {
         this.frame.setLayout(new BorderLayout());
         this.frame.setLocationByPlatform(true);
         this.frame.setFocusable(true);
+    }
+
+    @Override
+    public String getCurrentPanel() {
+        return this.currentPanel;
     }
 }

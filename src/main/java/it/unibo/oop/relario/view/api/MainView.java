@@ -15,4 +15,10 @@ public interface MainView {
      * Display the previous game panel.
      */
     void showPreviousPanel();
+
+    /**
+     * Retrieves the current panel.
+     * @return the current panel.
+     */
+    String getCurrentPanel();
 }
