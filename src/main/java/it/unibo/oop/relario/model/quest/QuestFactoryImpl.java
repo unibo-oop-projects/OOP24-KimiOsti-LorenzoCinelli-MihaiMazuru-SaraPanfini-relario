@@ -3,9 +3,13 @@ package it.unibo.oop.relario.model.quest;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 
+/**
+ * 
+ */
 public final class QuestFactoryImpl implements QuestFactory {
 
-    private QuestImpl createQuest(final String name, final String description, final ObjectiveStrategy objective, final Entity keyEntity) {
+    private QuestImpl createQuest(final String name, final String description, 
+    final ObjectiveStrategy objective, final Entity keyEntity) {
         return new QuestImpl(name, description, objective, keyEntity);
     }
 
