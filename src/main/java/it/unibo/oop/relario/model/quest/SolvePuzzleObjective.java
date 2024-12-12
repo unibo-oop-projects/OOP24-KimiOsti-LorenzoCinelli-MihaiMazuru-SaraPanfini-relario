@@ -2,6 +2,9 @@ package it.unibo.oop.relario.model.quest;
 
 import it.unibo.oop.relario.model.entities.Entity;
 
+/**
+ * 
+ */
 public final class SolvePuzzleObjective implements ObjectiveStrategy {
 
     @Override
