@@ -21,4 +21,9 @@ public interface MainView {
      * @return the current panel.
      */
     String getCurrentPanel();
+
+    /**
+     * Creates all the game panels and adds them to the main panel.
+     */
+    void panelsSetup();
 }
