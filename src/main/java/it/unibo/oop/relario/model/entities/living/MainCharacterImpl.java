@@ -51,8 +51,8 @@ public final class MainCharacterImpl implements MainCharacter {
     }
 
     @Override
-    public Position getPosition() {
-        return new PositionImpl(this.position.getX(), this.position.getY());
+    public Optional<Position> getPosition() {
+        return Optional.of(this.position);
     }
 
     @Override

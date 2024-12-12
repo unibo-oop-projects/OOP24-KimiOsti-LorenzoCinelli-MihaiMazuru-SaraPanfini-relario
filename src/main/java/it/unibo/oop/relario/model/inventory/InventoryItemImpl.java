@@ -1,5 +1,9 @@
 package it.unibo.oop.relario.model.inventory;
 
+import java.util.Optional;
+
+import it.unibo.oop.relario.utils.api.Position;
+
 /**
  * This class implements the InventoryItem interface and represents an inventory item,
  * providing details about it.
@@ -44,6 +48,11 @@ public class InventoryItemImpl implements InventoryItem {
     @Override
     public final int getIntensity() {
         return this.intensity;
+    }
+
+    @Override
+    public final Optional<Position> getPosition() {
+        return Optional.empty();
     }
 
 }

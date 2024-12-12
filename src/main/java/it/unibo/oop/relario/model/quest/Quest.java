@@ -1,11 +1,35 @@
 package it.unibo.oop.relario.model.quest;
 
+import it.unibo.oop.relario.model.entities.Entity;
+
+/**
+ * 
+ */
+
 public interface Quest {
+
+    /**
+     * 
+     * @return TODO
+     */
     String getName();
 
+    /**
+     * 
+     * @return TODO
+     */
     String getDescription();
 
-    void addObjective(ObjectiveStrategy objective);
-
+    /**
+     * 
+     * @return TODO
+     */
     boolean isCompleted();
+
+    /**
+     * 
+     * @return TODO
+     */
+    Entity getKeyEntity();
+
 }
