@@ -15,7 +15,7 @@ public final class ResourceLocator {
     private static final String FURNITURE_TEXTURE_URL = "furniture/";
     private static final String LIVING_TEXTURE_URL = "living/";
 
-    private ResourceLocator() {}
+    private ResourceLocator() { }
 
     /**
      * Method to bind a texture to a given furniture item.
