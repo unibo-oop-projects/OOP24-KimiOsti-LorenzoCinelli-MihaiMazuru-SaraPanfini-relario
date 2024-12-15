@@ -7,7 +7,6 @@ import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.MainMenuController;
-import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.model.map.RoomGenerator;
 import it.unibo.oop.relario.view.api.MainView;
@@ -34,30 +33,31 @@ public final class MainControllerImpl implements MainController {
         this.view = new MainViewImpl(this);
         this.roomIndex = 0;
         this.roomGenerator = new RoomGenerator();
-        this.curRoom = this.roomGenerator.createNewRoom(this.roomIndex);
+        this.curRoom = this.roomGenerator.getRoom(roomIndex);
         this.combat = null;
         this.game = new GameControllerImpl(this, this.view);
         this.inventory = null;
         this.mainMenu = new MainMenuControllerImpl(this.view);
+        this.view.panelsSetup();
     }
 
     @Override
-    public final CombatController getCombatController() {
+    public CombatController getCombatController() {
         return this.combat;
     }
 
     @Override
-    public final GameController getGameController() {
+    public GameController getGameController() {
         return this.game;
     }
 
     @Override
-    public final InventoryController getInventoryController() {
+    public InventoryController getInventoryController() {
         return this.inventory;
     }
 
     @Override
-    public final MainMenuController getMainMenuController() {
+    public MainMenuController getMainMenuController() {
         return this.mainMenu;
     }
 
@@ -69,6 +69,6 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void moveToNextRoom() {
         this.roomIndex++;
-        this.curRoom = this.roomGenerator.createNewRoom(this.roomIndex);
+        this.curRoom = this.roomGenerator.getRoom(roomIndex);
     }
 }

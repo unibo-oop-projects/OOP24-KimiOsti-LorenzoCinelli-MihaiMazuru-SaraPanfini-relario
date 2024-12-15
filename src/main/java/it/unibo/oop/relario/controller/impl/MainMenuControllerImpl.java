@@ -27,6 +27,6 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
     @Override
     public void exit() {
-        this.view.showPreviousPanel();
+        System.exit(0);
     }
 }
