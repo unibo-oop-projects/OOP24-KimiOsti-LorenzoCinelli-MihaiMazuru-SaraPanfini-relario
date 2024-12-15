@@ -7,7 +7,6 @@ import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.MainMenuController;
-import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.model.map.RoomGenerator;
 import it.unibo.oop.relario.view.api.MainView;
@@ -34,7 +33,7 @@ public final class MainControllerImpl implements MainController {
         this.view = new MainViewImpl(this);
         this.roomIndex = 0;
         this.roomGenerator = new RoomGenerator();
-        this.curRoom = this.roomGenerator.createNewRoom(this.roomIndex);
+        this.curRoom = this.roomGenerator.getRoom(roomIndex);
         this.combat = null;
         this.game = new GameControllerImpl(this, this.view);
         this.inventory = null;
@@ -70,6 +69,6 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void moveToNextRoom() {
         this.roomIndex++;
-        this.curRoom = this.roomGenerator.createNewRoom(this.roomIndex);
+        this.curRoom = this.roomGenerator.getRoom(roomIndex);
     }
 }
