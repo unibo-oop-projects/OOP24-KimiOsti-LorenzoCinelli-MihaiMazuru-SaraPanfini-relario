@@ -42,22 +42,22 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public final CombatController getCombatController() {
+    public CombatController getCombatController() {
         return this.combat;
     }
 
     @Override
-    public final GameController getGameController() {
+    public GameController getGameController() {
         return this.game;
     }
 
     @Override
-    public final InventoryController getInventoryController() {
+    public InventoryController getInventoryController() {
         return this.inventory;
     }
 
     @Override
-    public final MainMenuController getMainMenuController() {
+    public MainMenuController getMainMenuController() {
         return this.mainMenu;
     }
 
