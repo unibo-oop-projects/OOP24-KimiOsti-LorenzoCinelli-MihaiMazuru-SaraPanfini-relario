@@ -94,6 +94,12 @@ public interface Room {
     List<Position> getInnerCells();
 
     /**
+     * 
+     * @param quest
+     */
+    void setQuest(Optional<Quest> quest);
+
+    /**
      * Checks if a specified position is within the room's edges.
      * @param position that has to be checked
      * @return true if the position is valid, false otherwise

@@ -43,7 +43,7 @@ public final class RoomImpl implements Room {
     private final Set<Position> unavailableCells = new HashSet<>();
     private List<Position> perimeter;
     private List<Position> innerCells;
-    private final Optional<Quest> quest;
+    private Optional<Quest> quest = Optional.empty();
 
     /**
      * Constructs a room with the specified dimension and main character.
@@ -52,15 +52,13 @@ public final class RoomImpl implements Room {
      * @param player that is placed in the room
      * @param entry TODO
      * @param exit TODO
-     * @param quest TODO
      */
     public RoomImpl(final MainCharacter player, final Dimension dimension, final Position entry, 
-    final Position exit, final Optional<Quest> quest) {
+    final Position exit) {
         this.player = player;
         this.dimension = dimension;
         this.entry = new PositionImpl(entry.getX(), entry.getY());
         this.exit = new PositionImpl(exit.getX(), exit.getY());
-        this.quest = quest;
         initializeRoom();
     }
 
@@ -106,6 +104,11 @@ public final class RoomImpl implements Room {
     public Optional<Entity> getCellContent(final Position position) {
         return this.population.containsKey(position) ? Optional.of(this.population.get(position))
         : this.furniture.containsKey(position) ? Optional.of(this.furniture.get(position)) : Optional.empty();
+    }
+
+    @Override
+    public void setQuest(final Optional<Quest> quest) {
+        this.quest = quest;
     }
 
     @Override

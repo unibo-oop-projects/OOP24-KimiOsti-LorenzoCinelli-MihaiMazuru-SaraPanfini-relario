@@ -39,6 +39,7 @@ public final class MainControllerImpl implements MainController {
         this.game = new GameControllerImpl(this, this.view);
         this.inventory = null;
         this.mainMenu = new MainMenuControllerImpl(this.view);
+        this.view.panelsSetup();
     }
 
     @Override
