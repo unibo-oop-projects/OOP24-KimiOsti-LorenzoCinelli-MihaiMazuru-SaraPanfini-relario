@@ -25,6 +25,7 @@ public final class EnemyImpl extends LivingBeingImpl implements Enemy {
      * @param difficulty of the enemy
      * @param reward dropped by the enemy after death
      * @param merciful whether the enemy is merciful
+     * @param type of the enemy
      */
     public EnemyImpl(final String name, final String description, final Position position,
         final DifficultyLevel difficulty, final InventoryItem reward, final boolean merciful, final EnemyType type) {

@@ -17,9 +17,9 @@ public class EquippableItem extends InventoryItemImpl {
      * @param intensity of the item's effect
      * @param durability of the item, that states how long it can be used
      */
-    public EquippableItem(final String name, final String description, final EffectType effect, 
+    public EquippableItem(final String name, final String description, final InventoryItemType type, 
     final int intensity, final int durability) {
-        super(name, description, effect, intensity);
+        super(name, description, type, intensity);
         this.durability = durability;
     }
 
