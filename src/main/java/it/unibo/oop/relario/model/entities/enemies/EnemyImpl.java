@@ -15,6 +15,7 @@ public final class EnemyImpl extends LivingBeingImpl implements Enemy {
     private final DifficultyLevel difficulty;
     private final InventoryItem reward;
     private final boolean merciful;
+    private final EnemyType type;
 
     /**
      * Constructs a new instance of enemy.
@@ -26,13 +27,14 @@ public final class EnemyImpl extends LivingBeingImpl implements Enemy {
      * @param merciful whether the enemy is merciful
      */
     public EnemyImpl(final String name, final String description, final Position position,
-        final DifficultyLevel difficulty, final InventoryItem reward, final boolean merciful) {
+        final DifficultyLevel difficulty, final InventoryItem reward, final boolean merciful, final EnemyType type) {
         super(name, position);
         this.description = description;
         this.difficulty = difficulty;
         this.life = difficulty.getLife();
         this.reward = reward;
         this.merciful = merciful;
+        this.type = type;
     }
 
     @Override
@@ -69,6 +71,11 @@ public final class EnemyImpl extends LivingBeingImpl implements Enemy {
     public boolean attacked(final int playerDamage) {
         this.life -= playerDamage;
         return this.life > 0;
+    }
+
+    @Override
+    public EnemyType getType() {
+        return this.type;
     }
 
 }
