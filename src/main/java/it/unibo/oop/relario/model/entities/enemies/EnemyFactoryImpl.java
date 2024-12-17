@@ -28,15 +28,18 @@ public final class EnemyFactoryImpl implements EnemyFactory {
      * It initializes the enemies' configurations.
      */
     public EnemyFactoryImpl() {
-        enemiesData.put(EnemyType.THIEF, new EnemyConfig("Ladro",
-        "Il ladro è un nemico furtivo e abile, specializzato nel rubare oggetti e attaccare di sorpresa",
+        enemiesData.put(EnemyType.THIEF, new EnemyConfig(EnemyType.THIEF.getName(),
+        "Il ladro è un nemico furtivo e abile, specializzato nel rubare oggetti e attaccare di sorpresa", 
         DifficultyLevel.MEDIUM));
-        enemiesData.put(EnemyType.SOLDIER, new EnemyConfig("Soldato", 
-        "Il soldato è un nemico ben addestrato e dotato di armatura leggera", DifficultyLevel.EASY));
-        enemiesData.put(EnemyType.WIZARD, new EnemyConfig("Mago", 
-        "Il mago è un nemico abile nelle arti arcane, capace di infliggere danni con incantesimi potenti", DifficultyLevel.HARD));
-        enemiesData.put(EnemyType.KNIGHT, new EnemyConfig("Cavaliere", 
-        "Il cavaliere è un nemico potente, caratterizzato da un'armatura pesante e uno scudo resistente", DifficultyLevel.HARD));
+        enemiesData.put(EnemyType.SOLDIER, new EnemyConfig(EnemyType.SOLDIER.getName(),
+        "Il soldato è un nemico ben addestrato e dotato di armatura leggera", 
+        DifficultyLevel.EASY));
+        enemiesData.put(EnemyType.WIZARD, new EnemyConfig(EnemyType.WIZARD.getName(),
+        "Il mago è un nemico abile nelle arti arcane, capace di infliggere danni con incantesimi potenti", 
+        DifficultyLevel.HARD));
+        enemiesData.put(EnemyType.KNIGHT, new EnemyConfig(EnemyType.KNIGHT.getName(), 
+        "Il cavaliere è un nemico potente, caratterizzato da un'armatura pesante e uno scudo resistente", 
+        DifficultyLevel.HARD));
         this.itemFactory = new InventoryItemFactoryImpl();
     }
 
@@ -61,7 +64,7 @@ public final class EnemyFactoryImpl implements EnemyFactory {
 
     private Enemy createEnemy(final Position position, final EnemyType type, final InventoryItem reward) {
         final EnemyConfig config = enemiesData.get(type);
-        return new EnemyImpl(config.name(), config.description(), position, config.difficulty, reward, random.nextBoolean());
+        return new EnemyImpl(config.name(), config.description(), position, config.difficulty, reward, random.nextBoolean(), type);
     }
 
     private record EnemyConfig(String name, String description, DifficultyLevel difficulty) { }

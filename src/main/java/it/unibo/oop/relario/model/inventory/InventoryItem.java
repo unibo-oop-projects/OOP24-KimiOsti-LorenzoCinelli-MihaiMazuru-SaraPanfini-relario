@@ -27,6 +27,12 @@ public interface InventoryItem extends Entity {
     EffectType getEffect();
 
     /**
+     * Retrieves the type of the inventory item.
+     * @return the type of the item
+     */
+    InventoryItemType getType();
+
+    /**
      * Retrieves the intensity of the equippable item.
      * @return the intensity of the item
      */
