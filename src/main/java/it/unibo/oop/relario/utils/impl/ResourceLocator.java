@@ -23,18 +23,19 @@ public final class ResourceLocator {
 
     /**
      * Method to bind a texture to a given furniture item.
-     * @param elem a furniture item.
-     * @return the texture representing @param elem
+     * @param furnitureItem a furniture item.
+     * @return the texture representing @param furnitureItem
      */
-    public static ImageIcon getFurnitureTexture(final FurnitureItem elem) {
-        final String imgURL = TEXTURES_URL + FURNITURE_TEXTURE_URL;
+    public static ImageIcon getFurnitureTexture(final FurnitureItem furnitureItem) {
+        final StringBuilder imgURL = new StringBuilder(TEXTURES_URL);
+        imgURL.append(FURNITURE_TEXTURE_URL);
 
-        /**
-         * [TODO]: find the correct texture
-         */
+        imgURL
+            .append(furnitureItem.getType().getName().toLowerCase(Locale.ENGLISH))
+            .append(FILE_EXTENSION);
 
         return new ImageIcon(
-            Toolkit.getDefaultToolkit().getImage(imgURL)
+            Toolkit.getDefaultToolkit().getImage(imgURL.toString())
         );
     }
 
