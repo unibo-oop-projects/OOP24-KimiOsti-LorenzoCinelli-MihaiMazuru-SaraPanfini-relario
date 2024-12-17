@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.controller.api;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.map.Room;
 
 /**
@@ -27,7 +29,12 @@ public interface MainController {
     MainMenuController getMainMenuController();
 
     /**
-     * @return the current room.
+     * @return the current room in the gameplay.
      */
-    Room getCurrentRoom();
+    Optional<Room> getCurRoom();
+
+    /**
+     * Moves to the next room.
+     */
+    void moveToNextRoom();
 }

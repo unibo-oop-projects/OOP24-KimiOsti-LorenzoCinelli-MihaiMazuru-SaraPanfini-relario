@@ -1,60 +1,74 @@
 package it.unibo.oop.relario.controller.impl;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.MainMenuController;
 import it.unibo.oop.relario.model.map.Room;
+import it.unibo.oop.relario.model.map.RoomGenerator;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
 
 /**
- * Implementation of the main controller.
+ * Implementation for the Controller container class.
  */
-public class MainControllerImpl implements MainController {
+public final class MainControllerImpl implements MainController {
 
     private final CombatController combat;
     private final GameController game;
     private final InventoryController inventory;
     private final MainMenuController mainMenu;
     private final MainView view;
-    private Room curRoom;
+    private final RoomGenerator roomGenerator;
+    private Optional<Room> curRoom;
+    private int roomIndex;
 
     /**
      * Initializes all the controllers and the main view.
      */
     public MainControllerImpl() {
         this.view = new MainViewImpl(this);
+        this.roomIndex = 0;
+        this.roomGenerator = new RoomGenerator();
+        this.curRoom = this.roomGenerator.getRoom(roomIndex);
         this.combat = null;
-        this.game = null;
+        this.game = new GameControllerImpl(this, this.view);
         this.inventory = null;
         this.mainMenu = new MainMenuControllerImpl(this.view);
         this.view.panelsSetup();
     }
 
     @Override
-    public final CombatController getCombatController() {
+    public CombatController getCombatController() {
         return this.combat;
     }
 
     @Override
-    public final GameController getGameController() {
+    public GameController getGameController() {
         return this.game;
     }
 
     @Override
-    public final InventoryController getInventoryController() {
+    public InventoryController getInventoryController() {
         return this.inventory;
     }
 
     @Override
-    public final MainMenuController getMainMenuController() {
+    public MainMenuController getMainMenuController() {
         return this.mainMenu;
     }
 
     @Override
-    public final Room getCurrentRoom() {
+    public Optional<Room> getCurRoom() {
         return this.curRoom;
+    }
+
+    @Override
+    public void moveToNextRoom() {
+        this.roomIndex++;
+        this.curRoom = this.roomGenerator.getRoom(roomIndex);
     }
 }
