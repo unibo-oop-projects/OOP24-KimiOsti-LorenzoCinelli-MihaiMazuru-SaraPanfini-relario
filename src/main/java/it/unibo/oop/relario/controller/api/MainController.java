@@ -1,5 +1,9 @@
 package it.unibo.oop.relario.controller.api;
 
+import java.util.Optional;
+
+import it.unibo.oop.relario.model.map.Room;
+
 /**
  * Interface for container Controller class.
  */
@@ -23,4 +27,14 @@ public interface MainController {
      * @return the main menu Controller.
      */
     MainMenuController getMainMenuController();
+
+    /**
+     * @return the current room in the gameplay.
+     */
+    Optional<Room> getCurRoom();
+
+    /**
+     * Moves to the next room.
+     */
+    void moveToNextRoom();
 }
