@@ -1,12 +1,10 @@
 package it.unibo.oop.relario.model.entities.living;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import it.unibo.oop.relario.utils.impl.Direction;
-import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /*
  * CHECKSTYLE: MagicNumber OFF
