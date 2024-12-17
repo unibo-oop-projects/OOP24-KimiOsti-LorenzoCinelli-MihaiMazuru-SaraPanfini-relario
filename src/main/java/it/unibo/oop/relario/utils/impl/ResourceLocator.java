@@ -2,6 +2,7 @@ package it.unibo.oop.relario.utils.impl;
 
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import java.util.Locale;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
@@ -16,6 +17,7 @@ public final class ResourceLocator {
     private static final String TEXTURES_URL = "resources/img/";
     private static final String FURNITURE_TEXTURE_URL = "furniture/";
     private static final String LIVING_TEXTURE_URL = "living/";
+    private static final String FILE_EXTENSION = ".png";
 
     private ResourceLocator() { }
 
@@ -43,36 +45,38 @@ public final class ResourceLocator {
      * @return the texture representing @param livingBeing facing @param direction
      */
     public static ImageIcon getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
-        String imgURL = TEXTURES_URL + LIVING_TEXTURE_URL;
+        final StringBuilder imgURL = new StringBuilder(TEXTURES_URL);
+        imgURL.append(LIVING_TEXTURE_URL);
 
         if (livingBeing instanceof MainCharacter) {
-            imgURL += "chara";
+            imgURL.append("chara");
         } else if (livingBeing instanceof Enemy) {
-            imgURL += ((Enemy)livingBeing).getType().getName().toLowerCase();
+            imgURL.append(((Enemy) livingBeing).getType().getName().toLowerCase());
         } else {
-            imgURL += "npc";
+            imgURL.append("npc");
         }
 
-        switch(direction) {
+        switch (direction) {
             case UP:
-                imgURL += "-up.png";
+                imgURL.append("-up");
                 break;
 
             case DOWN:
-                imgURL += "-down.png";
+                imgURL.append("-down");
                 break;
 
             case LEFT:
-                imgURL += "-left.png";
+                imgURL.append("-left");
                 break;
 
             default:
-                imgURL += "-right.png";
+                imgURL.append("-right");
                 break;
         }
+        imgURL.append(FILE_EXTENSION);
 
         return new ImageIcon(
-            Toolkit.getDefaultToolkit().getImage(imgURL)
+            Toolkit.getDefaultToolkit().getImage(imgURL.toString())
         );
     }
 }
