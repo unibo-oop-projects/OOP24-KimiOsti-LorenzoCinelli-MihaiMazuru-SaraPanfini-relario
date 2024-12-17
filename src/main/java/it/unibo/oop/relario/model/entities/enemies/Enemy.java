@@ -42,6 +42,12 @@ public interface Enemy extends LivingBeing {
     InventoryItem getReward();
 
     /**
+     * Retrieves the type of the enemy.
+     * @return the type of the enemy
+     */
+    EnemyType getType();
+
+    /**
      * States whether the enemy is merciful.
      * @return true if the enemy is merciful, false otherwise
      */

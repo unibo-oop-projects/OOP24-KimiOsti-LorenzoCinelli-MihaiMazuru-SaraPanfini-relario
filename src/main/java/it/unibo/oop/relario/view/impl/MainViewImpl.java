@@ -17,6 +17,7 @@ public final class MainViewImpl implements MainView {
 
     private final JFrame frame;
     private final JPanel mainPanel;
+    private final MainController mainController;
     private String previousPanel;
     private String currentPanel;
 
@@ -25,14 +26,10 @@ public final class MainViewImpl implements MainView {
      * @param mainController is the controller container instance used to access controllers.
      */
     public MainViewImpl(final MainController mainController) {
-        final MainController controller = mainController;
+        this.mainController = mainController;
+        this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
         this.frameSetup();
-        mainPanel = new JPanel(new CardLayout());
-        mainPanel.add(new MainMenuView(controller), GameState.MENU);
-        mainPanel.add(new GameView(), GameState.GAME);
-        mainPanel.add(new InventoryView(), GameState.INVENTORY);
-        mainPanel.add(new CombatView(), GameState.COMBAT);
         this.currentPanel = GameState.NONE;
         this.previousPanel = GameState.NONE;
         this.frame.add(mainPanel);
@@ -63,5 +60,13 @@ public final class MainViewImpl implements MainView {
     @Override
     public String getCurrentPanel() {
         return this.currentPanel;
+    }
+
+    @Override
+    public void panelsSetup() {
+        mainPanel.add(new MainMenuView(this.mainController), GameState.MENU);
+        mainPanel.add(new GameView(), GameState.GAME);
+        mainPanel.add(new InventoryView(), GameState.INVENTORY);
+        mainPanel.add(new CombatView(), GameState.COMBAT);
     }
 }

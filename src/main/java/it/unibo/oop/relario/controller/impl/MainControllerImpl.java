@@ -30,6 +30,7 @@ public class MainControllerImpl implements MainController {
         this.game = null;
         this.inventory = null;
         this.mainMenu = new MainMenuControllerImpl(this.view);
+        this.view.panelsSetup();
     }
 
     @Override
