@@ -4,7 +4,9 @@ import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
+import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
+import it.unibo.oop.relario.model.entities.living.MainCharacter;
 
 /**
  * Static class for the game resource locator.
@@ -41,11 +43,33 @@ public final class ResourceLocator {
      * @return the texture representing @param livingBeing facing @param direction
      */
     public static ImageIcon getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
-        final String imgURL = TEXTURES_URL + LIVING_TEXTURE_URL;
+        String imgURL = TEXTURES_URL + LIVING_TEXTURE_URL;
 
-        /**
-         * [TODO]: find the correct texture 
-         */
+        if (livingBeing instanceof MainCharacter) {
+            imgURL += "chara";
+        } else if (livingBeing instanceof Enemy) {
+            imgURL += ((Enemy)livingBeing).getType().getName().toLowerCase();
+        } else {
+            imgURL += "npc";
+        }
+
+        switch(direction) {
+            case UP:
+                imgURL += "-up.png";
+                break;
+
+            case DOWN:
+                imgURL += "-down.png";
+                break;
+
+            case LEFT:
+                imgURL += "-left.png";
+                break;
+
+            default:
+                imgURL += "-right.png";
+                break;
+        }
 
         return new ImageIcon(
             Toolkit.getDefaultToolkit().getImage(imgURL)
