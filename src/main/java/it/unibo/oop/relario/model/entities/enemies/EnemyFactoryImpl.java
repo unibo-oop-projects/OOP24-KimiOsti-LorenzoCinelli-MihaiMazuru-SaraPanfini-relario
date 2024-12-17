@@ -61,7 +61,7 @@ public final class EnemyFactoryImpl implements EnemyFactory {
 
     private Enemy createEnemy(final Position position, final EnemyType type, final InventoryItem reward) {
         final EnemyConfig config = enemiesData.get(type);
-        return new EnemyImpl(config.name(), config.description(), position, config.difficulty, reward, random.nextBoolean());
+        return new EnemyImpl(config.name(), config.description(), position, config.difficulty, reward, random.nextBoolean(), type);
     }
 
     private record EnemyConfig(String name, String description, DifficultyLevel difficulty) { }
