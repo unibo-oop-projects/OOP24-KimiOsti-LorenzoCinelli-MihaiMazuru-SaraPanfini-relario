@@ -41,7 +41,7 @@ public final class LivingBeingsGenerator {
         while (placedCharacters < charactersNumber) {
             final Position position = getRandomInnerPosition(room);
             if (room.isPositionValid(position) && room.isCellAvailable(position)) {
-                room.addCharacter(position, createCharacter.apply(position));
+                room.addEntity(position, createCharacter.apply(position));
                 placedCharacters++;
             }
         }

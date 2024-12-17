@@ -68,7 +68,7 @@ public final class FurnitureGenerator {
         while (placedItems < itemsNumber) {
             final Position position = getRandomPerimeterPosition(room);
             if (room.isPositionValid(position) && room.isCellAvailable(position)) {
-                room.addFurniture(position, createItem.apply(position));
+                room.addEntity(position, createItem.apply(position));
                 placedItems++;
             }
         }
@@ -83,7 +83,7 @@ public final class FurnitureGenerator {
                 final FurnitureItem walkableItem = random.nextBoolean() 
                 ? this.furnitureFactory.createWalkableFurnitureItem(initialPosition)
                 : this.furnitureFactory.createWalkableFurnitureItemEmpty(initialPosition);
-                getArea(initialPosition).forEach(p -> room.addFurniture(p, walkableItem));
+                getArea(initialPosition).forEach(p -> room.addEntity(p, walkableItem));
                 placedItems++;
             }
         }

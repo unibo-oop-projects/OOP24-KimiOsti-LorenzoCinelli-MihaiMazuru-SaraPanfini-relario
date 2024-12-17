@@ -1,10 +1,12 @@
 package it.unibo.oop.relario.model.inventory;
 
+import it.unibo.oop.relario.model.entities.Entity;
+
 /**
  * An interface representing an inventory item.
  */
 
-public interface InventoryItem {
+public interface InventoryItem extends Entity {
 
     /**
      * Retrieves the name of the inventory item.
@@ -23,6 +25,12 @@ public interface InventoryItem {
      * @return the EffectType associated with the item
      */
     EffectType getEffect();
+
+    /**
+     * Retrieves the type of the inventory item.
+     * @return the type of the item
+     */
+    InventoryItemType getType();
 
     /**
      * Retrieves the intensity of the equippable item.

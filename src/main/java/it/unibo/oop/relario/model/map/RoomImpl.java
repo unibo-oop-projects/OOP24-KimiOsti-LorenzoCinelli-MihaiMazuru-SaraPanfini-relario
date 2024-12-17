@@ -15,6 +15,7 @@ import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
@@ -33,28 +34,35 @@ public final class RoomImpl implements Room {
     /** The border value used to define the edges of the room. */
     public static final int BORDER = 2;
 
+    private final MainCharacter player;
     private final Dimension dimension;
     private final Map<Position, LivingBeing> population = new HashMap<>();
     private final Map<Position, FurnitureItem> furniture = new HashMap<>();
-    private final MainCharacter player;
     private final Position entry;
     private final Position exit;
     private final Set<Position> unavailableCells = new HashSet<>();
-    private final List<Position> perimeter;
-    private final List<Position> innerCells;
-    // private final Optional<Quest> quest;
+    private List<Position> perimeter;
+    private List<Position> innerCells;
+    private Optional<Quest> quest = Optional.empty();
 
     /**
      * Constructs a room with the specified dimension and main character.
      * The room has an entry and an exit and the player is placed at the entry.
      * @param dimension of the room
      * @param player that is placed in the room
+     * @param entry TODO
+     * @param exit TODO
      */
-    public RoomImpl(final Dimension dimension, final MainCharacter player) {
+    public RoomImpl(final MainCharacter player, final Dimension dimension, final Position entry, 
+    final Position exit) {
+        this.player = player;
         this.dimension = dimension;
-        this.player = player; // new Player(player);
-        this.entry = new PositionImpl(0, this.dimension.getHeight() / 2);
-        this.exit = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() / 2);
+        this.entry = new PositionImpl(entry.getX(), entry.getY());
+        this.exit = new PositionImpl(exit.getX(), exit.getY());
+        initializeRoom();
+    }
+
+    private void initializeRoom() {
         this.player.setPosition(entry);
         this.unavailableCells.add(this.entry);
         this.unavailableCells.add(this.exit);
@@ -63,13 +71,18 @@ public final class RoomImpl implements Room {
     }
 
     @Override
+    public Room getRoom() {
+        return this;
+    }
+
+    @Override
     public MainCharacter getPlayer() {
         return this.player;
     }
 
     @Override
-    public Room getRoom() {
-        return this;
+    public Optional<Quest> getQuest() {
+        return this.quest; // forse meglio ritornare direttamente i campi?
     }
 
     @Override
@@ -94,18 +107,30 @@ public final class RoomImpl implements Room {
     }
 
     @Override
+    public void setQuest(final Optional<Quest> quest) {
+        this.quest = quest;
+    }
+
+    @Override
     public boolean isCellAvailable(final Position position) {
         return !unavailableCells.contains(position);
     }
 
     @Override
-    public void addFurniture(final Position position, final FurnitureItem furniture) {
+    public void addEntity(final Position position, final Entity entity) {
+        if (entity instanceof LivingBeing) {
+            addCharacter(position, (LivingBeing) entity);
+        } else if (entity instanceof FurnitureItem) {
+            addFurniture(position, (FurnitureItem) entity);
+        }
+    }
+
+    private void addFurniture(final Position position, final FurnitureItem furniture) {
         this.furniture.put(position, furniture);
         this.unavailableCells.addAll(adjacentCells(position, furniture));
     }
 
-    @Override
-    public void addCharacter(final Position position, final LivingBeing character) {
+    private void addCharacter(final Position position, final LivingBeing character) {
         this.population.put(position, character);
         this.unavailableCells.addAll(adjacentCells(position, character));
     }
@@ -142,6 +167,16 @@ public final class RoomImpl implements Room {
     @Override
     public Position getExit() {
         return new PositionImpl(this.exit.getX(), this.exit.getY());
+    }
+
+    @Override
+    public Position getEntry() {
+        return new PositionImpl(this.entry.getX(), this.entry.getY());
+    }
+
+    @Override
+    public void update() {
+        // ??
     }
 
     private Set<Position> adjacentCells(final Position position, final Entity entity) {

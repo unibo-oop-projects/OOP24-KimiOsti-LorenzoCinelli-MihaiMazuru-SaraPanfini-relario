@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.model.entities.furniture.impl;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
@@ -20,8 +22,8 @@ public class ObstructingFurnitureItem implements FurnitureItem {
     }
 
     @Override
-    public final Position getPosition() {
-        return new PositionImpl(this.pos.getX(), this.pos.getY());
+    public final Optional<Position> getPosition() {
+        return Optional.ofNullable(new PositionImpl(this.pos.getX(), this.pos.getY()));
     }
 
     @Override

@@ -1,21 +1,21 @@
 package it.unibo.oop.relario.model.quest;
 
+import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
-import it.unibo.oop.relario.model.inventory.InventoryItem;
 
+/**
+ * 
+ */
 public final class QuestFactoryImpl implements QuestFactory {
 
-    private QuestImpl createQuest(final String name, final String description, final ObjectiveStrategy... objectives) {
-        final QuestImpl quest = new QuestImpl(name, description);
-        for (final ObjectiveStrategy objective : objectives) {
-            quest.addObjective(objective);
-        }
-        return quest;
+    private QuestImpl createQuest(final String name, final String description, 
+    final ObjectiveStrategy objective, final Entity keyEntity) {
+        return new QuestImpl(name, description, objective, keyEntity);
     }
 
     @Override
-    public Quest createCollectItemQuest(final InventoryItem item, final MainCharacter player) {
-        return createQuest("", "", new CollectItemObjective(player, item));
+    public Quest createCollectItemQuest(final MainCharacter player, final Entity keyEntity) {
+        return createQuest("", "", new CollectItemObjective(player), keyEntity);
     }
 
     @Override
