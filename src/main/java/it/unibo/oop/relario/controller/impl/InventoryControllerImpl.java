@@ -26,8 +26,12 @@ public final class InventoryControllerImpl implements InventoryController {
      */
     public InventoryControllerImpl(final MainController mainController, final MainView mainView) {
         this.mainView = mainView;
-        this.player = mainController.getCurrentRoom().getPlayer();
-        this.inventory = player.getItems();
+        if(mainController.getCurRoom().isPresent()) {
+            this.player = mainController.getCurRoom().get().getPlayer();
+            this.inventory = player.getItems();
+        } else {
+            throw new UnsupportedOperationException();
+        }
     }
 
     private String getIntensity(final InventoryItem item) {
