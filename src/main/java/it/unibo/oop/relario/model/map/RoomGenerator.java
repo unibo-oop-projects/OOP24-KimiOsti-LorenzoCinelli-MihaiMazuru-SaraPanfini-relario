@@ -20,19 +20,12 @@ public final class RoomGenerator {
     /** TODO. */
     public static final int ROOMS_NUMBER = 5;
 
-    public static final int FIRST_ROOM = 1;
-    public static final int SECOND_ROOM = 2;
-    public static final int THIRD_ROOM = 3;
-    public static final int FOURTH_ROOM = 4;
-    public static final int FIFTH_ROOM = 5;
-
-
     private final Position defaultEntry;
     private final Position defaultExit;
     private final Dimension dimension;
     private final FurnitureGenerator furnitureGenerator = new FurnitureGenerator();
     private final LivingBeingsGenerator livingBeingsGenerator = new LivingBeingsGenerator();
-    private final QuestManager questManager = new QuestManager();
+    private final QuestManager questManager;
     private final MainCharacter player;
 
     /*public RoomGenerator(final Dimension dimension) {
@@ -50,7 +43,8 @@ public final class RoomGenerator {
         this.player = new MainCharacterImpl();
         this.defaultEntry = new PositionImpl(this.dimension.getHeight() / 2, 0);
         this.defaultExit = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() / 2);
-    }    
+        this.questManager = new QuestManager(player);
+    }
 
     /**
      * Creates a new room with furniture and living beings.
@@ -61,7 +55,7 @@ public final class RoomGenerator {
         final Room newRoom = new RoomImpl(this.player, this.dimension, defaultEntry, defaultExit);
         this.furnitureGenerator.generateFurniture(newRoom);
         this.livingBeingsGenerator.generateLivingBeings(newRoom);
-        this.questManager.assigneQuest(newRoom, indexRoom);
+        this.questManager.assignQuest(newRoom, indexRoom);
         return newRoom;
     }
 
