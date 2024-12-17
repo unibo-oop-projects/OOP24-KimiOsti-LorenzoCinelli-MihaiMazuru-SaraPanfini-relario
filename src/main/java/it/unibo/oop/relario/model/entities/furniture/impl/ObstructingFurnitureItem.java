@@ -12,12 +12,15 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 public class ObstructingFurnitureItem implements FurnitureItem {
 
     private final Position pos;
+    private final FurnitureType type;
 
     /**
      * Initializes a new obstructing furniture item.
      * @param pos is the position of the furniture item in the map.
+     * @param type is the type of the furniture.
      */
-    public ObstructingFurnitureItem(final Position pos) {
+    public ObstructingFurnitureItem(final Position pos, final FurnitureType type) {
+        this.type = type;
         this.pos = new PositionImpl(pos.getX(), pos.getY());
     }
 
@@ -38,5 +41,10 @@ public class ObstructingFurnitureItem implements FurnitureItem {
     @Override
     public boolean isInteractive() {
         return false;
+    }
+
+    @Override
+    public FurnitureType getType() {
+        return this.type;
     }
 }
