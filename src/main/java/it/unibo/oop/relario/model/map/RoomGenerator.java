@@ -20,6 +20,13 @@ public final class RoomGenerator {
     /** TODO. */
     public static final int ROOMS_NUMBER = 5;
 
+    public static final int FIRST_ROOM = 1;
+    public static final int SECOND_ROOM = 2;
+    public static final int THIRD_ROOM = 3;
+    public static final int FOURTH_ROOM = 4;
+    public static final int FIFTH_ROOM = 5;
+
+
     private final Position defaultEntry;
     private final Position defaultExit;
     private final Dimension dimension;
