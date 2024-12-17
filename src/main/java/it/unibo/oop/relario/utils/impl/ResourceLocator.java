@@ -51,7 +51,7 @@ public final class ResourceLocator {
         if (livingBeing instanceof MainCharacter) {
             imgURL.append("chara");
         } else if (livingBeing instanceof Enemy) {
-            imgURL.append(((Enemy) livingBeing).getType().getName().toLowerCase());
+            imgURL.append(((Enemy) livingBeing).getType().getName().toLowerCase(Locale.ITALIAN));
         } else {
             imgURL.append("npc");
         }
