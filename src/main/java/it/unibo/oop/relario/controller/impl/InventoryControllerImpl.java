@@ -15,6 +15,7 @@ import it.unibo.oop.relario.view.api.MainView;
  */
 public final class InventoryControllerImpl implements InventoryController {
 
+    private final MainController mainController;
     private final MainView mainView;
     private final MainCharacter player;
     private List<InventoryItem> inventory;
@@ -25,8 +26,9 @@ public final class InventoryControllerImpl implements InventoryController {
      * @param mainView the main view of the game.
      */
     public InventoryControllerImpl(final MainController mainController, final MainView mainView) {
+        this.mainController = mainController;
         this.mainView = mainView;
-        if(mainController.getCurRoom().isPresent()) {
+        if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
             this.inventory = player.getItems();
         } else {
@@ -73,6 +75,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public void regress() {
-        mainView.showPreviousPanel();
+        this.mainController.getGameController().resume(true);
+        this.mainView.showPreviousPanel();
     }
 }
