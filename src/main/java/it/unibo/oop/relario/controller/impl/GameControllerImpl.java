@@ -2,6 +2,7 @@ package it.unibo.oop.relario.controller.impl;
 
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
@@ -11,6 +12,7 @@ public final class GameControllerImpl implements GameController {
 
     private final MainController controller;
     private final MainView view;
+    private boolean exploring;
 
     /**
      * Constructor for the game controller.
@@ -20,11 +22,26 @@ public final class GameControllerImpl implements GameController {
     public GameControllerImpl(final MainController controller, final MainView view) {
         this.controller = controller;
         this.view = view;
+        this.exploring = false;
     }
 
     @Override
     public void run() {
-        this.view.showPanel("Game");   
+        this.exploring = true;
+        this.view.showPanel(GameState.GAME);
+        this.mainLoop();
     }
 
+    @Override
+    public void resume(boolean isExploring) {
+        this.exploring = isExploring;
+        if (!this.exploring) {
+            this.view.showPanel(GameState.GAME_OVER);
+        } else {
+            this.mainLoop();
+        }
+    }
+
+    private void mainLoop() {
+    }
 }

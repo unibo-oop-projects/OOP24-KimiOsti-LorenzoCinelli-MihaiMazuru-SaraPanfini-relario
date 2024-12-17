@@ -5,7 +5,13 @@ package it.unibo.oop.relario.controller.api;
  */
 public interface GameController {
     /**
-     * Shows again the Game view, after having switched to another display during the game.
+     * Shows the Game view and starts the main loop.
      */
     void run();
+
+    /**
+     * Resumes the main loop, if the game is still running.
+     * @param isExploring indicates whether the game is still running.
+     */
+    void resume(boolean isExploring);
 }
