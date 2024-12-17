@@ -16,9 +16,10 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
     /**
      * Initializes a new empty interactive furniture item.
      * @param pos is the position of the furniture item in the map.
+     * @param type is the type of the furniture.
      */
-    public InteractiveFurnitureItem(final Position pos) {
-        super(pos);
+    public InteractiveFurnitureItem(final Position pos, final FurnitureType type) {
+        super(pos, type);
         this.loot = Optional.empty();
     }
 
@@ -31,9 +32,11 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
      * Initializes a new interactive furniture item.
      * @param pos is the position of the furniture item in the map.
      * @param loot is the loot inside the furniture item.
+     * @param type is the furniture type.
      */
-    public InteractiveFurnitureItem(final Position pos, final InventoryItem loot) {
-        this(pos);
+    public InteractiveFurnitureItem(final Position pos, final InventoryItem loot, 
+    final FurnitureType type) {
+        this(pos, type);
         this.loot = Optional.of(loot);
     }
 
@@ -43,7 +46,7 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
      */
     public InventoryItem dropLoot() {
         final InventoryItem lootCopy = new InventoryItemImpl(this.loot.get().getName(),
-        this.loot.get().getDescription(), this.loot.get().getEffect(), this.loot.get().getIntensity());
+        this.loot.get().getDescription(), this.loot.get().getType(), this.loot.get().getIntensity());
         this.loot = Optional.empty();
         return lootCopy;
     }
