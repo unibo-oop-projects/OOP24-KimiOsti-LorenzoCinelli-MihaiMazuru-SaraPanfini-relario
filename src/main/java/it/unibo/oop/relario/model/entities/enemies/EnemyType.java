@@ -11,20 +11,22 @@ import it.unibo.oop.relario.model.inventory.EffectType;
 public enum EnemyType {
 
     /** Represents a thief enemy, who can drop only inventory items with no effect. */
-    THIEF(EffectType.NONE),
+    THIEF("Ladro", EffectType.NONE),
 
     /** Represents a soldier enemy, who can drop only inventory items with damage effect. */
-    SOLDIER(EffectType.DAMAGE),
+    SOLDIER("Soldato", EffectType.DAMAGE),
 
     /** Represents a knight enemy, who can drop only inventory items with protection effect. */
-    KNIGHT(EffectType.PROTECTION),
+    KNIGHT("Cavaliere", EffectType.PROTECTION),
 
     /** Represents a wizard enemy, who can drop only inventory items with healing effect. */
-    WIZARD(EffectType.HEALING);
+    WIZARD("Mago", EffectType.HEALING);
 
     private final EffectType effect;
+    private final String name;
 
-    EnemyType(final EffectType effect) {
+    EnemyType(final String name, final EffectType effect) {
+        this.name = name;
         this.effect = effect;
     }
 
@@ -34,5 +36,13 @@ public enum EnemyType {
      */
     public EffectType getEffect() {
         return this.effect;
+    }
+
+    /**
+     * Retrieves the name of the enemy type.
+     * @return the name of the enemy
+     */
+    public String getName() {
+        return this.name;
     }
 }
