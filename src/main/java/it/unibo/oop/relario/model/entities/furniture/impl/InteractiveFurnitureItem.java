@@ -43,7 +43,7 @@ public class InteractiveFurnitureItem extends ObstructingFurnitureItem {
      */
     public InventoryItem dropLoot() {
         final InventoryItem lootCopy = new InventoryItemImpl(this.loot.get().getName(),
-        this.loot.get().getDescription(), this.loot.get().getEffect(), this.loot.get().getIntensity());
+        this.loot.get().getDescription(), this.loot.get().getType(), this.loot.get().getIntensity());
         this.loot = Optional.empty();
         return lootCopy;
     }
