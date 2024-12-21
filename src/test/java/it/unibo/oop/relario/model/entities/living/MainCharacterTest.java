@@ -49,16 +49,16 @@ public class MainCharacterTest {
         }
         assertFalse(chara.addToInventory(itemFactory.createRandomItem()));
 
-        final int baseAtk = chara.getAttack();
+        final int baseAtk = chara.attack();
         assertTrue(chara.useItem(weapon));
-        assertTrue(chara.getAttack() == (baseAtk + weapon.getIntensity()));
+        assertTrue(chara.attack() == (baseAtk + weapon.getIntensity()));
         assertTrue(chara.addToInventory(itemFactory.createRandomItem()));
 
         assertTrue(chara.useItem(armor));
         assertTrue(chara.attacked(Constants.DEFAULT_PLAYER_LIFE));
         assertEquals(armor.getIntensity(), chara.getLife());
 
-        final int prevLife = chara.getLife();
+        //final int prevLife = chara.getLife();
         assertTrue(chara.discardItem(healing));
         //assertEquals(chara.getLife(), (prevLife + healing.getIntensity()));
     }
