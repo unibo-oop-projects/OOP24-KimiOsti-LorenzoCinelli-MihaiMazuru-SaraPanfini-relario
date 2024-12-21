@@ -109,12 +109,16 @@ public final class MainCharacterImpl implements MainCharacter {
 
     @Override
     public int attack() {
+        final int atk;
         if (!this.weapon.isEmpty()) {
-            this.weapon.get().decreaseDurability();
-            return this.weapon.get().getIntensity() + this.atk;
+            atk = this.weapon.get().getIntensity() + this.atk;
+            if (!this.weapon.get().decreaseDurability()) {
+                this.weapon = Optional.empty();
+            }
         } else {
-            return this.atk;
+            atk = this.atk;
         }
+        return atk;
     }
 
     @Override
