@@ -14,6 +14,7 @@ import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.Direction;
+import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /*
  * CHECKSTYLE: MagicNumber OFF
@@ -40,7 +41,7 @@ public class MainCharacterTest {
         assertTrue(chara.addToInventory(weapon));
         assertTrue(chara.addToInventory(armor));
         assertEquals(
-            List.of(healing, weapon, armor), 
+            List.of(healing, weapon, armor),
             chara.getItems()
         );
 
@@ -58,7 +59,7 @@ public class MainCharacterTest {
         assertTrue(chara.attacked(Constants.DEFAULT_PLAYER_LIFE));
         assertEquals(armor.getIntensity(), chara.getLife());
 
-        /* [TODO] - modify this test (eventually Chara class) to check proper healing */
+        /* [TODO] - add test to check proper healing */
 
         assertTrue(chara.discardItem(chara.getItems().getFirst()));
     }
@@ -69,6 +70,7 @@ public class MainCharacterTest {
     @Test
     public void testMovement() {
         final MainCharacter chara = new MainCharacterImpl();
+        chara.setPosition(new PositionImpl(0, 0));
         for(int i=0; i<5; i++) {chara.update();}
 
         chara.setMovement(Direction.RIGHT);
