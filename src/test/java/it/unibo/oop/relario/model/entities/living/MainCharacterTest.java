@@ -64,7 +64,7 @@ public class MainCharacterTest {
 
         /* [TODO] - add test to check proper healing */
 
-        assertTrue(chara.discardItem(chara.getItems().getFirst()));
+        assertTrue(chara.discardItem(chara.getItems().get(0)));
     }
 
     /**
