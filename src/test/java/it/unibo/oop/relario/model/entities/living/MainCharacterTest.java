@@ -12,6 +12,7 @@ import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
@@ -95,5 +96,22 @@ public class MainCharacterTest {
      */
     @Test
     public void testCombatScenarios() {
+        final MainCharacter chara = new MainCharacterImpl();
+
+        assertEquals(chara.attack(), Constants.DEFAULT_PLAYER_ATK);
+
+        final InventoryItem toyKnife = new InventoryItemFactoryImpl().createItem(InventoryItemType.DAGGER);
+        chara.addToInventory(toyKnife);
+        chara.useItem(toyKnife);
+        
+        for (int i=0; i<3; i++) {assertEquals(chara.attack(), Constants.DEFAULT_PLAYER_ATK + toyKnife.getIntensity());}
+        assertEquals(chara.attack(), Constants.DEFAULT_PLAYER_ATK);
+
+        final InventoryItem oldTutu = new InventoryItemFactoryImpl().createItem(InventoryItemType.BASICARMOR);
+        chara.addToInventory(oldTutu);
+        chara.useItem(oldTutu);
+
+        for (int i=0; i<3; i++) {assertTrue(chara.attacked(Constants.DEFAULT_PLAYER_LIFE / 3));}
+        assertFalse(chara.attacked(Constants.DEFAULT_PLAYER_LIFE));
     }
 }
