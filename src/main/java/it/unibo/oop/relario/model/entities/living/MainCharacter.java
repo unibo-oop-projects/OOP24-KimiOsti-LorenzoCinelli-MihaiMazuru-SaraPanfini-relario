@@ -47,6 +47,12 @@ public interface MainCharacter extends LivingBeing {
     boolean attacked(int damage);
 
     /**
+     * Gets the current life of the player.
+     * @return how many life points the player has.
+     */
+    int getLife();
+
+    /**
      * Handles the player's attack power.
      * @return the damage inflicted each attack by the player.
      */
