@@ -38,6 +38,8 @@ public class MainCharacterTest {
         final InventoryItem weapon = itemFactory.createRandomItemByEffect(EffectType.DAMAGE);
         final InventoryItem armor = itemFactory.createRandomItemByEffect(EffectType.PROTECTION);
 
+        assertFalse(chara.useItem(healing));
+
         assertTrue(chara.addToInventory(healing));
         assertTrue(chara.addToInventory(weapon));
         assertTrue(chara.addToInventory(armor));
