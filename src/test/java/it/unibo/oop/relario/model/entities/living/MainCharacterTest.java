@@ -29,6 +29,8 @@ public class MainCharacterTest {
     @Test
     public void testMovement() {
         final MainCharacter chara = new MainCharacterImpl();
+        for(int i=0; i<5; i++) {chara.update();}
+
         chara.setMovement(Direction.RIGHT);
         for(int i=0; i<5; i++) {chara.update();}
 
@@ -42,7 +44,7 @@ public class MainCharacterTest {
 
         assertTrue(
             chara.getPosition().get().getX() == 5
-            && chara.getPosition().get().getY()== 5
+            && chara.getPosition().get().getY() == 5
         );
     }
 
