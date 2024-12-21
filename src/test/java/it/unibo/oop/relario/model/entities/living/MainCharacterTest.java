@@ -36,9 +36,9 @@ public class MainCharacterTest {
         final InventoryItem weapon = itemFactory.createRandomItemByEffect(EffectType.DAMAGE);
         final InventoryItem armor = itemFactory.createRandomItemByEffect(EffectType.PROTECTION);
 
-        chara.addToInventory(healing);
-        chara.addToInventory(weapon);
-        chara.addToInventory(armor);
+        assertTrue(chara.addToInventory(healing));
+        assertTrue(chara.addToInventory(weapon));
+        assertTrue(chara.addToInventory(armor));
         assertEquals(
             List.of(healing, weapon, armor), 
             chara.getItems()
@@ -58,9 +58,9 @@ public class MainCharacterTest {
         assertTrue(chara.attacked(Constants.DEFAULT_PLAYER_LIFE));
         assertEquals(armor.getIntensity(), chara.getLife());
 
-        //final int prevLife = chara.getLife();
-        assertTrue(chara.discardItem(healing));
-        //assertEquals(chara.getLife(), (prevLife + healing.getIntensity()));
+        /* [TODO] - modify this test (eventually Chara class) to check proper healing */
+
+        assertTrue(chara.discardItem(chara.getItems().getFirst()));
     }
 
     /**
