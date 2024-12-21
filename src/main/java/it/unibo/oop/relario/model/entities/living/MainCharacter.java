@@ -47,10 +47,10 @@ public interface MainCharacter extends LivingBeing {
     boolean attacked(int damage);
 
     /**
-     * Handles the player's attack power.
-     * @return the damage inflicted each attack by the player.
+     * Represents the attacking action of the player.
+     * @return the damage inflicted by the player's attack.
      */
-    int getAttack();
+    int attack();
 
     /**
      * Returns the content of the player's inventory.
