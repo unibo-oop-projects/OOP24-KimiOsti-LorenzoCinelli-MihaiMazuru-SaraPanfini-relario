@@ -8,15 +8,26 @@ package it.unibo.oop.relario.model.inventory;
 public enum EffectType {
 
     /** An effect that increases the player's damage. */
-    DAMAGE, 
+    DAMAGE("Damage"), 
 
     /** An effect that provides protection. */
-    PROTECTION,
+    PROTECTION("Protection"),
 
     /** An effect that restores player's life. */
-    HEALING,
+    HEALING("Healing"),
 
     /** No effect, for collectable items. */
-    NONE;
+    NONE("None");
+
+    private final String effect;
+
+    EffectType(final String effect) {
+        this.effect = effect;
+    }
+
+    @Override
+    public String toString() {
+        return this.effect;
+    }
 
 }
