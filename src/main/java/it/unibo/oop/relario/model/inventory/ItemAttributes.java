@@ -38,18 +38,12 @@ public final class ItemAttributes {
 
     /** Constant intensity of a potion. */
     public static final int POTION_INTENSITY = 10;
-    /** Constant durability of a potion. */
-    public static final int POTION_DURABILITY = 1;
 
     /** Constant intensity of an apple. */
     public static final int APPLE_INTENSITY = 3;
-    /** Constant durability of an apple. */
-    public static final int APPLE_DURABILITY = 1;
 
     /** Constant intensity of an amulet. */
     public static final int AMULET_INTENSITY = 15;
-    /** Constant durability of an amulet. */
-    public static final int AMULET_DURABILITY = 1;
 
     /** Constant intensity of a coin. */
     public static final int COIN_INTENSITY = 1;
