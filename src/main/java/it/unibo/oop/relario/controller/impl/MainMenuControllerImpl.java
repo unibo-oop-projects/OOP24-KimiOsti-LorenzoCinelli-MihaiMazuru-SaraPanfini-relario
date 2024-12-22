@@ -13,6 +13,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
     /**
      * Create a new view for the main menu.
+     * @param view is the main view 
      */
     public MainMenuControllerImpl(final MainView view) {
         this.view = view;
@@ -26,6 +27,6 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
     @Override
     public void exit() {
-        this.view.showPreviousPanel();
+        System.exit(0);
     }
 }

@@ -18,10 +18,22 @@ import it.unibo.oop.relario.utils.api.Position;
 
 public interface Room {
 
+    /**
+     * 
+     * @return TODO
+     */
     Room getRoom();
 
+    /**
+     * 
+     * @return TODO
+     */
     MainCharacter getPlayer();
 
+    /**
+     * 
+     * @return TODO
+     */
     Optional<Quest> getQuest();
 
     /**
@@ -82,6 +94,12 @@ public interface Room {
     List<Position> getInnerCells();
 
     /**
+     * 
+     * @param quest
+     */
+    void setQuest(Optional<Quest> quest);
+
+    /**
      * Checks if a specified position is within the room's edges.
      * @param position that has to be checked
      * @return true if the position is valid, false otherwise
@@ -94,8 +112,15 @@ public interface Room {
      */
     Position getExit();
 
+    /**
+     * 
+     * @return TODO
+     */
     Position getEntry();
 
+    /**
+     * 
+     */
     void update();
 
 }

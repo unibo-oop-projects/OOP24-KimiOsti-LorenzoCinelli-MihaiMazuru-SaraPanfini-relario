@@ -17,35 +17,33 @@ public final class MainViewImpl implements MainView {
 
     private final JFrame frame;
     private final JPanel mainPanel;
+    private final MainController mainController;
     private String previousPanel;
     private String currentPanel;
 
     /**
      * Inizializes the frame of the main view.
-     * @param controller The Controller container instance used to access Controllers.
+     * @param mainController is the controller container instance used to access controllers.
      */
     public MainViewImpl(final MainController mainController) {
-        final MainController controller = mainController;
+        this.mainController = mainController;
+        this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
         this.frameSetup();
-        mainPanel = new JPanel(new CardLayout());
-        mainPanel.add(new MainMenuView(controller), GameState.MENU);
-        mainPanel.add(new GameView(), GameState.GAME);
-        mainPanel.add(new InventoryView(), GameState.INVENTORY);
-        mainPanel.add(new CombatView(), GameState.COMBAT);
         this.currentPanel = GameState.NONE;
         this.previousPanel = GameState.NONE;
         this.frame.add(mainPanel);
         this.frame.setVisible(true);
     }
 
+    @Override
     public void showPreviousPanel() {
         showPanel(this.previousPanel);
     }
 
     @Override
     public void showPanel(final String panelName) {
-        CardLayout layout = (CardLayout) this.mainPanel.getLayout();
+        final CardLayout layout = (CardLayout) this.mainPanel.getLayout();
         this.previousPanel = this.currentPanel;
         this.currentPanel = panelName;
         layout.show(mainPanel, this.currentPanel);
@@ -57,5 +55,18 @@ public final class MainViewImpl implements MainView {
         this.frame.setLayout(new BorderLayout());
         this.frame.setLocationByPlatform(true);
         this.frame.setFocusable(true);
+    }
+
+    @Override
+    public String getCurrentPanel() {
+        return this.currentPanel;
+    }
+
+    @Override
+    public void panelsSetup() {
+        mainPanel.add(new MainMenuView(this.mainController), GameState.MENU);
+        mainPanel.add(new GameView(), GameState.GAME);
+        mainPanel.add(new InventoryView(this.mainController), GameState.INVENTORY);
+        mainPanel.add(new CombatView(), GameState.COMBAT);
     }
 }

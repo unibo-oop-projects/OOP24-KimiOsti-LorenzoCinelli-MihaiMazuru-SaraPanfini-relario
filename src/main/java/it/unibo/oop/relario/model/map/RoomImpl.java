@@ -43,20 +43,22 @@ public final class RoomImpl implements Room {
     private final Set<Position> unavailableCells = new HashSet<>();
     private List<Position> perimeter;
     private List<Position> innerCells;
-    private final Optional<Quest> quest;
+    private Optional<Quest> quest = Optional.empty();
 
     /**
      * Constructs a room with the specified dimension and main character.
      * The room has an entry and an exit and the player is placed at the entry.
      * @param dimension of the room
      * @param player that is placed in the room
+     * @param entry TODO
+     * @param exit TODO
      */
-    public RoomImpl(final MainCharacter player, final Dimension dimension, final Position entry, final Position exit, final Optional<Quest> quest) {
+    public RoomImpl(final MainCharacter player, final Dimension dimension, final Position entry, 
+    final Position exit) {
         this.player = player;
         this.dimension = dimension;
-        this.entry = entry;
-        this.exit = exit;
-        this.quest = quest;
+        this.entry = new PositionImpl(entry.getX(), entry.getY());
+        this.exit = new PositionImpl(exit.getX(), exit.getY());
         initializeRoom();
     }
 
@@ -105,6 +107,11 @@ public final class RoomImpl implements Room {
     }
 
     @Override
+    public void setQuest(final Optional<Quest> quest) {
+        this.quest = quest;
+    }
+
+    @Override
     public boolean isCellAvailable(final Position position) {
         return !unavailableCells.contains(position);
     }
@@ -112,9 +119,9 @@ public final class RoomImpl implements Room {
     @Override
     public void addEntity(final Position position, final Entity entity) {
         if (entity instanceof LivingBeing) {
-            addCharacter(position, (LivingBeing)entity);
-        } else {
-            addFurniture(position, (FurnitureItem)entity);
+            addCharacter(position, (LivingBeing) entity);
+        } else if (entity instanceof FurnitureItem) {
+            addFurniture(position, (FurnitureItem) entity);
         }
     }
 

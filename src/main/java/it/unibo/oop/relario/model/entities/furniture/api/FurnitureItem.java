@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.model.entities.furniture.api;
 
 import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureType;
 
 /**
  * Interface for handling Furniture items.
@@ -17,4 +18,10 @@ public interface FurnitureItem extends Entity {
      * @return true if the main character can interact with the furniture item.
      */
     boolean isInteractive();
+
+    /**
+     * 
+     * @return
+     */
+    FurnitureType getType();
 }

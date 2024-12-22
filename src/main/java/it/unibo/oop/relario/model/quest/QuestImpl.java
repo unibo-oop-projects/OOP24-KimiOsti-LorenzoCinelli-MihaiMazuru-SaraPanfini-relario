@@ -2,6 +2,9 @@ package it.unibo.oop.relario.model.quest;
 
 import it.unibo.oop.relario.model.entities.Entity;
 
+/**
+ * 
+ */
 public final class QuestImpl implements Quest {
 
     private final String name;
@@ -9,6 +12,13 @@ public final class QuestImpl implements Quest {
     private final ObjectiveStrategy objective;
     private final Entity keyEntity;
 
+    /**
+     * 
+     * @param name
+     * @param description
+     * @param objective
+     * @param keyEntity
+     */
     public QuestImpl(final String name, final String description, final ObjectiveStrategy objective, final Entity keyEntity) {
         this.name = name;
         this.description = description;

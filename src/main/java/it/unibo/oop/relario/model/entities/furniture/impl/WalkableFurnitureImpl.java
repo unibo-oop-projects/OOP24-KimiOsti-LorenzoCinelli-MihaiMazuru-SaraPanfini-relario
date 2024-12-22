@@ -14,12 +14,15 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
 
     private final Position pos;
     private Optional<Enemy> enemy;
+    private final FurnitureType type;
 
     /**
      * Initializes a new empty walkable furniture item.
      * @param pos is the position of the furniture item in the map.
+     * @param type is the type of the furniture.
      */
-    public WalkableFurnitureImpl(final Position pos) {
+    public WalkableFurnitureImpl(final Position pos, final FurnitureType type) {
+        this.type = type;
         this.pos = new PositionImpl(pos.getX(), pos.getY());
         this.enemy = Optional.empty();
     }
@@ -28,9 +31,11 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
      * Initializes a new walkable furniture item.
      * @param pos is the position of the furniture item in the map.
      * @param enemy is the enemy inside the furniture item.
+     * @param type is the type of the furniture.
      */
-    public WalkableFurnitureImpl(final Position pos, final Enemy enemy) {
-        this(pos);
+    public WalkableFurnitureImpl(final Position pos, final Enemy enemy, 
+    final FurnitureType type) {
+        this(pos, type);
         this.enemy = Optional.of(enemy);
     }
 
@@ -62,5 +67,10 @@ public class WalkableFurnitureImpl implements WalkableFurniture {
     @Override
     public final boolean isInteractive() {
         return true;
+    }
+
+    @Override
+    public FurnitureType getType() {
+        return this.type;
     }
 }

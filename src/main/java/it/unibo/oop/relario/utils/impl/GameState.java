@@ -17,6 +17,13 @@ public final class GameState {
     /** Combat phase. */
     public static final String COMBAT = "Combat";
 
+    /** Game over. */
+    public static final String GAME_OVER = "GameOver";
+
     /** Initial phase when application is lauched. */
     public static final String NONE = null;
+
+    private GameState() {
+        throw new UnsupportedOperationException();
+    }
 }
