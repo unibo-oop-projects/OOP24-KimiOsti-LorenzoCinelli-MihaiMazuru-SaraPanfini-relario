@@ -2,6 +2,7 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.util.Optional;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,9 +37,20 @@ public final class MainViewImpl implements MainView {
         this.frame.setVisible(true);
     }
 
+    private void frameSetup() {
+        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.frame.setLayout(new BorderLayout());
+        this.frame.setLocationByPlatform(true);
+        this.frame.setFocusable(true);
+    }
+
     @Override
-    public void showPreviousPanel() {
-        showPanel(this.previousPanel);
+    public void panelsSetup() {
+        mainPanel.add(new MainMenuView(this.mainController), GameState.MENU);
+        mainPanel.add(new GameView(), GameState.GAME);
+        mainPanel.add(new InventoryView(this.mainController), GameState.INVENTORY);
+        mainPanel.add(new CombatView(), GameState.COMBAT);
     }
 
     @Override
@@ -49,12 +61,19 @@ public final class MainViewImpl implements MainView {
         layout.show(mainPanel, this.currentPanel);
     } 
 
-    private void frameSetup() {
-        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.frame.setLayout(new BorderLayout());
-        this.frame.setLocationByPlatform(true);
-        this.frame.setFocusable(true);
+    @Override
+    public JPanel getPanel(final String name) {
+        for (var comp : mainPanel.getComponents()) {
+            if (comp.getName() != null && comp.getName().equals(name)) {
+                return (JPanel) comp;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void showPreviousPanel() {
+        showPanel(this.previousPanel);
     }
 
     @Override
@@ -62,11 +81,4 @@ public final class MainViewImpl implements MainView {
         return this.currentPanel;
     }
 
-    @Override
-    public void panelsSetup() {
-        mainPanel.add(new MainMenuView(this.mainController), GameState.MENU);
-        mainPanel.add(new GameView(), GameState.GAME);
-        mainPanel.add(new InventoryView(this.mainController), GameState.INVENTORY);
-        mainPanel.add(new CombatView(), GameState.COMBAT);
-    }
 }
