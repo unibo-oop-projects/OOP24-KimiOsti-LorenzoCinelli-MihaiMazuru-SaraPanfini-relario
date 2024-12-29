@@ -1,39 +1,35 @@
 package it.unibo.oop.relario.controller.impl;
 
 import it.unibo.oop.relario.controller.api.CombatController;
-import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.utils.impl.GameState;
+import it.unibo.oop.relario.view.api.MainView;
 
 /**
- * Implementatio of the combat controller.
+ * Implementation of the combat controller.
  */
 public final class CombatControllerImpl implements CombatController {
 
-    private final MainController controller;
-    private final Enemy enemy;
-    private final MainCharacter player;
+    private final MainView view;
+    private MainCharacter player;
+    private Enemy enemy;
 
     /**
-     * Create a new combat view.
-     * @param controller is the controller of the main game.
-     * @param enemy is the of the two fughters.
-     * @param player is the other one of the two fighters.
+     * Saves reference to main view.
+     * @param view is the main view.
      */
-    public CombatControllerImpl(final MainController controller, 
-    final Enemy enemy, final MainCharacter player) {
-        this.controller = controller;
-        this.enemy = enemy;
+    public CombatControllerImpl(final MainView view) {
+        this.view = view;
+        this.player = null;
+        this.enemy = null;
+    }
+
+    @Override
+    public void initializeCombat(final MainCharacter player, final Enemy enemy) {
         this.player = player;
-
-        // new CombatView(this);
+        this.enemy = enemy;
+        this.view.showPanel(GameState.COMBAT);
     }
 
-    @Override
-    public void endTurn() {
-    }
-
-    @Override
-    public void stop() {
-    }
 }
