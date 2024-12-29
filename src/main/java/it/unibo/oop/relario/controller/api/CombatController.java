@@ -45,4 +45,10 @@ public interface CombatController {
      */
     DifficultyLevel getDifficultyLevel();
 
+    /**
+     * Handle attack and mercy request made by the player.
+     * @param askingMercy is true if the player's asking for mercy, false otherwise.
+     */
+    void handleCombatAction(boolean attackAction);
+
 }
