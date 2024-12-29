@@ -2,7 +2,6 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.util.Optional;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
