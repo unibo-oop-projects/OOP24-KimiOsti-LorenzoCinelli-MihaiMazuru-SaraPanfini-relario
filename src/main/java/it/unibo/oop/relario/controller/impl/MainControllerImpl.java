@@ -34,9 +34,9 @@ public final class MainControllerImpl implements MainController {
         this.roomIndex = 0;
         this.roomGenerator = new RoomGenerator();
         this.curRoom = this.roomGenerator.getRoom(roomIndex);
-        this.combat = null;
+        this.combat = new CombatControllerImpl(this.view);
         this.game = new GameControllerImpl(this, this.view);
-        this.inventory = null;
+        this.inventory = new InventoryControllerImpl(this, this.view);
         this.mainMenu = new MainMenuControllerImpl(this.view);
         this.view.panelsSetup();
     }
