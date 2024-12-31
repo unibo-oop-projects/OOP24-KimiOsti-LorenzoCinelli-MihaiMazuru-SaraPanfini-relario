@@ -42,14 +42,14 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
         () -> new EquippableItem("Armatura semplice", "Un'armatura leggera che offre protezione di base", 
         InventoryItemType.BASICARMOR, ItemAttributes.BASICARMOR_INTENSITY, ItemAttributes.BASICARMOR_DURABILITY));
         this.itemCreator.put(InventoryItemType.POTION, 
-        () -> new EquippableItem("Pozione", "Un liquido rosso che ripristina rapidamente la salute", 
-        InventoryItemType.POTION, ItemAttributes.POTION_INTENSITY, ItemAttributes.POTION_DURABILITY));
+        () -> new InventoryItemImpl("Pozione", "Un liquido rosso che ripristina rapidamente la salute", 
+        InventoryItemType.POTION, ItemAttributes.POTION_INTENSITY));
         this.itemCreator.put(InventoryItemType.APPLE, 
-        () -> new EquippableItem("Mela", "Una mela fresca e succosa, perfetta per recuperare un po' di energia", 
-        InventoryItemType.APPLE, ItemAttributes.APPLE_INTENSITY, ItemAttributes.APPLE_DURABILITY));
+        () -> new InventoryItemImpl("Mela", "Una mela fresca e succosa, perfetta per recuperare un po' di energia", 
+        InventoryItemType.APPLE, ItemAttributes.APPLE_INTENSITY));
         this.itemCreator.put(InventoryItemType.AMULET, 
-        () -> new EquippableItem("Amuleto", "Un ciondolo antico e luminoso che emana un'aura di guarigione", 
-        InventoryItemType.AMULET, ItemAttributes.AMULET_INTENSITY, ItemAttributes.AMULET_DURABILITY));
+        () -> new InventoryItemImpl("Amuleto", "Un ciondolo antico e luminoso che emana un'aura di guarigione", 
+        InventoryItemType.AMULET, ItemAttributes.AMULET_INTENSITY));
         this.itemCreator.put(InventoryItemType.COIN, 
         () -> new InventoryItemImpl("Moneta", "Una moneta luccicante", 
         InventoryItemType.COIN, ItemAttributes.COIN_INTENSITY));
