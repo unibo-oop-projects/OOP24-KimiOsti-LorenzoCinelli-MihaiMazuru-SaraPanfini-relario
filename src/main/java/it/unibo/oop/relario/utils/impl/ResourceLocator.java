@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
-import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
+import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 
 /**
@@ -26,7 +26,7 @@ public final class ResourceLocator {
      * @param furnitureItem a furniture item.
      * @return the texture representing @param furnitureItem
      */
-    public static ImageIcon getFurnitureTexture(final FurnitureItem furnitureItem) {
+    public static ImageIcon getFurnitureTexture(final Furniture furnitureItem) {
         final StringBuilder imgURL = new StringBuilder(TEXTURES_URL);
         imgURL.append(FURNITURE_TEXTURE_URL);
 
