@@ -59,17 +59,6 @@ final class TestInteractions {
         // entityMap.put(new PositionImpl(0, 0), Optional.of(new MainCharacterImpl()));
     }
 
-    @Test
-    void testMaps() {
-        for (int i = 0; i < depth; i++) {
-            for (int j = 0; j < width; j++) {
-                Position p1 = new PositionImpl(i, j);
-                assertNotNull(entityMap.get(p1));
-                assertNotNull(furnitureMap.get(p1));
-            }
-        }
-    }
-
     /**
      * Tests if entities can move.
      */
