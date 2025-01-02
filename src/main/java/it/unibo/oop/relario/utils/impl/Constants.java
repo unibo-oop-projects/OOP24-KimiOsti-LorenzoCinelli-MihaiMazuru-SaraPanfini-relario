@@ -14,6 +14,11 @@ public final class Constants {
      */
     public static final int DEFAULT_PLAYER_ATK = 20;
 
+    /**
+     * Game engine refresh time.
+     */
+    public static final int REFRESH_TIME = 125;
+
     private Constants() {
         throw new UnsupportedOperationException();
     }
