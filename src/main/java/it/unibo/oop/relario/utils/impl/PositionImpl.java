@@ -39,4 +39,9 @@ public final class PositionImpl implements Position {
     public void setY(final int newY) {
         this.y = newY;
     }
+
+    @Override
+    public boolean equals(Position pos) {
+        return this == pos || (this.getX() == pos.getX() && this.getY() == pos.getY());
+    }
 }
