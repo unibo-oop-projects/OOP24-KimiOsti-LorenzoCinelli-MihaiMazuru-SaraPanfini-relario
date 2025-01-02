@@ -52,23 +52,20 @@ final class TestInteractions {
         for (int i = 0; i < depth; i++) {
             for (int j = 0; j < width; j++) {
                 Position p = new PositionImpl(i, j);
-                System.out.println(p.getX() + " " + p.getY());
                 entityMap.put(p, Optional.empty());
                 furnitureMap.put(p, Optional.empty());
             }
         }
-        entityMap.put(new PositionImpl(0, 0), Optional.of(new MainCharacterImpl()));
+        // entityMap.put(new PositionImpl(0, 0), Optional.of(new MainCharacterImpl()));
     }
 
     @Test
     void testMaps() {
-        System.out.println(entityMap.keySet().contains(new PositionImpl(0, 0)));
-        System.out.println(entityMap.values());
         for (int i = 0; i < depth; i++) {
             for (int j = 0; j < width; j++) {
-                Position p = new PositionImpl(i, j);
-                assertNotNull(entityMap.get(p));
-                assertNotNull(furnitureMap.get(p));
+                Position p1 = new PositionImpl(i, j);
+                assertNotNull(entityMap.get(p1));
+                assertNotNull(furnitureMap.get(p1));
             }
         }
     }
