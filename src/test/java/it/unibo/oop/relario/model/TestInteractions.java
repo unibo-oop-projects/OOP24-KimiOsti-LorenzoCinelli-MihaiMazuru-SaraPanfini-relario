@@ -1,9 +1,12 @@
 package it.unibo.oop.relario.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.Transient;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,9 +15,13 @@ import org.junit.jupiter.api.BeforeEach;
 
 import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.LivingBeing;
-import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
+import it.unibo.oop.relario.model.entities.LivingBeingImpl;
+import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
+import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
+import it.unibo.oop.relario.model.map.LivingBeingsGenerator;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
+import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 
 /*
@@ -28,18 +35,42 @@ final class TestInteractions {
     
     private int depth;
     private int width;
-    private Position pos;
-    private Direction dir;
+    // private Position pos;
+    // private Direction dir;
     private Map<Position, Optional<LivingBeing>> entityMap;
-    private Map<Position, Optional<FurnitureItem>> furnitureMap;
+    private Map<Position, Optional<Furniture>> furnitureMap;
 
     /**
      * Sets up the testing.
      */
     @BeforeEach
     void setUp() {
-        depth = 50;
-        width = 50;
+        depth = 5;
+        width = 5;
+        entityMap = new HashMap<>();
+        furnitureMap = new HashMap<>();
+        for (int i = 0; i < depth; i++) {
+            for (int j = 0; j < width; j++) {
+                Position p = new PositionImpl(i, j);
+                System.out.println(p.getX() + " " + p.getY());
+                entityMap.put(p, Optional.empty());
+                furnitureMap.put(p, Optional.empty());
+            }
+        }
+        entityMap.put(new PositionImpl(0, 0), Optional.of(new MainCharacterImpl()));
+    }
+
+    @Test
+    void testMaps() {
+        System.out.println(entityMap.keySet().contains(new PositionImpl(0, 0)));
+        System.out.println(entityMap.values());
+        for (int i = 0; i < depth; i++) {
+            for (int j = 0; j < width; j++) {
+                Position p = new PositionImpl(i, j);
+                assertNotNull(entityMap.get(p));
+                assertNotNull(furnitureMap.get(p));
+            }
+        }
     }
 
     /**
@@ -47,7 +78,28 @@ final class TestInteractions {
      */
     @Test
     void testCanMove() {
+        final Position pos = new PositionImpl(0,0);
+        Direction dir;
 
+        dir = Direction.UP;
+        System.out.println("UP");
+        System.out.println(entityMap.get(dir.move(pos)));
+        assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+        
+        dir = Direction.RIGHT;
+        System.out.println("RIGHT");
+        System.out.println(entityMap.get(dir.move(pos)));
+        assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+
+        dir = Direction.LEFT;
+        System.out.println("LEFT");
+        System.out.println(entityMap.get(dir.move(pos)));
+        assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+
+        dir = Direction.DOWN;
+        System.out.println("DOWN");
+        System.out.println(entityMap.get(dir.move(pos)));
+        assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
     }
 
     /**
