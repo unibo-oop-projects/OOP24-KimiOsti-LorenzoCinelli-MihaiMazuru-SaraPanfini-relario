@@ -18,21 +18,21 @@ public final class Interactions {
     }
 
     private static boolean isPositionIntoRoomBorder(final Position pos, final int depth, final int width) {
-        return pos.getX() < 0 || pos.getY() < 0 || pos.getX() >= width || pos.getY() >= depth;
+        return !(pos.getX() < 0 || pos.getY() < 0 || pos.getX() >= width || pos.getY() >= depth);
     }
 
     private static boolean isPositionWithoutEntity(final Position pos, final Map<Position, Optional<LivingBeing>> entityMap) {
-        return !entityMap.get(pos).isPresent();
+        return entityMap.get(pos) != null && !entityMap.get(pos).isPresent();
     }
 
     private static boolean isPositionWithoutNonWalkableForniture(final Position pos, 
     final Map<Position, Optional<Furniture>> furnitureMap) {
-        return furnitureMap.get(pos).isEmpty() || furnitureMap.get(pos).get().isWalkable();
+        return furnitureMap.get(pos) != null && (furnitureMap.get(pos).isEmpty() || furnitureMap.get(pos).get().isWalkable());
     }
 
     private static boolean isPositionWithInteractivFurniture(final Position pos, 
     final Map<Position, Optional<Furniture>> furnitureMap) {
-        return furnitureMap.get(pos).isPresent() && furnitureMap.get(pos).get().isInteractive();
+        return furnitureMap.get(pos) != null && furnitureMap.get(pos).isPresent() && furnitureMap.get(pos).get().isInteractive();
     }
 
     /**
