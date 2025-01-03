@@ -1,7 +1,10 @@
 package it.unibo.oop.relario.controller.impl;
 
-import it.unibo.oop.relario.controller.api.MainController;
+import java.util.List;
+
 import it.unibo.oop.relario.controller.api.MainMenuController;
+import it.unibo.oop.relario.model.menu.MenuElement;
+import it.unibo.oop.relario.model.menu.MenuManager;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
@@ -11,26 +14,24 @@ import it.unibo.oop.relario.view.api.MainView;
 public final class MainMenuControllerImpl implements MainMenuController {
 
     private final MainView view;
-    private final MainController controller;
+    private final MenuManager menuModel;
 
     /**
      * Create a new view for the main menu.
      * @param view is the main view.
-     * @param controller is the main controller,
      */
-    public MainMenuControllerImpl(final MainView view, final MainController controller) {
+    public MainMenuControllerImpl(final MainView view) {
+        menuModel = new MenuManager();
         this.view = view;
-        this.controller = controller;
         this.view.showPanel(GameState.MENU);
     }
 
-    @Override
-    public void progress() {
-        this.controller.getGameController().run();
+    public List<MenuElement> getInGameMenuElements() {
+        return this.menuModel.getInGameMenu().getElem();
     }
 
-    @Override
-    public void exit() {
-        System.exit(0);
+    public List<MenuElement> getStartMenuElements() {
+        return this.menuModel.getStartMenu().getElem();
     }
+
 }
