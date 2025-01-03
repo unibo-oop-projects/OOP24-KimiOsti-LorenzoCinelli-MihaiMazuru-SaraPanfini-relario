@@ -1,17 +1,24 @@
 package it.unibo.oop.relario.controller.api;
 
+import java.util.List;
+
+import it.unibo.oop.relario.model.menu.MenuElement;
+
 /**
  * Controller for managing mani menu options.
  */
 public interface MainMenuController {
 
     /**
-     * Makes the game progress to the game phase. 
+     * Retrieves all the menu elements in the in game menu.
+     * @return a list of menu elements.
      */
-    void progress();
+    List<MenuElement> getInGameMenuElements();
 
     /**
-     * Shuts down the app.
+     * Retrieves all the menu elements in the start menu.
+     * @return a list of menu elements.
      */
-    void exit();
+    List<MenuElement> getStartMenuElements();
+
 }
