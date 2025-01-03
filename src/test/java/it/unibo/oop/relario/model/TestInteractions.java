@@ -67,13 +67,7 @@ final class TestInteractions {
         interactiveFurniture = new ArrayList<>();
         obstructingEntity = new ArrayList<>();
         interactiveEntity = new ArrayList<>();
-        for (int j = 0; j < depth; j++) {
-            for (int i = 0; i < width; i++) {
-                Position p = new PositionImpl(i, j);
-                entityMap.put(p, Optional.empty());
-                furnitureMap.put(p, Optional.empty());
-            }
-        }
+        clearMap();
     }
 
     void furnitureSetup() {
@@ -287,6 +281,20 @@ final class TestInteractions {
         interactiveEntity.add(p);
     }
 
+    void clearMap() {
+        for (int j = 0; j < depth; j++) {
+            for (int i = 0; i < width; i++) {
+                Position p = new PositionImpl(i, j);
+                furnitureMap.put(p, Optional.empty());
+                entityMap.put(p, Optional.empty());
+            }
+        }
+        obstructingFurniture.clear();
+        interactiveFurniture.clear();
+        obstructingEntity.clear();
+        interactiveEntity.clear();
+    }
+
     @Test
     void testBorderMovement() {
         Position pos = new PositionImpl(0,0);
@@ -465,6 +473,31 @@ final class TestInteractions {
     void testMovement() {
         furnitureSetup();
         entitySetup();
+
+        Position pos;
+        Direction dir;
+        Position nextPos;
+
+        for (int j = 0; j < depth; j++) {
+            for (int i = 0; i < width; i++) {
+                pos = new PositionImpl(i, j);
+
+                dir = Direction.UP;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && entityMap.get(nextPos) != null
+                && nextPos.getX() >= 0
+                && nextPos.getX() < width
+                && nextPos.getY() >= 0
+                && nextPos.getY() < depth
+                && !obstructingFurniture.contains(nextPos)
+                && ! obstructingEntity.contains(nextPos)) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+            }
+        }
     }
 
     /**
@@ -473,8 +506,11 @@ final class TestInteractions {
     @Test
     void testCanMove() {
         testBorderMovement();
+        clearMap();
         testFurnitureMovement();
+        clearMap();
         testEntityMovement();
+        clearMap();
         testMovement();
     }
 
