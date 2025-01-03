@@ -1,11 +1,8 @@
 package it.unibo.oop.relario.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,10 +12,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.LivingBeing;
-import it.unibo.oop.relario.model.entities.LivingBeingImpl;
-import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
@@ -29,8 +23,6 @@ import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureType;
 import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
 import it.unibo.oop.relario.model.entities.npc.NpcFactory;
 import it.unibo.oop.relario.model.entities.npc.NpcFactoryImpl;
-import it.unibo.oop.relario.model.map.FurnitureGenerator;
-import it.unibo.oop.relario.model.map.LivingBeingsGenerator;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
@@ -70,6 +62,9 @@ final class TestInteractions {
         clearMap();
     }
 
+    /**
+     * Sets up the furniture.
+     */
     void furnitureSetup() {
         FurnitureFactory ff = new FurnitureFactoryImpl();
         Position p;
@@ -231,6 +226,9 @@ final class TestInteractions {
         
     }
     
+    /**
+     * Sets up entities.
+     */
     void entitySetup() {
         EnemyFactory ef = new EnemyFactoryImpl();
         NpcFactory nf = new NpcFactoryImpl();
@@ -281,6 +279,9 @@ final class TestInteractions {
         interactiveEntity.add(p);
     }
 
+    /**
+     * Clears the map, furniture and entities.
+     */
     void clearMap() {
         for (int j = 0; j < depth; j++) {
             for (int i = 0; i < width; i++) {
@@ -295,6 +296,9 @@ final class TestInteractions {
         interactiveEntity.clear();
     }
 
+    /**
+     * Sub-testing for the movement into the borders of the room.
+     */
     @Test
     void testBorderMovement() {
         Position pos = new PositionImpl(0,0);
@@ -335,6 +339,9 @@ final class TestInteractions {
         }
     }
 
+    /**
+     * Sub-testing for the movement with furniture.
+     */
     @Test
     void testFurnitureMovement() {
         furnitureSetup();
@@ -402,6 +409,9 @@ final class TestInteractions {
         }
     }
 
+    /**
+     * Sub-testing for the movement with entities.
+     */
     @Test
     void testEntityMovement() {
         entitySetup();
@@ -469,6 +479,9 @@ final class TestInteractions {
         }
     }
 
+    /**
+     * Sub-testing for the general movement.
+     */
     @Test
     void testMovement() {
         furnitureSetup();
@@ -515,11 +528,186 @@ final class TestInteractions {
     }
 
     /**
+     * Sub-testing for the interaction with furniture.
+     */
+    @Test
+    void testFurnitureInteraction() {
+        furnitureSetup();
+
+        Position pos;
+        Direction dir;
+        Position nextPos;
+
+        for (int j = 0; j < depth; j++) {
+            for (int i = 0; i < width; i++) {
+                pos = new PositionImpl(i, j);
+
+                dir = Direction.UP;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && interactiveFurniture.contains(nextPos)) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.LEFT;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && interactiveFurniture.contains(nextPos)) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.RIGHT;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && interactiveFurniture.contains(nextPos)) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.DOWN;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && interactiveFurniture.contains(nextPos)) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+            }
+        }
+    }
+
+    /**
+     * Sub-testing for the interaction with entities.
+     */
+    @Test
+    void testEntityInteraction() {
+        entitySetup();
+
+        Position pos;
+        Direction dir;
+        Position nextPos;
+
+        for (int j = 0; j < depth; j++) {
+            for (int i = 0; i < width; i++) {
+                pos = new PositionImpl(i, j);
+                
+                dir = Direction.UP;
+                nextPos = dir.move(pos);
+                if (entityMap.get(nextPos) != null
+                && interactiveEntity.contains(nextPos)) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.LEFT;
+                nextPos = dir.move(pos);
+                if (entityMap.get(nextPos) != null
+                && interactiveEntity.contains(nextPos)) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.RIGHT;
+                nextPos = dir.move(pos);
+                if (entityMap.get(nextPos) != null
+                && interactiveEntity.contains(nextPos)) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.DOWN;
+                nextPos = dir.move(pos);
+                if (entityMap.get(nextPos) != null
+                && interactiveEntity.contains(nextPos)) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+            }
+        }
+    }
+
+    /**
+     * Sub-testing for the general interaction.
+     */
+    @Test
+    void testInteraction() {
+        furnitureSetup();
+        entitySetup();
+
+        Position pos;
+        Direction dir;
+        Position nextPos;
+
+        for (int j = 0; j < depth; j++) {
+            for (int i = 0; i < width; i++) {
+                pos = new PositionImpl(i, j);
+                
+                dir = Direction.UP;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && entityMap.get(nextPos) != null
+                && (interactiveEntity.contains(nextPos) 
+                    || interactiveFurniture.contains(nextPos))) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.LEFT;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && entityMap.get(nextPos) != null
+                && (interactiveEntity.contains(nextPos) 
+                    || interactiveFurniture.contains(nextPos))) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.RIGHT;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && entityMap.get(nextPos) != null
+                && (interactiveEntity.contains(nextPos) 
+                    || interactiveFurniture.contains(nextPos))) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+
+                dir = Direction.DOWN;
+                nextPos = dir.move(pos);
+                if (furnitureMap.get(nextPos) != null
+                && entityMap.get(nextPos) != null
+                && (interactiveEntity.contains(nextPos) 
+                    || interactiveFurniture.contains(nextPos))) {
+                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+                }
+            }
+        }
+    }
+
+    /**
      * Tests if entity can interact.
      */
     @Test
     void testCanInteract() {
-
+        testFurnitureInteraction();
+        clearMap();
+        testEntityInteraction();
+        clearMap();
+        testInteraction();
     }
 
 }
