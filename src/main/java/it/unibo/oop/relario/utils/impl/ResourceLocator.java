@@ -2,13 +2,16 @@ package it.unibo.oop.relario.utils.impl;
 
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.utils.api.Position;
 
 /**
  * Static class for the game resource locator.
@@ -23,11 +26,19 @@ public final class ResourceLocator {
     private ResourceLocator() { }
 
     /**
-     * Method to bind a texture to a given entity.
-     * @param entity the entity of which the texture is requested.
-     * @return the desired texture.
+     * Returns a map containing the textures to be represented and their position on the map.
+     * @param model the model entities to be processed.
+     * @return a map containing textures and their position.
      */
-    public static ImageIcon getTexture(final Entity entity) {
+    public static Map<Position, ImageIcon> processModel(Map<Position, ? extends Entity> model) {
+        final var res = new HashMap<Position, ImageIcon>();
+        model.forEach((k, v) -> {
+            res.put(k, ResourceLocator.getTexture(v));
+        });
+        return Map.copyOf(res);
+    }
+
+    private static ImageIcon getTexture(final Entity entity) {
         if (entity instanceof Furniture) {
             return ResourceLocator.getFurnitureTexture((Furniture) entity);
         } else if (entity instanceof LivingBeing) {

@@ -21,8 +21,8 @@ public final class Interactions {
         return !(pos.getX() < 0 || pos.getY() < 0 || pos.getX() >= width || pos.getY() >= depth);
     }
 
-    private static boolean isPositionWithoutEntity(final Position pos, final Map<Position, Optional<LivingBeing>> entityMap) {
-        return entityMap.get(pos) != null && !entityMap.get(pos).isPresent();
+    private static boolean isPositionWithEntity(final Position pos, final Map<Position, Optional<LivingBeing>> entityMap) {
+        return entityMap.get(pos) != null && entityMap.get(pos).isPresent();
     }
 
     private static boolean isPositionWithoutNonWalkableForniture(final Position pos, 
@@ -49,7 +49,7 @@ public final class Interactions {
     final Map<Position, Optional<LivingBeing>> entityMap, final Map<Position, Optional<Furniture>> furnitureMap) {
         final Position nextPos = dir.move(pos);
         return isPositionIntoRoomBorder(nextPos, depth, width)
-        && isPositionWithoutEntity(nextPos, entityMap)
+        && !isPositionWithEntity(nextPos, entityMap)
         && isPositionWithoutNonWalkableForniture(nextPos, furnitureMap);
     }
 
@@ -64,7 +64,7 @@ public final class Interactions {
     public static boolean canInteract(final Position pos, final Direction dir, 
     final Map<Position, Optional<LivingBeing>> entityMap, final Map<Position, Optional<Furniture>> furnitureMap) {
         final Position nextPos = dir.move(pos);
-        return !isPositionWithoutEntity(nextPos, entityMap)
+        return isPositionWithEntity(nextPos, entityMap)
         || isPositionWithInteractivFurniture(nextPos, furnitureMap);
     }
 
