@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.Transient;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,7 +19,11 @@ import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
+import it.unibo.oop.relario.model.entities.furniture.api.FurnitureFactory;
+import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureFactoryImpl;
+import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureType;
 import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
+import it.unibo.oop.relario.model.map.FurnitureGenerator;
 import it.unibo.oop.relario.model.map.LivingBeingsGenerator;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
@@ -35,28 +41,318 @@ final class TestInteractions {
     
     private int depth;
     private int width;
-    // private Position pos;
-    // private Direction dir;
     private Map<Position, Optional<LivingBeing>> entityMap;
     private Map<Position, Optional<Furniture>> furnitureMap;
+    private List<Position> obstructingFurniture;
+    private List<Position> interactiveFurniture;
+    private List<Position> obstructingEntity;
+    private List<Position> interactiveEntity;
 
     /**
      * Sets up the testing.
      */
     @BeforeEach
     void setUp() {
-        depth = 5;
-        width = 5;
+        depth = 10;
+        width = 15;
         entityMap = new HashMap<>();
         furnitureMap = new HashMap<>();
-        for (int i = 0; i < depth; i++) {
-            for (int j = 0; j < width; j++) {
+        obstructingFurniture = new ArrayList<>();
+        interactiveFurniture = new ArrayList<>();
+        obstructingEntity = new ArrayList<>();
+        interactiveEntity = new ArrayList<>();
+        for (int j = 0; j < depth; j++) {
+            for (int i = 0; i < width; i++) {
                 Position p = new PositionImpl(i, j);
                 entityMap.put(p, Optional.empty());
                 furnitureMap.put(p, Optional.empty());
             }
         }
+    }
+
+    void furnitureSetup() {
+        FurnitureFactory ff = new FurnitureFactoryImpl();
+        Position p;
+
+        //armorstand
+        p = new PositionImpl(0, 0);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(4, 0);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(8, 0);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(9, 7);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(0, 8);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(3, 9);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(7, 9);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        
+        //statue
+        p = new PositionImpl(2, 0);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        obstructingFurniture.add(p);
+        p = new PositionImpl(6, 0);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        obstructingFurniture.add(p);
+        p = new PositionImpl(9, 1);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        obstructingFurniture.add(p);
+        p = new PositionImpl(9, 9);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        obstructingFurniture.add(p);
+        p = new PositionImpl(5, 9);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        obstructingFurniture.add(p);
+        p = new PositionImpl(0, 2);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        obstructingFurniture.add(p);
+        p = new PositionImpl(0, 6);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        obstructingFurniture.add(p);
+        
+        //vase
+        p = new PositionImpl(0, 3);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(0, 5);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(9, 3);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(9, 5);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        
+        //carpet
+        p = new PositionImpl(2, 3);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(2, 4);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(2, 5);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        
+        p = new PositionImpl(3, 3);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(3, 4);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(3, 5);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        
+        p = new PositionImpl(4, 3);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(4, 4);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(4, 5);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        
+        p = new PositionImpl(5, 3);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(5, 4);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(5, 5);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        
+        p = new PositionImpl(6, 3);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(6, 4);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(6, 5);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        
+        p = new PositionImpl(7, 3);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(7, 4);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        p = new PositionImpl(7, 5);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        interactiveFurniture.add(p);
+        
+        //chest
+        p = new PositionImpl(3, 1);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.CHEST)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        p = new PositionImpl(5, 1);
+        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.CHEST)));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+        
+        //wardrobe
+        p = new PositionImpl(3, 8);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.WARDROBE)));
+        obstructingFurniture.add(p);
+        p = new PositionImpl(5, 8);
+        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.WARDROBE)));
+        obstructingFurniture.add(p);
+        
+        //trapdor
+        p = new PositionImpl(4, 7);
+        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.TRAPDOOR)));
+        interactiveFurniture.add(p);
+        
+    }
+    
+    void entitySetup() {
+        
+        
         // entityMap.put(new PositionImpl(0, 0), Optional.of(new MainCharacterImpl()));
+    }
+
+    @Test
+    void testBorderMovement() {
+        Position pos = new PositionImpl(0,0);
+        Direction dir;
+
+        for (int j = 0; j < depth; j++) {
+            for (int i = 0; i < width; i++) {
+                pos = new PositionImpl(i, j);
+
+                dir = Direction.UP;
+                if (pos.getY() > 0) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+                
+                dir = Direction.RIGHT;
+                if (pos.getX() < width - 1) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+
+                dir = Direction.LEFT;
+                if (pos.getX() > 0) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+
+                dir = Direction.DOWN;
+                if (pos.getY() < depth - 1) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+            }
+        }
+    }
+
+    @Test
+    void testFurnitureMovement() {
+        furnitureSetup();
+
+        Position pos = new PositionImpl(0,0);
+        Direction dir;
+        Position nextPos;
+
+        for (int j = 0; j < depth; j++) {
+            for (int i = 0; i < width; i++) {
+                pos = new PositionImpl(i, j);
+                
+                dir = Direction.UP;
+                nextPos = dir.move(pos);
+                if(!obstructingFurniture.contains(nextPos) 
+                && furnitureMap.get(nextPos) != null 
+                && nextPos.getX() >= 0 
+                && nextPos.getX() < width 
+                && nextPos.getY() >= 0 
+                && nextPos.getY() < depth) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+                
+                dir = Direction.LEFT;
+                nextPos = dir.move(pos);
+                if(!obstructingFurniture.contains(nextPos) 
+                && furnitureMap.get(nextPos) != null 
+                && nextPos.getX() >= 0 
+                && nextPos.getX() < width 
+                && nextPos.getY() >= 0 
+                && nextPos.getY() < depth) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+
+                dir = Direction.RIGHT;
+                nextPos = dir.move(pos);
+                if(!obstructingFurniture.contains(nextPos) 
+                && furnitureMap.get(nextPos) != null 
+                && nextPos.getX() >= 0 
+                && nextPos.getX() < width 
+                && nextPos.getY() >= 0 
+                && nextPos.getY() < depth) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+
+                dir = Direction.DOWN;
+                nextPos = dir.move(pos);
+                if(!obstructingFurniture.contains(nextPos) 
+                && furnitureMap.get(nextPos) != null 
+                && nextPos.getX() >= 0 
+                && nextPos.getX() < width 
+                && nextPos.getY() >= 0 
+                && nextPos.getY() < depth) {
+                    assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                } else {
+                    assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+                }
+            }
+        }
+    }
+
+    @Test
+    void testEntityMovement() {
+        entitySetup();
+    }
+
+    @Test
+    void testMovement() {
+        furnitureSetup();
+        entitySetup();
     }
 
     /**
@@ -64,28 +360,10 @@ final class TestInteractions {
      */
     @Test
     void testCanMove() {
-        final Position pos = new PositionImpl(0,0);
-        Direction dir;
-
-        dir = Direction.UP;
-        System.out.println("UP");
-        System.out.println(entityMap.get(dir.move(pos)));
-        assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
-        
-        dir = Direction.RIGHT;
-        System.out.println("RIGHT");
-        System.out.println(entityMap.get(dir.move(pos)));
-        assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
-
-        dir = Direction.LEFT;
-        System.out.println("LEFT");
-        System.out.println(entityMap.get(dir.move(pos)));
-        assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
-
-        dir = Direction.DOWN;
-        System.out.println("DOWN");
-        System.out.println(entityMap.get(dir.move(pos)));
-        assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
+        testBorderMovement();
+        testFurnitureMovement();
+        testEntityMovement();
+        testMovement();
     }
 
     /**
