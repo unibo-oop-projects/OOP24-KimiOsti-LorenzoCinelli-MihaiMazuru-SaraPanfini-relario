@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.menu.Command;
 import it.unibo.oop.relario.model.menu.MenuElement;
+import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
@@ -53,6 +54,7 @@ public final class MainMenuView extends JPanel {
             gridc.gridy++;
         }
 
+        this.addKeyListener(new GameKeyListener(view, controller));
         this.add(this, BorderLayout.CENTER);
     }
 
