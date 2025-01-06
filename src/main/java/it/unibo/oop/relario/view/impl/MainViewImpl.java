@@ -91,9 +91,9 @@ public final class MainViewImpl implements MainView {
 
     @Override
     public JPanel getPanel(final String name) {
-        for (var comp : mainPanel.getComponents()) {
-            if (comp.getName() != null && comp.getName().equals(name)) {
-                return (JPanel) comp;
+        for (var p: panels.keySet()) {
+            if (panels.get(p).equals(name)) {
+                return p;
             }
         }
         return null;
