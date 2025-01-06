@@ -85,6 +85,8 @@ public final class MainViewImpl implements MainView {
         this.previousPanel = this.currentPanel;
         this.currentPanel = panelName;
         layout.show(mainPanel, this.currentPanel);
+
+        this.getPanel(this.currentPanel).requestFocus();
     } 
 
     @Override
