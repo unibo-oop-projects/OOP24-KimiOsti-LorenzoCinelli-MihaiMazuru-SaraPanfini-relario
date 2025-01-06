@@ -79,25 +79,25 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     @Override
     public Furniture createRandomWalkableFurnitureEmpty(final Position pos) {
         matchingProperties = filterByPropriety(FurniturePropriety.WALKABLE);
-        return createWalkableFurnitureByItemEmpty(pos, matchingProperties.get(random.nextInt(matchingTypes.size())));
+        return createWalkableFurnitureByItemEmpty(pos, matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
     @Override
     public Furniture createRandomWalkableFurniture(final Position pos) {
         matchingProperties = filterByPropriety(FurniturePropriety.WALKABLE);
-        return createWalkableFurnitureByItem(pos, matchingProperties.get(random.nextInt(matchingTypes.size())));
+        return createWalkableFurnitureByItem(pos, matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
     @Override
     public Furniture createRandomInteractiveFurniture(final Position pos) {
         matchingProperties = filterByPropriety(FurniturePropriety.INTERACTIVE);
-        return createInteractiveFurnitureByItem(pos,matchingProperties.get(random.nextInt(matchingTypes.size())));
+        return createInteractiveFurnitureByItem(pos,matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
     @Override
     public Furniture createRandomObstructingFurniture(final Position pos) {
         matchingProperties = filterByPropriety(FurniturePropriety.OBSTRUCTING);
-        return createObstructingFurnitureByItem(pos, matchingProperties.get(random.nextInt(matchingTypes.size())));
+        return createObstructingFurnitureByItem(pos, matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
     private List<FurnitureType> filterByPropriety(final FurniturePropriety type) {
