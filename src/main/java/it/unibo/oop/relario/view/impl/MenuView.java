@@ -22,7 +22,7 @@ import it.unibo.oop.relario.view.api.MainView;
 /**
  * View implementation for the main menu.
  */
-public final class MainMenuView extends JPanel {
+public final class MenuView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private final static int INSETS = 3;
@@ -35,7 +35,7 @@ public final class MainMenuView extends JPanel {
      * @param view is the main view that contains all the game panels.
      * @param elements are the menu elements that need to be added to the view.
      */
-    public MainMenuView(final MainView view, final List<MenuElement> elements, 
+    public MenuView(final MainView view, final List<MenuElement> elements, 
     final MainController controller) {
         this.view = view;
         this.controller = controller;

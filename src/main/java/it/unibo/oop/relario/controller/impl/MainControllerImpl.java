@@ -6,7 +6,7 @@ import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
-import it.unibo.oop.relario.controller.api.MainMenuController;
+import it.unibo.oop.relario.controller.api.MenuController;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.model.map.RoomGenerator;
 import it.unibo.oop.relario.view.api.MainView;
@@ -20,7 +20,7 @@ public final class MainControllerImpl implements MainController {
     private final CombatController combat;
     private final GameController game;
     private final InventoryController inventory;
-    private final MainMenuController mainMenu;
+    private final MenuController mainMenu;
     private final MainView view;
     private final RoomGenerator roomGenerator;
     private Optional<Room> curRoom;
@@ -37,7 +37,7 @@ public final class MainControllerImpl implements MainController {
         this.combat = new CombatControllerImpl(this.view);
         this.game = new GameControllerImpl(this, this.view);
         this.inventory = new InventoryControllerImpl(this, this.view);
-        this.mainMenu = new MainMenuControllerImpl(this.view);
+        this.mainMenu = new MenuControllerImpl(this.view);
         this.view.panelsSetup();
     }
 
@@ -57,7 +57,7 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public MainMenuController getMainMenuController() {
+    public MenuController getMenuController() {
         return this.mainMenu;
     }
 

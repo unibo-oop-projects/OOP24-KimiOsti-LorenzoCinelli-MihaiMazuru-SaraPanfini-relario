@@ -46,9 +46,9 @@ public final class MainViewImpl implements MainView {
 
     @Override
     public void panelsSetup() {
-        mainPanel.add(new MainMenuView(this, this.mainController.getMainMenuController().getStartMenuElements(), 
+        mainPanel.add(new MenuView(this, this.mainController.getMenuController().getStartMenuElements(), 
         this.mainController), GameState.MENU);
-        mainPanel.add(new MainMenuView(this, this.mainController.getMainMenuController().getInGameMenuElements(), 
+        mainPanel.add(new MenuView(this, this.mainController.getMenuController().getInGameMenuElements(), 
         this.mainController), GameState.MENU_IN_GAME);
         mainPanel.add(new GameView(this.mainController), GameState.GAME);
         mainPanel.add(new InventoryView(this.mainController), GameState.INVENTORY);
