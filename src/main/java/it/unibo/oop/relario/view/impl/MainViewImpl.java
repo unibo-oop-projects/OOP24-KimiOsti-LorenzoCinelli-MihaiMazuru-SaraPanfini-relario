@@ -65,6 +65,18 @@ public final class MainViewImpl implements MainView {
         
         final JPanel combatView = new CombatView();
         panels.put(combatView, GameState.COMBAT);
+
+        this.panelsSetFocusable();
+    }
+
+    /**
+     * Sets focusable any panel and adds it to the main panel.
+     */
+    private void panelsSetFocusable() {
+        for (var p: panels.keySet()) {
+            p.setFocusable(true);
+            mainPanel.add(p, panels.get(p));
+        }
     }
 
     @Override
