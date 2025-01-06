@@ -28,11 +28,11 @@ public enum FurnitureType {
     CHEST("Chest", FurniturePropriety.INTERACTIVE);
 
     private final String furnitureType;
-    private final String furniturePropriety;
+    private final FurniturePropriety furniturePropriety;
 
-    FurnitureType(final String type, final String furnitureType) {
+    FurnitureType(final String type, final FurniturePropriety furniturePropriety) {
         this.furnitureType = type;
-        this.furniturePropriety = furnitureType;
+        this.furniturePropriety = furniturePropriety;
     }
 
     /**
@@ -47,7 +47,7 @@ public enum FurnitureType {
      * Retrieves the furniutre item's propriety.
      * @return the furniture item's propriety.
      */
-    public String getFurniturePropriety() {
+    public FurniturePropriety getFurniturePropriety() {
         return this.furniturePropriety;
     }
 }
