@@ -35,7 +35,7 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 /**
  * Test class for the {@link Interactions} class.
  */
-final class TestInteractions {
+final class InteractionsTest {
 
     private int depth;
     private int width;
