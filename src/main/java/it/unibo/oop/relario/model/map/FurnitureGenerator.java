@@ -6,9 +6,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
-import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItemFactory;
-import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureItemFactoryImpl;
+import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
+import it.unibo.oop.relario.model.entities.furniture.api.FurnitureFactory;
+import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureFactoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
@@ -29,7 +29,7 @@ public final class FurnitureGenerator {
     public static final int WALKABLE_ITEMS_SIZE = 3;
 
     private final Random random = new Random();
-    private final FurnitureItemFactory furnitureFactory = new FurnitureItemFactoryImpl();
+    private final FurnitureFactory furnitureFactory = new FurnitureFactoryImpl();
 
     /**
      * Generates and places all the items in the room randomly.
@@ -40,7 +40,7 @@ public final class FurnitureGenerator {
         final int interactiveItems = FURNITURE_ITEMS_NUMBER - obstructiveItems;
 
 
-        placeFurniture(room, obstructiveItems, this.furnitureFactory::createObstructingFurnitureItem);
+        placeFurniture(room, obstructiveItems, this.furnitureFactory::createObstructingItemFurniture);
         placeFurniture(room, interactiveItems / 3, this.furnitureFactory::createInteractiveFurnitureItemEmpty);
         placeFurniture(room, interactiveItems - (interactiveItems / 3), this.furnitureFactory::createInteractiveFurnitureItem);
         placeWalkableFurniture(room);
@@ -62,7 +62,7 @@ public final class FurnitureGenerator {
         }
     }*/
 
-    private void placeFurniture(final Room room, final int itemsNumber, final Function<Position, FurnitureItem> createItem) {
+    private void placeFurniture(final Room room, final int itemsNumber, final Function<Position, Furniture> createItem) {
         int placedItems = 0;
 
         while (placedItems < itemsNumber) {
@@ -80,7 +80,7 @@ public final class FurnitureGenerator {
         while (placedItems < WALKABLE_ITEMS_NUMBER) {
             final Position initialPosition = getRandomInnerPosition(room);
             if (isAreaAvailable(room, getArea(initialPosition))) {
-                final FurnitureItem walkableItem = random.nextBoolean() 
+                final Furniture walkableItem = random.nextBoolean() 
                 ? this.furnitureFactory.createWalkableFurnitureItem(initialPosition)
                 : this.furnitureFactory.createWalkableFurnitureItemEmpty(initialPosition);
                 getArea(initialPosition).forEach(p -> room.addEntity(p, walkableItem));
