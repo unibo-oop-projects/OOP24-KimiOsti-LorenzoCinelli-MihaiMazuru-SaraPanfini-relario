@@ -52,12 +52,6 @@ public interface MainCharacter extends LivingBeing {
     int getLife();
 
     /**
-     * Gets the current life of the player.
-     * @return how many life points the player has.
-     */
-    int getLife();
-
-    /**
      * Represents the attacking action of the player.
      * @return the damage inflicted by the player's attack.
      */

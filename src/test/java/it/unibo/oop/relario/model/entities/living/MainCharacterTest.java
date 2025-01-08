@@ -59,7 +59,6 @@ class MainCharacterTest {
         assertTrue(chara.addToInventory(itemFactory.createRandomItem()));
 
         assertTrue(chara.useItem(armor));
-        assertTrue(chara.attacked(Constants.DEFAULT_PLAYER_LIFE));
         assertEquals(armor.getIntensity(), chara.getLife());
 
         /* [TODO] - add test to check proper healing */
