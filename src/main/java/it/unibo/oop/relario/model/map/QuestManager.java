@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.model.quest.QuestFactory;
@@ -56,8 +58,12 @@ public class QuestManager {
         if (quest.isEmpty()) {
             return;
         }
+        final Entity keyEntity = quest.get().getKeyEntity();
+        if (keyEntity instanceof InventoryItem) {
+            // keyEntity = new FurnitureItemFactoryImpl().createInteractiveFurnitureItem(null, keyEntity);
+        }
         
-        room.addEntity(null, quest.get().getKeyEntity()); //room.getAvailablePosition()??
+        room.addEntity(null, keyEntity); //room.getAvailablePosition()??
         room.setQuest(quest);
 
     }
