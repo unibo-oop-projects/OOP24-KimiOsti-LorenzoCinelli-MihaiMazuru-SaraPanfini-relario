@@ -2,6 +2,8 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,6 +20,7 @@ public final class MainViewImpl implements MainView {
     private final JFrame frame;
     private final JPanel mainPanel;
     private final MainController mainController;
+    private final Map<JPanel, String> panels = new HashMap<>();
     private String previousPanel;
     private String currentPanel;
 
@@ -46,10 +49,34 @@ public final class MainViewImpl implements MainView {
 
     @Override
     public void panelsSetup() {
-        mainPanel.add(new MainMenuView(this.mainController), GameState.MENU);
-        mainPanel.add(new GameView(this.mainController), GameState.GAME);
-        mainPanel.add(new InventoryView(this.mainController), GameState.INVENTORY);
-        mainPanel.add(new CombatView(), GameState.COMBAT);
+        final JPanel startMenuView = new MenuView(this, 
+        this.mainController.getMenuController().getStartMenuElements(), this.mainController);
+        panels.put(startMenuView, GameState.MENU);
+
+        final JPanel inGameMenuView = new MenuView(this, 
+        this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
+        panels.put(inGameMenuView, GameState.MENU_IN_GAME);
+
+        final JPanel gameView = new GameView(this.mainController);
+        panels.put(gameView, GameState.GAME);
+
+        final JPanel inventoryView = new InventoryView(this.mainController);
+        panels.put(inventoryView, GameState.INVENTORY);
+        
+        final JPanel combatView = new CombatView();
+        panels.put(combatView, GameState.COMBAT);
+
+        this.panelsSetFocusable();
+    }
+
+    /**
+     * Sets focusable any panel and adds it to the main panel.
+     */
+    private void panelsSetFocusable() {
+        for (var p: panels.keySet()) {
+            p.setFocusable(true);
+            mainPanel.add(p, panels.get(p));
+        }
     }
 
     @Override
@@ -58,13 +85,15 @@ public final class MainViewImpl implements MainView {
         this.previousPanel = this.currentPanel;
         this.currentPanel = panelName;
         layout.show(mainPanel, this.currentPanel);
+
+        this.getPanel(this.currentPanel).requestFocus();
     } 
 
     @Override
     public JPanel getPanel(final String name) {
-        for (var comp : mainPanel.getComponents()) {
-            if (comp.getName() != null && comp.getName().equals(name)) {
-                return (JPanel) comp;
+        for (var p: panels.keySet()) {
+            if (panels.get(p).equals(name)) {
+                return p;
             }
         }
         return null;

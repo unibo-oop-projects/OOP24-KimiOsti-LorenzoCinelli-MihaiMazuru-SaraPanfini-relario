@@ -30,5 +30,5 @@ public interface Position {
     boolean equals(Object pos);
 
     @Override
-    public int hashCode();
+    int hashCode();
 }

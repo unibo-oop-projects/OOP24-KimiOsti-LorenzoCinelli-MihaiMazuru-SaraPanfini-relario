@@ -20,7 +20,7 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
 
     private final Map<FurnitureType, String> furnitureInfo = new EnumMap<>(FurnitureType.class);
     private final Random random = new Random();
-    private List<FurnitureType> matchingTypes;
+    private List<FurnitureType> matchingProperties;
     private String desc;
 
     /**
@@ -78,29 +78,29 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
 
     @Override
     public Furniture createRandomWalkableFurnitureEmpty(final Position pos) {
-        matchingTypes = filterByType(FurniturePropriety.WALKABLE);
-        return createWalkableFurnitureByItemEmpty(pos, matchingTypes.get(random.nextInt(matchingTypes.size())));
+        matchingProperties = filterByPropriety(FurniturePropriety.WALKABLE);
+        return createWalkableFurnitureByItemEmpty(pos, matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
     @Override
     public Furniture createRandomWalkableFurniture(final Position pos) {
-        matchingTypes = filterByType(FurniturePropriety.WALKABLE);
-        return createWalkableFurnitureByItem(pos, matchingTypes.get(random.nextInt(matchingTypes.size())));
+        matchingProperties = filterByPropriety(FurniturePropriety.WALKABLE);
+        return createWalkableFurnitureByItem(pos, matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
     @Override
     public Furniture createRandomInteractiveFurniture(final Position pos) {
-        matchingTypes = filterByType(FurniturePropriety.INTERACTIVE);
-        return createInteractiveFurnitureByItem(pos,matchingTypes.get(random.nextInt(matchingTypes.size())));
+        matchingProperties = filterByPropriety(FurniturePropriety.INTERACTIVE);
+        return createInteractiveFurnitureByItem(pos,matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
     @Override
     public Furniture createRandomObstructingFurniture(final Position pos) {
-        matchingTypes = filterByType(FurniturePropriety.OBSTRUCTING);
-        return createObstructingFurnitureByItem(pos, matchingTypes.get(random.nextInt(matchingTypes.size())));
+        matchingProperties = filterByPropriety(FurniturePropriety.OBSTRUCTING);
+        return createObstructingFurnitureByItem(pos, matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
-    private List<FurnitureType> filterByType(final String type) {
+    private List<FurnitureType> filterByPropriety(final FurniturePropriety type) {
         return furnitureInfo.keySet().stream()
         .filter(t -> t.getFurniturePropriety().equals(type)).toList();
     }
