@@ -28,7 +28,7 @@ public class GameLoop extends Thread {
         long prevCycleTS = System.currentTimeMillis();
 
         view.renderFloor(this.model.getDimension());
-        view.renderTextures(this.processModel(this.model.getFurniture()));
+        view.renderTextures(ResourceLocator.processModel(this.model.getFurniture()));
 
         while (running) {
             long currCycleTS = System.currentTimeMillis();
