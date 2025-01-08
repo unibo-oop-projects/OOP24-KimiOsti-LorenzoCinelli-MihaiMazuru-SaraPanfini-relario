@@ -25,4 +25,10 @@ public interface Position {
      * @param newY the destination value for the y coordinate.
      */
     void setY(int newY);
+
+    @Override
+    boolean equals(Object pos);
+
+    @Override
+    int hashCode();
 }
