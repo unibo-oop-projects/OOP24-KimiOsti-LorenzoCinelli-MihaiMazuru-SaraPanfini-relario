@@ -6,11 +6,13 @@ import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.model.entities.npc.NpcFactoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.model.quest.QuestFactory;
 import it.unibo.oop.relario.model.quest.QuestFactoryImpl;
+import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
  * 
@@ -64,6 +66,10 @@ public class QuestManager {
         }
         
         room.addEntity(null, keyEntity); //room.getAvailablePosition()??
+        room.addEntity(new PositionImpl(room.getExit().getX() - 1, room.getExit().getY() - 1), 
+        new NpcFactoryImpl().createQuestNpc(new PositionImpl(room.getExit().getX() - 1, room.getExit().getY() - 1), 
+        quest.get().getDescription()));
+
         room.setQuest(quest);
 
     }
