@@ -17,12 +17,6 @@ public interface MainCharacter extends LivingBeing {
     void setPosition(Position position);
 
     /**
-     * Reveals the current player direction.
-     * @return the current direction the player is facing.
-     */
-    Direction getDirection();
-
-    /**
      * Asks whether the player is moving.
      * @return true if the player is moving, false otherwise.
      */
