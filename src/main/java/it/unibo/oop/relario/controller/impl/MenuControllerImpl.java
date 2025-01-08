@@ -23,7 +23,7 @@ public final class MenuControllerImpl implements MenuController {
     public MenuControllerImpl(final MainView view) {
         menuModel = new MenuManager();
         this.view = view;
-        this.view.showPanel(GameState.MENU);
+        this.view.showPanel(GameState.MENU.getState());
     }
 
     public List<MenuElement> getInGameMenuElements() {

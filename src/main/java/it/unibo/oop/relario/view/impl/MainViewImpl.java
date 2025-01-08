@@ -33,8 +33,8 @@ public final class MainViewImpl implements MainView {
         this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
         this.frameSetup();
-        this.currentPanel = GameState.NONE;
-        this.previousPanel = GameState.NONE;
+        this.currentPanel = GameState.NONE.getState();
+        this.previousPanel = GameState.NONE.getState();
         this.frame.add(mainPanel);
         this.frame.setVisible(true);
     }
@@ -51,20 +51,20 @@ public final class MainViewImpl implements MainView {
     public void panelsSetup() {
         final JPanel startMenuView = new MenuView(this, 
         this.mainController.getMenuController().getStartMenuElements(), this.mainController);
-        panels.put(startMenuView, GameState.MENU);
+        panels.put(startMenuView, GameState.MENU.getState());
 
         final JPanel inGameMenuView = new MenuView(this, 
         this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
-        panels.put(inGameMenuView, GameState.MENU_IN_GAME);
+        panels.put(inGameMenuView, GameState.MENU_IN_GAME.getState());
 
         final JPanel gameView = new GameView(this.mainController);
-        panels.put(gameView, GameState.GAME);
+        panels.put(gameView, GameState.GAME.getState());
 
         final JPanel inventoryView = new InventoryView(this.mainController);
-        panels.put(inventoryView, GameState.INVENTORY);
+        panels.put(inventoryView, GameState.INVENTORY.getState());
         
         final JPanel combatView = new CombatView();
-        panels.put(combatView, GameState.COMBAT);
+        panels.put(combatView, GameState.COMBAT.getState());
 
         this.panelsSetFocusable();
     }
