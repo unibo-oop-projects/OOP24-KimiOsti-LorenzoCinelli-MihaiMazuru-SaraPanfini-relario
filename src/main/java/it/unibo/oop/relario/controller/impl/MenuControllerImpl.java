@@ -38,9 +38,11 @@ public final class MenuControllerImpl implements MenuController {
     }
 
     @Override
-    public void notify(Event event) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notify'");
+    public void notify(final Event event) {
+        if (event.equals(Event.ESCAPE) && 
+        this.view.getCurrentPanel().equals(GameState.MENU_IN_GAME.getState())) {
+            this.view.showPreviousPanel();
+        }
     }
 
 }
