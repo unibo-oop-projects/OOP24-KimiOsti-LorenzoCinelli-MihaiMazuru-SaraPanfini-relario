@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
-import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
+import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.utils.api.Dimension;
@@ -37,7 +37,7 @@ public final class RoomImpl implements Room {
     private final MainCharacter player;
     private final Dimension dimension;
     private final Map<Position, LivingBeing> population = new HashMap<>();
-    private final Map<Position, FurnitureItem> furniture = new HashMap<>();
+    private final Map<Position, Furniture> furniture = new HashMap<>();
     private final Position entry;
     private final Position exit;
     private final Set<Position> unavailableCells = new HashSet<>();
@@ -96,7 +96,7 @@ public final class RoomImpl implements Room {
     }
 
     @Override
-    public Map<Position, FurnitureItem> getFurniture() {
+    public Map<Position, Furniture> getFurniture() {
         return Map.copyOf(this.furniture);
     }
 
@@ -120,12 +120,12 @@ public final class RoomImpl implements Room {
     public void addEntity(final Position position, final Entity entity) {
         if (entity instanceof LivingBeing) {
             addCharacter(position, (LivingBeing) entity);
-        } else if (entity instanceof FurnitureItem) {
-            addFurniture(position, (FurnitureItem) entity);
+        } else if (entity instanceof Furniture) {
+            addFurniture(position, (Furniture) entity);
         }
     }
 
-    private void addFurniture(final Position position, final FurnitureItem furniture) {
+    private void addFurniture(final Position position, final Furniture furniture) {
         this.furniture.put(position, furniture);
         this.unavailableCells.addAll(adjacentCells(position, furniture));
     }
@@ -180,7 +180,7 @@ public final class RoomImpl implements Room {
     }
 
     private Set<Position> adjacentCells(final Position position, final Entity entity) {
-        final int rangeX = entity instanceof FurnitureItem ? EXCLUSION_RANGE : CHARACTERS_EXCLUSION_RANGE;
+        final int rangeX = entity instanceof Furniture ? EXCLUSION_RANGE : CHARACTERS_EXCLUSION_RANGE;
         final int rangeY = EXCLUSION_RANGE;
 
         return IntStream.rangeClosed(position.getX() - rangeX, position.getX() + rangeX)

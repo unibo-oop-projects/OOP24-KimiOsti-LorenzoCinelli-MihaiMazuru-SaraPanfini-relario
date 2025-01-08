@@ -1,7 +1,7 @@
 package it.unibo.oop.relario.model.quest;
 
-import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 
 /**
  * 
@@ -14,7 +14,7 @@ public interface QuestFactory {
      * @param keyEntity
      * @return TODO
      */
-    Quest createCollectItemQuest(MainCharacter player, Entity keyEntity);
+    Quest createCollectItemQuest(MainCharacter player, InventoryItemType keyItem);
 
     /**
      * 
