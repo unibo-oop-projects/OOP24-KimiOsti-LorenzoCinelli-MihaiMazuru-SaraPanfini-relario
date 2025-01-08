@@ -59,9 +59,13 @@ class MainCharacterTest {
         assertTrue(chara.addToInventory(itemFactory.createRandomItem()));
 
         assertTrue(chara.useItem(armor));
+        chara.attacked(Constants.DEFAULT_PLAYER_LIFE);
         assertEquals(armor.getIntensity(), chara.getLife());
 
-        /* [TODO] - add test to check proper healing */
+        assertTrue(chara.useItem(healing));
+        assertEquals(armor.getIntensity() + healing.getIntensity(), chara.getLife());
+
+        assertFalse(chara.useItem(healing));
 
         assertTrue(chara.discardItem(chara.getItems().get(0)));
     }
@@ -123,8 +127,10 @@ class MainCharacterTest {
         chara.useItem(oldTutu);
 
         for (int i = 0; i < 3; i++) {
-            assertTrue(chara.attacked(Constants.DEFAULT_PLAYER_LIFE / 3));
+            chara.attacked(Constants.DEFAULT_PLAYER_LIFE / 3);
+            assertTrue(chara.getLife() > 0);
         }
-        assertFalse(chara.attacked(Constants.DEFAULT_PLAYER_LIFE));
+        chara.attacked(Constants.DEFAULT_PLAYER_LIFE);
+        assertEquals(0, chara.getLife());
     }
 }
