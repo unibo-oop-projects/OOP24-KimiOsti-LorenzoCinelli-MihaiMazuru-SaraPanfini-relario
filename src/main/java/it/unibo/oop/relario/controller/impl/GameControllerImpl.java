@@ -47,6 +47,7 @@ public final class GameControllerImpl implements GameController {
             (GameView) this.view.getPanel(GameState.GAME),
             this.controller.getCurRoom().get()
         );
+        this.gameLoop.start();
     }
 
     private boolean progressRoom() {
