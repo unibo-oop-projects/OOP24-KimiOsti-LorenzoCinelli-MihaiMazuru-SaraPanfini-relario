@@ -90,13 +90,17 @@ public final class MainCharacterImpl implements MainCharacter {
     }
 
     @Override
-    public boolean attacked(final int damage) {
+    public void attacked(final int damage) {
         this.life = this.life + (this.armor.isEmpty() ? 0 : this.armor.get().getIntensity()) >= damage
             ? this.life - damage + (this.armor.isEmpty() ? 0 : this.armor.get().getIntensity()) : 0;
         if (!this.armor.isEmpty()) {
             this.armor.get().decreaseDurability();
         }
-        return this.life > 0;
+    }
+
+    @Override
+    public int getLife() {
+        return this.life;
     }
 
     @Override
