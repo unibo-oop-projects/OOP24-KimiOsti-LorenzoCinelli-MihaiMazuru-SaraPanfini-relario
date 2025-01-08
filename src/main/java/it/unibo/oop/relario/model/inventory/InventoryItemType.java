@@ -37,7 +37,10 @@ public enum InventoryItemType {
     COIN(EffectType.NONE),
 
     /** A gemstone with no effect. */
-    GEMSTONE(EffectType.NONE);
+    GEMSTONE(EffectType.NONE),
+
+    /** A key with no effect. */
+    KEY(EffectType.NONE);
 
     private final EffectType effect;
 

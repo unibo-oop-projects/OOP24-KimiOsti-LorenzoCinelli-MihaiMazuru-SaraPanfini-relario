@@ -4,48 +4,68 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.model.quest.QuestFactory;
 import it.unibo.oop.relario.model.quest.QuestFactoryImpl;
-import it.unibo.oop.relario.model.quest.QuestType;
+
+/**
+ * 
+ */
 
 public class QuestManager {
 
-    public static final int COLLECT_QUEST_INDEX = 2;
-    public static final int SOLVE_PUZZLE_QUEST_INDEX = 3;
-    public static final int DEFEAT_ENEMY_QUEST_INDEX = 4;
+    /** Index of the first room. */
+    public static final int FIRST_ROOM = 1;
+
+    /** Index of the second room. */
+    public static final int SECOND_ROOM = 2;
+
+    /** Index of the third room. */
+    public static final int THIRD_ROOM = 3;
+
+    /** Index of the fourth room. */
+    public static final int FOURTH_ROOM = 4;
+
+    /** Index of the fifth room. */
+    public static final int FIFTH_ROOM = 5;
 
     private final QuestFactory questFactory = new QuestFactoryImpl();
-    private final Map<QuestType, Optional<Quest>> questMap = new HashMap<>();
+    private final Map<Integer, Optional<Quest>> roomQuests = new HashMap<>();
 
-    public QuestManager() {
-        this.questMap.put(QuestType.COLLECTION_QUEST, Optional.of(null)); // createCollectQuest()
-        this.questMap.put(QuestType.SOLVE_PUZZLE_QUEST, Optional.of(this.questFactory.createSolvePuzzleQuest()));
-        this.questMap.put(QuestType.DEFEAT_ENEMY_QUEST, Optional.of(this.questFactory.createDefeatEnemyQuest()));
+    /**
+     * 
+     * @param player
+     */
+    public QuestManager(final MainCharacter player) {
+        this.roomQuests.put(FIRST_ROOM, Optional.empty());
+        this.roomQuests.put(SECOND_ROOM, Optional.of(this.questFactory.createCollectItemQuest(player, InventoryItemType.KEY)));
+        this.roomQuests.put(THIRD_ROOM, Optional.of(this.questFactory.createSolvePuzzleQuest()));
+        this.roomQuests.put(FOURTH_ROOM, Optional.of(this.questFactory.createDefeatEnemyQuest()));
+        this.roomQuests.put(FIFTH_ROOM, Optional.empty());      
     }
 
-    private void handleQuest(final Room room, final QuestType questType) {
-        final Optional<Quest> quest = this.questMap.get(questType);
-        if (quest.isPresent()) {
-            room.addEntity(null, quest.get().getKeyEntity());
+    /**
+     * 
+     * @param room
+     * @param indexRoom
+     */
+    public void assignQuest(final Room room, final int indexRoom) {
+        final Optional<Quest> quest = this.roomQuests.get(indexRoom);
+        if (quest.isEmpty()) {
+            return;
         }
+        final Entity keyEntity = quest.get().getKeyEntity();
+        if (keyEntity instanceof InventoryItem) {
+            // keyEntity = new FurnitureItemFactoryImpl().createInteractiveFurnitureItem(null, keyEntity);
+        }
+        
+        room.addEntity(null, keyEntity); //room.getAvailablePosition()??
         room.setQuest(quest);
+
     }
 
-    public void assigneQuest(final Room newRoom, final int indexRoom) {
-        switch (indexRoom) {
-            case COLLECT_QUEST_INDEX:
-                handleQuest(newRoom, QuestType.COLLECTION_QUEST);
-                break;
-            case SOLVE_PUZZLE_QUEST_INDEX:
-                handleQuest(newRoom, QuestType.SOLVE_PUZZLE_QUEST);
-                break;
-            case DEFEAT_ENEMY_QUEST_INDEX:
-                handleQuest(newRoom, QuestType.DEFEAT_ENEMY_QUEST);
-                break;
-            default:
-                return;
-        }
-    }
-    
 }
