@@ -2,12 +2,16 @@ package it.unibo.oop.relario.utils.impl;
 
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
-import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
+import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.utils.api.Position;
 
 /**
  * Static class for the game resource locator.
@@ -22,11 +26,27 @@ public final class ResourceLocator {
     private ResourceLocator() { }
 
     /**
-     * Method to bind a texture to a given furniture item.
-     * @param furnitureItem a furniture item.
-     * @return the texture representing @param furnitureItem
+     * Returns a map containing the textures to be represented and their position on the map.
+     * @param model the model entities to be processed.
+     * @return a map containing textures and their position.
      */
-    public static ImageIcon getFurnitureTexture(final FurnitureItem furnitureItem) {
+    public static Map<Position, ImageIcon> processModel(Map<Position, ? extends Entity> model) {
+        final var res = new HashMap<Position, ImageIcon>();
+        model.forEach((k, v) -> {
+            res.put(k, ResourceLocator.getTexture(v));
+        });
+        return Map.copyOf(res);
+    }
+
+    private static ImageIcon getTexture(final Entity entity) {
+        if (entity instanceof Furniture) {
+            return ResourceLocator.getFurnitureTexture((Furniture) entity);
+        } else if (entity instanceof LivingBeing) {
+            return ResourceLocator.getLivingBeingTexture((LivingBeing) entity, ((LivingBeing) entity).getDirection());
+        }
+    }
+
+    private static ImageIcon getFurnitureTexture(final Furniture furnitureItem) {
         final StringBuilder imgURL = new StringBuilder(TEXTURES_URL);
         imgURL.append(FURNITURE_TEXTURE_URL);
 
@@ -39,13 +59,7 @@ public final class ResourceLocator {
         );
     }
 
-    /**
-     * Method to bind a texture to a given living being.
-     * @param livingBeing a living being.
-     * @param direction the direction towards where it's facing.
-     * @return the texture representing @param livingBeing facing @param direction
-     */
-    public static ImageIcon getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
+    private static ImageIcon getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
         final StringBuilder imgURL = new StringBuilder(TEXTURES_URL);
         imgURL.append(LIVING_TEXTURE_URL);
 

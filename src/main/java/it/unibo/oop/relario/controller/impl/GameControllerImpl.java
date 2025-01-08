@@ -4,6 +4,7 @@ import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
+import it.unibo.oop.relario.view.impl.GameView;
 
 /**
  * Implementation for the Game Controller.
@@ -12,7 +13,7 @@ public final class GameControllerImpl implements GameController {
 
     private final MainController controller;
     private final MainView view;
-    private boolean exploring;
+    private Thread gameLoop;
 
     /**
      * Constructor for the game controller.
@@ -22,26 +23,35 @@ public final class GameControllerImpl implements GameController {
     public GameControllerImpl(final MainController controller, final MainView view) {
         this.controller = controller;
         this.view = view;
-        this.exploring = false;
     }
 
     @Override
     public void run() {
-        this.exploring = true;
-        this.view.showPanel(GameState.GAME);
-        this.mainLoop();
+        if (this.progressRoom()) {
+            this.startGameLoop();
+        }
     }
 
     @Override
     public void resume(boolean isExploring) {
-        this.exploring = isExploring;
-        if (!this.exploring) {
+        if (!isExploring) {
             this.view.showPanel(GameState.GAME_OVER);
         } else {
-            this.mainLoop();
+            this.startGameLoop();
         }
     }
 
-    private void mainLoop() {
+    private void startGameLoop() {
+        this.view.showPanel(GameState.GAME);
+        this.gameLoop = new GameLoop(
+            (GameView) this.view.getPanel(GameState.GAME),
+            this.controller.getCurRoom().get()
+        );
+        this.gameLoop.start();
+    }
+
+    private boolean progressRoom() {
+        this.controller.moveToNextRoom();
+        return this.controller.getCurRoom().isPresent();
     }
 }

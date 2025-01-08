@@ -42,9 +42,14 @@ public interface MainCharacter extends LivingBeing {
     /**
      * Inflicts some damage to the player.
      * @param damage the damage inflicted to the player.
-     * @return true if the player survives the attack, false otherwise.
      */
-    boolean attacked(int damage);
+    void attacked(int damage);
+
+    /**
+     * Inspects the health state of the player.
+     * @return the current life of the player.
+     */
+    int getLife();
 
     /**
      * Gets the current life of the player.

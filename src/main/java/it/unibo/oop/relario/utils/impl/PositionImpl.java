@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.utils.impl;
 
+import java.util.Objects;
+
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -38,5 +40,22 @@ public final class PositionImpl implements Position {
     @Override
     public void setY(final int newY) {
         this.y = newY;
+    }
+
+    @Override
+    public boolean equals(final Object pos) {
+        if (this == pos) {
+            return true;
+        }
+        if (pos == null || getClass() != pos.getClass()) {
+            return false;
+        }
+        final Position p = (Position) pos;
+        return Objects.equals(this.getX(), p.getX()) && Objects.equals(this.getY(), p.getY());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

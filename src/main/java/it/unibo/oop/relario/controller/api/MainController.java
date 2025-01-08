@@ -26,7 +26,7 @@ public interface MainController {
     /**
      * @return the main menu Controller.
      */
-    MainMenuController getMainMenuController();
+    MenuController getMenuController();
 
     /**
      * @return the current room in the gameplay.
