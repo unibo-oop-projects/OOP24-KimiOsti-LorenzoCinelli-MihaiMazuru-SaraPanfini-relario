@@ -74,12 +74,11 @@ public final class CombatControllerImpl implements CombatController {
 
     private void attack(final boolean isPlayerAttacking) {
         if (isPlayerAttacking) {
-            enemy.attacked(player.attack());
+            this.enemy.attacked(this.player.attack());
         } else {
-            player.attacked(enemy.getDamage());
+            this.player.attacked(this.enemy.getDamage());
         }
         //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
-        this.view.showPanel(this.view.getCurrentPanel());
 
         if(enemy.getLife() <= 0) {
             player.addToInventory(enemy.getReward());
@@ -93,9 +92,10 @@ public final class CombatControllerImpl implements CombatController {
             Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU.getState()));
             timer.setRepeats(false);
             timer.start();
+        } else if (isPlayerAttacking) {
+            this.attack(false);
         }
 
-        this.attack(false);
     }
 
     private void mercyRequest() {
