@@ -52,6 +52,10 @@ public abstract class LivingBeingImpl implements LivingBeing {
         setPosition(this.direction.move(position));
     }
 
+    public final Direction getDirection() {
+        return this.direction;
+    }
+
     /**
      * Allows to change the direction of the living beings.
      */
