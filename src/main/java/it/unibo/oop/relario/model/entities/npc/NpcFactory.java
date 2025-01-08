@@ -37,4 +37,6 @@ public interface NpcFactory {
      */
     Npc createNpcWithLoot(Position position, InventoryItem loot);
 
+    Npc createQuestNpc(Position position, String dialogue);
+
 }
