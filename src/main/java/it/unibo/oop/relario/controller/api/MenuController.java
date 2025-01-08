@@ -7,7 +7,7 @@ import it.unibo.oop.relario.model.menu.MenuElement;
 /**
  * Controller for managing mani menu options.
  */
-public interface MenuController {
+public interface MenuController extends Observer {
 
     /**
      * Retrieves all the menu elements in the in game menu.

@@ -5,6 +5,7 @@ import java.util.List;
 import it.unibo.oop.relario.controller.api.MenuController;
 import it.unibo.oop.relario.model.menu.MenuElement;
 import it.unibo.oop.relario.model.menu.MenuManager;
+import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
@@ -26,12 +27,20 @@ public final class MenuControllerImpl implements MenuController {
         this.view.showPanel(GameState.MENU);
     }
 
+    @Override
     public List<MenuElement> getInGameMenuElements() {
         return this.menuModel.getInGameMenu().getElem();
     }
 
+    @Override
     public List<MenuElement> getStartMenuElements() {
         return this.menuModel.getStartMenu().getElem();
+    }
+
+    @Override
+    public void notify(Event event) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notify'");
     }
 
 }
