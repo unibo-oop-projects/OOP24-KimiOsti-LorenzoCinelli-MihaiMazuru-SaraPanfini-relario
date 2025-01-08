@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.furniture.api.FurnitureFactory;
+import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
@@ -98,6 +100,22 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     public Furniture createRandomObstructingFurniture(final Position pos) {
         matchingProperties = filterByPropriety(FurniturePropriety.OBSTRUCTING);
         return createObstructingFurnitureByItem(pos, matchingProperties.get(random.nextInt(matchingProperties.size())));
+    }
+
+    @Override
+    public Furniture createInteractiveFurnitureLoot(Position pos, InventoryItem loot) {
+        matchingProperties = filterByPropriety(FurniturePropriety.INTERACTIVE);
+        final FurnitureType type = matchingProperties.get(random.nextInt(matchingProperties.size()));
+        desc = furnitureInfo.get(type);
+        return new InteractiveFurnitureImpl(pos, type.getName(), desc, type, loot);
+    }
+
+    @Override
+    public Furniture createWalkableFurnitureEnemy(Position pos, Enemy enemy) {
+        matchingProperties = filterByPropriety(FurniturePropriety.INTERACTIVE);
+        final FurnitureType type = matchingProperties.get(random.nextInt(matchingProperties.size()));
+        desc = furnitureInfo.get(type);
+        return new WalkableFurnitureImpl(pos, type.getName(), desc, type, enemy);
     }
 
     private List<FurnitureType> filterByPropriety(final FurniturePropriety type) {
