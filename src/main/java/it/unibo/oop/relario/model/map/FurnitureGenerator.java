@@ -40,9 +40,8 @@ public final class FurnitureGenerator {
         final int interactiveItems = FURNITURE_ITEMS_NUMBER - obstructiveItems;
 
 
-        placeFurniture(room, obstructiveItems, this.furnitureFactory::createObstructingItemFurniture);
-        placeFurniture(room, interactiveItems / 3, this.furnitureFactory::createInteractiveFurnitureItemEmpty);
-        placeFurniture(room, interactiveItems - (interactiveItems / 3), this.furnitureFactory::createInteractiveFurnitureItem);
+        placeFurniture(room, obstructiveItems, this.furnitureFactory::createRandomObstructingFurniture);
+        placeFurniture(room, interactiveItems, this.furnitureFactory::createRandomInteractiveFurniture);
         placeWalkableFurniture(room);
     }
 
@@ -81,8 +80,8 @@ public final class FurnitureGenerator {
             final Position initialPosition = getRandomInnerPosition(room);
             if (isAreaAvailable(room, getArea(initialPosition))) {
                 final Furniture walkableItem = random.nextBoolean() 
-                ? this.furnitureFactory.createWalkableFurnitureItem(initialPosition)
-                : this.furnitureFactory.createWalkableFurnitureItemEmpty(initialPosition);
+                ? this.furnitureFactory.createRandomWalkableFurniture(initialPosition)
+                : this.furnitureFactory.createRandomWalkableFurnitureEmpty(initialPosition);
                 getArea(initialPosition).forEach(p -> room.addEntity(p, walkableItem));
                 placedItems++;
             }
