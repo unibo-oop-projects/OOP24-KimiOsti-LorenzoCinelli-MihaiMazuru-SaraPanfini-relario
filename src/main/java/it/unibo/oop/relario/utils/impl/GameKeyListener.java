@@ -3,26 +3,21 @@ package it.unibo.oop.relario.utils.impl;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import it.unibo.oop.relario.controller.api.MainController;
-import it.unibo.oop.relario.model.entities.living.MainCharacter;
-import it.unibo.oop.relario.view.api.MainView;
+import it.unibo.oop.relario.controller.api.Observer;
 
 /**
- * Implemention for handling the movement of the main character.
+ * Implemention for managing input keys.
  */
 public final class GameKeyListener implements KeyListener {
 
-    private final MainView view;
-    private final MainController controller;
+    private final Observer observer;
 
     /**
      * Initializes the game game listener.
-     * @param view is the main view that contains references to all game panels.
-     * @param controller is the main controller that contains references to all controllers. 
+     * @param observer is the controller that 
      */
-    public GameKeyListener(final MainView view, final MainController controller) {
-        this.view = view;
-        this.controller = controller;
+    public GameKeyListener(final Observer observer) {
+        this.observer = observer;
     }
 
     @Override
@@ -31,23 +26,8 @@ public final class GameKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(final KeyEvent e) {
-        if (this.view.getCurrentPanel().equals(GameState.INVENTORY)) {
-            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                this.view.showPreviousPanel();
-            }
-        } else if (this.view.getCurrentPanel().equals(GameState.GAME)) {
-            if (e.getKeyCode() == KeyEvent.VK_I) {
-                this.view.showPanel(GameState.INVENTORY);
-            } else if (e.getKeyCode() == KeyEvent.VK_E) {
-                //gestione interazioni;
-            } else if (isMovementKey(e)) {
-                final MainCharacter player = controller.getCurRoom().get().getPlayer();
-                player.setMovement(convertDirection(e));
-                player.update();
-                //this.view.getCurrentPanel().draw(); //aggiungere metodo draw   
-            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                this.view.showPanel(GameState.MENU_IN_GAME);
-            }
+        if (this.isValidKey(e)) {
+            this.observer.notify(convertKey(e));
         }
     }
 
@@ -67,20 +47,37 @@ public final class GameKeyListener implements KeyListener {
     }
 
     /**
+     * Checks if the key pressed is a valid key.
+     * @param e is the key pressed.
+     * @return true if the key pressed is a valid key, false otherwise.
+     */
+    private boolean isValidKey(final KeyEvent e) {
+        final int keyCode = e.getKeyCode();
+        return  isMovementKey(e) || keyCode == KeyEvent.VK_ESCAPE || 
+        keyCode == KeyEvent.VK_I ||keyCode == KeyEvent.VK_E;
+    }
+
+    /**
      * Converts the the key pressed into a direction.
      * @param e is the key pressed.
      * @return the direction corresponding to the key pressed.
      */
-    private static Direction convertDirection(final KeyEvent e) {
+    private static Event convertKey(final KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP: 
-                return Direction.UP;
+                return Event.MOVE_UP;
             case KeyEvent.VK_DOWN: 
-                return Direction.DOWN;
+                return Event.MOVE_DOWN;
             case KeyEvent.VK_RIGHT: 
-                return Direction.RIGHT;
+                return Event.MOVE_RIGHT;
             case KeyEvent.VK_LEFT: 
-                return Direction.LEFT;
+                return Event.MOVE_LEFT;
+            case KeyEvent.VK_ESCAPE:
+                return Event.ESCAPE;
+            case KeyEvent.VK_I:
+                return Event.INVENTORY;
+            case KeyEvent.VK_E:
+                return Event.INTERACT;
             default: throw new IllegalArgumentException("Illegal pressed key");
         }
     }
