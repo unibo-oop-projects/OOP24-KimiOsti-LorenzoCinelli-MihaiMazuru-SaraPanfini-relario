@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
@@ -20,7 +21,8 @@ public final class MainViewImpl implements MainView {
     private final JFrame frame;
     private final JPanel mainPanel;
     private final MainController mainController;
-    private final Map<JPanel, String> panels = new HashMap<>();
+    private final Map<JPanel, String> panels;
+    private final GameKeyListener keyListener;
     private String previousPanel;
     private String currentPanel;
 
@@ -32,10 +34,13 @@ public final class MainViewImpl implements MainView {
         this.mainController = mainController;
         this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
+        this.panels = new HashMap<>();
+        this.keyListener = new GameKeyListener(null);
         this.frameSetup();
         this.currentPanel = GameState.NONE.getState();
         this.previousPanel = GameState.NONE.getState();
         this.frame.add(mainPanel);
+        this.frame.addKeyListener(keyListener);
         this.frame.setVisible(true);
     }
 
