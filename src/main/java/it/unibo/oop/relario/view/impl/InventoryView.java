@@ -17,6 +17,7 @@ public class InventoryView extends JPanel {
     private static final long serialVersionUID = 1L;
 
     // private final MainController controller;
+    private int buttonSelected = 0;
 
     /**
      * Initializes the inventory view.
@@ -39,10 +40,11 @@ public class InventoryView extends JPanel {
         ActionListener radioButtonsListener = e -> {
             for (int j = 0; j < radioButtons.length; j++) {
                 if (radioButtons[j].isSelected()) {
-
+                    buttonSelected = j;
                 }
             }
         };
+        radioButtons[buttonSelected].setSelected(true);
 
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i] = new JRadioButton(list.get(i));
@@ -64,12 +66,13 @@ public class InventoryView extends JPanel {
         final JPanel equippedPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         equippedPanel.add(new JLabel("equipped items"));
         this.add(equippedPanel, BorderLayout.EAST);
+    }
 
-        /*final JPanel commandsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        commandsPanel.add(new JLabel("commands list"));
-        commandsPanel.add(new JLabel("commands list"));
-        commandsPanel.add(new JLabel("commands list"));
-        commandsPanel.add(new JLabel("commands list"));
-        this.add(commandsPanel, BorderLayout.SOUTH);*/
+    /**
+     * Returns the position of the selected item in the inventory.
+     * @return the index of the selected item.
+     */
+    final public int getItemSelected() {
+        return buttonSelected;
     }
 }
