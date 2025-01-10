@@ -1,12 +1,14 @@
 package it.unibo.oop.relario.view.impl;
 
-import javax.swing.JButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import it.unibo.oop.relario.controller.api.MainController;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * View implementation for inventory navigation.
@@ -31,9 +33,24 @@ public class InventoryView extends JPanel {
         final JPanel itemListPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         itemListPanel.add(new JLabel("item list"));
         final var list = controller.getInventoryController().getItemsNames();
-        for (final var name : list) {
-            itemListPanel.add(new JButton(name));
+        JRadioButton[] radioButtons = new JRadioButton[list.size()];
+        ButtonGroup bg = new ButtonGroup();
+                
+        ActionListener radioButtonsListener = e -> {
+            for (int j = 0; j < radioButtons.length; j++) {
+                if (radioButtons[j].isSelected()) {
+
+                }
+            }
+        };
+
+        for (int i = 0; i < radioButtons.length; i++) {
+            radioButtons[i] = new JRadioButton(list.get(i));
+            bg.add(radioButtons[i]);
+            itemListPanel.add(radioButtons[i]);
+            radioButtons[i].addActionListener(radioButtonsListener);
         }
+
         itemListPanel.add(new JLabel(list.toString()));
         this.add(itemListPanel, BorderLayout.WEST);
 
@@ -48,11 +65,11 @@ public class InventoryView extends JPanel {
         equippedPanel.add(new JLabel("equipped items"));
         this.add(equippedPanel, BorderLayout.EAST);
 
-        final JPanel commandsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        /*final JPanel commandsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         commandsPanel.add(new JLabel("commands list"));
         commandsPanel.add(new JLabel("commands list"));
         commandsPanel.add(new JLabel("commands list"));
         commandsPanel.add(new JLabel("commands list"));
-        this.add(commandsPanel, BorderLayout.SOUTH);
+        this.add(commandsPanel, BorderLayout.SOUTH);*/
     }
 }
