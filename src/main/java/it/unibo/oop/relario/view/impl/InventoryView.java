@@ -34,7 +34,7 @@ public class InventoryView extends JPanel {
         itemListPanel.add(new JLabel("item list"));
         final var list = controller.getInventoryController().getItemsNames();
         JRadioButton[] radioButtons = new JRadioButton[list.size()];
-        ButtonGroup bg = new ButtonGroup();
+        ButtonGroup buttonGroup = new ButtonGroup();
                 
         ActionListener radioButtonsListener = e -> {
             for (int j = 0; j < radioButtons.length; j++) {
@@ -46,7 +46,7 @@ public class InventoryView extends JPanel {
 
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i] = new JRadioButton(list.get(i));
-            bg.add(radioButtons[i]);
+            buttonGroup.add(radioButtons[i]);
             itemListPanel.add(radioButtons[i]);
             radioButtons[i].addActionListener(radioButtonsListener);
         }
