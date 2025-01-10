@@ -39,24 +39,20 @@ public final class GameKeyListener implements KeyListener {
     public void keyReleased(final KeyEvent e) {
     } 
 
-    /**
-     * Checks if the key pressed is a valid key for movement.
-     * @param e is the key pressed.
-     * @return true if the the key pressed is a valid key for movement, false otherwise.
-     */
-    private boolean isMovementKey(final int keyCode) {
-        return keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_S ||
-        keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_A;
-    }
+    // private boolean isMovementKey(final int keyCode) {
+    //     return keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_S ||
+    //     keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_A;
+    // }
 
     /**
      * Checks if the key pressed is a valid key.
-     * @param e is the key pressed.
+     * @param keyCode is the key pressed.
      * @return true if the key pressed is a valid key, false otherwise.
      */
     private boolean isValidKey(final int keyCode) {
-        return  isMovementKey(keyCode) || keyCode == KeyEvent.VK_ESCAPE || 
-        keyCode == KeyEvent.VK_I || keyCode == KeyEvent.VK_E;
+        return this.keys.keySet().contains(keyCode);
+        // return  isMovementKey(keyCode) || keyCode == KeyEvent.VK_ESCAPE || 
+        // keyCode == KeyEvent.VK_I || keyCode == KeyEvent.VK_E;
     }
 
     /**
@@ -70,6 +66,8 @@ public final class GameKeyListener implements KeyListener {
         this.keys.put(KeyEvent.VK_I, Event.INVENTORY);
         this.keys.put(KeyEvent.VK_E, Event.INTERACT);
         this.keys.put(KeyEvent.VK_ESCAPE, Event.ESCAPE);
+        this.keys.put(KeyEvent.VK_ENTER, Event.USE_ITEM);
+        this.keys.put(KeyEvent.VK_BACK_SPACE, Event.DISCARD_ITEM);
     }
 
     /**
