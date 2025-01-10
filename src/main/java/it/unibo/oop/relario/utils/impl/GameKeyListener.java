@@ -39,11 +39,6 @@ public final class GameKeyListener implements KeyListener {
     public void keyReleased(final KeyEvent e) {
     } 
 
-    // private boolean isMovementKey(final int keyCode) {
-    //     return keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_S ||
-    //     keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_A;
-    // }
-
     /**
      * Checks if the key pressed is a valid key.
      * @param keyCode is the key pressed.
@@ -51,8 +46,6 @@ public final class GameKeyListener implements KeyListener {
      */
     private boolean isValidKey(final int keyCode) {
         return this.keys.keySet().contains(keyCode);
-        // return  isMovementKey(keyCode) || keyCode == KeyEvent.VK_ESCAPE || 
-        // keyCode == KeyEvent.VK_I || keyCode == KeyEvent.VK_E;
     }
 
     /**
