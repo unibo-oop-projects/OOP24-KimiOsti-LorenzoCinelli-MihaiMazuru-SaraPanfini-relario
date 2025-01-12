@@ -25,11 +25,11 @@ public enum Event {
 
     /** Represents the action for interacting with an entity. */
     INTERACT,
-    
-    /** Represents the action for using the focused item in the inventory */
+
+    /** Represents the action for using the focused item in the inventory. */
     USE_ITEM,
-    
-    /** Represents the action for discarding the focused item in the inventory */
+
+    /** Represents the action for discarding the focused item in the inventory. */
     DISCARD_ITEM;
 
 }
