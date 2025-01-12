@@ -16,6 +16,8 @@ import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
+/* [TODO]: aggiungere le scritte, e gestire l'aggiornamento frame by frame */
+
 /**
  * View implementations for the exploration phase of the game.
  */
@@ -55,7 +57,43 @@ public final class GameView extends JPanel {
      * @param textures the textures to be rendered on the background, apart from the floor.
      */
     public void renderBackground(Dimension dimension, Map<Position, Image> textures) {
-        /* [TODO]: implement method. */
+        this.mapDimension = dimension;
+        this.tileDimension = this.min(
+            this.getHeight() / this.mapDimension.getHeight(),
+            this.getWidth() / this.mapDimension.getWidth()
+        );
+
+        this.resizePanels();
+
+        for (int y = 0; y < dimension.getHeight(); y++) {
+            for (int x = 0; x < dimension.getWidth(); x++) {
+                this.background.add(
+                    this.computeIndex(x, y),
+                    new BackgroundTile(null)
+                );
+                this.add(
+                    this.background.get(this.computeIndex(x, y)),
+                    this.computeIndex(x, y)
+                );
+            }
+        }
+
+        for (final var texture : textures.entrySet()) {
+            final var tile = new BackgroundTile(
+                texture.getValue().getScaledInstance(
+                    this.tileDimension,
+                    this.tileDimension,
+                    Image.SCALE_SMOOTH
+                )
+            );
+
+            this.background.get(this.computeIndex(texture.getKey().getX(), texture.getKey().getY())).add(tile);
+            this.background.remove(this.computeIndex(texture.getKey().getX(), texture.getKey().getY()));
+            this.background.add(
+                this.computeIndex(texture.getKey().getX(), texture.getKey().getY()),
+                tile
+            );
+        }
     }
 
     /**
@@ -77,11 +115,23 @@ public final class GameView extends JPanel {
         return x < y ? x : y;
     }
 
-    private int computeIndex(Position pos) {
-        if(this.mapDimension != null) {
-            return pos.getX() + pos.getY() * this.mapDimension.getWidth();
-        } else {
-            return 0;
-        }
+    private void resizePanels() {
+        this.mapPanel.setPreferredSize(
+            new java.awt.Dimension(
+                this.mapDimension.getWidth() * this.tileDimension,
+                this.mapDimension.getHeight() * this.tileDimension
+            )
+        );
+
+        this.upperPanel.setPreferredSize(
+            new java.awt.Dimension(
+                this.getWidth(),
+                (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 3   
+            )
+        );
+    }
+
+    private int computeIndex(int x, int y) {
+        return this.mapDimension == null ? 0 : (x + y * this.mapDimension.getWidth());
     }
 }
