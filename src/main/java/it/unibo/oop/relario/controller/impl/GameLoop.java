@@ -5,7 +5,10 @@ import it.unibo.oop.relario.view.impl.GameView;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
-public class GameLoop extends Thread {
+/**
+ * The thread running the game's main loop.
+ */
+public final class GameLoop extends Thread {
 
     private final GameView view;
     private final Room model;
@@ -51,5 +54,5 @@ public class GameLoop extends Thread {
     public void interrupt() {
         this.running = false;
     }
-    
+
 }
