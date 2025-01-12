@@ -26,6 +26,23 @@ public class InventoryView extends JPanel {
     private int buttonSelected = 0;
     private Font font;
 
+    private enum InventoryType {
+        ITEM_LIST("Item list"),
+        ITEM_DESCRIPTION("Item description"),
+        EQUIPPED_ITEMS("Equipped items");
+
+        private final String string;
+
+        private InventoryType(final String string) {
+            this.string = string;
+        }
+
+        @Override
+        public String toString() {
+            return string;
+        }
+    }
+
     /**
      * Initializes the inventory view.
      * @param controller the main controller of the game.
@@ -50,6 +67,31 @@ public class InventoryView extends JPanel {
         titlePanel.setBackground(Color.BLACK);
         titlePanel.add(titleLabel);
         return titlePanel;
+    }
+
+    private JPanel setupInventory(final InventoryController inventory, final InventoryType type) {
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        final JLabel label = new JLabel(type.toString());
+        label.setForeground(Color.WHITE);
+        label.setFont(font);
+        panel.setBackground(Color.BLACK);
+        panel.setAlignmentX(CENTER_ALIGNMENT);
+        switch (type) {
+            case ITEM_LIST:
+
+                break;
+            case ITEM_DESCRIPTION:
+
+                break;
+            case EQUIPPED_ITEMS:
+
+                break;
+            default:
+                break;
+        }
+        panel.add(label);
+        return panel;
     }
 
     private void setupList(final InventoryController inventory) {
