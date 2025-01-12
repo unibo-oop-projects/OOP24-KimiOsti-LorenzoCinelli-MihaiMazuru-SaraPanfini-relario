@@ -34,4 +34,9 @@ public final class NpcFactoryImpl implements NpcFactory {
         return new InteractiveNpc("", position, loot, dialoguesGenerator);
     }
 
+    @Override
+    public Npc createQuestNpc(Position position, String dialogue) {
+        return new QuestNpc("", position, dialogue);
+    }
+
 }

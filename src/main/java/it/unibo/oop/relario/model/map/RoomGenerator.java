@@ -53,9 +53,9 @@ public final class RoomGenerator {
      */
     private Room createNewRoom(final int indexRoom) {
         final Room newRoom = new RoomImpl(this.player, this.dimension, defaultEntry, defaultExit);
+        this.questManager.assignQuest(newRoom, indexRoom);
         this.furnitureGenerator.generateFurniture(newRoom);
         this.livingBeingsGenerator.generateLivingBeings(newRoom);
-        this.questManager.assignQuest(newRoom, indexRoom);
         return newRoom;
     }
 

@@ -54,7 +54,7 @@ public final class MenuView extends JPanel {
             gridc.gridy++;
         }
 
-        this.addKeyListener(new GameKeyListener(view, controller));
+        this.addKeyListener(new GameKeyListener(controller.getMenuController()));
         this.add(this, BorderLayout.CENTER);
     }
 
