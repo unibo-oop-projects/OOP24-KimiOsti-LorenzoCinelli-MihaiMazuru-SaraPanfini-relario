@@ -2,7 +2,6 @@ package it.unibo.oop.relario.controller.impl;
 
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.MainController;
-import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
@@ -46,8 +45,8 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void notify(Event e) {
         switch (e) {
-            case Event.INVENTORY -> this.view.showPanel(GameState.INVENTORY);
-            case Event.ESCAPE -> this.view.showPanel(GameState.MENU_IN_GAME);
+            case Event.INVENTORY -> this.view.showPanel(GameState.INVENTORY.getState());
+            case Event.ESCAPE -> this.view.showPanel(GameState.MENU_IN_GAME.getState());
             case Event.INTERACT -> this.handleInteraction();
             default -> /* [TODO]: handle movement events. */ { }
         }
