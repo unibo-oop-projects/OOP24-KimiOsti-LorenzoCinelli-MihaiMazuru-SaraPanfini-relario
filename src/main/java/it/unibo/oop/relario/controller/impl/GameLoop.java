@@ -12,7 +12,7 @@ public final class GameLoop extends Thread {
 
     private final GameView view;
     private final Room model;
-    private boolean running;
+    private boolean running; //NOPMD suppressed as it is a false positive due to multithreading.
 
     /**
      * Constructor for the game loop thread.
@@ -32,16 +32,16 @@ public final class GameLoop extends Thread {
 
         view.renderBackground(this.model.getDimension(), ResourceLocator.processModel(this.model.getFurniture()));
 
-        while (running) {
-            long currCycleTS = System.currentTimeMillis();
+        while (this.running) {
+            final long currCycleTS = System.currentTimeMillis();
             if (currCycleTS - prevCycleTS >= Constants.REFRESH_TIME) {
                 prevCycleTS = currCycleTS;
                 this.model.update();
                 this.view.renderTextures(ResourceLocator.processModel(this.model.getPopulation()));
             } else {
                 try {
-                    Thread.sleep(Constants.REFRESH_TIME - System.currentTimeMillis() + prevCycleTS);
-                } catch (Exception e) {
+                    sleep(Constants.REFRESH_TIME - System.currentTimeMillis() + prevCycleTS);
+                } catch (InterruptedException e) {
                     /*
                      * Exception is here ignored since the thread interruption means stopping the loop.
                      */
