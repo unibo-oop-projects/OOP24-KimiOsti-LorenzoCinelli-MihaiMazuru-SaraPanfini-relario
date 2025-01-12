@@ -1,6 +1,6 @@
 package it.unibo.oop.relario.utils.impl;
 
-import javax.swing.ImageIcon;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Locale;
@@ -30,23 +30,31 @@ public final class ResourceLocator {
      * @param model the model entities to be processed.
      * @return a map containing textures and their position.
      */
-    public static Map<Position, ImageIcon> processModel(Map<Position, ? extends Entity> model) {
-        final var res = new HashMap<Position, ImageIcon>();
+    public static Map<Position, Image> processModel(Map<Position, ? extends Entity> model) {
+        final var res = new HashMap<Position, Image>();
         model.forEach((k, v) -> {
             res.put(k, ResourceLocator.getTexture(v));
         });
         return Map.copyOf(res);
     }
 
-    private static ImageIcon getTexture(final Entity entity) {
+    private static Image getTexture(final Entity entity) {
         if (entity instanceof Furniture) {
             return ResourceLocator.getFurnitureTexture((Furniture) entity);
         } else if (entity instanceof LivingBeing) {
             return ResourceLocator.getLivingBeingTexture((LivingBeing) entity, ((LivingBeing) entity).getDirection());
+        } else {
+            return Toolkit.getDefaultToolkit().getImage(
+                new StringBuilder(TEXTURES_URL)
+                    .append(FURNITURE_TEXTURE_URL)
+                    .append("floor")
+                    .append(FILE_EXTENSION)
+                    .toString()   
+            );
         }
     }
 
-    private static ImageIcon getFurnitureTexture(final Furniture furnitureItem) {
+    private static Image getFurnitureTexture(final Furniture furnitureItem) {
         final StringBuilder imgURL = new StringBuilder(TEXTURES_URL);
         imgURL.append(FURNITURE_TEXTURE_URL);
 
@@ -54,12 +62,10 @@ public final class ResourceLocator {
             .append(furnitureItem.getType().getName().toLowerCase(Locale.ENGLISH))
             .append(FILE_EXTENSION);
 
-        return new ImageIcon(
-            Toolkit.getDefaultToolkit().getImage(imgURL.toString())
-        );
+        return Toolkit.getDefaultToolkit().getImage(imgURL.toString());
     }
 
-    private static ImageIcon getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
+    private static Image getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
         final StringBuilder imgURL = new StringBuilder(TEXTURES_URL);
         imgURL.append(LIVING_TEXTURE_URL);
 
@@ -90,8 +96,6 @@ public final class ResourceLocator {
         }
         imgURL.append(FILE_EXTENSION);
 
-        return new ImageIcon(
-            Toolkit.getDefaultToolkit().getImage(imgURL.toString())
-        );
+        return Toolkit.getDefaultToolkit().getImage(imgURL.toString());
     }
 }
