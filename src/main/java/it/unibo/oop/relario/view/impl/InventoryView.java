@@ -5,6 +5,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.border.Border;
 
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
@@ -54,9 +55,9 @@ public class InventoryView extends JPanel {
         this.setLayout(new BorderLayout());
         
         this.add(setupTitle(), BorderLayout.NORTH);
-        setupList(inventory);
-        setupDescription(inventory);
-        setupEquipped(inventory);
+        this.add(setupInventory(inventory, InventoryType.ITEM_LIST), BorderLayout.WEST);
+        this.add(setupInventory(inventory, InventoryType.ITEM_DESCRIPTION), BorderLayout.CENTER);
+        this.add(setupInventory(inventory, InventoryType.EQUIPPED_ITEMS), BorderLayout.EAST);
     }
 
     private JPanel setupTitle() {
@@ -77,34 +78,32 @@ public class InventoryView extends JPanel {
         label.setFont(font);
         panel.setBackground(Color.BLACK);
         panel.setAlignmentX(CENTER_ALIGNMENT);
+        panel.add(label);
         switch (type) {
             case ITEM_LIST:
-
+                setupList(inventory, panel);
                 break;
             case ITEM_DESCRIPTION:
-
+                setupDescription(inventory, panel);
                 break;
             case EQUIPPED_ITEMS:
-
+                setupEquipped(inventory, panel);
                 break;
             default:
-                break;
+                throw new UnsupportedOperationException();
         }
-        panel.add(label);
         return panel;
     }
 
-    private void setupList(final InventoryController inventory) {
-        final JPanel itemListPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        itemListPanel.add(new JLabel("item list"));
+    private void setupList(final InventoryController inventory, final JPanel panel) {
         final var list = inventory.getItemsNames();
         JRadioButton[] radioButtons = new JRadioButton[list.size()];
         ButtonGroup buttonGroup = new ButtonGroup();
 
         ActionListener radioButtonsListener = e -> {
-            for (int j = 0; j < radioButtons.length; j++) {
-                if (radioButtons[j].isSelected()) {
-                    buttonSelected = j;
+            for (int i = 0; i < radioButtons.length; i++) {
+                if (radioButtons[i].isSelected()) {
+                    buttonSelected = i;
                 }
             }
         };
@@ -113,28 +112,28 @@ public class InventoryView extends JPanel {
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i] = new JRadioButton(list.get(i));
             buttonGroup.add(radioButtons[i]);
-            itemListPanel.add(radioButtons[i]);
             radioButtons[i].addActionListener(radioButtonsListener);
+            radioButtons[i].setForeground(Color.WHITE);
+            radioButtons[i].setBackground(Color.BLACK);
+            panel.add(radioButtons[i]);
         }
-
-        itemListPanel.add(new JLabel(list.toString()));
-        this.add(itemListPanel, BorderLayout.WEST);
-
+        radioButtons[buttonSelected].setSelected(true);
     }
 
-    private void setupDescription(final InventoryController inventory) {
-        final JPanel descriptionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        descriptionPanel.add(new JLabel("item description"));
-        final int index = 0;
-        final var description = inventory.getItemFullDescription(index);
-        descriptionPanel.add(new JLabel(description));
-        this.add(descriptionPanel, BorderLayout.CENTER);
+    private void setupDescription(final InventoryController inventory, final JPanel panel) {
+        final var description = inventory.getItemFullDescription(buttonSelected);
+        final JLabel descriptionLabel = new JLabel(convertToHtmlString(description));
+        descriptionLabel.setForeground(Color.WHITE);
+        panel.add(descriptionLabel);
     }
 
-    private void setupEquipped(final InventoryController inventory) {
-        final JPanel equippedPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        equippedPanel.add(new JLabel("equipped items"));
-        this.add(equippedPanel, BorderLayout.EAST);
+    private void setupEquipped(final InventoryController inventory, final JPanel panel) {
+        
+    }
+
+    private String convertToHtmlString(final String string) {
+        String result = "<html>" + string + "</html>";
+        return result.replace("\n", "<br>");
     }
 
     /**
