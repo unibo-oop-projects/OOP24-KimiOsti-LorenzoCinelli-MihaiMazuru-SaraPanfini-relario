@@ -5,6 +5,7 @@ import java.util.List;
 import it.unibo.oop.relario.controller.api.MenuController;
 import it.unibo.oop.relario.model.menu.MenuElement;
 import it.unibo.oop.relario.model.menu.MenuManager;
+import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
@@ -23,15 +24,25 @@ public final class MenuControllerImpl implements MenuController {
     public MenuControllerImpl(final MainView view) {
         menuModel = new MenuManager();
         this.view = view;
-        this.view.showPanel(GameState.MENU);
+        this.view.showPanel(GameState.MENU.getState());
     }
 
+    @Override
     public List<MenuElement> getInGameMenuElements() {
         return this.menuModel.getInGameMenu().getElem();
     }
 
+    @Override
     public List<MenuElement> getStartMenuElements() {
         return this.menuModel.getStartMenu().getElem();
+    }
+
+    @Override
+    public void notify(final Event event) {
+        if (event.equals(Event.ESCAPE) && 
+        this.view.getCurrentPanel().equals(GameState.MENU_IN_GAME.getState())) {
+            this.view.showPreviousPanel();
+        }
     }
 
 }

@@ -3,34 +3,44 @@ package it.unibo.oop.relario.utils.impl;
 /**
  * Utility static class containing all the game phases.
  */
-public final class GameState {
+public enum GameState {
 
     /** Start menu phase. */
-    public static final String MENU = "Menu";
+    MENU("Menu"),
 
     /** In game menu phase */
-    public static final String MENU_IN_GAME = "Menu";
+    MENU_IN_GAME("InGameMenu"),
 
     /** Exploring phase. */
-    public static final String GAME = "Game";
+    GAME("Game"),
 
     /** Inventory phase. */
-    public static final String INVENTORY = "Inventory";
+    INVENTORY("Inventory"),
 
     /** Combat phase. */
-    public static final String COMBAT = "Combat";
+    COMBAT("Combat"),
 
     /** Game over. */
-    public static final String GAME_OVER = "GameOver";
+    GAME_OVER("GameOver"),
 
     /** End game. */
-    public static final String VICTORY = "Victory";
+    VICTORY("Victory"),
 
     /** Initial phase when application is lauched. */
-    public static final String NONE = null;
+    NONE(null);
 
-    private GameState() {
-        throw new UnsupportedOperationException();
+    private final String state;
+
+    GameState(final String state) {
+        this.state = state;
+    }
+
+    /**
+     * Retrieves the state of the game.
+     * @return the game state.
+     */
+    public String getState() {
+        return this.state;
     }
 
 }
