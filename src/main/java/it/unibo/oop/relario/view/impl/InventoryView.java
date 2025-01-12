@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.view.impl;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -7,9 +8,13 @@ import javax.swing.JRadioButton;
 
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.utils.impl.Constants;
+import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 
 /**
@@ -19,24 +24,32 @@ public class InventoryView extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private int buttonSelected = 0;
+    private Font font;
 
     /**
      * Initializes the inventory view.
-     * @param controller 
+     * @param controller the main controller of the game.
      */
     public InventoryView(final MainController controller) {
         final InventoryController inventory = controller.getInventoryController();
+        this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
+        // this.font.deriveFont(1.1f);
         this.setLayout(new BorderLayout());
-        setupTitle();
+        
+        this.add(setupTitle(), BorderLayout.NORTH);
         setupList(inventory);
         setupDescription(inventory);
         setupEquipped(inventory);
     }
 
-    private void setupTitle() {
-        final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        titlePanel.add(new JLabel("Inventory"));
-        this.add(titlePanel, BorderLayout.NORTH);
+    private JPanel setupTitle() {
+        final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        final JLabel titleLabel = new JLabel("Inventory");
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(font);
+        titlePanel.setBackground(Color.BLACK);
+        titlePanel.add(titleLabel);
+        return titlePanel;
     }
 
     private void setupList(final InventoryController inventory) {
