@@ -5,9 +5,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 /**
@@ -16,7 +18,6 @@ import java.awt.event.ActionListener;
 public class InventoryView extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    // private final MainController controller;
     private int buttonSelected = 0;
 
     /**
@@ -24,8 +25,8 @@ public class InventoryView extends JPanel {
      * @param controller 
      */
     public InventoryView(final MainController controller) {
-        // this.controller = controller;
-        this.setLayout(new BorderLayout(10, 10));
+        final InventoryController inventory = controller.getInventoryController();
+        this.setLayout(new BorderLayout());
 
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         titlePanel.add(new JLabel("Inventory"));
@@ -33,10 +34,10 @@ public class InventoryView extends JPanel {
 
         final JPanel itemListPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         itemListPanel.add(new JLabel("item list"));
-        final var list = controller.getInventoryController().getItemsNames();
+        final var list = inventory.getItemsNames();
         JRadioButton[] radioButtons = new JRadioButton[list.size()];
         ButtonGroup buttonGroup = new ButtonGroup();
-                
+
         ActionListener radioButtonsListener = e -> {
             for (int j = 0; j < radioButtons.length; j++) {
                 if (radioButtons[j].isSelected()) {
@@ -59,7 +60,7 @@ public class InventoryView extends JPanel {
         final JPanel descriptionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         descriptionPanel.add(new JLabel("item description"));
         final int index = 0;
-        final var description = controller.getInventoryController().getItemFullDescription(index);
+        final var description = inventory.getItemFullDescription(index);
         descriptionPanel.add(new JLabel(description));
         this.add(descriptionPanel, BorderLayout.CENTER);
 
@@ -72,7 +73,7 @@ public class InventoryView extends JPanel {
      * Returns the position of the selected item in the inventory.
      * @return the index of the selected item.
      */
-    final public int getItemSelected() {
+    public final int getItemSelected() {
         return buttonSelected;
     }
 }
