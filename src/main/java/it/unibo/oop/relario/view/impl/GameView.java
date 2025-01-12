@@ -35,7 +35,11 @@ public final class GameView extends JPanel {
     private Dimension mapDimension;
     private int tileDimension;
 
-    public GameView(MainController controller) {
+    /**
+     * The constructor for the game view.
+     * @param controller the observer for user input events.
+     */
+    public GameView(final MainController controller) {
         this.upperPanel = new JPanel();
         this.mapPanel = new JPanel();
         this.lowerPanel = new JPanel();
@@ -56,7 +60,7 @@ public final class GameView extends JPanel {
      * @param dimension the map dimension.
      * @param textures the textures to be rendered on the background, apart from the floor.
      */
-    public void renderBackground(Dimension dimension, Map<Position, Image> textures) {
+    public void renderBackground(final Dimension dimension, final Map<Position, Image> textures) {
         this.mapDimension = dimension;
         this.tileDimension = this.min(
             this.getHeight() / this.mapDimension.getHeight(),
@@ -100,18 +104,18 @@ public final class GameView extends JPanel {
      * Renders the scene's foreground, sizing the textures to fit on their background.
      * @param textures the textures to be rendered on the foreground of the scene.
      */
-    public void renderTextures(Map<Position, Image> textures) {
+    public void renderTextures(final Map<Position, Image> textures) {
         /* [TODO]: implement method. */
     }
 
-    private void setBackgroundColor(Color color) {
+    private void setBackgroundColor(final Color color) {
         this.setBackground(color);
         for (final var component : this.getComponents()) {
             component.setBackground(color);
         }
     }
 
-    private int min(int x, int y) {
+    private int min(final int x, final int y) {
         return x < y ? x : y;
     }
 
@@ -126,12 +130,12 @@ public final class GameView extends JPanel {
         this.upperPanel.setPreferredSize(
             new java.awt.Dimension(
                 this.getWidth(),
-                (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 3   
+                (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 3
             )
         );
     }
 
-    private int computeIndex(int x, int y) {
+    private int computeIndex(final int x, final int y) {
         return this.mapDimension == null ? 0 : (x + y * this.mapDimension.getWidth());
     }
 }
