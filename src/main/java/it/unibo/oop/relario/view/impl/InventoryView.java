@@ -27,11 +27,19 @@ public class InventoryView extends JPanel {
     public InventoryView(final MainController controller) {
         final InventoryController inventory = controller.getInventoryController();
         this.setLayout(new BorderLayout());
+        setupTitle();
+        setupList(inventory);
+        setupDescription(inventory);
+        setupEquipped(inventory);
+    }
 
+    private void setupTitle() {
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         titlePanel.add(new JLabel("Inventory"));
         this.add(titlePanel, BorderLayout.NORTH);
+    }
 
+    private void setupList(final InventoryController inventory) {
         final JPanel itemListPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         itemListPanel.add(new JLabel("item list"));
         final var list = inventory.getItemsNames();
@@ -57,13 +65,18 @@ public class InventoryView extends JPanel {
         itemListPanel.add(new JLabel(list.toString()));
         this.add(itemListPanel, BorderLayout.WEST);
 
+    }
+
+    private void setupDescription(final InventoryController inventory) {
         final JPanel descriptionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         descriptionPanel.add(new JLabel("item description"));
         final int index = 0;
         final var description = inventory.getItemFullDescription(index);
         descriptionPanel.add(new JLabel(description));
         this.add(descriptionPanel, BorderLayout.CENTER);
+    }
 
+    private void setupEquipped(final InventoryController inventory) {
         final JPanel equippedPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         equippedPanel.add(new JLabel("equipped items"));
         this.add(equippedPanel, BorderLayout.EAST);
@@ -73,7 +86,7 @@ public class InventoryView extends JPanel {
      * Returns the position of the selected item in the inventory.
      * @return the index of the selected item.
      */
-    public final int getItemSelected() {
+    public final int getSelectedItem() {
         return buttonSelected;
     }
 }
