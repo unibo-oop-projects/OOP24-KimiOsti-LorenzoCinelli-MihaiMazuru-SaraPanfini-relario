@@ -34,7 +34,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void resume(boolean isExploring) {
+    public void resume(final boolean isExploring) {
         if (!isExploring) {
             this.view.showPanel(GameState.GAME_OVER.getState());
         } else {
@@ -43,13 +43,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void notify(Event e) {
-        switch (e) {
-            case Event.INVENTORY -> this.view.showPanel(GameState.INVENTORY.getState());
-            case Event.ESCAPE -> this.view.showPanel(GameState.MENU_IN_GAME.getState());
-            case Event.INTERACT -> this.handleInteraction();
-            default -> /* [TODO]: handle movement events. */ { }
-        }
+    public void notify(final Event e) {
     }
 
     private void startGameLoop() {
