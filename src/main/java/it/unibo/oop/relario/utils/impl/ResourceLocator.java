@@ -1,7 +1,10 @@
 package it.unibo.oop.relario.utils.impl;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -21,7 +24,10 @@ public final class ResourceLocator {
     private static final String TEXTURES_URL = "resources/img/";
     private static final String FURNITURE_TEXTURE_URL = "furniture/";
     private static final String LIVING_TEXTURE_URL = "living/";
-    private static final String FILE_EXTENSION = ".png";
+    private static final String TEXTURE_EXTENSION = ".png";
+
+    private static final String FONT_URL = "resources/font/";
+    private static final String FONT_EXTENSION = ".ttf";
 
     private ResourceLocator() { }
 
@@ -38,6 +44,28 @@ public final class ResourceLocator {
         return Map.copyOf(res);
     }
 
+    /**
+     * Returns the desired font from the game resources.
+     * @param fontName the name of the font.
+     * @return the desired font.
+     */
+    public static Font getGameFont(String fontName) {
+        Font font;
+
+        try {
+            font = Font.createFont(
+                Font.TRUETYPE_FONT,
+                ResourceLocator.class.getResourceAsStream(
+                    new StringBuilder(FONT_URL).append(fontName.toLowerCase()).append(FONT_EXTENSION).toString()
+                )
+            );
+        } catch (FontFormatException | IOException e) {
+            font = null;
+        }
+
+        return font;
+    }
+
     private static Image getTexture(final Entity entity) {
         if (entity instanceof Furniture) {
             return ResourceLocator.getFurnitureTexture((Furniture) entity);
@@ -48,7 +76,7 @@ public final class ResourceLocator {
                 new StringBuilder(TEXTURES_URL)
                     .append(FURNITURE_TEXTURE_URL)
                     .append("floor")
-                    .append(FILE_EXTENSION)
+                    .append(TEXTURE_EXTENSION)
                     .toString()   
             );
         }
@@ -60,7 +88,7 @@ public final class ResourceLocator {
 
         imgURL
             .append(furnitureItem.getType().getName().toLowerCase(Locale.ENGLISH))
-            .append(FILE_EXTENSION);
+            .append(TEXTURE_EXTENSION);
 
         return Toolkit.getDefaultToolkit().getImage(imgURL.toString());
     }
@@ -94,7 +122,7 @@ public final class ResourceLocator {
                 imgURL.append("-right");
                 break;
         }
-        imgURL.append(FILE_EXTENSION);
+        imgURL.append(TEXTURE_EXTENSION);
 
         return Toolkit.getDefaultToolkit().getImage(imgURL.toString());
     }
