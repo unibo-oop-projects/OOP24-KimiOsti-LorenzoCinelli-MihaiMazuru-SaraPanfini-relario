@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
@@ -65,8 +66,9 @@ final class InteractionsTest {
     /**
      * Sets up the furniture.
      */
+    @Disabled
     void furnitureSetup() {
-        FurnitureFactory ff = new FurnitureFactoryImpl();
+        final FurnitureFactory ff = new FurnitureFactoryImpl();
         Position p;
 
         //armorstand
@@ -229,9 +231,10 @@ final class InteractionsTest {
     /**
      * Sets up entities.
      */
+    @Disabled
     void entitySetup() {
-        EnemyFactory ef = new EnemyFactoryImpl();
-        NpcFactory nf = new NpcFactoryImpl();
+        final EnemyFactory ef = new EnemyFactoryImpl();
+        final NpcFactory nf = new NpcFactoryImpl();
         Position p;
 
         //non interactive npc
@@ -282,10 +285,11 @@ final class InteractionsTest {
     /**
      * Clears the map, furniture and entities.
      */
+    @Disabled
     void clearMap() {
         for (int j = 0; j < depth; j++) {
             for (int i = 0; i < width; i++) {
-                Position p = new PositionImpl(i, j);
+                final Position p = new PositionImpl(i, j);
                 furnitureMap.put(p, Optional.empty());
                 entityMap.put(p, Optional.empty());
             }
@@ -301,7 +305,7 @@ final class InteractionsTest {
      */
     @Test
     void testBorderMovement() {
-        Position pos = new PositionImpl(0,0);
+        Position pos;
         Direction dir;
 
         for (int j = 0; j < depth; j++) {
@@ -356,7 +360,7 @@ final class InteractionsTest {
 
                 dir = Direction.UP;
                 nextPos = dir.move(pos);
-                if(!obstructingFurniture.contains(nextPos)
+                if (!obstructingFurniture.contains(nextPos)
                 && furnitureMap.get(nextPos) != null
                 && nextPos.getX() >= 0
                 && nextPos.getX() < width
@@ -369,7 +373,7 @@ final class InteractionsTest {
 
                 dir = Direction.LEFT;
                 nextPos = dir.move(pos);
-                if(!obstructingFurniture.contains(nextPos)
+                if (!obstructingFurniture.contains(nextPos)
                 && furnitureMap.get(nextPos) != null
                 && nextPos.getX() >= 0
                 && nextPos.getX() < width
@@ -382,7 +386,7 @@ final class InteractionsTest {
 
                 dir = Direction.RIGHT;
                 nextPos = dir.move(pos);
-                if(!obstructingFurniture.contains(nextPos)
+                if (!obstructingFurniture.contains(nextPos)
                 && furnitureMap.get(nextPos) != null
                 && nextPos.getX() >= 0
                 && nextPos.getX() < width
@@ -395,7 +399,7 @@ final class InteractionsTest {
 
                 dir = Direction.DOWN;
                 nextPos = dir.move(pos);
-                if(!obstructingFurniture.contains(nextPos)
+                if (!obstructingFurniture.contains(nextPos)
                 && furnitureMap.get(nextPos) != null
                 && nextPos.getX() >= 0
                 && nextPos.getX() < width
@@ -426,7 +430,7 @@ final class InteractionsTest {
 
                 dir = Direction.UP;
                 nextPos = dir.move(pos);
-                if(!obstructingEntity.contains(nextPos)
+                if (!obstructingEntity.contains(nextPos)
                 && entityMap.get(nextPos) != null
                 && nextPos.getX() >= 0
                 && nextPos.getX() < width
@@ -439,7 +443,7 @@ final class InteractionsTest {
 
                 dir = Direction.LEFT;
                 nextPos = dir.move(pos);
-                if(!obstructingEntity.contains(nextPos)
+                if (!obstructingEntity.contains(nextPos)
                 && entityMap.get(nextPos) != null
                 && nextPos.getX() >= 0
                 && nextPos.getX() < width
@@ -452,7 +456,7 @@ final class InteractionsTest {
 
                 dir = Direction.RIGHT;
                 nextPos = dir.move(pos);
-                if(!obstructingEntity.contains(nextPos)
+                if (!obstructingEntity.contains(nextPos)
                 && entityMap.get(nextPos) != null
                 && nextPos.getX() >= 0
                 && nextPos.getX() < width
@@ -465,7 +469,7 @@ final class InteractionsTest {
 
                 dir = Direction.DOWN;
                 nextPos = dir.move(pos);
-                if(!obstructingEntity.contains(nextPos)
+                if (!obstructingEntity.contains(nextPos)
                 && entityMap.get(nextPos) != null
                 && nextPos.getX() >= 0
                 && nextPos.getX() < width
@@ -504,7 +508,7 @@ final class InteractionsTest {
                 && nextPos.getY() >= 0
                 && nextPos.getY() < depth
                 && !obstructingFurniture.contains(nextPos)
-                && ! obstructingEntity.contains(nextPos)) {
+                && !obstructingEntity.contains(nextPos)) {
                     assertTrue(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
                 } else {
                     assertFalse(Interactions.canMove(pos, dir, depth, width, entityMap, furnitureMap));
