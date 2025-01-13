@@ -62,7 +62,7 @@ public class InventoryView extends JPanel {
 
     private JPanel setupTitle() {
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        final JLabel titleLabel = new JLabel("Inventory");
+        final JLabel titleLabel = new JLabel(convertToHtmlString("<b>Inventory</b>"));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(font);
         titlePanel.setBackground(Color.BLACK);
@@ -72,10 +72,12 @@ public class InventoryView extends JPanel {
 
     private JPanel setupInventory(final InventoryController inventory, final InventoryType type) {
         final JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        final JPanel subpanel = new JPanel();
         final JLabel label = new JLabel(type.toString());
-        label.setForeground(Color.WHITE);
+        label.setForeground(Color.LIGHT_GRAY);
         label.setFont(font);
+        subpanel.setBackground(Color.BLACK);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.BLACK);
         panel.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(label);
@@ -84,6 +86,7 @@ public class InventoryView extends JPanel {
                 setupList(inventory, panel);
                 break;
             case ITEM_DESCRIPTION:
+                label.setAlignmentX(CENTER_ALIGNMENT);
                 setupDescription(inventory, panel);
                 break;
             case EQUIPPED_ITEMS:
@@ -92,10 +95,12 @@ public class InventoryView extends JPanel {
             default:
                 throw new UnsupportedOperationException();
         }
+        panel.add(subpanel);
         return panel;
     }
 
     private void setupList(final InventoryController inventory, final JPanel panel) {
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         final var list = inventory.getItemsNames();
         final JRadioButton[] radioButtons = new JRadioButton[list.size()];
         final ButtonGroup buttonGroup = new ButtonGroup();
@@ -104,6 +109,8 @@ public class InventoryView extends JPanel {
             for (int i = 0; i < radioButtons.length; i++) {
                 if (radioButtons[i].isSelected()) {
                     buttonSelected = i;
+                    this.add(setupInventory(inventory, InventoryType.ITEM_DESCRIPTION), BorderLayout.CENTER);
+                    this.validate();
                 }
             }
         };
@@ -120,6 +127,7 @@ public class InventoryView extends JPanel {
     }
 
     private void setupDescription(final InventoryController inventory, final JPanel panel) {
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
         final var description = inventory.getItemFullDescription(buttonSelected);
         final JLabel descriptionLabel = new JLabel(convertToHtmlString(description));
         descriptionLabel.setForeground(Color.WHITE);
@@ -127,7 +135,7 @@ public class InventoryView extends JPanel {
     }
 
     private void setupEquipped(final InventoryController inventory, final JPanel panel) {
-
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     }
 
     private String convertToHtmlString(final String string) {
