@@ -55,10 +55,12 @@ class MainCharacterTest {
 
         final int baseAtk = chara.attack();
         assertTrue(chara.useItem(weapon));
+        assertEquals(weapon, chara.getEquippedWeapon().get());
         assertEquals(chara.attack(), baseAtk + weapon.getIntensity());
         assertTrue(chara.addToInventory(itemFactory.createRandomItem()));
 
         assertTrue(chara.useItem(armor));
+        assertEquals(armor, chara.getEquippedArmor().get());
         chara.attacked(Constants.DEFAULT_PLAYER_LIFE);
         assertEquals(armor.getIntensity(), chara.getLife());
 
