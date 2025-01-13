@@ -5,7 +5,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.border.Border;
 
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
@@ -34,7 +33,7 @@ public class InventoryView extends JPanel {
 
         private final String string;
 
-        private InventoryType(final String string) {
+        InventoryType(final String string) {
             this.string = string;
         }
 
@@ -53,7 +52,7 @@ public class InventoryView extends JPanel {
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
         // this.font.deriveFont(1.1f);
         this.setLayout(new BorderLayout());
-        
+
         this.add(setupTitle(), BorderLayout.NORTH);
         this.add(setupInventory(inventory, InventoryType.ITEM_LIST), BorderLayout.WEST);
         this.add(setupInventory(inventory, InventoryType.ITEM_DESCRIPTION), BorderLayout.CENTER);
@@ -107,7 +106,6 @@ public class InventoryView extends JPanel {
                 }
             }
         };
-        radioButtons[buttonSelected].setSelected(true);
 
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i] = new JRadioButton(list.get(i));
@@ -128,7 +126,7 @@ public class InventoryView extends JPanel {
     }
 
     private void setupEquipped(final InventoryController inventory, final JPanel panel) {
-        
+
     }
 
     private String convertToHtmlString(final String string) {
