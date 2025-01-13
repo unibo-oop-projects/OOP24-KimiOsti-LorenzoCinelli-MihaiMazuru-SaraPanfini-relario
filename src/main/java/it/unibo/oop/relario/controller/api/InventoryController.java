@@ -22,13 +22,15 @@ public interface InventoryController {
 
     /**
      * Returns the name, description, effect and durability of the equipped armor if equipped. 
-     * @return the full description of equipped armor.
+     * If no armor is equipped it returns an empty string.
+     * @return the full description of equipped armor if present, otherwise an empty string.
      */
     String getEquippedArmor();
 
     /**
      * Returns the name, description, effect and durability of the equipped weapon if equipped. 
-     * @return the full description of equipped weapon.
+     * If no weapon is equipped it returns an empty string.
+     * @return the full description of equipped weapon if present, otherwise an empty string.
      */
     String getEquippedWeapon();
 

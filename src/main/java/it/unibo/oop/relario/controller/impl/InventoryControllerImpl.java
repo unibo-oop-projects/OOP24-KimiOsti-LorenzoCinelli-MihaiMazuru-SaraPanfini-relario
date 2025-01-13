@@ -2,11 +2,13 @@ package it.unibo.oop.relario.controller.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.EffectType;
+import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.view.api.MainView;
 
@@ -19,6 +21,8 @@ public final class InventoryControllerImpl implements InventoryController {
     private final MainView mainView;
     private final MainCharacter player;
     private List<InventoryItem> inventory;
+    private Optional<EquippableItem> equippedArmor;
+    private Optional<EquippableItem> equippedWeapon;
 
     /**
      * Creates a new view for the inventory of the player.
@@ -30,17 +34,39 @@ public final class InventoryControllerImpl implements InventoryController {
         this.mainView = mainView;
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
-            this.inventory = player.getItems();
+            updateInventory();
         } else {
             throw new UnsupportedOperationException();
         }
     }
 
+    private void updateInventory() {
+        this.inventory = player.getItems();
+        this.equippedArmor = player.getEquippedArmor();
+        this.equippedWeapon = player.getEquippedWeapon();
+    }
+    
+    private String getFullDescription(InventoryItem item) {
+        return item.getDescription()
+        + ",\nEffect: " + item.getEffect().toString()
+        + this.getIntensity(item);
+    }
+    
     private String getIntensity(final InventoryItem item) {
         if (item.getEffect() == EffectType.NONE) {
             return "";
         } else {
             return " " + item.getIntensity();
+        }
+    }
+
+    private String getEquippedItem(Optional<EquippableItem> item) {
+        if (item.isPresent()) {
+            var equippedItem = item.get();
+            return equippedItem.getName() + "\n" + getFullDescription(equippedItem)
+            + "\nDurability: " + equippedItem.getDurability();
+        } else {
+            return "";
         }
     }
 
@@ -55,10 +81,22 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public String getItemFullDescription(final int index) {
-        final InventoryItem item = inventory.get(index);
-        return item.getDescription()
-        + ",\nEffect: " + item.getEffect().toString()
-        + this.getIntensity(item);
+        if (index <= inventory.size()) {
+            final InventoryItem item = inventory.get(index);
+            return getFullDescription(item);
+        } else {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    @Override
+    public String getEquippedArmor() {
+        return getEquippedItem(equippedArmor);
+    }
+
+    @Override
+    public String getEquippedWeapon() {
+        return getEquippedItem(equippedWeapon);
     }
 
     @Override
