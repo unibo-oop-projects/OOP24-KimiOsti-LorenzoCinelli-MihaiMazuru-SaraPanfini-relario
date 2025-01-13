@@ -72,6 +72,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public List<String> getItemsNames() {
+        updateInventory();
         final List<String> temp = new ArrayList<>();
         for (final var item : inventory) {
             temp.add(item.getName());
@@ -103,12 +104,14 @@ public final class InventoryControllerImpl implements InventoryController {
     public void useItem(final int index) {
         player.useItem(inventory.get(index));
         inventory = player.getItems();
+        updateInventory();
     }
 
     @Override
     public void discardItem(final int index) {
         player.discardItem(inventory.get(index));
         inventory = player.getItems();
+        updateInventory();
     }
 
     @Override
