@@ -23,8 +23,8 @@ import java.awt.event.ActionListener;
 public class InventoryView extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private int buttonSelected = 0;
-    private Font font;
+    private int buttonSelected;
+    private final Font font;
 
     private enum InventoryType {
         ITEM_LIST("Item list"),
@@ -52,6 +52,7 @@ public class InventoryView extends JPanel {
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
         // this.font.deriveFont(1.1f);
         this.setLayout(new BorderLayout());
+        this.buttonSelected = 0;
 
         this.add(setupTitle(), BorderLayout.NORTH);
         this.add(setupInventory(inventory, InventoryType.ITEM_LIST), BorderLayout.WEST);
@@ -96,10 +97,10 @@ public class InventoryView extends JPanel {
 
     private void setupList(final InventoryController inventory, final JPanel panel) {
         final var list = inventory.getItemsNames();
-        JRadioButton[] radioButtons = new JRadioButton[list.size()];
-        ButtonGroup buttonGroup = new ButtonGroup();
+        final JRadioButton[] radioButtons = new JRadioButton[list.size()];
+        final ButtonGroup buttonGroup = new ButtonGroup();
 
-        ActionListener radioButtonsListener = e -> {
+        final ActionListener radioButtonsListener = e -> {
             for (int i = 0; i < radioButtons.length; i++) {
                 if (radioButtons[i].isSelected()) {
                     buttonSelected = i;
@@ -130,7 +131,7 @@ public class InventoryView extends JPanel {
     }
 
     private String convertToHtmlString(final String string) {
-        String result = "<html>" + string + "</html>";
+        final String result = "<html>" + string + "</html>";
         return result.replace("\n", "<br>");
     }
 
