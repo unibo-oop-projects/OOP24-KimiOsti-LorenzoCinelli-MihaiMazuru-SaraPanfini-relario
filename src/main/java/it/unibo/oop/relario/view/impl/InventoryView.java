@@ -136,6 +136,14 @@ public class InventoryView extends JPanel {
 
     private void setupEquipped(final InventoryController inventory, final JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        final var armor = "Armor: " + inventory.getEquippedArmor();
+        final var weapon = "\nWeapon: " + inventory.getEquippedWeapon();
+        final JLabel armorLabel = new JLabel(convertToHtmlString(armor));
+        final JLabel weaponLabel = new JLabel(convertToHtmlString(weapon));
+        armorLabel.setForeground(Color.WHITE);
+        weaponLabel.setForeground(Color.WHITE);
+        panel.add(armorLabel);
+        panel.add(weaponLabel);
     }
 
     private String convertToHtmlString(final String string) {
