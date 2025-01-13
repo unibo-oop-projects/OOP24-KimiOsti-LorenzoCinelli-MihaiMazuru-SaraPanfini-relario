@@ -42,16 +42,16 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private void updateInventory() {
         this.inventory = player.getItems();
-        this.equippedArmor = player.getEquippedArmor();
-        this.equippedWeapon = player.getEquippedWeapon();
+        // this.equippedArmor = player.getEquippedArmor();
+        // this.equippedWeapon = player.getEquippedWeapon();
     }
-    
-    private String getFullDescription(InventoryItem item) {
+
+    private String getFullDescription(final InventoryItem item) {
         return item.getDescription()
         + ",\nEffect: " + item.getEffect().toString()
         + this.getIntensity(item);
     }
-    
+
     private String getIntensity(final InventoryItem item) {
         if (item.getEffect() == EffectType.NONE) {
             return "";
@@ -60,9 +60,9 @@ public final class InventoryControllerImpl implements InventoryController {
         }
     }
 
-    private String getEquippedItem(Optional<EquippableItem> item) {
+    private String getEquippedItem(final Optional<EquippableItem> item) {
         if (item.isPresent()) {
-            var equippedItem = item.get();
+            final var equippedItem = item.get();
             return equippedItem.getName() + "\n" + getFullDescription(equippedItem)
             + "\nDurability: " + equippedItem.getDurability();
         } else {
