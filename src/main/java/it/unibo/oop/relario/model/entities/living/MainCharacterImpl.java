@@ -119,6 +119,16 @@ public final class MainCharacterImpl implements MainCharacter {
     }
 
     @Override
+    public Optional<EquippableItem> getEquippedWeapon() {
+        return this.getEquipped(this.weapon);
+    }
+
+    @Override
+    public Optional<EquippableItem> getEquippedArmor() {
+        return this.getEquipped(this.armor);
+    }
+
+    @Override
     public boolean useItem(final InventoryItem item) {
         if (this.inventory.removeItem(item)) {
             if (item instanceof EquippableItem) {
@@ -159,5 +169,9 @@ public final class MainCharacterImpl implements MainCharacter {
             }
             armor = Optional.of(item);
         }
+    }
+
+    private Optional<EquippableItem> getEquipped(final Optional<EquippableItem> item) {
+        return item.isPresent() ? Optional.of(item.get()) : Optional.empty();
     }
 }
