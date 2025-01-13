@@ -5,6 +5,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
@@ -62,7 +63,7 @@ public class InventoryView extends JPanel {
 
     private JPanel setupTitle() {
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        final JLabel titleLabel = new JLabel(convertToHtmlString("<b>Inventory</b>"));
+        final JLabel titleLabel = new JLabel("Inventory");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(font);
         titlePanel.setBackground(Color.BLACK);
@@ -129,26 +130,25 @@ public class InventoryView extends JPanel {
     private void setupDescription(final InventoryController inventory, final JPanel panel) {
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
         final var description = inventory.getItemFullDescription(buttonSelected);
-        final JLabel descriptionLabel = new JLabel(convertToHtmlString(description));
-        descriptionLabel.setForeground(Color.WHITE);
-        panel.add(descriptionLabel);
+        panel.add(addTextArea(description));
     }
 
     private void setupEquipped(final InventoryController inventory, final JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         final var armor = "Armor: " + inventory.getEquippedArmor();
-        final var weapon = "\nWeapon: " + inventory.getEquippedWeapon();
-        final JLabel armorLabel = new JLabel(convertToHtmlString(armor));
-        final JLabel weaponLabel = new JLabel(convertToHtmlString(weapon));
-        armorLabel.setForeground(Color.WHITE);
-        weaponLabel.setForeground(Color.WHITE);
-        panel.add(armorLabel);
-        panel.add(weaponLabel);
+        final var weapon = "Weapon: " + inventory.getEquippedWeapon();
+        panel.add(addTextArea(armor));
+        panel.add(addTextArea(weapon));
     }
 
-    private String convertToHtmlString(final String string) {
-        final String result = "<html>" + string + "</html>";
-        return result.replace("\n", "<br>");
+    private JTextArea addTextArea(final String string) {
+        final JTextArea area = new JTextArea(string);
+        area.setLineWrap(true);
+        area.setWrapStyleWord(true);
+        area.setForeground(Color.WHITE);
+        area.setBackground(Color.BLACK);
+        area.setEditable(false);
+        return area;
     }
 
     /**
