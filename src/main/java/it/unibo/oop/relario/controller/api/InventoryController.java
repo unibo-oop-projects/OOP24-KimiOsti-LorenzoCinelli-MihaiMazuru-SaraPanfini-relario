@@ -8,7 +8,7 @@ import java.util.List;
 public interface InventoryController {
 
     /**
-     * Retrives the names of all items into the player inventory.
+     * Returns the names of all items into the player inventory.
      * @return the list of items' names.
      */
     List<String> getItemsNames();
@@ -19,6 +19,18 @@ public interface InventoryController {
      * @return the full description of the item.
      */
     String getItemFullDescription(int index);
+
+    /**
+     * Returns the name, description, effect and durability of the equipped armor if equipped. 
+     * @return the full description of equipped armor.
+     */
+    String getEquippedArmor();
+
+    /**
+     * Returns the name, description, effect and durability of the equipped weapon if equipped. 
+     * @return the full description of equipped weapon.
+     */
+    String getEquippedWeapon();
 
     /**
      * Uses an item which is into the inventory.
