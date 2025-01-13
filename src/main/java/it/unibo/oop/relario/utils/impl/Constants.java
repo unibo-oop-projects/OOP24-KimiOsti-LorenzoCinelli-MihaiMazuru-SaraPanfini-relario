@@ -19,6 +19,11 @@ public final class Constants {
      */
     public static final int REFRESH_TIME = 125;
 
+    /**
+     * Game's font name.
+     */
+    public static final String MONOSPACE_FONT = "monogram";
+
     private Constants() {
         throw new UnsupportedOperationException();
     }
