@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
-import it.unibo.oop.relario.model.entities.furniture.api.FurnitureItem;
+import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.utils.api.Dimension;
@@ -52,7 +52,7 @@ public interface Room {
      * Retrieves all the furniture in the room and their positions.
      * @return a map of positions and furniture items
      */
-    Map<Position, FurnitureItem> getFurniture();
+    Map<Position, Furniture> getFurniture();
 
     /**
      * Retrieves the content of a specific cell of the room.

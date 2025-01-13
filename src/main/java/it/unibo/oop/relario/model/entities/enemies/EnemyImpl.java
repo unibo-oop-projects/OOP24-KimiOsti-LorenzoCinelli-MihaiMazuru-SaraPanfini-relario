@@ -69,9 +69,8 @@ public final class EnemyImpl extends LivingBeingImpl implements Enemy {
     }
 
     @Override
-    public boolean attacked(final int playerDamage) {
+    public void attacked(final int playerDamage) {
         this.life -= playerDamage;
-        return this.life > 0;
     }
 
     @Override

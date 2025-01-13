@@ -58,6 +58,6 @@ public interface Enemy extends LivingBeing {
      * @param playerDamage the damage of the player
      * @return true if the enemy is alive, false otherwise
      */
-    boolean attacked(int playerDamage);
+    void attacked(int playerDamage);
 
 }
