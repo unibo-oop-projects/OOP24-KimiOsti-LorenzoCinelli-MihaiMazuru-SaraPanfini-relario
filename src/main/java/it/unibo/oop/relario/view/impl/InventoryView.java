@@ -24,12 +24,8 @@ import java.awt.event.ActionListener;
 public class InventoryView extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private final InventoryController inventory;
-    private final Font font;
     private int buttonSelected;
-    private JPanel listPanel;
-    private JPanel descriptionPanel;
-    private JPanel equippedPanel;
+    private final Font font;
 
     private enum InventoryType {
         ITEM_LIST("Item list"),
@@ -49,25 +45,20 @@ public class InventoryView extends JPanel {
     }
 
     /**
-     * Creates the inventory view.
+     * Initializes the inventory view.
      * @param controller the main controller of the game.
      */
     public InventoryView(final MainController controller) {
-        this.inventory = controller.getInventoryController();
+        final InventoryController inventory = controller.getInventoryController();
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
-        this.buttonSelected = 0;
-    }
-
-    /**
-     * Initializes the inventory view.
-     */
-    public void init() {
+        // this.font.deriveFont(1.1f);
         this.setLayout(new BorderLayout());
-        this.refresh();
-        this.add(setupTitle());
-        this.add(listPanel);
-        this.add(descriptionPanel);
-        this.add(equippedPanel);
+        this.buttonSelected = 0;
+
+        this.add(setupTitle(), BorderLayout.NORTH);
+        this.add(setupInventory(inventory, InventoryType.ITEM_LIST), BorderLayout.WEST);
+        this.add(setupInventory(inventory, InventoryType.ITEM_DESCRIPTION), BorderLayout.CENTER);
+        this.add(setupInventory(inventory, InventoryType.EQUIPPED_ITEMS), BorderLayout.EAST);
     }
 
     private JPanel setupTitle() {
@@ -80,7 +71,7 @@ public class InventoryView extends JPanel {
         return titlePanel;
     }
 
-    private JPanel setupInventory(final InventoryType type) {
+    private JPanel setupInventory(final InventoryController inventory, final InventoryType type) {
         final JPanel panel = new JPanel();
         final JPanel subpanel = new JPanel();
         final JLabel label = new JLabel(type.toString());
@@ -92,21 +83,26 @@ public class InventoryView extends JPanel {
         panel.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(label);
         switch (type) {
-            case ITEM_LIST -> setupList(panel);
-            case ITEM_DESCRIPTION -> {
-                    label.setAlignmentX(CENTER_ALIGNMENT);
-                    setupDescription(panel);
-                }
-            case EQUIPPED_ITEMS -> setupEquipped(panel);
-            default -> { }
+            case ITEM_LIST:
+                setupList(inventory, panel);
+                break;
+            case ITEM_DESCRIPTION:
+                label.setAlignmentX(CENTER_ALIGNMENT);
+                setupDescription(inventory, panel);
+                break;
+            case EQUIPPED_ITEMS:
+                setupEquipped(inventory, panel);
+                break;
+            default:
+                throw new UnsupportedOperationException();
         }
         panel.add(subpanel);
         return panel;
     }
 
-    private void setupList(final JPanel panel) {
+    private void setupList(final InventoryController inventory, final JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        final var list = this.inventory.getItemsNames();
+        final var list = inventory.getItemsNames();
         final JRadioButton[] radioButtons = new JRadioButton[list.size()];
         final ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -114,7 +110,7 @@ public class InventoryView extends JPanel {
             for (int i = 0; i < radioButtons.length; i++) {
                 if (radioButtons[i].isSelected()) {
                     buttonSelected = i;
-                    this.descriptionPanel = setupInventory(InventoryType.ITEM_DESCRIPTION);
+                    this.add(setupInventory(inventory, InventoryType.ITEM_DESCRIPTION), BorderLayout.CENTER);
                     this.validate();
                 }
             }
@@ -124,7 +120,6 @@ public class InventoryView extends JPanel {
             radioButtons[i] = new JRadioButton(list.get(i));
             buttonGroup.add(radioButtons[i]);
             radioButtons[i].addActionListener(radioButtonsListener);
-            radioButtons[i].setFont(font);
             radioButtons[i].setForeground(Color.WHITE);
             radioButtons[i].setBackground(Color.BLACK);
             panel.add(radioButtons[i]);
@@ -132,23 +127,22 @@ public class InventoryView extends JPanel {
         radioButtons[buttonSelected].setSelected(true);
     }
 
-    private void setupDescription(final JPanel panel) {
+    private void setupDescription(final InventoryController inventory, final JPanel panel) {
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        final var description = this.inventory.getItemFullDescription(buttonSelected);
+        final var description = inventory.getItemFullDescription(buttonSelected);
         panel.add(addTextArea(description));
     }
 
-    private void setupEquipped(final JPanel panel) {
+    private void setupEquipped(final InventoryController inventory, final JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        final var armor = "Armor: " + this.inventory.getEquippedArmor();
-        final var weapon = "Weapon: " + this.inventory.getEquippedWeapon();
+        final var armor = "Armor: " + inventory.getEquippedArmor();
+        final var weapon = "Weapon: " + inventory.getEquippedWeapon();
         panel.add(addTextArea(armor));
         panel.add(addTextArea(weapon));
     }
 
     private JTextArea addTextArea(final String string) {
         final JTextArea area = new JTextArea(string);
-        area.setFont(font);
         area.setLineWrap(true);
         area.setWrapStyleWord(true);
         area.setForeground(Color.WHITE);
@@ -163,15 +157,5 @@ public class InventoryView extends JPanel {
      */
     public final int getSelectedItem() {
         return buttonSelected;
-    }
-
-    /**
-     * Repaints the inventory view.
-     */
-    public final void refresh() {
-        this.listPanel = setupInventory(InventoryType.ITEM_LIST);
-        this.descriptionPanel = setupInventory(InventoryType.ITEM_DESCRIPTION);
-        this.equippedPanel = setupInventory(InventoryType.EQUIPPED_ITEMS);
-        this.validate();
     }
 }
