@@ -27,8 +27,8 @@ import it.unibo.oop.relario.utils.impl.ResourceLocator;
 public final class GameView extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private static final Color backgroundColor = Color.BLACK;
-    private static final Color foregroundColor = Color.WHITE;
+    private static final Color BACKGROUND_COLOR = Color.BLACK;
+    private static final Color TEXT_COLOR = Color.WHITE;
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
@@ -47,7 +47,7 @@ public final class GameView extends JPanel {
         this.upperPanel = new JPanel();
         this.mapPanel = new JPanel();
         this.lowerPanel = new JPanel();
-        this.setBackgroundColor(backgroundColor);
+        this.setBackgroundColor(BACKGROUND_COLOR);
 
         this.background = new LinkedList<>();
         this.foreground = new HashMap<>();
@@ -78,7 +78,7 @@ public final class GameView extends JPanel {
     private void setupPanels(final JPanel ... panels) {
         for (final var panel : panels) {
             this.add(panel);
-            panel.setBackground(backgroundColor);
+            panel.setBackground(BACKGROUND_COLOR);
         }
     }
 
