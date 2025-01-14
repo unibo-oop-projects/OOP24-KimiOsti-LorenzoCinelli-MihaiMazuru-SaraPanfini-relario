@@ -75,6 +75,17 @@ public final class InventoryControllerImpl implements InventoryController {
         }
     }
 
+    private void refresh() {
+        inventory = player.getItems();
+        updateInventory();
+        inventoryView.refresh();
+    }
+
+    private void regress() {
+        this.mainController.getGameController().resume(true);
+        this.mainView.showPreviousPanel();
+    }
+
     @Override
     public List<String> getItemsNames() {
         updateInventory();
@@ -106,30 +117,18 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     @Override
-    public void useItem(final int index) {
-        player.useItem(inventory.get(index));
-        inventory = player.getItems();
-        updateInventory();
-        inventoryView.refresh();
-    }
-
-    @Override
-    public void discardItem(final int index) {
-        player.discardItem(inventory.get(index));
-        inventory = player.getItems();
-        updateInventory();
-        inventoryView.refresh();
-    }
-
-    @Override
-    public void regress() {
-        this.mainController.getGameController().resume(true);
-        this.mainView.showPreviousPanel();
-    }
-    
-    @Override
-    public void notify(Event event) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notify'");
+    public void notify(final Event event) {
+        switch (event) {
+            case USE_ITEM -> {
+                player.useItem(inventory.get(inventoryView.getSelectedItem()));
+                refresh();
+            }
+            case DISCARD_ITEM -> {
+                player.discardItem(inventory.get(inventoryView.getSelectedItem()));
+                refresh();
+            }
+            case INVENTORY -> regress();
+            default -> { }
+        }
     }
 }
