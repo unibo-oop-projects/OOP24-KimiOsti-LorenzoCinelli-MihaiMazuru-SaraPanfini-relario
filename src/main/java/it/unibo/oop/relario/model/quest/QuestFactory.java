@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.model.quest;
 
+import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 
@@ -20,12 +21,12 @@ public interface QuestFactory {
      * 
      * @return TODO
      */
-    Quest createDefeatEnemyQuest();
+    Quest createDefeatEnemyQuest(EnemyType keyEnemy);
 
     /**
      * 
      * @return TODO
      */
-    Quest createSolvePuzzleQuest();
+    Quest createPressButtonQuest();
 
 }
