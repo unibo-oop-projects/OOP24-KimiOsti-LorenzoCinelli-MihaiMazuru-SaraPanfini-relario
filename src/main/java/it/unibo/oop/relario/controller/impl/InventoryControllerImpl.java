@@ -53,7 +53,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private String getFullDescription(final InventoryItem item) {
         return item.getDescription()
-        + ",\nEffect: " + item.getEffect().toString()
+        + ",\nEffetto: " + item.getEffect().toString()
         + this.getIntensity(item);
     }
 
@@ -69,7 +69,7 @@ public final class InventoryControllerImpl implements InventoryController {
         if (item.isPresent()) {
             final var equippedItem = item.get();
             return equippedItem.getName() + "\n" + getFullDescription(equippedItem)
-            + "\nDurability: " + equippedItem.getDurability();
+            + "\nDurabilità: " + equippedItem.getDurability();
         } else {
             return "";
         }
