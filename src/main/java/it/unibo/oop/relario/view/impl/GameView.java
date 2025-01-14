@@ -6,17 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
+import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
-/* [TODO]: aggiungere le scritte, e gestire l'aggiornamento frame by frame */
+/* [TODO]: aggiungere la texture del pavimento, aggiungere le scritte, e gestire l'aggiornamento frame by frame */
 
 /**
  * View implementations for the exploration phase of the game.
@@ -24,7 +27,8 @@ import it.unibo.oop.relario.utils.impl.ResourceLocator;
 public final class GameView extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private static final String FONT_NAME = "monogram";
+    private static final Color backgroundColor = Color.BLACK;
+    private static final Color foregroundColor = Color.WHITE;
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
@@ -43,15 +47,13 @@ public final class GameView extends JPanel {
         this.upperPanel = new JPanel();
         this.mapPanel = new JPanel();
         this.lowerPanel = new JPanel();
-        this.setBackgroundColor(Color.BLACK);
+        this.setBackgroundColor(backgroundColor);
 
         this.background = new LinkedList<>();
         this.foreground = new HashMap<>();
-        this.font = ResourceLocator.getGameFont(FONT_NAME);
+        this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
 
-        this.add(this.upperPanel);
-        this.add(this.mapPanel);
-        this.add(this.lowerPanel);
+        this.setupPanels(this.upperPanel, this.mapPanel, this.lowerPanel);
         this.addKeyListener(new GameKeyListener(controller.getGameController()));
     }
 
@@ -61,43 +63,8 @@ public final class GameView extends JPanel {
      * @param textures the textures to be rendered on the background, apart from the floor.
      */
     public void renderBackground(final Dimension dimension, final Map<Position, Image> textures) {
-        this.mapDimension = dimension;
-        this.tileDimension = this.min(
-            this.getHeight() / this.mapDimension.getHeight(),
-            this.getWidth() / this.mapDimension.getWidth()
-        );
-
-        this.resizePanels();
-
-        for (int y = 0; y < dimension.getHeight(); y++) {
-            for (int x = 0; x < dimension.getWidth(); x++) {
-                this.background.add(
-                    this.computeIndex(x, y),
-                    new BackgroundTile(null)
-                );
-                this.add(
-                    this.background.get(this.computeIndex(x, y)),
-                    this.computeIndex(x, y)
-                );
-            }
-        }
-
-        for (final var texture : textures.entrySet()) {
-            final var tile = new BackgroundTile(
-                texture.getValue().getScaledInstance(
-                    this.tileDimension,
-                    this.tileDimension,
-                    Image.SCALE_SMOOTH
-                )
-            );
-
-            this.background.get(this.computeIndex(texture.getKey().getX(), texture.getKey().getY())).add(tile);
-            this.background.remove(this.computeIndex(texture.getKey().getX(), texture.getKey().getY()));
-            this.background.add(
-                this.computeIndex(texture.getKey().getX(), texture.getKey().getY()),
-                tile
-            );
-        }
+        this.renderFloor(dimension);
+        this.renderBackgroundTextures(textures);
     }
 
     /**
@@ -108,11 +75,78 @@ public final class GameView extends JPanel {
         /* [TODO]: implement method. */
     }
 
+    private void setupPanels(final JPanel ... panels) {
+        for (final var panel : panels) {
+            this.add(panel);
+            panel.setBackground(backgroundColor);
+        }
+    }
+
     private void setBackgroundColor(final Color color) {
         this.setBackground(color);
         for (final var component : this.getComponents()) {
             component.setBackground(color);
         }
+    }
+
+    private void renderFloor(final Dimension dimension) {
+        this.mapDimension = dimension;
+        this.tileDimension = this.min(
+            (int) (this.getHeight() / 1.5 / this.mapDimension.getHeight()),
+            (int) (this.getWidth() / 1.5 / this.mapDimension.getWidth())
+        );
+
+        this.resizePanels();
+        this.mapPanel.setLayout(new GridLayout(
+            this.mapDimension.getHeight(),
+            this.mapDimension.getWidth(),
+            0,
+            0
+        ));
+
+        for (int y = 0; y < dimension.getHeight(); y++) {
+            for (int x = 0; x < dimension.getWidth(); x++) {
+                this.background.add(
+                    this.computeIndex(x, y),
+                    new BackgroundTile(null) //aggiungere immagine del floor
+                );
+                this.add(
+                    this.background.get(this.computeIndex(x, y)),
+                    this.computeIndex(x, y)
+                );
+            }
+        }
+    }
+
+    private void renderBackgroundTextures(final Map<Position, Image> textures) {
+        for (final var texture : textures.entrySet()) {
+            final var innerTile = new BackgroundTile(
+                texture.getValue().getScaledInstance(
+                    this.tileDimension,
+                    this.tileDimension,
+                    Image.SCALE_SMOOTH
+                )
+            );
+
+            final var outerTile = this.background.get(this.computeIndex(
+                texture.getKey().getX(),
+                texture.getKey().getY()
+            ));
+
+            outerTile.add(innerTile);
+            this.refresh(outerTile);
+
+            this.background.remove(outerTile);
+            this.background.add(
+                this.computeIndex(texture.getKey().getX(),texture.getKey().getY()),
+                innerTile
+            );
+        }
+    }
+
+    private void refresh(final JComponent component) {
+        component.revalidate();
+        component.repaint();
     }
 
     private int min(final int x, final int y) {
@@ -131,6 +165,13 @@ public final class GameView extends JPanel {
             new java.awt.Dimension(
                 this.getWidth(),
                 (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 3
+            )
+        );
+
+        this.lowerPanel.setPreferredSize(
+            new java.awt.Dimension(
+                this.getWidth(),
+                (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 2
             )
         );
     }
