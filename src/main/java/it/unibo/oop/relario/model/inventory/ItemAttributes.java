@@ -51,6 +51,9 @@ public final class ItemAttributes {
     /** Constant intensity of a gemstone. */
     public static final int GEMSTONE_INTENSITY = 1;
 
+    /** Constant intensity of a key. */
+    public static final int KEY_INTENSITY = 1;
+
     /**
      * Private constructor that prevents the instantiation of the class.
      */
