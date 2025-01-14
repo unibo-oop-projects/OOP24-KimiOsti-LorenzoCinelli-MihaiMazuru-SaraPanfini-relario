@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Interface for inventory controller, used when the user is interacting with the inventory.
  */
-public interface InventoryController {
+public interface InventoryController extends Observer {
 
     /**
      * Returns the names of all items into the player inventory.

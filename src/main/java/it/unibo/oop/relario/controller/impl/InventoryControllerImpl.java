@@ -10,6 +10,7 @@ import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.InventoryView;
@@ -124,5 +125,11 @@ public final class InventoryControllerImpl implements InventoryController {
     public void regress() {
         this.mainController.getGameController().resume(true);
         this.mainView.showPreviousPanel();
+    }
+    
+    @Override
+    public void notify(Event event) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notify'");
     }
 }
