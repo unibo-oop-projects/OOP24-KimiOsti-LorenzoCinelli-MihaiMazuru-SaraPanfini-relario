@@ -11,7 +11,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
@@ -47,27 +46,7 @@ final class InteractionsTest {
     private List<Position> obstructingEntity;
     private List<Position> interactiveEntity;
 
-    /**
-     * Sets up the testing.
-     */
-    @BeforeEach
-    void setUp() {
-        depth = 10;
-        width = 15;
-        entityMap = new HashMap<>();
-        furnitureMap = new HashMap<>();
-        obstructingFurniture = new ArrayList<>();
-        interactiveFurniture = new ArrayList<>();
-        obstructingEntity = new ArrayList<>();
-        interactiveEntity = new ArrayList<>();
-        clearMap();
-    }
-
-    /**
-     * Sets up the furniture.
-     */
-    @Disabled
-    void furnitureSetup() {
+    private void furnitureSetup() {
         final FurnitureFactory ff = new FurnitureFactoryImpl();
         Position p;
 
@@ -228,11 +207,7 @@ final class InteractionsTest {
 
     }
 
-    /**
-     * Sets up entities.
-     */
-    @Disabled
-    void entitySetup() {
+    private void entitySetup() {
         final EnemyFactory ef = new EnemyFactoryImpl();
         final NpcFactory nf = new NpcFactoryImpl();
         Position p;
@@ -282,11 +257,7 @@ final class InteractionsTest {
         interactiveEntity.add(p);
     }
 
-    /**
-     * Clears the map, furniture and entities.
-     */
-    @Disabled
-    void clearMap() {
+    private void clearMap() {
         for (int j = 0; j < depth; j++) {
             for (int i = 0; i < width; i++) {
                 final Position p = new PositionImpl(i, j);
@@ -298,6 +269,22 @@ final class InteractionsTest {
         interactiveFurniture.clear();
         obstructingEntity.clear();
         interactiveEntity.clear();
+    }
+
+    /**
+     * Sets up the testing.
+     */
+    @BeforeEach
+    void setUp() {
+        depth = 10;
+        width = 15;
+        entityMap = new HashMap<>();
+        furnitureMap = new HashMap<>();
+        obstructingFurniture = new ArrayList<>();
+        interactiveFurniture = new ArrayList<>();
+        obstructingEntity = new ArrayList<>();
+        interactiveEntity = new ArrayList<>();
+        clearMap();
     }
 
     /**
