@@ -24,7 +24,6 @@ public final class MenuControllerImpl implements MenuController {
     public MenuControllerImpl(final MainView view) {
         menuModel = new MenuManager();
         this.view = view;
-        this.view.showPanel(GameState.MENU.getState());
     }
 
     @Override
