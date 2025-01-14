@@ -14,7 +14,7 @@ public enum EffectType {
     PROTECTION("Protezione"),
 
     /** An effect that restores player's life. */
-    HEALING("Guarigione"),
+    HEALING("Cura"),
 
     /** No effect, for collectable items. */
     NONE("Nessuno");
