@@ -44,6 +44,12 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void notify(final Event e) {
+        switch (e) {
+            case INTERACT -> this.handleInteraction();
+            case INVENTORY -> this.changeGameState(GameState.INVENTORY.getState());
+            case ESCAPE -> this.changeGameState(GameState.MENU_IN_GAME.getState());
+            default -> this.handleMovement(e);
+        }
     }
 
     private void startGameLoop() {
@@ -61,6 +67,15 @@ public final class GameControllerImpl implements GameController {
     }
 
     private void handleInteraction() {
-        /* [TODO]: handle interaction scenarios. */
+
+    }
+
+    private void changeGameState(final String gameState) {
+        this.gameLoop.interrupt();
+        this.view.showPanel(gameState);
+    }
+
+    private void handleMovement(final Event e) {
+
     }
 }
