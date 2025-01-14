@@ -10,7 +10,10 @@ import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.utils.impl.Event;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
+import it.unibo.oop.relario.view.impl.InventoryView;
 
 /**
  * Implementation of the inventory controller.
@@ -19,6 +22,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private final MainController mainController;
     private final MainView mainView;
+    private final InventoryView inventoryView;
     private final MainCharacter player;
     private List<InventoryItem> inventory;
     private Optional<EquippableItem> equippedArmor;
@@ -32,6 +36,7 @@ public final class InventoryControllerImpl implements InventoryController {
     public InventoryControllerImpl(final MainController mainController, final MainView mainView) {
         this.mainController = mainController;
         this.mainView = mainView;
+        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY.getState());
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
             updateInventory();
@@ -42,8 +47,8 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private void updateInventory() {
         this.inventory = player.getItems();
-        // this.equippedArmor = player.getEquippedArmor();
-        // this.equippedWeapon = player.getEquippedWeapon();
+        this.equippedArmor = player.getEquippedArmor();
+        this.equippedWeapon = player.getEquippedWeapon();
     }
 
     private String getFullDescription(final InventoryItem item) {
@@ -68,6 +73,17 @@ public final class InventoryControllerImpl implements InventoryController {
         } else {
             return "";
         }
+    }
+
+    private void refresh() {
+        inventory = player.getItems();
+        updateInventory();
+        inventoryView.refresh();
+    }
+
+    private void regress() {
+        this.mainController.getGameController().resume(true);
+        this.mainView.showPreviousPanel();
     }
 
     @Override
@@ -101,22 +117,18 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     @Override
-    public void useItem(final int index) {
-        player.useItem(inventory.get(index));
-        inventory = player.getItems();
-        updateInventory();
-    }
-
-    @Override
-    public void discardItem(final int index) {
-        player.discardItem(inventory.get(index));
-        inventory = player.getItems();
-        updateInventory();
-    }
-
-    @Override
-    public void regress() {
-        this.mainController.getGameController().resume(true);
-        this.mainView.showPreviousPanel();
+    public void notify(final Event event) {
+        switch (event) {
+            case USE_ITEM -> {
+                player.useItem(inventory.get(inventoryView.getSelectedItem()));
+                refresh();
+            }
+            case DISCARD_ITEM -> {
+                player.discardItem(inventory.get(inventoryView.getSelectedItem()));
+                refresh();
+            }
+            case INVENTORY -> regress();
+            default -> { }
+        }
     }
 }

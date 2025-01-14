@@ -65,7 +65,7 @@ public final class GameKeyListener implements KeyListener {
 
     /**
      * Converts the the key pressed into an event.
-     * @param e is the key pressed.
+     * @param keyCode is the key pressed.
      * @return the event corresponding to the key pressed.
      */
     private Event convertKey(final int keyCode) {

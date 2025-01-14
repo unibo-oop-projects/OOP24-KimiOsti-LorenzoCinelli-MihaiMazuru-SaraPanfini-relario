@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Interface for inventory controller, used when the user is interacting with the inventory.
  */
-public interface InventoryController {
+public interface InventoryController extends Observer {
 
     /**
      * Returns the names of all items into the player inventory.
@@ -33,21 +33,4 @@ public interface InventoryController {
      * @return the full description of equipped weapon if present, otherwise an empty string.
      */
     String getEquippedWeapon();
-
-    /**
-     * Uses an item which is into the inventory.
-     * @param index identifies the item to use. 
-     */
-    void useItem(int index);
-
-    /**
-     * Discards an item from the inventory.
-     * @param index identifies the item to discard.
-     */
-    void discardItem(int index);
-
-    /**
-     * Displays the previous view.
-     */
-    void regress();
 }
