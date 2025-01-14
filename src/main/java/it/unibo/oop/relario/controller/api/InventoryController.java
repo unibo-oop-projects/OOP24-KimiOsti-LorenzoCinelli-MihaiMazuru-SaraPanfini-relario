@@ -38,16 +38,16 @@ public interface InventoryController extends Observer {
      * Uses an item which is into the inventory.
      * @param index identifies the item to use. 
      */
-    // void useItem(int index);
+    void useItem(int index);
 
     /**
      * Discards an item from the inventory.
      * @param index identifies the item to discard.
      */
-    // void discardItem(int index);
+    void discardItem(int index);
 
     /**
      * Displays the previous view.
      */
-    // void regress();
+    void regress();
 }
