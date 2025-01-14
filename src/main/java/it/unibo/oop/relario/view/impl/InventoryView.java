@@ -32,9 +32,9 @@ public class InventoryView extends JPanel {
     private JPanel equippedPanel;
 
     private enum InventoryType {
-        ITEM_LIST("Item list"),
-        ITEM_DESCRIPTION("Item description"),
-        EQUIPPED_ITEMS("Equipped items");
+        ITEM_LIST("Lista oggetti"),
+        ITEM_DESCRIPTION("Descrizione oggetto"),
+        EQUIPPED_ITEMS("Oggetti equipaggiati");
 
         private final String string;
 
@@ -72,7 +72,7 @@ public class InventoryView extends JPanel {
 
     private JPanel setupTitle() {
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        final JLabel titleLabel = new JLabel("Inventory");
+        final JLabel titleLabel = new JLabel("Inventario");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(font);
         titlePanel.setBackground(Color.BLACK);
@@ -140,8 +140,8 @@ public class InventoryView extends JPanel {
 
     private void setupEquipped(final JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        final var armor = "Armor: " + this.inventory.getEquippedArmor();
-        final var weapon = "Weapon: " + this.inventory.getEquippedWeapon();
+        final var armor = "Armatura: " + this.inventory.getEquippedArmor();
+        final var weapon = "Arma: " + this.inventory.getEquippedWeapon();
         panel.add(addTextArea(armor));
         panel.add(addTextArea(weapon));
     }
@@ -166,7 +166,7 @@ public class InventoryView extends JPanel {
     }
 
     /**
-     * Repaints the inventory view.
+     * Refresh the inventory view with updated data.
      */
     public final void refresh() {
         this.listPanel = setupInventory(InventoryType.ITEM_LIST);
