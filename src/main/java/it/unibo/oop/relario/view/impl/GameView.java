@@ -29,6 +29,7 @@ public final class GameView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final Color BACKGROUND_COLOR = Color.BLACK;
     private static final Color TEXT_COLOR = Color.WHITE;
+    private static final double SCREEN_TO_MAP_RATIO = 1.5;
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
@@ -75,7 +76,7 @@ public final class GameView extends JPanel {
         /* [TODO]: implement method. */
     }
 
-    private void setupPanels(final JPanel ... panels) {
+    private void setupPanels(final JPanel... panels) {
         for (final var panel : panels) {
             this.add(panel);
             panel.setBackground(BACKGROUND_COLOR);
@@ -92,8 +93,8 @@ public final class GameView extends JPanel {
     private void renderFloor(final Dimension dimension) {
         this.mapDimension = dimension;
         this.tileDimension = this.min(
-            (int) (this.getHeight() / 1.5 / this.mapDimension.getHeight()),
-            (int) (this.getWidth() / 1.5 / this.mapDimension.getWidth())
+            (int) (this.getHeight() / SCREEN_TO_MAP_RATIO / this.mapDimension.getHeight()),
+            (int) (this.getWidth() / SCREEN_TO_MAP_RATIO / this.mapDimension.getWidth())
         );
 
         this.resizePanels();
@@ -138,7 +139,7 @@ public final class GameView extends JPanel {
 
             this.background.remove(outerTile);
             this.background.add(
-                this.computeIndex(texture.getKey().getX(),texture.getKey().getY()),
+                this.computeIndex(texture.getKey().getX(), texture.getKey().getY()),
                 innerTile
             );
         }
