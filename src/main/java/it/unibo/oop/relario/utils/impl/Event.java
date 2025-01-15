@@ -30,6 +30,12 @@ public enum Event {
     USE_ITEM,
 
     /** Represents the action for discarding the focused item in the inventory. */
-    DISCARD_ITEM;
+    DISCARD_ITEM,
+
+    /** Represents focusing on the next item in the inventory. */
+    NEXT_ITEM,
+
+    /** Represents focusing on the previous item in the inventory. */
+    PREVIOUS_ITEM;
 
 }

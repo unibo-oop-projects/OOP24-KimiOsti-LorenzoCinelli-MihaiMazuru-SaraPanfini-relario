@@ -61,6 +61,8 @@ public final class GameKeyListener implements KeyListener {
         this.keys.put(KeyEvent.VK_ESCAPE, Event.ESCAPE);
         this.keys.put(KeyEvent.VK_ENTER, Event.USE_ITEM);
         this.keys.put(KeyEvent.VK_BACK_SPACE, Event.DISCARD_ITEM);
+        this.keys.put(KeyEvent.VK_DOWN, Event.NEXT_ITEM);
+        this.keys.put(KeyEvent.VK_UP, Event.PREVIOUS_ITEM);
     }
 
     /**

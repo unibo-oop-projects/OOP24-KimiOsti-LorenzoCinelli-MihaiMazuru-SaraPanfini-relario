@@ -24,8 +24,6 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
 	private final Font font;
     private final InventoryController inventory;
 
-    private int buttonSelected = 0;
-
     /**
      * Creates an inventory view factory to populate the inventory view. 
      * @param inventory
@@ -102,7 +100,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         final ActionListener radioButtonsListener = e -> {
             for (int i = 0; i < radioButtons.length; i++) {
                 if (radioButtons[i].isSelected()) {
-                    buttonSelected = i;
+                    inventory.setSelectedItemIndex(i);
                 }
             }
         };
@@ -114,16 +112,17 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
             radioButtons[i].setFont(font);
             radioButtons[i].setForeground(Color.WHITE);
             radioButtons[i].setBackground(Color.BLACK);
+            radioButtons[i].setFocusable(false);
             panel.add(radioButtons[i]);
         }
-        radioButtons[buttonSelected].setSelected(true);
+        radioButtons[inventory.getSelectedItemIndex()].setSelected(true);
         return panel;
 	}
 
 	private JPanel createDescriptionPanel() {
         final var subpanel = new JPanel();
         final var panel = createContentSubpanel("Descrizione oggetto");
-		final var description = this.inventory.getItemFullDescription(buttonSelected);
+		final var description = this.inventory.getItemFullDescription(inventory.getSelectedItemIndex());
         subpanel.setBackground(Color.BLACK);
         subpanel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         subpanel.add(this.addTextArea(description));

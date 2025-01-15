@@ -27,6 +27,7 @@ public final class InventoryControllerImpl implements InventoryController {
     private List<InventoryItem> inventory;
     private Optional<EquippableItem> equippedArmor;
     private Optional<EquippableItem> equippedWeapon;
+    private int selectedItem;
 
     /**
      * Creates a new view for the inventory of the player.
@@ -37,6 +38,7 @@ public final class InventoryControllerImpl implements InventoryController {
         this.mainController = mainController;
         this.mainView = mainView;
         this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY.getState());
+        this.selectedItem = 0;
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
             updateInventory();
@@ -77,7 +79,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private void refresh() {
         inventory = player.getItems();
-        updateInventory();
+        this.updateInventory();
         inventoryView.refresh();
     }
 
@@ -88,7 +90,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public List<String> getItemsNames() {
-        updateInventory();
+        this.updateInventory();
         final List<String> temp = new ArrayList<>();
         for (final var item : inventory) {
             temp.add(item.getName());
@@ -119,16 +121,23 @@ public final class InventoryControllerImpl implements InventoryController {
     @Override
     public void notify(final Event event) {
         switch (event) {
-            case USE_ITEM -> {
-                player.useItem(inventory.get(0));
-                refresh();
-            }
-            case DISCARD_ITEM -> {
-                player.discardItem(inventory.get(0));
-                refresh();
-            }
+            case PREVIOUS_ITEM -> this.selectedItem--;
+            case NEXT_ITEM -> this.selectedItem++;
+            case USE_ITEM -> player.useItem(inventory.get(0));
+            case DISCARD_ITEM -> player.discardItem(inventory.get(0));
             case INVENTORY -> regress();
             default -> { }
         }
+        this.refresh();
+    }
+
+    @Override
+    public int getSelectedItemIndex() {
+        return selectedItem;
+    }
+
+    @Override
+    public void setSelectedItemIndex(final int index) {
+        this.selectedItem = index;
     }
 }

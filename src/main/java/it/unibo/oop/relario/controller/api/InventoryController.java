@@ -33,4 +33,16 @@ public interface InventoryController extends Observer {
      * @return the full description of equipped weapon if present, otherwise an empty string.
      */
     String getEquippedWeapon();
+
+    /**
+     * Returns the index of the selected item in the inventory.
+     * @return the index of the selected item in the inventory.
+     */
+    int getSelectedItemIndex();
+
+    /**
+     * Sets the index of the new selected item in the inventory.
+     * @param index is the value of the new selected item.
+     */
+    void setSelectedItemIndex(int index);
 }
