@@ -120,11 +120,11 @@ public final class InventoryControllerImpl implements InventoryController {
     public void notify(final Event event) {
         switch (event) {
             case USE_ITEM -> {
-                player.useItem(inventory.get(inventoryView.getSelectedItem()));
+                player.useItem(inventory.get(0));
                 refresh();
             }
             case DISCARD_ITEM -> {
-                player.discardItem(inventory.get(inventoryView.getSelectedItem()));
+                player.discardItem(inventory.get(0));
                 refresh();
             }
             case INVENTORY -> regress();
