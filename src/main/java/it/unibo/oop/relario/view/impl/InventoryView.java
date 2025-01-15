@@ -14,6 +14,7 @@ import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -23,14 +24,14 @@ import java.awt.event.ActionListener;
  */
 public class InventoryView extends JPanel {
     private static final long serialVersionUID = 1L;
+    private static final double CONTENT_RATIO = 0.6;
+    private static final double COMMANDS_RATIO = 0.15;
 
     private final InventoryController inventory;
     private final Font font;
     private int buttonSelected;
-    private JPanel listPanel;
-    private JPanel descriptionPanel;
-    private JPanel equippedPanel;
-
+    final JPanel contentPanel;
+    
     private enum InventoryType {
         ITEM_LIST("Lista oggetti"),
         ITEM_DESCRIPTION("Descrizione oggetto"),
@@ -56,18 +57,32 @@ public class InventoryView extends JPanel {
         this.inventory = controller.getInventoryController();
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
         this.buttonSelected = 0;
+        this.contentPanel = new JPanel(new BorderLayout());
     }
 
     /**
      * Initializes the inventory view.
      */
     public void init() {
-        this.setLayout(new BorderLayout());
-        this.refresh();
+        this.setLayout(new FlowLayout());
+        this.setBackground(Color.BLACK);
+        //command panel
+        var secondPanel = new JPanel();
+        var label = new JLabel("↑↓ - spostarsi tra gli oggetti \t Enter - usa un oggetto \t Backspace - scarta un oggetto \t I - esci dall\'inventario");
+        label.setForeground(Color.WHITE);
+        label.setFont(font);
+        secondPanel.add(label);
+        secondPanel.setBackground(Color.BLACK);
+        //
         this.add(setupTitle());
-        this.add(listPanel);
-        this.add(descriptionPanel);
-        this.add(equippedPanel);
+        this.add(contentPanel);
+        this.refresh();
+        //ridimensiona i pannelli
+        var dim = new Dimension((int) (this.getWidth() * CONTENT_RATIO), (int) (this.getHeight() * CONTENT_RATIO));
+        var dim2 = new Dimension((int) (this.getWidth()), (int) (this.getHeight() * COMMANDS_RATIO));
+        secondPanel.setPreferredSize(dim2);
+        contentPanel.setPreferredSize(dim);
+        validate();
     }
 
     private JPanel setupTitle() {
@@ -84,9 +99,10 @@ public class InventoryView extends JPanel {
         final JPanel panel = new JPanel();
         final JPanel subpanel = new JPanel();
         final JLabel label = new JLabel(type.toString());
+        subpanel.setBackground(Color.BLACK);
+        subpanel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         label.setForeground(Color.LIGHT_GRAY);
         label.setFont(font);
-        subpanel.setBackground(Color.BLACK);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.BLACK);
         panel.setAlignmentX(CENTER_ALIGNMENT);
@@ -105,7 +121,6 @@ public class InventoryView extends JPanel {
     }
 
     private void setupList(final JPanel panel) {
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         final var list = this.inventory.getItemsNames();
         final JRadioButton[] radioButtons = new JRadioButton[list.size()];
         final ButtonGroup buttonGroup = new ButtonGroup();
@@ -114,7 +129,7 @@ public class InventoryView extends JPanel {
             for (int i = 0; i < radioButtons.length; i++) {
                 if (radioButtons[i].isSelected()) {
                     buttonSelected = i;
-                    this.descriptionPanel = setupInventory(InventoryType.ITEM_DESCRIPTION);
+                    this.contentPanel.add(setupInventory(InventoryType.ITEM_DESCRIPTION), BorderLayout.CENTER);
                     this.validate();
                 }
             }
@@ -133,13 +148,11 @@ public class InventoryView extends JPanel {
     }
 
     private void setupDescription(final JPanel panel) {
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
         final var description = this.inventory.getItemFullDescription(buttonSelected);
         panel.add(addTextArea(description));
     }
 
     private void setupEquipped(final JPanel panel) {
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         final var armor = "Armatura: " + this.inventory.getEquippedArmor();
         final var weapon = "Arma: " + this.inventory.getEquippedWeapon();
         panel.add(addTextArea(armor));
@@ -169,9 +182,9 @@ public class InventoryView extends JPanel {
      * Refresh the inventory view with updated data.
      */
     public final void refresh() {
-        this.listPanel = setupInventory(InventoryType.ITEM_LIST);
-        this.descriptionPanel = setupInventory(InventoryType.ITEM_DESCRIPTION);
-        this.equippedPanel = setupInventory(InventoryType.EQUIPPED_ITEMS);
+        this.contentPanel.add(setupInventory(InventoryType.ITEM_LIST), BorderLayout.WEST);
+        this.contentPanel.add(setupInventory(InventoryType.ITEM_DESCRIPTION), BorderLayout.CENTER);
+        this.contentPanel.add(setupInventory(InventoryType.EQUIPPED_ITEMS), BorderLayout.EAST);
         this.validate();
     }
 }
