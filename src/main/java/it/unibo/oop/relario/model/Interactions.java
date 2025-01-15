@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
+import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
 
@@ -45,10 +46,10 @@ public final class Interactions {
      * @param furnitureMap position-furniture map.
      * @return true if the position in front is available, false otherwise.
      */
-    public static boolean canMove(final Position pos, final Direction dir, final int depth, final int width, 
+    public static boolean canMove(final Position pos, final Direction dir, final Dimension dimension, 
     final Map<Position, Optional<LivingBeing>> entityMap, final Map<Position, Optional<Furniture>> furnitureMap) {
         final Position nextPos = dir.move(pos);
-        return isPositionIntoRoomBorder(nextPos, depth, width)
+        return isPositionIntoRoomBorder(nextPos, dimension.getHeight(), dimension.getWidth())
         && !isPositionWithEntity(nextPos, entityMap)
         && isPositionWithoutNonWalkableForniture(nextPos, furnitureMap);
     }
