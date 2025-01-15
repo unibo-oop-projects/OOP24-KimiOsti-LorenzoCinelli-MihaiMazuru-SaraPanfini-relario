@@ -40,8 +40,7 @@ public final class Interactions {
      * Checks if the next position is available.
      * @param pos the initial position of the entity.
      * @param dir the direction the entity is moving.
-     * @param depth the depth of the room.
-     * @param width the width of the room.
+     * @param dimension the dimension of the room.
      * @param entityMap position-entity map.
      * @param furnitureMap position-furniture map.
      * @return true if the position in front is available, false otherwise.
