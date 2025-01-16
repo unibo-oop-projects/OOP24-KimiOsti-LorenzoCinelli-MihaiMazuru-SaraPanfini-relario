@@ -115,7 +115,9 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
             radioButtons[i].setFocusable(false);
             panel.add(radioButtons[i]);
         }
-        radioButtons[inventory.getSelectedItemIndex()].setSelected(true);
+        if(radioButtons.length > 0) {
+            radioButtons[inventory.getSelectedItemIndex()].setSelected(true);
+        }
         return panel;
 	}
 
@@ -124,7 +126,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         final var panel = createContentSubpanel("Descrizione oggetto");
 		final var description = this.inventory.getItemFullDescription(inventory.getSelectedItemIndex());
         subpanel.setBackground(Color.BLACK);
-        subpanel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.Y_AXIS));
         subpanel.add(this.addTextArea(description));
         panel.add(subpanel);
         return panel;
@@ -136,7 +138,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         final var weapon = "Arma: " + this.inventory.getEquippedWeapon();
         final var subpanel = new JPanel();
         subpanel.setBackground(Color.BLACK);
-        subpanel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.Y_AXIS));
         subpanel.add(this.addTextArea(armor));
         subpanel.add(this.addTextArea(weapon));
         panel.add(subpanel);
