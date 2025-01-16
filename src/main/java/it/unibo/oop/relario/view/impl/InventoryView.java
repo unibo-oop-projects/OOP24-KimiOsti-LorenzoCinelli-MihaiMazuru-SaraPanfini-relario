@@ -2,11 +2,11 @@ package it.unibo.oop.relario.view.impl;
 
 import javax.swing.JPanel;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.view.api.InventoryViewFactory;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 /**
  * View implementation for inventory navigation.
@@ -16,29 +16,23 @@ public class InventoryView extends JPanel {
     private static final double CONTENT_RATIO = 0.6;
     private static final double COMMANDS_RATIO = 0.15;
     private static final double DEFAULT_RATIO = 1;
+    private static final int CONTENT_PANEL_INDEX = 1;
 
-    private final InventoryViewFactory factory;
-    private JPanel contentPanel;
-
-    /**
-     * Creates the inventory view.
-     * @param controller the main controller of the game.
-     */
-    public InventoryView(final MainController controller) {
-        factory = new InventoryViewFactoryImpl(controller.getInventoryController());
-    }
+    private InventoryViewFactory factory;
 
     /**
      * Initializes the inventory view.
+     * @param controller is the main controller of the game.
      */
-    public void init() {
+    public void init(final MainController controller) {
+        this.factory = new InventoryViewFactoryImpl(controller.getInventoryController());
+        this.addKeyListener(new GameKeyListener(controller.getInventoryController()));
+
         final var commandPanel = this.factory.createCommandPanel();
-        contentPanel = this.factory.createContentPanel();
-        this.setLayout(new FlowLayout());
+        final var contentPanel = this.factory.createContentPanel();
         this.setBackground(Color.BLACK);
         this.add(commandPanel);
         this.add(contentPanel);
-        this.validate();
         this.resize(commandPanel, COMMANDS_RATIO, DEFAULT_RATIO);
         this.resize(contentPanel, CONTENT_RATIO, CONTENT_RATIO);
         this.validate();
@@ -53,7 +47,11 @@ public class InventoryView extends JPanel {
      * Refresh the inventory view with updated data.
      */
     public final void refresh() {
-        this.contentPanel = this.factory.createContentPanel();
+        final var contentPanel = this.factory.createContentPanel();
+        this.remove(CONTENT_PANEL_INDEX);
+        this.add(contentPanel);
+        this.resize(contentPanel, CONTENT_RATIO, CONTENT_RATIO);
+        this.repaint();
         this.validate();
     }
 }
