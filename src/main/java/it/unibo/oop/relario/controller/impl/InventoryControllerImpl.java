@@ -16,7 +16,7 @@ import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.InventoryView;
 
 /**
- * Implementation of the inventory controller.
+ * Implementation of {@link InventoryController}.
  */
 public final class InventoryControllerImpl implements InventoryController {
 
@@ -80,7 +80,7 @@ public final class InventoryControllerImpl implements InventoryController {
     private void refresh() {
         this.inventory = player.getItems();
         this.updateInventory();
-        if(this.selectedItem >= this.inventory.size()) {
+        if (this.selectedItem >= this.inventory.size()) {
             this.selectedItem = 0;
         }
         this.inventoryView.refresh();
@@ -123,7 +123,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public void notify(final Event event) {
-        if(inventory.size() > 0 && this.selectedItem >= 0 && this.selectedItem < inventory.size()) {
+        if (!inventory.isEmpty() && this.selectedItem >= 0 && this.selectedItem < inventory.size()) {
             switch (event) {
                 case PREVIOUS_ITEM -> this.selectedItem = (this.selectedItem + this.inventory.size() - 1) % this.inventory.size();
                 case NEXT_ITEM -> this.selectedItem = (this.selectedItem + 1) % this.inventory.size();
@@ -145,6 +145,7 @@ public final class InventoryControllerImpl implements InventoryController {
     public void setSelectedItemIndex(final int index) {
         if (index >= 0 && index < inventory.size()) {
             this.selectedItem = index;
+            this.refresh();
         }
     }
 }
