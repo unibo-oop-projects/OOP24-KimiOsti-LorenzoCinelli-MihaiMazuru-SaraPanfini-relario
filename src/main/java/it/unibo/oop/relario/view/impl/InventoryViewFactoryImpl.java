@@ -138,6 +138,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
     @Override
     public JPanel createContentPanel() {
         final var panel = new JPanel(new BorderLayout());
+        panel.setBackground(Color.BLACK);
         panel.add(createTitlePanel(), BorderLayout.NORTH);
         panel.add(createListPanel(), BorderLayout.WEST);
         panel.add(createDescriptionPanel(), BorderLayout.CENTER);
