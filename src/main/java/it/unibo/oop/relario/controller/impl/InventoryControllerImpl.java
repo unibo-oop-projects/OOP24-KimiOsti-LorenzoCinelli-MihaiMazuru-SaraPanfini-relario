@@ -78,9 +78,12 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     private void refresh() {
-        inventory = player.getItems();
+        this.inventory = player.getItems();
         this.updateInventory();
-        inventoryView.refresh();
+        if(this.selectedItem >= this.inventory.size()) {
+            this.selectedItem = 0;
+        }
+        this.inventoryView.refresh();
     }
 
     private void regress() {
@@ -100,11 +103,11 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public String getItemFullDescription(final int index) {
-        if (index <= inventory.size()) {
+        if (index >= 0 && index < inventory.size()) {
             final InventoryItem item = inventory.get(index);
             return getFullDescription(item);
         } else {
-            throw new UnsupportedOperationException();
+            return "";
         }
     }
 
@@ -120,15 +123,17 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public void notify(final Event event) {
-        switch (event) {
-            case PREVIOUS_ITEM -> this.selectedItem--;
-            case NEXT_ITEM -> this.selectedItem++;
-            case USE_ITEM -> player.useItem(inventory.get(0));
-            case DISCARD_ITEM -> player.discardItem(inventory.get(0));
-            case INVENTORY -> regress();
-            default -> { }
+        if(inventory.size() > 0 && this.selectedItem >= 0 && this.selectedItem < inventory.size()) {
+            switch (event) {
+                case PREVIOUS_ITEM -> this.selectedItem = (this.selectedItem + this.inventory.size() - 1) % this.inventory.size();
+                case NEXT_ITEM -> this.selectedItem = (this.selectedItem + 1) % this.inventory.size();
+                case USE_ITEM -> player.useItem(inventory.get(this.selectedItem));
+                case DISCARD_ITEM -> player.discardItem(inventory.get(this.selectedItem));
+                case INVENTORY -> regress();
+                default -> { }
+            }
+            this.refresh();
         }
-        this.refresh();
     }
 
     @Override
@@ -138,6 +143,8 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public void setSelectedItemIndex(final int index) {
-        this.selectedItem = index;
+        if (index >= 0 && index < inventory.size()) {
+            this.selectedItem = index;
+        }
     }
 }
