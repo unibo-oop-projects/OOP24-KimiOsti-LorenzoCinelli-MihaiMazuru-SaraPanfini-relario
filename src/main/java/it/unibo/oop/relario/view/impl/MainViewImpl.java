@@ -65,7 +65,8 @@ public final class MainViewImpl implements MainView {
         final JPanel gameView = new GameView(this.mainController);
         panels.put(gameView, GameState.GAME.getState());
 
-        final JPanel inventoryView = new InventoryView(this.mainController);
+        final InventoryView inventoryView = new InventoryView(this.mainController);
+        inventoryView.init();
         panels.put(inventoryView, GameState.INVENTORY.getState());
         
         final JPanel combatView = new CombatView();
