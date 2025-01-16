@@ -19,9 +19,12 @@ import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 import it.unibo.oop.relario.view.api.InventoryViewFactory;
 
+/**
+ * Implementation of {@link InventoryViewFactory}.
+ */
 public final class InventoryViewFactoryImpl implements InventoryViewFactory {
 
-	private final Font font;
+    private final Font font;
     private final InventoryController inventory;
 
     /**
@@ -56,19 +59,19 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         return area;
     }
 
-	private JPanel createTitlePanel() {
-		final var panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    private JPanel createTitlePanel() {
+        final var panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final var label = new JLabel("Inventario");
         label.setForeground(Color.WHITE);
         label.setFont(font);
         panel.setBackground(Color.BLACK);
         panel.add(label);
         return panel;
-	}
+    }
 
-	private JPanel createListPanel() {
+    private JPanel createListPanel() {
         final var panel = createContentSubpanel("Lista oggetti");
-		final var list = this.inventory.getItemsNames();
+        final var list = this.inventory.getItemsNames();
         final var radioButtons = new JRadioButton[list.size()];
         final var buttonGroup = new ButtonGroup();
 
@@ -90,26 +93,26 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
             radioButtons[i].setFocusable(false);
             panel.add(radioButtons[i]);
         }
-        if(radioButtons.length > 0) {
+        if (radioButtons.length > 0) {
             radioButtons[inventory.getSelectedItemIndex()].setSelected(true);
         }
         return panel;
-	}
+    }
 
-	private JPanel createDescriptionPanel() {
+    private JPanel createDescriptionPanel() {
         final var subpanel = new JPanel();
         final var panel = createContentSubpanel("Descrizione oggetto");
-		final var description = this.inventory.getItemFullDescription(inventory.getSelectedItemIndex());
+        final var description = this.inventory.getItemFullDescription(inventory.getSelectedItemIndex());
         subpanel.setBackground(Color.BLACK);
         subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.Y_AXIS));
         subpanel.add(this.addTextArea(description));
         panel.add(subpanel);
         return panel;
-	}
+    }
 
-	private JPanel createEquippedPanel() {
+    private JPanel createEquippedPanel() {
         final var panel = createContentSubpanel("Oggetti equipaggiati");
-		final var armor = "Armatura: " + this.inventory.getEquippedArmor();
+        final var armor = "Armatura: " + this.inventory.getEquippedArmor();
         final var weapon = "Arma: " + this.inventory.getEquippedWeapon();
         final var subpanel = new JPanel();
         subpanel.setBackground(Color.BLACK);
@@ -118,11 +121,11 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         subpanel.add(this.addTextArea(weapon));
         panel.add(subpanel);
         return panel;
-	}
+    }
 
     @Override
-	public JPanel createCommandPanel() {
-		final var panel = new JPanel();
+    public JPanel createCommandPanel() {
+        final var panel = new JPanel();
         final var commandsString = """
             ↑↓ - spostarsi tra gli oggetti Enter - usa un oggetto Backspace -
             scarta un oggetto I - esci dall\'inventario
@@ -133,7 +136,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         panel.setBackground(Color.BLACK);
         panel.add(label);
         return panel;
-	}
+    }
 
     @Override
     public JPanel createContentPanel() {
