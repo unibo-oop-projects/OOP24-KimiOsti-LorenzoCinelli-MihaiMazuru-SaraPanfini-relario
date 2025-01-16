@@ -56,31 +56,6 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         return area;
     }
 
-    @Override
-	public JPanel createCommandPanel() {
-		final var panel = new JPanel();
-        final var commandsString = """
-            ↑↓ - spostarsi tra gli oggetti Enter - usa un oggetto Backspace -
-            scarta un oggetto I - esci dall\'inventario
-        """;
-        final var label = new JLabel(commandsString);
-        label.setForeground(Color.WHITE);
-        label.setFont(font);
-        panel.setBackground(Color.BLACK);
-        panel.add(label);
-        return panel;
-	}
-
-    @Override
-    public JPanel createContentPanel() {
-        final var panel = new JPanel(new BorderLayout());
-        panel.add(createTitlePanel(), BorderLayout.NORTH);
-        panel.add(createListPanel(), BorderLayout.WEST);
-        panel.add(createDescriptionPanel(), BorderLayout.CENTER);
-        panel.add(createEquippedPanel(), BorderLayout.EAST);
-        return panel;
-    }
-
 	private JPanel createTitlePanel() {
 		final var panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final var label = new JLabel("Inventario");
@@ -144,5 +119,30 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         panel.add(subpanel);
         return panel;
 	}
+
+    @Override
+	public JPanel createCommandPanel() {
+		final var panel = new JPanel();
+        final var commandsString = """
+            ↑↓ - spostarsi tra gli oggetti Enter - usa un oggetto Backspace -
+            scarta un oggetto I - esci dall\'inventario
+        """;
+        final var label = new JLabel(commandsString);
+        label.setForeground(Color.WHITE);
+        label.setFont(font);
+        panel.setBackground(Color.BLACK);
+        panel.add(label);
+        return panel;
+	}
+
+    @Override
+    public JPanel createContentPanel() {
+        final var panel = new JPanel(new BorderLayout());
+        panel.add(createTitlePanel(), BorderLayout.NORTH);
+        panel.add(createListPanel(), BorderLayout.WEST);
+        panel.add(createDescriptionPanel(), BorderLayout.CENTER);
+        panel.add(createEquippedPanel(), BorderLayout.EAST);
+        return panel;
+    }
 
 }
