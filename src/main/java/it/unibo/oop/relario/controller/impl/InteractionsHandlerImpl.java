@@ -31,9 +31,9 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
         this.controller = controller;
         this.view = view;
         this.classNameToInteraction = Map.of(
-            Npc.class.getName(), (e) -> {this.interactWithNpc((Npc) e);},
-            Enemy.class.getName(), (e) -> {this.startEnemyCombat((Enemy) e);},
-            Furniture.class.getName(), (e) -> {this.interactWithFurniture((Furniture) e);}
+            Npc.class.getName(), (e) -> this.interactWithNpc((Npc) e),
+            Enemy.class.getName(), (e) -> this.startEnemyCombat((Enemy) e),
+            Furniture.class.getName(), (e) -> this.interactWithFurniture((Furniture) e)
         );
     }
 
@@ -57,23 +57,24 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                     curRoom.getPlayer().getDirection().move(curRoom.getPlayer().getPosition().get())
                 );
                 if (entity.isPresent()) {
-                    this.classNameToInteraction.get((entity.get().getClass().getName())).accept(entity.get());
+                    this.classNameToInteraction.get(entity.get().getClass().getName()).accept(entity.get());
                 }
             }
         }
 
+        /* [TODO]: risolvi il fatto che qui, se parte un combattimento, comunque fai resume del game loop */
         this.controller.getGameController().resume(this.controller.getCurRoom().isPresent());
     }
 
-    private void interactWithNpc(Npc npc) {
+    private void interactWithNpc(final Npc npc) {
         /* [TODO]: visualizzare il dialogo e ottenere un eventuale oggetto */
     }
 
-    private void startEnemyCombat(Enemy enemy) {
+    private void startEnemyCombat(final Enemy enemy) {
         /* [TODO]: avviare il combattimento */
     }
 
-    private void interactWithFurniture(Furniture furniture) {
+    private void interactWithFurniture(final Furniture furniture) {
         /* [TODO]: interazione con la furniture, che sia walkable o interactive */
     }
 
