@@ -25,7 +25,7 @@ public final class Interactions {
         return entityMap.containsKey(pos);
     }
 
-    private static boolean isPositionWithObstructingForniture(final Position pos, 
+    private static boolean isPositionWithObstructingForniture(final Position pos,
     final Map<Position, Furniture> furnitureMap) {
         return furnitureMap.containsKey(pos) && !furnitureMap.get(pos).isWalkable();
     }
@@ -44,7 +44,7 @@ public final class Interactions {
      * @param furnitureMap position-furniture map.
      * @return true if the position in front is available, false otherwise.
      */
-    public static boolean canMove(final Position pos, final Direction dir, final Dimension dimension, 
+    public static boolean canMove(final Position pos, final Direction dir, final Dimension dimension,
     final Map<Position, LivingBeing> entityMap, final Map<Position, Furniture> furnitureMap) {
         final Position nextPos = dir.move(pos);
         return isPositionIntoRoomBorder(nextPos, dimension.getHeight(), dimension.getWidth())
@@ -60,7 +60,7 @@ public final class Interactions {
      * @param furnitureMap position-furniture map.
      * @return true if the position in front is interactive, false otherwise.
      */
-    public static boolean canInteract(final Position pos, final Direction dir, 
+    public static boolean canInteract(final Position pos, final Direction dir,
     final Map<Position, LivingBeing> entityMap, final Map<Position, Furniture> furnitureMap) {
         final Position nextPos = dir.move(pos);
         return isPositionWithEntity(nextPos, entityMap)
