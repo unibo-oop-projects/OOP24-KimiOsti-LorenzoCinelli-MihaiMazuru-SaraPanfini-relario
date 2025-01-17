@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ch.qos.logback.core.spi.ConfigurationEvent.EventType;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.impl.InventoryControllerImpl;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
@@ -154,14 +153,6 @@ final class InventoryControllerTest {
         this.inventoryController.notify(Event.DISCARD_ITEM);
         assertEquals(List.of(),
         this.inventoryController.getItemsNames());
-    }
-
-    /**
-     * Tests the regress to the previous controller and view.
-     */
-    @Test
-    void testRegress() {
-
     }
 
 }
