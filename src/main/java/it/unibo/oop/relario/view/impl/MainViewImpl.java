@@ -6,7 +6,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,7 +22,7 @@ public final class MainViewImpl implements MainView {
     private final JFrame frame;
     private final JPanel mainPanel;
     private final MainController mainController;
-    private final Map<JPanel, String> panels = new HashMap<>();
+    private final Map<JPanel, GameState> panels = new HashMap<>();
     private Deque<String> stack = new ArrayDeque<>();
     private String currentPanel;
 
@@ -45,20 +44,17 @@ public final class MainViewImpl implements MainView {
     public void panelsSetup() {
         final JPanel startMenuView = new MenuView(this, 
         this.mainController.getMenuController().getStartMenuElements(), this.mainController);
-        panels.put(startMenuView, GameState.MENU.getState());
-
         final JPanel inGameMenuView = new MenuView(this, 
         this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
-        panels.put(inGameMenuView, GameState.MENU_IN_GAME.getState());
-
         final JPanel gameView = new GameView(this.mainController);
-        panels.put(gameView, GameState.GAME.getState());
-
         final JPanel inventoryView = new InventoryView(this.mainController);
-        panels.put(inventoryView, GameState.INVENTORY.getState());
-        
         final JPanel combatView = new CombatView();
-        panels.put(combatView, GameState.COMBAT.getState());
+        
+        panels.put(startMenuView, GameState.MENU);
+        panels.put(inGameMenuView, GameState.MENU_IN_GAME);
+        panels.put(gameView, GameState.GAME);
+        panels.put(inventoryView, GameState.INVENTORY);
+        panels.put(combatView, GameState.COMBAT);
 
         this.panelsSetFocusable();
     }
@@ -76,7 +72,7 @@ public final class MainViewImpl implements MainView {
     @Override
     public JPanel getPanel(final String name) {
         return panels.entrySet().stream()
-            .filter(e -> e.getValue().equals(name))
+            .filter(e -> e.getValue().getState().equals(name))
             .map(Map.Entry::getKey)
             .findFirst()
             .get();
