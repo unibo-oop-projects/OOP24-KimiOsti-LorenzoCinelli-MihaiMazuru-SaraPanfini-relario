@@ -5,35 +5,50 @@ import java.util.List;
 /**
  * Interface for inventory controller, used when the user is interacting with the inventory.
  */
-public interface InventoryController {
+public interface InventoryController extends Observer {
 
     /**
-     * Retrives the names of all items into the player inventory.
+     * Initializes the inventory controller. 
+     */
+    void init();
+    
+    /**
+     * Returns the names of all items into the player inventory.
      * @return the list of items' names.
      */
     List<String> getItemsNames();
 
     /**
      * Retrives the description and effects of an item into the inventory.
+     * If the number of items is 0 or the index is out of bounds returns an empty string
      * @param index identifies what item the description is required.
-     * @return the full description of the item.
+     * @return the full description of the item, or an empty string in case the index is out of bounds.
      */
     String getItemFullDescription(int index);
 
     /**
-     * Uses an item which is into the inventory.
-     * @param index identifies the item to use. 
+     * Returns the name, description, effect and durability of the equipped armor if equipped. 
+     * If no armor is equipped it returns an empty string.
+     * @return the full description of equipped armor if present, otherwise an empty string.
      */
-    void useItem(int index);
+    String getEquippedArmor();
 
     /**
-     * Discards an item from the inventory.
-     * @param index identifies the item to discard.
+     * Returns the name, description, effect and durability of the equipped weapon if equipped. 
+     * If no weapon is equipped it returns an empty string.
+     * @return the full description of equipped weapon if present, otherwise an empty string.
      */
-    void discardItem(int index);
+    String getEquippedWeapon();
 
     /**
-     * Displays the previous view.
+     * Returns the index of the selected item in the inventory.
+     * @return the index of the selected item in the inventory.
      */
-    void regress();
+    int getSelectedItemIndex();
+
+    /**
+     * Sets the index of the new selected item in the inventory.
+     * @param index is the value of the new selected item.
+     */
+    void setSelectedItemIndex(int index);
 }

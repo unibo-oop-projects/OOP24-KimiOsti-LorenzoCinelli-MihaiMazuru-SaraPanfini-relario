@@ -19,6 +19,7 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 public final class MainCharacterImpl implements MainCharacter {
 
     private static final int DEFAULT_INITIAL_POSITION = 0;
+    private static final Direction DEFAULT_INITIAL_DIRECTION = Direction.RIGHT;
 
     private final Inventory inventory;
     private final String name;
@@ -41,6 +42,8 @@ public final class MainCharacterImpl implements MainCharacter {
         this.atk = Constants.DEFAULT_PLAYER_ATK;
         this.inventory = new InventoryImpl();
         this.position = new PositionImpl(DEFAULT_INITIAL_POSITION, DEFAULT_INITIAL_POSITION);
+        this.direction = DEFAULT_INITIAL_DIRECTION;
+        this.moving = false;
         this.armor = Optional.empty();
         this.weapon = Optional.empty();
     }
@@ -90,28 +93,46 @@ public final class MainCharacterImpl implements MainCharacter {
     }
 
     @Override
-    public boolean attacked(final int damage) {
+    public void attacked(final int damage) {
         this.life = this.life + (this.armor.isEmpty() ? 0 : this.armor.get().getIntensity()) >= damage
             ? this.life - damage + (this.armor.isEmpty() ? 0 : this.armor.get().getIntensity()) : 0;
         if (!this.armor.isEmpty()) {
             this.armor.get().decreaseDurability();
         }
-        return this.life > 0;
+    }
+
+    @Override
+    public int getLife() {
+        return this.life;
     }
 
     @Override
     public int attack() {
+        final int atk;
         if (!this.weapon.isEmpty()) {
-            this.weapon.get().decreaseDurability();
-            return this.weapon.get().getIntensity() + this.atk;
+            atk = this.weapon.get().getIntensity() + this.atk;
+            if (!this.weapon.get().decreaseDurability()) {
+                this.weapon = Optional.empty();
+            }
         } else {
-            return this.atk;
+            atk = this.atk;
         }
+        return atk;
     }
 
     @Override
     public List<InventoryItem> getItems() {
         return this.inventory.getItemsList();
+    }
+
+    @Override
+    public Optional<EquippableItem> getEquippedWeapon() {
+        return this.getEquipped(this.weapon);
+    }
+
+    @Override
+    public Optional<EquippableItem> getEquippedArmor() {
+        return this.getEquipped(this.armor);
     }
 
     @Override
@@ -155,5 +176,9 @@ public final class MainCharacterImpl implements MainCharacter {
             }
             armor = Optional.of(item);
         }
+    }
+
+    private Optional<EquippableItem> getEquipped(final Optional<EquippableItem> item) {
+        return item.isPresent() ? Optional.of(item.get()) : Optional.empty();
     }
 }

@@ -1,6 +1,5 @@
 package it.unibo.oop.relario.view.impl;
 
-import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -46,16 +45,16 @@ public final class MenuView extends JPanel {
         gridc.fill = GridBagConstraints.CENTER;
 
         final JLabel title = new JLabel(GAME_NAME);
-        this.add(title);
+        this.add(title, gridc);
         gridc.gridy++;
+        gridc.fill = GridBagConstraints.BOTH;
 
         for (final var elem: elements) {
-            this.add(createButton(elem));
+            this.add(createButton(elem), gridc);
             gridc.gridy++;
         }
 
-        this.addKeyListener(new GameKeyListener(view, controller));
-        this.add(this, BorderLayout.CENTER);
+        this.addKeyListener(new GameKeyListener(controller.getMenuController()));
     }
 
     private JButton createButton(MenuElement elem) {

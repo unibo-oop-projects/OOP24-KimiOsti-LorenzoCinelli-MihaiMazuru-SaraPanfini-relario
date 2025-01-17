@@ -17,13 +17,25 @@ public enum Event {
     /** Represents the action for moving left. */
     MOVE_LEFT,
 
-    /** Represents the action for opening the inventory. */
+    /** Represents the action for opening or closing the inventory. */
     INVENTORY,
 
     /** Represents the action for closing a window. */
     ESCAPE, 
 
     /** Represents the action for interacting with an entity. */
-    INTERACT;
+    INTERACT,
+
+    /** Represents the action for using the focused item in the inventory. */
+    USE_ITEM,
+
+    /** Represents the action for discarding the focused item in the inventory. */
+    DISCARD_ITEM,
+
+    /** Represents focusing on the next item in the inventory. */
+    NEXT_ITEM,
+
+    /** Represents focusing on the previous item in the inventory. */
+    PREVIOUS_ITEM;
 
 }
