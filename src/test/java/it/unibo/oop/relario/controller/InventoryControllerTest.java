@@ -2,20 +2,19 @@ package it.unibo.oop.relario.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ch.qos.logback.core.spi.ConfigurationEvent.EventType;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.impl.InventoryControllerImpl;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
-import it.unibo.oop.relario.model.inventory.InventoryItemImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.impl.Event;
 
@@ -60,11 +59,9 @@ final class InventoryControllerTest {
     void testGetItemsInfo() {
         assertEquals(List.of("Amuleto", "Pietra preziosa", "Armatura semplice"),
         this.inventoryController.getItemsNames());
-        assertEquals("""
-            Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5""",
+        assertEquals("Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5",
         inventoryController.getEquippedArmor());
-        assertEquals("""
-            Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3""",
+        assertEquals("Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3",
         inventoryController.getEquippedWeapon());
 
         assertEquals(0, inventoryController.getSelectedItemIndex());
@@ -88,11 +85,9 @@ final class InventoryControllerTest {
 
         assertEquals(List.of("Amuleto", "Pietra preziosa", "Armatura semplice"),
         this.inventoryController.getItemsNames());
-        assertEquals("""
-            Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5""",
+        assertEquals("Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5",
         inventoryController.getEquippedArmor());
-        assertEquals("""
-            Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3""",
+        assertEquals("Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3",
         inventoryController.getEquippedWeapon());
     }
 
@@ -101,7 +96,44 @@ final class InventoryControllerTest {
      */
     @Test
     void testUseItem() {
+        assertEquals(List.of("Amuleto", "Pietra preziosa", "Armatura semplice"),
+        this.inventoryController.getItemsNames());
+        assertEquals(0, this.inventoryController.getSelectedItemIndex());
+        this.inventoryController.setSelectedItemIndex(2);
+        assertEquals(2, this.inventoryController.getSelectedItemIndex());
+        this.inventoryController.notify(Event.USE_ITEM);
 
+        assertEquals(List.of("Amuleto", "Pietra preziosa", "Scudo"),
+        this.inventoryController.getItemsNames());
+        assertEquals(2, this.inventoryController.getSelectedItemIndex());
+        assertEquals("Uno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10",
+        this.inventoryController.getItemFullDescription(this.inventoryController.getSelectedItemIndex()));
+
+        this.inventoryController.notify(Event.NEXT_ITEM);
+        assertEquals(0, this.inventoryController.getSelectedItemIndex());
+        this.inventoryController.notify(Event.USE_ITEM);
+        assertEquals(List.of("Pietra preziosa", "Scudo"),
+        this.inventoryController.getItemsNames());
+        assertEquals("Una gemma scintillante di rara bellezza,\nEffetto: Nessuno",
+        this.inventoryController.getItemFullDescription(inventoryController.getSelectedItemIndex()));
+
+        this.inventoryController.notify(Event.NEXT_ITEM);
+        assertEquals(1, this.inventoryController.getSelectedItemIndex());
+        this.inventoryController.notify(Event.USE_ITEM);
+        assertEquals(List.of("Pietra preziosa", "Armatura semplice"),
+        this.inventoryController.getItemsNames());
+        assertEquals(1, this.inventoryController.getSelectedItemIndex());
+        assertEquals("Un'armatura leggera che offre protezione di base,\nEffetto: Protezione 5",
+        inventoryController.getItemFullDescription(inventoryController.getSelectedItemIndex()));
+
+        this.inventoryController.notify(Event.NEXT_ITEM);
+        assertEquals(0, this.inventoryController.getSelectedItemIndex());
+        this.inventoryController.notify(Event.USE_ITEM);
+        assertEquals(List.of("Armatura semplice"),
+        this.inventoryController.getItemsNames());
+        assertEquals(0, this.inventoryController.getSelectedItemIndex());
+        assertEquals("Un'armatura leggera che offre protezione di base,\nEffetto: Protezione 5",
+        inventoryController.getItemFullDescription(inventoryController.getSelectedItemIndex()));
     }
 
     /**
