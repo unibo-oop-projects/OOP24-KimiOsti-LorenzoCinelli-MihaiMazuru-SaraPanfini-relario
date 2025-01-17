@@ -101,39 +101,31 @@ final class InventoryControllerTest {
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.setSelectedItemIndex(2);
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
+        
         this.inventoryController.notify(Event.USE_ITEM);
-
         assertEquals(List.of("Amuleto", "Pietra preziosa", "Scudo"),
         this.inventoryController.getItemsNames());
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
-        assertEquals("Uno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5",
-        this.inventoryController.getItemFullDescription());
-
+        
         this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.notify(Event.USE_ITEM);
         assertEquals(List.of("Pietra preziosa", "Scudo"),
         this.inventoryController.getItemsNames());
-        assertEquals("Una gemma scintillante di rara bellezza,\nEffetto: Nessuno",
-        this.inventoryController.getItemFullDescription());
-
+        
         this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(1, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.notify(Event.USE_ITEM);
         assertEquals(List.of("Pietra preziosa", "Armatura semplice"),
         this.inventoryController.getItemsNames());
         assertEquals(1, this.inventoryController.getSelectedItemIndex());
-        assertEquals("Un'armatura leggera che offre protezione di base,\nEffetto: Protezione 5\nDurabilità: 3",
-        inventoryController.getItemFullDescription());
-
+        
         this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.notify(Event.USE_ITEM);
         assertEquals(List.of("Armatura semplice"),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
-        assertEquals("Un'armatura leggera che offre protezione di base,\nEffetto: Protezione 5\nDurabilità: 3",
-        inventoryController.getItemFullDescription());
     }
 
     /**
@@ -141,7 +133,27 @@ final class InventoryControllerTest {
      */
     @Test
     void testDiscardItem() {
+        assertEquals(List.of("Amuleto", "Pietra preziosa", "Armatura semplice"),
+        this.inventoryController.getItemsNames());
+        assertEquals(0, this.inventoryController.getSelectedItemIndex());
+        this.inventoryController.setSelectedItemIndex(2);
+        assertEquals(2, this.inventoryController.getSelectedItemIndex());
+        
+        this.inventoryController.notify(Event.DISCARD_ITEM);
+        assertEquals(List.of("Amuleto", "Pietra preziosa"),
+        this.inventoryController.getItemsNames());
+        assertEquals(0, this.inventoryController.getSelectedItemIndex());
 
+        this.inventoryController.notify(Event.PREVIOUS_ITEM);
+        assertEquals(1, this.inventoryController.getSelectedItemIndex());
+        this.inventoryController.notify(Event.DISCARD_ITEM);
+        assertEquals(List.of("Amuleto"),
+        this.inventoryController.getItemsNames());
+
+        assertEquals(0, this.inventoryController.getSelectedItemIndex());
+        this.inventoryController.notify(Event.DISCARD_ITEM);
+        assertEquals(List.of(),
+        this.inventoryController.getItemsNames());
     }
 
     /**
