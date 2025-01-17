@@ -90,8 +90,12 @@ public final class GameControllerImpl implements GameController {
     }
 
     private void handleMovement(final Event e) {
-        this.controller.getCurRoom().get().getPlayer().setMovement(
-            this.inputToDirection.get(e)
-        );
+        if (e.equals(Event.RELEASED)) {
+            this.controller.getCurRoom().get().getPlayer().stop();
+        } else {
+            this.controller.getCurRoom().get().getPlayer().setMovement(
+                this.inputToDirection.get(e)
+            );
+        }
     }
 }
