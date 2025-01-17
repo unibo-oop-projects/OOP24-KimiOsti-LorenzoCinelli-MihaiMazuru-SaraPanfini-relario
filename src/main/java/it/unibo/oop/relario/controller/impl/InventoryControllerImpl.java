@@ -55,7 +55,8 @@ public final class InventoryControllerImpl implements InventoryController {
     private String getFullDescription(final InventoryItem item) {
         return item.getDescription()
         + ",\nEffetto: " + item.getEffect().toString()
-        + this.getIntensity(item);
+        + this.getIntensity(item)
+        + this.getDurability(item);
     }
 
     private String getIntensity(final InventoryItem item) {
@@ -66,11 +67,18 @@ public final class InventoryControllerImpl implements InventoryController {
         }
     }
 
+    private String getDurability(final InventoryItem item) {
+        if (item instanceof EquippableItem) {
+            return "\nDurabilità: " + ((EquippableItem) item).getDurability();
+        } else {
+            return "";
+        }
+    }
+
     private String getEquippedItem(final Optional<EquippableItem> item) {
         if (item.isPresent()) {
             final var equippedItem = item.get();
-            return equippedItem.getName() + "\n" + getFullDescription(equippedItem)
-            + "\nDurabilità: " + equippedItem.getDurability();
+            return equippedItem.getName() + "\n" + getFullDescription(equippedItem);
         } else {
             return "";
         }
@@ -106,9 +114,9 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     @Override
-    public String getItemFullDescription(final int index) {
-        if (index >= 0 && index < inventory.size()) {
-            final InventoryItem item = inventory.get(index);
+    public String getItemFullDescription() {
+        if (selectedItem >= 0 && selectedItem < inventory.size()) {
+            final InventoryItem item = inventory.get(selectedItem);
             return getFullDescription(item);
         } else {
             return "";

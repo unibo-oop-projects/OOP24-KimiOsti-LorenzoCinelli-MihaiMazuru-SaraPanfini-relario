@@ -20,11 +20,10 @@ public interface InventoryController extends Observer {
 
     /**
      * Retrives the description and effects of an item into the inventory.
-     * If the number of items is 0 or the index is out of bounds returns an empty string
-     * @param index identifies what item the description is required.
-     * @return the full description of the item, or an empty string in case the index is out of bounds.
+     * If the item is equippable returns even the durability.
+     * @return the full description of the item, or an empty string in case the inventory is empty.
      */
-    String getItemFullDescription(int index);
+    String getItemFullDescription();
 
     /**
      * Returns the name, description, effect and durability of the equipped armor if equipped. 

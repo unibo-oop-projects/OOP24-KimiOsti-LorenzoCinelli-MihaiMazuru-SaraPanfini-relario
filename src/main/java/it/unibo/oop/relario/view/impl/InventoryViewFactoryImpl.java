@@ -102,7 +102,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
     private JPanel createDescriptionPanel() {
         final var subpanel = new JPanel();
         final var panel = createContentSubpanel("Descrizione oggetto");
-        final var description = this.inventory.getItemFullDescription(inventory.getSelectedItemIndex());
+        final var description = this.inventory.getItemFullDescription();
         subpanel.setBackground(Color.BLACK);
         subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.Y_AXIS));
         subpanel.add(this.addTextArea(description));
