@@ -47,9 +47,9 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     private void updateInventory() {
-        this.inventory = player.getItems();
-        this.equippedArmor = player.getEquippedArmor();
-        this.equippedWeapon = player.getEquippedWeapon();
+        this.inventory = this.player.getItems();
+        this.equippedArmor = this.player.getEquippedArmor();
+        this.equippedWeapon = this.player.getEquippedWeapon();
     }
 
     private String getFullDescription(final InventoryItem item) {
@@ -126,6 +126,19 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     @Override
+    public int getSelectedItemIndex() {
+        return selectedItem;
+    }
+
+    @Override
+    public void setSelectedItemIndex(final int index) {
+        if (index >= 0 && index < inventory.size()) {
+            this.selectedItem = index;
+            this.refresh();
+        }
+    }
+
+    @Override
     public void notify(final Event event) {
         if (!inventory.isEmpty() && this.selectedItem >= 0 && this.selectedItem < inventory.size()) {
             switch (event) {
@@ -136,19 +149,6 @@ public final class InventoryControllerImpl implements InventoryController {
                 case INVENTORY -> regress();
                 default -> { }
             }
-            this.refresh();
-        }
-    }
-
-    @Override
-    public int getSelectedItemIndex() {
-        return selectedItem;
-    }
-
-    @Override
-    public void setSelectedItemIndex(final int index) {
-        if (index >= 0 && index < inventory.size()) {
-            this.selectedItem = index;
             this.refresh();
         }
     }
