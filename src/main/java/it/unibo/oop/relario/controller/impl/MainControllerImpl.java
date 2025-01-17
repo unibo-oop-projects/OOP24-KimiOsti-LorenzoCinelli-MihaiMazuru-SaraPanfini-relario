@@ -40,6 +40,7 @@ public final class MainControllerImpl implements MainController {
         this.inventory = new InventoryControllerImpl(this, this.view);
         this.mainMenu = new MenuControllerImpl(this.view);
         this.view.panelsSetup();
+        this.inventory.init();
         this.view.showPanel(GameState.MENU.getState());
     }
 
