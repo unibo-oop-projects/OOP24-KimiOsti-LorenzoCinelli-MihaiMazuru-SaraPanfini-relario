@@ -4,14 +4,15 @@ import javax.swing.JPanel;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.view.api.InventoryViewFactory;
+import it.unibo.oop.relario.view.api.InventoryView;
 
 import java.awt.Color;
 import java.awt.Dimension;
 
 /**
- * View implementation for inventory navigation.
+ * Implementation of {@link InventoryView}.
  */
-public final class InventoryView extends JPanel {
+public final class InventoryViewImpl extends JPanel implements InventoryView {
     private static final long serialVersionUID = 1L;
     private static final double CONTENT_RATIO = 0.6;
     private static final double COMMANDS_RATIO = 0.15;
@@ -24,7 +25,7 @@ public final class InventoryView extends JPanel {
      * Creates and initializes the inventory view.
      * @param controller is the main controller of the game.
      */
-    public InventoryView(final MainController controller) {
+    public InventoryViewImpl(final MainController controller) {
         this.factory = new InventoryViewFactoryImpl(controller.getInventoryController());
         this.addKeyListener(new GameKeyListener(controller.getInventoryController()));
         final var commandPanel = this.factory.createCommandPanel();
@@ -42,9 +43,7 @@ public final class InventoryView extends JPanel {
         panel.setPreferredSize(dim);
     }
 
-    /**
-     * Refresh the inventory view with updated data.
-     */
+    @Override
     public void refresh() {
         final var contentPanel = this.factory.createContentPanel();
         this.remove(CONTENT_PANEL_INDEX);
