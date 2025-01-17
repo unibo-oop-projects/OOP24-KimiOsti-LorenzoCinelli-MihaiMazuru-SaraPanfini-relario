@@ -1,6 +1,5 @@
 package it.unibo.oop.relario.model.map;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -79,19 +78,7 @@ public interface Room {
      * Removes an entity from a specified position.
      * @param position of the entity
      */
-    void removeEntity(Position position);
-
-    /**
-     * Retrieves the list of boundary cells of the room.
-     * @return a list of positions
-     */
-    List<Position> getPerimeter();
-
-    /**
-     * Retrieves the list of inner cells of the room.
-     * @return a list of positions
-     */
-    List<Position> getInnerCells();
+    void removeEnemy(Position position);
 
     /**
      * Assigns a quest to the room.

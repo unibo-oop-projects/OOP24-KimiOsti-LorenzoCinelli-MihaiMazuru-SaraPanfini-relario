@@ -1,9 +1,6 @@
 package it.unibo.oop.relario.model.map;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -13,6 +10,7 @@ import java.util.stream.IntStream;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
+import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.quest.Quest;
@@ -36,13 +34,11 @@ public final class RoomImpl implements Room {
 
     private final MainCharacter player;
     private final Dimension dimension;
+    private final Map<Position, CellState> cellStates = new HashMap<>();
     private final Map<Position, LivingBeing> population = new HashMap<>();
     private final Map<Position, Furniture> furniture = new HashMap<>();
     private final Position entry;
     private final Position exit;
-    private final Set<Position> unavailableCells = new HashSet<>();
-    private List<Position> perimeter;
-    private List<Position> innerCells;
     private Optional<Quest> quest = Optional.empty();
 
     /**
@@ -50,8 +46,8 @@ public final class RoomImpl implements Room {
      * The room has an entry and an exit and the player is placed at the entry.
      * @param dimension of the room
      * @param player that is placed in the room
-     * @param entry TODO
-     * @param exit TODO
+     * @param entry of the room
+     * @param exit of the room
      */
     public RoomImpl(final MainCharacter player, final Dimension dimension, final Position entry, 
     final Position exit) {
@@ -60,14 +56,6 @@ public final class RoomImpl implements Room {
         this.entry = new PositionImpl(entry.getX(), entry.getY());
         this.exit = new PositionImpl(exit.getX(), exit.getY());
         initializeRoom();
-    }
-
-    private void initializeRoom() {
-        this.player.setPosition(entry);
-        this.unavailableCells.add(this.entry);
-        this.unavailableCells.add(this.exit);
-        this.perimeter = perimeterPositions();
-        this.innerCells = innerCells();
     }
 
     @Override
@@ -82,7 +70,7 @@ public final class RoomImpl implements Room {
 
     @Override
     public Optional<Quest> getQuest() {
-        return this.quest; // forse meglio ritornare direttamente i campi?
+        return this.quest;
     }
 
     @Override
@@ -113,7 +101,8 @@ public final class RoomImpl implements Room {
 
     @Override
     public boolean isCellAvailable(final Position position) {
-        return !unavailableCells.contains(position);
+        return this.cellStates.get(position).equals(CellState.PERIMETER_EMPTY) || 
+        this.cellStates.get(position).equals(CellState.INNER_EMPTY);
     }
 
     @Override
@@ -125,33 +114,11 @@ public final class RoomImpl implements Room {
         }
     }
 
-    private void addFurniture(final Position position, final Furniture furniture) {
-        this.furniture.put(position, furniture);
-        this.unavailableCells.addAll(adjacentCells(position, furniture));
-    }
-
-    private void addCharacter(final Position position, final LivingBeing character) {
-        this.population.put(position, character);
-        this.unavailableCells.addAll(adjacentCells(position, character));
-    }
-
     @Override
-    public void removeEntity(final Position position) {
-        if (population.containsKey(position)) {
+    public void removeEnemy(final Position position) {
+        if (population.containsKey(position) && population.get(position) instanceof Enemy) {
             this.population.remove(position);
-        } else if (furniture.containsKey(position)) {
-            this.furniture.remove(position);
         }
-    }
-
-    @Override
-    public List<Position> getPerimeter() {
-        return List.copyOf(this.perimeter);
-    }
-
-    @Override
-    public List<Position> getInnerCells() {
-        return List.copyOf(this.innerCells);
     }
 
     @Override
@@ -179,40 +146,45 @@ public final class RoomImpl implements Room {
         // ??
     }
 
+    private void addFurniture(final Position position, final Furniture furniture) {
+        Set<Position> adjacentCells = adjacentCells(position, furniture);
+        this.furniture.put(position, furniture);
+        this.cellStates.put(position, CellState.OCCUPIED);
+        for (Position pos : adjacentCells) {
+            this.cellStates.put(pos, CellState.RESTRICTED);
+        }
+    }
+
+    private void addCharacter(final Position position, final LivingBeing character) {
+        Set<Position> adjacentCells = adjacentCells(position, character);
+        this.population.put(position, character);
+        this.cellStates.put(position, CellState.OCCUPIED);
+        for (Position pos : adjacentCells) {
+            this.cellStates.put(pos, CellState.RESTRICTED);
+        }
+    }
+
     private Set<Position> adjacentCells(final Position position, final Entity entity) {
         final int rangeX = entity instanceof Furniture ? EXCLUSION_RANGE : CHARACTERS_EXCLUSION_RANGE;
         final int rangeY = EXCLUSION_RANGE;
 
         return IntStream.rangeClosed(position.getX() - rangeX, position.getX() + rangeX)
         .boxed().flatMap(x -> IntStream.rangeClosed(position.getY() - rangeY, position.getY() + rangeY)
-        .mapToObj(y -> new PositionImpl(x, y))).filter(this::isPositionValid).collect(Collectors.toSet());
+        .mapToObj(y -> new PositionImpl(x, y))).filter(p -> isPositionValid(p) && p.equals(position))
+        .collect(Collectors.toSet());
     }
 
-    private List<Position> perimeterPositions() {
-        final List<Position> perimeter = new ArrayList<>();
-
-        for (int x = 0; x < this.dimension.getWidth(); x++) {
-            perimeter.add(new PositionImpl(x, 0));
-            perimeter.add(new PositionImpl(x, this.dimension.getHeight() - 1));
-        }
-        for (int y = 1; y < this.dimension.getHeight() - 1; y++) {
-            perimeter.add(new PositionImpl(this.dimension.getWidth() - 1, y));
-            perimeter.add(new PositionImpl(0, y));
-        }
-
-        return perimeter;
+    private void initializeRoom() {
+        this.player.setPosition(entry);
+        this.cellStates.putAll(IntStream.range(0, this.dimension.getWidth())
+        .boxed().flatMap(x -> IntStream.range(0, this.dimension.getHeight())
+        .mapToObj(y -> new PositionImpl(x, y))).collect(Collectors.toMap(pos -> pos,
+        pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY : CellState.INNER_EMPTY)));
+        this.cellStates.put(this.entry, CellState.RESTRICTED);
     }
 
-    private List<Position> innerCells() {
-        final List<Position> innerCells = new ArrayList<>();
-
-        for (int x = BORDER; x < this.dimension.getWidth() - BORDER; x++) {
-            for (int y = BORDER; y < this.dimension.getHeight() - BORDER; y++) {
-                innerCells.add(new PositionImpl(x, y));
-            }
-        }
-
-        return innerCells;
+    private boolean isPerimeter(final int x, final int y) {
+        return x == 0 || y == 0 || x == this.dimension.getWidth() - 1 || y == this.dimension.getHeight() - 1;
     }
 
 }
