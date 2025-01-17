@@ -22,8 +22,8 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private final MainController mainController;
     private final MainView mainView;
-    private final InventoryView inventoryView;
     private final MainCharacter player;
+    private InventoryView inventoryView;
     private List<InventoryItem> inventory;
     private Optional<EquippableItem> equippedArmor;
     private Optional<EquippableItem> equippedWeapon;
@@ -37,7 +37,6 @@ public final class InventoryControllerImpl implements InventoryController {
     public InventoryControllerImpl(final MainController mainController, final MainView mainView) {
         this.mainController = mainController;
         this.mainView = mainView;
-        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY.getState());
         this.selectedItem = 0;
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
@@ -89,6 +88,11 @@ public final class InventoryControllerImpl implements InventoryController {
     private void regress() {
         this.mainController.getGameController().resume(true);
         this.mainView.showPreviousPanel();
+    }
+
+    @Override
+    public void init() {
+        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY.getState());
     }
 
     @Override
