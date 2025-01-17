@@ -11,7 +11,7 @@ public interface InventoryController extends Observer {
      * Initializes the inventory controller. 
      */
     void init();
-    
+
     /**
      * Returns the names of all items into the player inventory.
      * @return the list of items' names.
