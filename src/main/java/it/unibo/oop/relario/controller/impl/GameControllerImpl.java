@@ -3,6 +3,7 @@ package it.unibo.oop.relario.controller.impl;
 import java.util.Map;
 
 import it.unibo.oop.relario.controller.api.GameController;
+import it.unibo.oop.relario.controller.api.InteractionsHandler;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.Event;
@@ -15,6 +16,7 @@ import it.unibo.oop.relario.view.impl.GameView;
  */
 public final class GameControllerImpl implements GameController {
 
+    private final InteractionsHandler interactionsHandler;
     private final Map<Event, Direction> inputToDirection;
     private final MainController controller;
     private final MainView view;
@@ -27,6 +29,7 @@ public final class GameControllerImpl implements GameController {
      */
     public GameControllerImpl(final MainController controller, final MainView view) {
         this.controller = controller;
+        this.interactionsHandler = new InteractionsHandlerImpl(this.controller);
         this.view = view;
         this.inputToDirection = Map.of(
             Event.MOVE_UP,
@@ -62,9 +65,8 @@ public final class GameControllerImpl implements GameController {
         switch (e) {
             case INTERACT -> {
                 this.gameLoop.interrupt();
-                new InteractionsHandlerImpl().handleInteraction(
-                    this.controller.getCurRoom().get(),
-                    this.controller
+                this.interactionsHandler.handleInteraction(
+                    this.controller.getCurRoom().get()
                 );
             }
             case INVENTORY -> this.changeGameState(GameState.INVENTORY.getState());
