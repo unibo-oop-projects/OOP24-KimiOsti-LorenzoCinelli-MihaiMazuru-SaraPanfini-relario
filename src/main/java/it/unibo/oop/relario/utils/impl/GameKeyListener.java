@@ -43,23 +43,12 @@ public final class GameKeyListener implements KeyListener {
     } 
 
     /**
-     * Checks if the key pressed is a valid key for movement.
-     * @param e is the key pressed.
-     * @return true if the the key pressed is a valid key for movement, false otherwise.
-     */
-    private boolean isMovementKey(final int keyCode) {
-        return keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_S ||
-        keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_A;
-    }
-
-    /**
      * Checks if the key pressed is a valid key.
      * @param e is the key pressed.
      * @return true if the key pressed is a valid key, false otherwise.
      */
     private boolean isValidKey(final int keyCode) {
-        return  isMovementKey(keyCode) || keyCode == KeyEvent.VK_ESCAPE || 
-        keyCode == KeyEvent.VK_I || keyCode == KeyEvent.VK_E;
+        return keys.containsKey(keyCode);
     }
 
     /**
