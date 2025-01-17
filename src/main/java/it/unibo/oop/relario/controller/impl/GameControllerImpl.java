@@ -32,14 +32,10 @@ public final class GameControllerImpl implements GameController {
         this.view = view;
         this.interactionsHandler = new InteractionsHandlerImpl(this.controller, this.view);
         this.inputToDirection = Map.of(
-            Event.MOVE_UP,
-            Direction.UP,
-            Event.MOVE_DOWN,
-            Direction.DOWN,
-            Event.MOVE_RIGHT,
-            Direction.RIGHT,
-            Event.MOVE_LEFT,
-            Direction.LEFT
+            Event.MOVE_UP, Direction.UP,
+            Event.MOVE_DOWN, Direction.DOWN,
+            Event.MOVE_RIGHT, Direction.RIGHT,
+            Event.MOVE_LEFT, Direction.LEFT
         );
     }
 
