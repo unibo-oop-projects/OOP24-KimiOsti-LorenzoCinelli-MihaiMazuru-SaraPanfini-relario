@@ -10,8 +10,7 @@ public interface InteractionsHandler {
     /**
      * Handles interactions requested by the user input.
      * @param curRoom the room surrounding the interaction request.
-     * @param controller the controller handling eventual response calls.
      */
-    void handleInteraction(Room curRoom, MainController controller);
+    void handleInteraction(Room curRoom);
 
 }
