@@ -61,12 +61,6 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void changeGameState(final GameState state) {
-        this.gameLoop.interrupt();
-        this.view.showPanel(state.getState());
-    }
-
-    @Override
     public void notify(final Event e) {
         switch (e) {
             case INTERACT -> {
@@ -88,6 +82,11 @@ public final class GameControllerImpl implements GameController {
             this.controller.getCurRoom().get()
         );
         this.gameLoop.start();
+    }
+    
+    private void changeGameState(final GameState state) {
+        this.gameLoop.interrupt();
+        this.view.showPanel(state.getState());
     }
 
     private void handleMovement(final Event e) {
