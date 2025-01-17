@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
@@ -127,10 +128,6 @@ public final class RoomImpl implements Room {
             && position.getY() >= 0 && position.getY() < this.dimension.getHeight();
     }
 
-    /* public boolean canExit() {
-        return this.player.getPosition().equals(this.exit);
-    } */
-
     @Override
     public Position getExit() {
         return new PositionImpl(this.exit.getX(), this.exit.getY());
@@ -143,7 +140,15 @@ public final class RoomImpl implements Room {
 
     @Override
     public void update() {
-        // ??
+        if (!Interactions.canMove(this.player.getPosition().get(), this.player.getDirection(), 
+        this.dimension, this.population, this.furniture)) {
+            this.player.stop();
+        }
+        this.player.update();
+
+        for (LivingBeing chara : this.population.values()) {
+            chara.update();
+        }
     }
 
     private void addFurniture(final Position position, final Furniture furniture) {
