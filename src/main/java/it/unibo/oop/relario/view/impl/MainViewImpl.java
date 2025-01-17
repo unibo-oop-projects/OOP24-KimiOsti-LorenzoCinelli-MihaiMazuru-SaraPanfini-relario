@@ -35,7 +35,7 @@ public final class MainViewImpl implements MainView {
         this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
         this.frameSetup();
-        this.currentPanel = GameState.NONE.getState();
+        this.currentPanel = GameState.MENU.getState();
         this.frame.add(mainPanel);
         this.frame.setVisible(true);
     }
@@ -103,7 +103,7 @@ public final class MainViewImpl implements MainView {
     private void panelsSetFocusable() {
         for (var p: panels.keySet()) {
             p.setFocusable(true);
-            mainPanel.add(p, panels.get(p));
+            mainPanel.add(p, panels.get(p).getState());
         }
     }
 
