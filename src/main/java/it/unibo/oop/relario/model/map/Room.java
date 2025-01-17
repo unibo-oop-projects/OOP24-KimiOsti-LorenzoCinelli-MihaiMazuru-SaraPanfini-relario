@@ -13,26 +13,26 @@ import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
- * Interface for a room in the game map.
+ * Interface representing a room in the game map.
  */
 
 public interface Room {
 
     /**
-     * 
-     * @return TODO
+     * Retrieves the current room instance.
+     * @return the current room
      */
     Room getRoom();
 
     /**
-     * 
-     * @return TODO
+     * Retrieves the main character in the room.
+     * @return the player
      */
     MainCharacter getPlayer();
 
     /**
-     * 
-     * @return TODO
+     * Retrieves the quest assigned to the room, if any.
+     * @return an optional containing the quest or empty if no quest is assigned
      */
     Optional<Quest> getQuest();
 
@@ -94,8 +94,8 @@ public interface Room {
     List<Position> getInnerCells();
 
     /**
-     * 
-     * @param quest
+     * Assigns a quest to the room.
+     * @param quest to assign
      */
     void setQuest(Optional<Quest> quest);
 
@@ -113,13 +113,13 @@ public interface Room {
     Position getExit();
 
     /**
-     * 
-     * @return TODO
+     * Retrieves the entry position of the room.
+     * @return the entry position
      */
     Position getEntry();
 
     /**
-     * 
+     * Updates the state of the room.
      */
     void update();
 
