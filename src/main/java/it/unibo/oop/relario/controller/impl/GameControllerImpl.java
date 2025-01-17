@@ -1,7 +1,10 @@
 package it.unibo.oop.relario.controller.impl;
 
+import java.util.Map;
+
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
@@ -12,6 +15,7 @@ import it.unibo.oop.relario.view.impl.GameView;
  */
 public final class GameControllerImpl implements GameController {
 
+    private final Map<Event, Direction> inputToDirection;
     private final MainController controller;
     private final MainView view;
     private Thread gameLoop;
@@ -24,6 +28,16 @@ public final class GameControllerImpl implements GameController {
     public GameControllerImpl(final MainController controller, final MainView view) {
         this.controller = controller;
         this.view = view;
+        this.inputToDirection = Map.of(
+            Event.MOVE_UP,
+            Direction.UP,
+            Event.MOVE_DOWN,
+            Direction.DOWN,
+            Event.MOVE_RIGHT,
+            Direction.RIGHT,
+            Event.MOVE_LEFT,
+            Direction.LEFT
+        );
     }
 
     @Override
@@ -76,6 +90,8 @@ public final class GameControllerImpl implements GameController {
     }
 
     private void handleMovement(final Event e) {
-
+        this.controller.getCurRoom().get().getPlayer().setMovement(
+            this.inputToDirection.get(e)
+        );
     }
 }
