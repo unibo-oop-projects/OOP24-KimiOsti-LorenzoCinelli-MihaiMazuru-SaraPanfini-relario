@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.impl.InventoryControllerImpl;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
-import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
@@ -25,9 +24,11 @@ import it.unibo.oop.relario.utils.impl.Event;
  * Test class for the {@link InventoryControllerImpl} class.
  */
 final class InventoryControllerTest {
-    
+    private static final String AMULETO = "Amuleto";
+    private static final String PIETRA = "Pietra preziosa";
+    private static final String ARMATURA = "Armatura semplice";
+
     private InventoryController inventoryController;
-    private MainCharacter player;
 
     /**
      * Sets up the testing.
@@ -37,18 +38,18 @@ final class InventoryControllerTest {
         final var mainController = new MainControllerImpl();
         this.inventoryController = mainController.getInventoryController();
 
-        this.player = mainController.getCurRoom().get().getPlayer();
+        final var player = mainController.getCurRoom().get().getPlayer();
         final InventoryItemFactory itemFactory = new InventoryItemFactoryImpl();
 
         final var dagger = itemFactory.createItem(InventoryItemType.DAGGER);
         final var shield = itemFactory.createItem(InventoryItemType.SHIELD);
-        assertTrue(this.player.addToInventory(itemFactory.createItem(InventoryItemType.AMULET)));
-        assertTrue(this.player.addToInventory(itemFactory.createItem(InventoryItemType.GEMSTONE)));
-        assertTrue(this.player.addToInventory(itemFactory.createItem(InventoryItemType.BASICARMOR)));
-        assertTrue(this.player.addToInventory(dagger));
-        assertTrue(this.player.useItem(dagger));
-        assertTrue(this.player.addToInventory(shield));
-        assertTrue(this.player.useItem(shield));
+        assertTrue(player.addToInventory(itemFactory.createItem(InventoryItemType.AMULET)));
+        assertTrue(player.addToInventory(itemFactory.createItem(InventoryItemType.GEMSTONE)));
+        assertTrue(player.addToInventory(itemFactory.createItem(InventoryItemType.BASICARMOR)));
+        assertTrue(player.addToInventory(dagger));
+        assertTrue(player.useItem(dagger));
+        assertTrue(player.addToInventory(shield));
+        assertTrue(player.useItem(shield));
     }
 
     /**
@@ -56,17 +57,19 @@ final class InventoryControllerTest {
      */
     @Test
     void testGetItemsInfo() {
-        assertEquals(List.of("Amuleto", "Pietra preziosa", "Armatura semplice"),
+        assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
-        assertEquals("Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5",
+        assertEquals("""
+        Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5""",
         inventoryController.getEquippedArmor());
-        assertEquals("Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3",
+        assertEquals("""
+        Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3""",
         inventoryController.getEquippedWeapon());
 
         assertEquals(0, inventoryController.getSelectedItemIndex());
         assertEquals("Un ciondolo antico e luminoso che emana un'aura di guarigione,\nEffetto: Cura 15",
         inventoryController.getItemFullDescription());
-        
+
         inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(1, inventoryController.getSelectedItemIndex());
         assertEquals("Una gemma scintillante di rara bellezza,\nEffetto: Nessuno",
@@ -74,7 +77,8 @@ final class InventoryControllerTest {
 
         inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(2, inventoryController.getSelectedItemIndex());
-        assertEquals("Un'armatura leggera che offre protezione di base,\nEffetto: Protezione 5\nDurabilità: 3",
+        assertEquals("""
+        Un'armatura leggera che offre protezione di base,\nEffetto: Protezione 5\nDurabilità: 3""",
         inventoryController.getItemFullDescription());
 
         inventoryController.notify(Event.PREVIOUS_ITEM);
@@ -82,11 +86,13 @@ final class InventoryControllerTest {
         assertEquals("Una gemma scintillante di rara bellezza,\nEffetto: Nessuno",
         inventoryController.getItemFullDescription());
 
-        assertEquals(List.of("Amuleto", "Pietra preziosa", "Armatura semplice"),
+        assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
-        assertEquals("Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5",
+        assertEquals("""
+        Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5""",
         inventoryController.getEquippedArmor());
-        assertEquals("Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3",
+        assertEquals("""
+        Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3""",
         inventoryController.getEquippedWeapon());
     }
 
@@ -95,34 +101,34 @@ final class InventoryControllerTest {
      */
     @Test
     void testUseItem() {
-        assertEquals(List.of("Amuleto", "Pietra preziosa", "Armatura semplice"),
+        assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.setSelectedItemIndex(2);
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
-        
+
         this.inventoryController.notify(Event.USE_ITEM);
-        assertEquals(List.of("Amuleto", "Pietra preziosa", "Scudo"),
+        assertEquals(List.of(AMULETO, PIETRA, "Scudo"),
         this.inventoryController.getItemsNames());
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
-        
+
         this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.notify(Event.USE_ITEM);
-        assertEquals(List.of("Pietra preziosa", "Scudo"),
+        assertEquals(List.of(PIETRA, "Scudo"),
         this.inventoryController.getItemsNames());
-        
+
         this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(1, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.notify(Event.USE_ITEM);
-        assertEquals(List.of("Pietra preziosa", "Armatura semplice"),
+        assertEquals(List.of(PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(1, this.inventoryController.getSelectedItemIndex());
-        
+
         this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.notify(Event.USE_ITEM);
-        assertEquals(List.of("Armatura semplice"),
+        assertEquals(List.of(ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
     }
@@ -132,21 +138,21 @@ final class InventoryControllerTest {
      */
     @Test
     void testDiscardItem() {
-        assertEquals(List.of("Amuleto", "Pietra preziosa", "Armatura semplice"),
+        assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.setSelectedItemIndex(2);
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
-        
+
         this.inventoryController.notify(Event.DISCARD_ITEM);
-        assertEquals(List.of("Amuleto", "Pietra preziosa"),
+        assertEquals(List.of(AMULETO, PIETRA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
 
         this.inventoryController.notify(Event.PREVIOUS_ITEM);
         assertEquals(1, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.notify(Event.DISCARD_ITEM);
-        assertEquals(List.of("Amuleto"),
+        assertEquals(List.of(AMULETO),
         this.inventoryController.getItemsNames());
 
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
