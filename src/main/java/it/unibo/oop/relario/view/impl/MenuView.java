@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.view.impl;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,6 +17,7 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.menu.Command;
 import it.unibo.oop.relario.model.menu.MenuElement;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
@@ -33,6 +35,7 @@ public final class MenuView extends JPanel {
      * Initializes a new menu view.
      * @param view is the main view that contains all the game panels.
      * @param elements are the menu elements that need to be added to the view.
+     * @param controller is the main controller.
      */
     public MenuView(final MainView view, final List<MenuElement> elements, 
     final MainController controller) {
@@ -44,8 +47,10 @@ public final class MenuView extends JPanel {
         gridc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
         gridc.fill = GridBagConstraints.CENTER;
 
-        final JLabel title = new JLabel(GAME_NAME);
-        this.add(title, gridc);
+        if (this.view.getCurrentPanel().equals(GameState.MENU.getState())) {
+            final JLabel title = new JLabel(GAME_NAME);
+            this.add(title, gridc);
+        }
         gridc.gridy++;
         gridc.fill = GridBagConstraints.BOTH;
 
@@ -54,6 +59,7 @@ public final class MenuView extends JPanel {
             gridc.gridy++;
         }
 
+        this.setBackground(Color.BLACK);
         this.addKeyListener(new GameKeyListener(controller.getMenuController()));
     }
 
@@ -73,6 +79,8 @@ public final class MenuView extends JPanel {
                     for (final var f : Frame.getFrames()) {
                         f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
                     }
+                } else {
+                    this.requestFocus(true);
                 }
             }
         });
