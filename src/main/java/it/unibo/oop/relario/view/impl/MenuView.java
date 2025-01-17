@@ -79,6 +79,8 @@ public final class MenuView extends JPanel {
                     for (final var f : Frame.getFrames()) {
                         f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
                     }
+                } else {
+                    this.requestFocus(true);
                 }
             }
         });
