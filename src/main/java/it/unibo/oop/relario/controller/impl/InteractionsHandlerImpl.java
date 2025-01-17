@@ -10,8 +10,18 @@ import it.unibo.oop.relario.model.map.Room;
  */
 public final class InteractionsHandlerImpl implements InteractionsHandler {
 
+    private final MainController controller;
+
+    /**
+     * Constructor for the game's interaction handler.
+     * @param controller the controller for return calls.
+     */
+    public InteractionsHandlerImpl(final MainController controller) {
+        this.controller = controller;
+    }
+
     @Override
-    public void handleInteraction(final Room curRoom, final MainController controller) {
+    public void handleInteraction(final Room curRoom) {
         if (
             curRoom.getPlayer().getPosition().isPresent()
             && Interactions.canInteract(
@@ -22,13 +32,13 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
             )
         ) {
             if (curRoom.getPlayer().getPosition().get().equals(curRoom.getExit())) {
-                controller.moveToNextRoom();
+                this.controller.moveToNextRoom();
             } else {
                 /* [TODO]: handle interaction scenarios */
             }
         }
 
-        controller.getGameController().resume(controller.getCurRoom().isPresent());
+        this.controller.getGameController().resume(this.controller.getCurRoom().isPresent());
     }
 
 }
