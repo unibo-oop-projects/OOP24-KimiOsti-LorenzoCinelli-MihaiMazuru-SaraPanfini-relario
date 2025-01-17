@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,8 +39,8 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 final class InteractionsTest {
 
     private Dimension dim;
-    private Map<Position, Optional<LivingBeing>> entityMap;
-    private Map<Position, Optional<Furniture>> furnitureMap;
+    private Map<Position, LivingBeing> entityMap;
+    private Map<Position, Furniture> furnitureMap;
     private List<Position> obstructingFurniture;
     private List<Position> interactiveFurniture;
     private List<Position> obstructingEntity;
@@ -53,157 +52,157 @@ final class InteractionsTest {
 
         //armorstand
         p = new PositionImpl(0, 0);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(4, 0);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(8, 0);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(9, 7);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(0, 8);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(3, 9);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(7, 9);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
 
         //statue
         p = new PositionImpl(2, 0);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
         obstructingFurniture.add(p);
         p = new PositionImpl(6, 0);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
         obstructingFurniture.add(p);
         p = new PositionImpl(9, 1);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
         obstructingFurniture.add(p);
         p = new PositionImpl(9, 9);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
         obstructingFurniture.add(p);
         p = new PositionImpl(5, 9);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
         obstructingFurniture.add(p);
         p = new PositionImpl(0, 2);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
         obstructingFurniture.add(p);
         p = new PositionImpl(0, 6);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
         obstructingFurniture.add(p);
 
         //vase
         p = new PositionImpl(0, 3);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(0, 5);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(9, 3);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(9, 5);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
 
         //carpet
         p = new PositionImpl(2, 3);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(2, 4);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(2, 5);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
 
         p = new PositionImpl(3, 3);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(3, 4);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(3, 5);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
 
         p = new PositionImpl(4, 3);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(4, 4);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(4, 5);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
 
         p = new PositionImpl(5, 3);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(5, 4);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(5, 5);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
 
         p = new PositionImpl(6, 3);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(6, 4);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(6, 5);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
 
         p = new PositionImpl(7, 3);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(7, 4);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
         p = new PositionImpl(7, 5);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
         interactiveFurniture.add(p);
 
         //chest
         p = new PositionImpl(3, 1);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.CHEST)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.CHEST));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
         p = new PositionImpl(5, 1);
-        furnitureMap.put(p, Optional.of(ff.createInteractiveFurnitureByItem(p, FurnitureType.CHEST)));
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.CHEST));
         obstructingFurniture.add(p);
         interactiveFurniture.add(p);
 
         //wardrobe
         p = new PositionImpl(3, 8);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.WARDROBE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.WARDROBE));
         obstructingFurniture.add(p);
         p = new PositionImpl(5, 8);
-        furnitureMap.put(p, Optional.of(ff.createObstructingFurnitureByItem(p, FurnitureType.WARDROBE)));
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.WARDROBE));
         obstructingFurniture.add(p);
 
         //trapdor
         p = new PositionImpl(4, 7);
-        furnitureMap.put(p, Optional.of(ff.createWalkableFurnitureByItem(p, FurnitureType.TRAPDOOR)));
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.TRAPDOOR));
         interactiveFurniture.add(p);
 
     }
@@ -215,57 +214,52 @@ final class InteractionsTest {
 
         //non interactive npc
         p = new PositionImpl(1, 1);
-        entityMap.put(p, Optional.of(nf.createNotInteractiveNpc(p)));
+        entityMap.put(p, nf.createNotInteractiveNpc(p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
         p = new PositionImpl(5, 3);
-        entityMap.put(p, Optional.of(nf.createNotInteractiveNpc(p)));
+        entityMap.put(p, nf.createNotInteractiveNpc(p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
 
         //interactive npc
         p = new PositionImpl(3, 4);
-        entityMap.put(p, Optional.of(nf.createInteractiveNpc(p)));
+        entityMap.put(p, nf.createInteractiveNpc(p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
         p = new PositionImpl(0, 9);
-        entityMap.put(p, Optional.of(nf.createInteractiveNpc(p)));
+        entityMap.put(p, nf.createInteractiveNpc(p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
 
         //enemies
         p = new PositionImpl(4, 2);
-        entityMap.put(p, Optional.of(ef.createEnemyByType(EnemyType.THIEF, p)));
+        entityMap.put(p, ef.createEnemyByType(EnemyType.THIEF, p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
         p = new PositionImpl(7, 2);
-        entityMap.put(p, Optional.of(ef.createEnemyByType(EnemyType.KNIGHT, p)));
+        entityMap.put(p, ef.createEnemyByType(EnemyType.KNIGHT, p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
         p = new PositionImpl(4, 8);
-        entityMap.put(p, Optional.of(ef.createEnemyByType(EnemyType.SOLDIER, p)));
+        entityMap.put(p, ef.createEnemyByType(EnemyType.SOLDIER, p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
         p = new PositionImpl(7, 7);
-        entityMap.put(p, Optional.of(ef.createEnemyByType(EnemyType.WIZARD, p)));
+        entityMap.put(p, ef.createEnemyByType(EnemyType.WIZARD, p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
 
         //character
         p = new PositionImpl(0, 4);
-        entityMap.put(p, Optional.of(new MainCharacterImpl()));
+        entityMap.put(p, new MainCharacterImpl());
         obstructingEntity.add(p);
         interactiveEntity.add(p);
     }
 
     private void clearMap() {
-        for (int j = 0; j < dim.getHeight(); j++) {
-            for (int i = 0; i < dim.getWidth(); i++) {
-                final Position p = new PositionImpl(i, j);
-                furnitureMap.put(p, Optional.empty());
-                entityMap.put(p, Optional.empty());
-            }
-        }
+        furnitureMap.clear();
+        entityMap.clear();
         obstructingFurniture.clear();
         interactiveFurniture.clear();
         obstructingEntity.clear();

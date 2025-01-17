@@ -1,7 +1,6 @@
 package it.unibo.oop.relario.model;
 
 import java.util.Map;
-import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
