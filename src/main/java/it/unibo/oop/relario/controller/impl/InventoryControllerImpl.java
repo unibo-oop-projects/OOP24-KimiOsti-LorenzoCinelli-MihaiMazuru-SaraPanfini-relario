@@ -13,7 +13,7 @@ import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
-import it.unibo.oop.relario.view.impl.InventoryView;
+import it.unibo.oop.relario.view.api.InventoryView;
 
 /**
  * Implementation of {@link InventoryController}.

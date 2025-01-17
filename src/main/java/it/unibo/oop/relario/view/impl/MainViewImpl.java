@@ -21,7 +21,7 @@ public final class MainViewImpl implements MainView {
     private final JFrame frame;
     private final JPanel mainPanel;
     private final MainController mainController;
-    private final Map<JPanel, String> panels;
+    private final Map<String, JPanel> panels;
     private final GameKeyListener keyListener;
     private String previousPanel;
     private String currentPanel;
@@ -56,21 +56,20 @@ public final class MainViewImpl implements MainView {
     public void panelsSetup() {
         final JPanel startMenuView = new MenuView(this, 
         this.mainController.getMenuController().getStartMenuElements(), this.mainController);
-        panels.put(startMenuView, GameState.MENU.getState());
+        panels.put(GameState.MENU.getState(), startMenuView);
 
         final JPanel inGameMenuView = new MenuView(this, 
         this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
-        panels.put(inGameMenuView, GameState.MENU_IN_GAME.getState());
+        panels.put(GameState.MENU_IN_GAME.getState(), inGameMenuView);
 
         final JPanel gameView = new GameView(this.mainController);
-        panels.put(gameView, GameState.GAME.getState());
+        panels.put(GameState.GAME.getState(), gameView);
 
-        final InventoryView inventoryView = new InventoryView(this.mainController);
-        inventoryView.init();
-        panels.put(inventoryView, GameState.INVENTORY.getState());
+        final InventoryViewImpl inventoryView = new InventoryViewImpl(this.mainController);
+        panels.put(GameState.INVENTORY.getState(), inventoryView);
         
         final JPanel combatView = new CombatView();
-        panels.put(combatView, GameState.COMBAT.getState());
+        panels.put(GameState.COMBAT.getState(), combatView);
 
         this.panelsSetFocusable();
     }
@@ -80,8 +79,8 @@ public final class MainViewImpl implements MainView {
      */
     private void panelsSetFocusable() {
         for (var p: panels.keySet()) {
-            p.setFocusable(true);
-            mainPanel.add(p, panels.get(p));
+            panels.get(p).setFocusable(true);
+            mainPanel.add(panels.get(p), p);
         }
     }
 
@@ -97,12 +96,7 @@ public final class MainViewImpl implements MainView {
 
     @Override
     public JPanel getPanel(final String name) {
-        for (var p: panels.keySet()) {
-            if (panels.get(p).equals(name)) {
-                return p;
-            }
-        }
-        return null;
+        return panels.get(name);
     }
 
     @Override
