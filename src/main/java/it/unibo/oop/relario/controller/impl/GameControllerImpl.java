@@ -60,10 +60,13 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void notify(final Event e) {
         switch (e) {
-            case INTERACT -> new InteractionsHandlerImpl().handleInteraction(
-                this.controller.getCurRoom().get(),
-                this.controller
-            );
+            case INTERACT -> {
+                this.gameLoop.interrupt();
+                new InteractionsHandlerImpl().handleInteraction(
+                    this.controller.getCurRoom().get(),
+                    this.controller
+                );
+            }
             case INVENTORY -> this.changeGameState(GameState.INVENTORY.getState());
             case ESCAPE -> this.changeGameState(GameState.MENU_IN_GAME.getState());
             default -> this.handleMovement(e);
