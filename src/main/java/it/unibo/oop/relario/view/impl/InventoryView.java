@@ -11,23 +11,22 @@ import java.awt.Dimension;
 /**
  * View implementation for inventory navigation.
  */
-public class InventoryView extends JPanel {
+public final class InventoryView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final double CONTENT_RATIO = 0.6;
     private static final double COMMANDS_RATIO = 0.15;
     private static final double DEFAULT_RATIO = 1;
     private static final int CONTENT_PANEL_INDEX = 1;
 
-    private InventoryViewFactory factory;
+    private final InventoryViewFactory factory;
 
     /**
-     * Initializes the inventory view.
+     * Creates and initializes the inventory view.
      * @param controller is the main controller of the game.
      */
-    public void init(final MainController controller) {
+    public InventoryView(final MainController controller) {
         this.factory = new InventoryViewFactoryImpl(controller.getInventoryController());
         this.addKeyListener(new GameKeyListener(controller.getInventoryController()));
-
         final var commandPanel = this.factory.createCommandPanel();
         final var contentPanel = this.factory.createContentPanel();
         this.setBackground(Color.BLACK);
@@ -46,7 +45,7 @@ public class InventoryView extends JPanel {
     /**
      * Refresh the inventory view with updated data.
      */
-    public final void refresh() {
+    public void refresh() {
         final var contentPanel = this.factory.createContentPanel();
         this.remove(CONTENT_PANEL_INDEX);
         this.add(contentPanel);
