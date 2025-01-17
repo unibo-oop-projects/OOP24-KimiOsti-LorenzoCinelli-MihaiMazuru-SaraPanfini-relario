@@ -17,6 +17,9 @@ public enum Event {
     /** Represents the action for moving left. */
     MOVE_LEFT,
 
+    /** Represents the realising of the key pressed before. */
+    RELEASED, 
+
     /** Represents the action for opening or closing the inventory. */
     INVENTORY,
 

@@ -37,6 +37,9 @@ public final class GameKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(final KeyEvent e) {
+        if (this.isValidKey(e.getKeyCode())) {
+            this.observer.notify(Event.RELEASED);
+        }
     } 
 
     /**
@@ -45,7 +48,7 @@ public final class GameKeyListener implements KeyListener {
      * @return true if the key pressed is a valid key, false otherwise.
      */
     private boolean isValidKey(final int keyCode) {
-        return this.keys.keySet().contains(keyCode);
+        return keys.containsKey(keyCode);
     }
 
     /**
