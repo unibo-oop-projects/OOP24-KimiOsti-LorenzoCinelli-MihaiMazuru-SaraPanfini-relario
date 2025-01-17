@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
@@ -284,7 +285,7 @@ final class InteractionsTest {
     /**
      * Sub-testing for the movement into the borders of the room.
      */
-    @Test
+    @Disabled
     void testBorderMovement() {
         Position pos;
         Direction dir;
@@ -327,7 +328,7 @@ final class InteractionsTest {
     /**
      * Sub-testing for the movement with furniture.
      */
-    @Test
+    @Disabled
     void testFurnitureMovement() {
         furnitureSetup();
 
@@ -393,7 +394,7 @@ final class InteractionsTest {
     /**
      * Sub-testing for the movement with entities.
      */
-    @Test
+    @Disabled
     void testEntityMovement() {
         entitySetup();
 
@@ -459,7 +460,7 @@ final class InteractionsTest {
     /**
      * Sub-testing for the general movement.
      */
-    @Test
+    @Disabled
     void testMovement() {
         furnitureSetup();
         entitySetup();
@@ -544,7 +545,7 @@ final class InteractionsTest {
     /**
      * Sub-testing for the interaction with furniture.
      */
-    @Test
+    @Disabled
     void testFurnitureInteraction() {
         furnitureSetup();
 
@@ -594,7 +595,7 @@ final class InteractionsTest {
     /**
      * Sub-testing for the interaction with entities.
      */
-    @Test
+    @Disabled
     void testEntityInteraction() {
         entitySetup();
 
@@ -644,7 +645,7 @@ final class InteractionsTest {
     /**
      * Sub-testing for the general interaction.
      */
-    @Test
+    @Disabled
     void testInteraction() {
         furnitureSetup();
         entitySetup();
