@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,14 +40,6 @@ public final class MainViewImpl implements MainView {
         this.frame.setVisible(true);
     }
 
-    private void frameSetup() {
-        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.frame.setLayout(new BorderLayout());
-        this.frame.setLocationByPlatform(true);
-        this.frame.setFocusable(true);
-    }
-
     @Override
     public void panelsSetup() {
         final JPanel startMenuView = new MenuView(this, 
@@ -69,16 +62,6 @@ public final class MainViewImpl implements MainView {
         this.panelsSetFocusable();
     }
 
-    /**
-     * Sets focusable any panel and adds it to the main panel.
-     */
-    private void panelsSetFocusable() {
-        for (var p: panels.keySet()) {
-            p.setFocusable(true);
-            mainPanel.add(p, panels.get(p));
-        }
-    }
-
     @Override
     public void showPanel(final String panelName) {
         final CardLayout layout = (CardLayout) this.mainPanel.getLayout();
@@ -91,12 +74,11 @@ public final class MainViewImpl implements MainView {
 
     @Override
     public JPanel getPanel(final String name) {
-        for (var p: panels.keySet()) {
-            if (panels.get(p).equals(name)) {
-                return p;
-            }
-        }
-        return null;
+        return panels.entrySet().stream()
+            .filter(e -> e.getValue().equals(name))
+            .map(Map.Entry::getKey)
+            .findFirst()
+            .get();
     }
 
     @Override
@@ -107,6 +89,24 @@ public final class MainViewImpl implements MainView {
     @Override
     public String getCurrentPanel() {
         return this.currentPanel;
+    }
+
+    private void frameSetup() {
+        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.frame.setLayout(new BorderLayout());
+        this.frame.setLocationByPlatform(true);
+        this.frame.setFocusable(true);
+    }
+
+    /**
+     * Sets focusable any panel and adds it to the main panel.
+     */
+    private void panelsSetFocusable() {
+        for (var p: panels.keySet()) {
+            p.setFocusable(true);
+            mainPanel.add(p, panels.get(p));
+        }
     }
 
 }
