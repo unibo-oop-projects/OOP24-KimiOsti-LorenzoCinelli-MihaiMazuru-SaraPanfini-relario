@@ -51,55 +51,19 @@ public final class InventoryControllerImpl implements InventoryController {
         }
     }
 
-    private void updateInventory() {
-        this.inventory = this.player.getItems();
-        this.equippedArmor = this.player.getEquippedArmor();
-        this.equippedWeapon = this.player.getEquippedWeapon();
-    }
-
-    private String getFullDescription(final InventoryItem item) {
-        return item.getDescription()
-        + ",\nEffetto: " + item.getEffect().toString()
-        + this.getIntensity(item)
-        + this.getDurability(item);
-    }
-
-    private String getIntensity(final InventoryItem item) {
-        if (item.getEffect() == EffectType.NONE) {
-            return "";
-        } else {
-            return " " + item.getIntensity();
+    @Override
+    public void notify(final Event event) {
+        if (!inventory.isEmpty() && this.selectedItem >= 0 && this.selectedItem < inventory.size()) {
+            switch (event) {
+                case PREVIOUS_ITEM -> this.selectedItem = (this.selectedItem + this.inventory.size() - 1) % this.inventory.size();
+                case NEXT_ITEM -> this.selectedItem = (this.selectedItem + 1) % this.inventory.size();
+                case USE_ITEM -> player.useItem(inventory.get(this.selectedItem));
+                case DISCARD_ITEM -> player.discardItem(inventory.get(this.selectedItem));
+                case INVENTORY -> regress();
+                default -> { }
+            }
+            this.refresh();
         }
-    }
-
-    private String getDurability(final InventoryItem item) {
-        if (item instanceof EquippableItem) {
-            return "\nDurabilità: " + ((EquippableItem) item).getDurability();
-        } else {
-            return "";
-        }
-    }
-
-    private String getEquippedItem(final Optional<EquippableItem> item) {
-        if (item.isPresent()) {
-            final var equippedItem = item.get();
-            return equippedItem.getName() + "\n" + getFullDescription(equippedItem);
-        } else {
-            return "";
-        }
-    }
-
-    private void refresh() {
-        this.updateInventory();
-        if (this.selectedItem >= this.inventory.size()) {
-            this.selectedItem = 0;
-        }
-        this.inventoryView.refresh();
-    }
-
-    private void regress() {
-        this.mainController.getGameController().resume(true);
-        this.mainView.showPreviousPanel();
     }
 
     @Override
@@ -155,18 +119,55 @@ public final class InventoryControllerImpl implements InventoryController {
         }
     }
 
-    @Override
-    public void notify(final Event event) {
-        if (!inventory.isEmpty() && this.selectedItem >= 0 && this.selectedItem < inventory.size()) {
-            switch (event) {
-                case PREVIOUS_ITEM -> this.selectedItem = (this.selectedItem + this.inventory.size() - 1) % this.inventory.size();
-                case NEXT_ITEM -> this.selectedItem = (this.selectedItem + 1) % this.inventory.size();
-                case USE_ITEM -> player.useItem(inventory.get(this.selectedItem));
-                case DISCARD_ITEM -> player.discardItem(inventory.get(this.selectedItem));
-                case INVENTORY -> regress();
-                default -> { }
-            }
-            this.refresh();
+    private void updateInventory() {
+        this.inventory = this.player.getItems();
+        this.equippedArmor = this.player.getEquippedArmor();
+        this.equippedWeapon = this.player.getEquippedWeapon();
+    }
+
+    private String getFullDescription(final InventoryItem item) {
+        return item.getDescription()
+        + ",\nEffetto: " + item.getEffect().toString()
+        + this.getIntensity(item)
+        + this.getDurability(item);
+    }
+
+    private String getIntensity(final InventoryItem item) {
+        if (item.getEffect() == EffectType.NONE) {
+            return "";
+        } else {
+            return " " + item.getIntensity();
         }
     }
+
+    private String getDurability(final InventoryItem item) {
+        if (item instanceof EquippableItem) {
+            return "\nDurabilità: " + ((EquippableItem) item).getDurability();
+        } else {
+            return "";
+        }
+    }
+
+    private String getEquippedItem(final Optional<EquippableItem> item) {
+        if (item.isPresent()) {
+            final var equippedItem = item.get();
+            return equippedItem.getName() + "\n" + getFullDescription(equippedItem);
+        } else {
+            return "";
+        }
+    }
+
+    private void refresh() {
+        this.updateInventory();
+        if (this.selectedItem >= this.inventory.size()) {
+            this.selectedItem = 0;
+        }
+        this.inventoryView.refresh();
+    }
+
+    private void regress() {
+        this.mainController.getGameController().resume(true);
+        this.mainView.showPreviousPanel();
+    }
+
 }
