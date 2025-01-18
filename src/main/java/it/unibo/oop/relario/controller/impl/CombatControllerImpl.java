@@ -35,11 +35,11 @@ public final class CombatControllerImpl implements CombatController {
     public void initializeCombat(final MainCharacter player, final Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
-        this.view.showPanel(GameState.COMBAT);
+        this.view.showPanel(GameState.COMBAT.getState());
     }
 
     @Override
-    public String getGombatState() {
+    public String getCombatState() {
         return this.combatState;
     }
 
@@ -55,8 +55,7 @@ public final class CombatControllerImpl implements CombatController {
 
     @Override
     public int getPlayerLife() {
-        return 0;
-        //return this.player.getLife();
+        return this.player.getLife();
     }
 
     @Override
@@ -75,32 +74,28 @@ public final class CombatControllerImpl implements CombatController {
 
     private void attack(final boolean isPlayerAttacking) {
         if (isPlayerAttacking) {
-            if (!(enemy.attacked(player.attack()))) {   //altro metodo
-                player.addToInventory(enemy.getReward());
-            } else {
-                //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
-                this.attack(false);
-            }
+            this.enemy.attacked(this.player.attack());
         } else {
-            player.attacked(enemy.getDamage());
+            this.player.attacked(this.enemy.getDamage());
         }
         //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
-        this.view.showPanel(this.view.getCurrentPanel());  //altri metodi, altrimenti ripetitivo
 
         if(enemy.getLife() <= 0) {
+            player.addToInventory(enemy.getReward());
             combatState = this.player.getName() + "You've won the combat";
             //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
             Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
             timer.setRepeats(false);
             timer.start();
-        } 
-        /** 
-        if (player.getLife() <= 0) {
-            this.view.showPanel(GameState.GAME_OVER);
-            Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU));
+        } else if (player.getLife() <= 0) {
+            this.view.showPanel(GameState.GAME_OVER.getState());
+            Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU.getState()));
             timer.setRepeats(false);
             timer.start();
-        } */
+        } else if (isPlayerAttacking) {
+            this.attack(false);
+        }
+
     }
 
     private void mercyRequest() {

@@ -2,6 +2,8 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +22,8 @@ public final class MainViewImpl implements MainView {
     private final JFrame frame;
     private final JPanel mainPanel;
     private final MainController mainController;
-    private final Map<JPanel, String> panels = new HashMap<>();
-    private String previousPanel;
+    private final Map<JPanel, GameState> panels = new HashMap<>();
+    private Deque<String> stack = new ArrayDeque<>();
     private String currentPanel;
 
     /**
@@ -33,10 +35,58 @@ public final class MainViewImpl implements MainView {
         this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
         this.frameSetup();
-        this.currentPanel = GameState.NONE;
-        this.previousPanel = GameState.NONE;
+        this.currentPanel = GameState.MENU.getState();
         this.frame.add(mainPanel);
         this.frame.setVisible(true);
+    }
+
+    @Override
+    public void panelsSetup() {
+        final JPanel startMenuView = new MenuView(this, 
+        this.mainController.getMenuController().getStartMenuElements(), this.mainController);
+        final JPanel inGameMenuView = new MenuView(this, 
+        this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
+        final JPanel gameView = new GameView(this.mainController);
+        final JPanel inventoryView = new InventoryView(this.mainController);
+        final JPanel combatView = new CombatView();
+        
+        panels.put(startMenuView, GameState.MENU);
+        panels.put(inGameMenuView, GameState.MENU_IN_GAME);
+        panels.put(gameView, GameState.GAME);
+        panels.put(inventoryView, GameState.INVENTORY);
+        panels.put(combatView, GameState.COMBAT);
+
+        this.panelsSetFocusable();
+    }
+
+    @Override
+    public void showPanel(final String panelName) {
+        final CardLayout layout = (CardLayout) this.mainPanel.getLayout();
+        this.currentPanel = panelName;
+        layout.show(mainPanel, this.currentPanel);
+
+        stack.push(panelName);
+        this.getPanel(this.currentPanel).requestFocus();
+    } 
+
+    @Override
+    public JPanel getPanel(final String name) {
+        return panels.entrySet().stream()
+            .filter(e -> e.getValue().getState().equals(name))
+            .map(Map.Entry::getKey)
+            .findFirst()
+            .get();
+    }
+
+    @Override
+    public void showPreviousPanel() {
+        stack.pop();
+        showPanel(stack.pop());
+    }
+
+    @Override
+    public String getCurrentPanel() {
+        return this.currentPanel;
     }
 
     private void frameSetup() {
@@ -47,66 +97,14 @@ public final class MainViewImpl implements MainView {
         this.frame.setFocusable(true);
     }
 
-    @Override
-    public void panelsSetup() {
-        final JPanel startMenuView = new MenuView(this, 
-        this.mainController.getMenuController().getStartMenuElements(), this.mainController);
-        panels.put(startMenuView, GameState.MENU);
-
-        final JPanel inGameMenuView = new MenuView(this, 
-        this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
-        panels.put(inGameMenuView, GameState.MENU_IN_GAME);
-
-        final JPanel gameView = new GameView(this.mainController);
-        panels.put(gameView, GameState.GAME);
-
-        final JPanel inventoryView = new InventoryView(this.mainController);
-        panels.put(inventoryView, GameState.INVENTORY);
-        
-        final JPanel combatView = new CombatView();
-        panels.put(combatView, GameState.COMBAT);
-
-        this.panelsSetFocusable();
-    }
-
     /**
      * Sets focusable any panel and adds it to the main panel.
      */
     private void panelsSetFocusable() {
         for (var p: panels.keySet()) {
             p.setFocusable(true);
-            mainPanel.add(p, panels.get(p));
+            mainPanel.add(p, panels.get(p).getState());
         }
-    }
-
-    @Override
-    public void showPanel(final String panelName) {
-        final CardLayout layout = (CardLayout) this.mainPanel.getLayout();
-        this.previousPanel = this.currentPanel;
-        this.currentPanel = panelName;
-        layout.show(mainPanel, this.currentPanel);
-
-        this.getPanel(this.currentPanel).requestFocus();
-    } 
-
-    @Override
-    public JPanel getPanel(final String name) {
-        for (var p: panels.keySet()) {
-            if (panels.get(p).equals(name)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void showPreviousPanel() {
-        showPanel(this.previousPanel);
-    }
-
-    @Override
-    public String getCurrentPanel() {
-        return this.currentPanel;
     }
 
 }

@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.view.impl;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,7 +17,9 @@ import javax.swing.JPanel;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.menu.Command;
 import it.unibo.oop.relario.model.menu.MenuElement;
+import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
@@ -27,6 +30,7 @@ public final class MenuView extends JPanel {
     private static final long serialVersionUID = 1L;
     private final static int INSETS = 3;
     private final static String GAME_NAME  = "RELARIO";
+    private final static int FONT_SIZE = 28;
     private final MainView view;
     private final MainController controller;
 
@@ -34,6 +38,7 @@ public final class MenuView extends JPanel {
      * Initializes a new menu view.
      * @param view is the main view that contains all the game panels.
      * @param elements are the menu elements that need to be added to the view.
+     * @param controller is the main controller.
      */
     public MenuView(final MainView view, final List<MenuElement> elements, 
     final MainController controller) {
@@ -45,17 +50,21 @@ public final class MenuView extends JPanel {
         gridc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
         gridc.fill = GridBagConstraints.CENTER;
 
-        final JLabel title = new JLabel(GAME_NAME);
-        this.add(title);
+        if (this.view.getCurrentPanel().equals(GameState.MENU.getState())) {
+            final JLabel title = new JLabel(GAME_NAME);
+            title.setFont(new Font(Constants.MONOSPACE_FONT, Font.BOLD, FONT_SIZE));
+            this.add(title, gridc);
+        }
         gridc.gridy++;
+        gridc.fill = GridBagConstraints.BOTH;
 
         for (final var elem: elements) {
-            this.add(createButton(elem));
+            this.add(createButton(elem), gridc);
             gridc.gridy++;
         }
 
-        this.addKeyListener(new GameKeyListener(view, controller));
-        this.add(this, BorderLayout.CENTER);
+        this.setBackground(Color.BLACK);
+        this.addKeyListener(new GameKeyListener(controller.getMenuController()));
     }
 
     private JButton createButton(MenuElement elem) {
@@ -74,6 +83,8 @@ public final class MenuView extends JPanel {
                     for (final var f : Frame.getFrames()) {
                         f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
                     }
+                } else {
+                    this.requestFocus(true);
                 }
             }
         });

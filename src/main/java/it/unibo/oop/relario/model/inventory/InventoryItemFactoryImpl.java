@@ -56,6 +56,9 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
         this.itemCreator.put(InventoryItemType.GEMSTONE, 
         () -> new InventoryItemImpl("Pietra preziosa", "Una gemma scintillante di rara bellezza", 
         InventoryItemType.GEMSTONE, ItemAttributes.GEMSTONE_INTENSITY));
+        this.itemCreator.put(InventoryItemType.KEY,
+        () -> new InventoryItemImpl("Chiave", "Chiave antica per aprire un passaggio", 
+        InventoryItemType.KEY, ItemAttributes.KEY_INTENSITY));
     }
 
     @Override

@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
-import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.model.quest.QuestFactory;
@@ -43,8 +42,8 @@ public class QuestManager {
     public QuestManager(final MainCharacter player) {
         this.roomQuests.put(FIRST_ROOM, Optional.empty());
         this.roomQuests.put(SECOND_ROOM, Optional.of(this.questFactory.createCollectItemQuest(player, InventoryItemType.KEY)));
-        this.roomQuests.put(THIRD_ROOM, Optional.of(this.questFactory.createSolvePuzzleQuest()));
-        this.roomQuests.put(FOURTH_ROOM, Optional.of(this.questFactory.createDefeatEnemyQuest()));
+        this.roomQuests.put(THIRD_ROOM, Optional.of(null)); //??
+        this.roomQuests.put(FOURTH_ROOM, Optional.of(this.questFactory.createDefeatEnemyQuest(EnemyType.KNIGHT))); //EnemyType.BOSS??
         this.roomQuests.put(FIFTH_ROOM, Optional.empty());      
     }
 
@@ -54,18 +53,7 @@ public class QuestManager {
      * @param indexRoom
      */
     public void assignQuest(final Room room, final int indexRoom) {
-        final Optional<Quest> quest = this.roomQuests.get(indexRoom);
-        if (quest.isEmpty()) {
-            return;
-        }
-        final Entity keyEntity = quest.get().getKeyEntity();
-        if (keyEntity instanceof InventoryItem) {
-            // keyEntity = new FurnitureItemFactoryImpl().createInteractiveFurnitureItem(null, keyEntity);
-        }
-        
-        room.addEntity(null, keyEntity); //room.getAvailablePosition()??
-        room.setQuest(quest);
-
+        room.setQuest(this.roomQuests.get(indexRoom));
     }
 
 }

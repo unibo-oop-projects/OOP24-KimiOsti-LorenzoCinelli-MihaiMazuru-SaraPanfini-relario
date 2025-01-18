@@ -1,7 +1,9 @@
 package it.unibo.oop.relario.model.entities.living;
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
+import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
@@ -36,9 +38,14 @@ public interface MainCharacter extends LivingBeing {
     /**
      * Inflicts some damage to the player.
      * @param damage the damage inflicted to the player.
-     * @return true if the player survives the attack, false otherwise.
      */
-    boolean attacked(int damage);
+    void attacked(int damage);
+
+    /**
+     * Inspects the health state of the player.
+     * @return the current life of the player.
+     */
+    int getLife();
 
     /**
      * Represents the attacking action of the player.
@@ -51,6 +58,18 @@ public interface MainCharacter extends LivingBeing {
      * @return a list containing the player's ivnentory items.
      */
     List<InventoryItem> getItems();
+
+    /**
+     * Returns the current weapon, if equipped.
+     * @return the equipped weapon, or an empty object.
+     */
+    Optional<EquippableItem> getEquippedWeapon();
+
+    /**
+     * Returns the current armor, if equipped.
+     * @return the equipped armor, or an empty object.
+     */
+    Optional<EquippableItem> getEquippedArmor();
 
     /**
      * Uses an item from the inventory.
