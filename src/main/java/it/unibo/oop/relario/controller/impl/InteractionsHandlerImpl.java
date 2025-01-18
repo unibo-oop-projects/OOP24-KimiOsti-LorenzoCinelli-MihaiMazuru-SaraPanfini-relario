@@ -84,7 +84,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
         if (output.getLoot().isPresent()) {
             this.curRoom.getPlayer().addToInventory(output.getLoot().get());
         }
-        ((GameView) this.view.getPanel(GameState.GAME.getState())).showInteractionText(output.getDialogue());
+        this.showOutputText(output.getDialogue());
     }
 
     private void startEnemyCombat(final Enemy enemy) {
@@ -92,7 +92,19 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void interactWithFurniture(final InteractiveFurniture furniture) {
-        /* [TODO]: gestire l'interazione con l'arredamento */
+        if (furniture.hasLoot()) {
+            final var loot = furniture.dropLoot();
+            if (this.curRoom.getPlayer().addToInventory(loot)) {
+                this.showOutputText("Ecco qualcosa che mi tornerà utile!");
+            } else {
+                this.showOutputText("Sembra che io non abbia più spazio per portarmelo dietro...");
+                furniture.addLoot(loot);
+            }
+        }
+    }
+
+    private void showOutputText(final String text) {
+        ((GameView) this.view.getPanel(GameState.GAME.getState())).showInteractionText(text);
     }
 
 }
