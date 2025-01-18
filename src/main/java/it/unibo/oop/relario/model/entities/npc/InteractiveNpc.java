@@ -34,11 +34,14 @@ public final class InteractiveNpc extends LivingBeingImpl implements Npc {
     @Override
     public InteractionOutput interact() {
         if (hasLoot) {
-            this.hasLoot = false;
             return new InteractionOutput(this.dialoguesGenerator.getLootDialogue(), Optional.of(loot));
         } else {
             return new InteractionOutput(this.dialoguesGenerator.getNoLootDialogue(), Optional.empty());
         }
+    }
+
+    public void confirmLootTaken() {
+        this.hasLoot = false;
     }
 
 }
