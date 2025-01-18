@@ -11,7 +11,6 @@ import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
-import it.unibo.oop.relario.model.inventory.InventoryItemImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
