@@ -10,8 +10,6 @@ import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
-import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
-import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
@@ -42,9 +40,6 @@ public final class InventoryControllerImpl implements InventoryController {
         this.selectedItem = 0;
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
-            final var factory = new InventoryItemFactoryImpl();
-            this.player.addToInventory(factory.createItem(InventoryItemType.AMULET));
-            this.player.addToInventory(factory.createItem(InventoryItemType.SWORD));
             updateInventory();
         } else {
             throw new UnsupportedOperationException();
