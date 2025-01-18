@@ -59,7 +59,7 @@ final class InventoryControllerTest {
     @Test
     void testGetItemsInfo() {
         assertEquals("50", inventoryController.getLife());
-        
+
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals("""
