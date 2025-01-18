@@ -5,11 +5,14 @@ import it.unibo.oop.relario.view.impl.GameView;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
-public class GameLoop extends Thread {
+/**
+ * The thread running the game's main loop.
+ */
+public final class GameLoop extends Thread {
 
     private final GameView view;
     private final Room model;
-    private boolean running;
+    private boolean running; //NOPMD suppressed as it is a false positive due to multithreading.
 
     /**
      * Constructor for the game loop thread.
@@ -27,22 +30,21 @@ public class GameLoop extends Thread {
         this.running = true;
         long prevCycleTS = System.currentTimeMillis();
 
-        view.renderFloor(this.model.getDimension());
-        view.renderTextures(this.processModel(this.model.getFurniture()));
+        view.renderBackground(this.model.getDimension(), ResourceLocator.processModel(this.model.getFurniture()));
 
-        while (running) {
-            long currCycleTS = System.currentTimeMillis();
+        while (this.running) {
+            final long currCycleTS = System.currentTimeMillis();
             if (currCycleTS - prevCycleTS >= Constants.REFRESH_TIME) {
                 prevCycleTS = currCycleTS;
                 this.model.update();
                 this.view.renderTextures(ResourceLocator.processModel(this.model.getPopulation()));
             } else {
                 try {
-                    Thread.sleep(Constants.REFRESH_TIME - System.currentTimeMillis() + prevCycleTS);
-                } catch (Exception e) {
-                    /*
-                     * Exception is here ignored since the thread interruption means stopping the loop.
-                     */
+                    sleep(Constants.REFRESH_TIME - System.currentTimeMillis() + prevCycleTS);
+                } catch (InterruptedException e) {
+                    if (!interrupted()) {
+                        this.interrupt();
+                    }
                 }
             }
         }
@@ -52,5 +54,5 @@ public class GameLoop extends Thread {
     public void interrupt() {
         this.running = false;
     }
-    
+
 }

@@ -1,6 +1,8 @@
 package it.unibo.oop.relario.model.quest;
 
 import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
+import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
@@ -21,15 +23,15 @@ public final class QuestFactoryImpl implements QuestFactory {
     }
 
     @Override
-    public Quest createDefeatEnemyQuest() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createDefeatEnemyQuest'");
+    public Quest createDefeatEnemyQuest(final EnemyType keyEnemy) {
+        return createQuest("", "", new DefeatEnemyObjective(), 
+        new EnemyFactoryImpl().createEnemyByType(keyEnemy, null));
     }
 
     @Override
-    public Quest createSolvePuzzleQuest() {
+    public Quest createPressButtonQuest() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createSolvePuzzleQuest'");
+        throw new UnsupportedOperationException("Unimplemented method 'createPressButtonQuest'");
     }
 
 }

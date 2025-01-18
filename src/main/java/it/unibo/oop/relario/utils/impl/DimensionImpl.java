@@ -8,17 +8,17 @@ import it.unibo.oop.relario.utils.api.Dimension;
 
 public final class DimensionImpl implements Dimension {
 
-    private final int height;
     private final int width;
+    private final int height;
 
     /**
      * Constructor for room's dimension, given height and width.
      * @param height of the room
      * @param width of the room
      */
-    public DimensionImpl(final int height, final int width) {
-        this.height = height;
+    public DimensionImpl(final int width, final int height) {
         this.width = width;
+        this.height = height;
     }
 
     @Override
