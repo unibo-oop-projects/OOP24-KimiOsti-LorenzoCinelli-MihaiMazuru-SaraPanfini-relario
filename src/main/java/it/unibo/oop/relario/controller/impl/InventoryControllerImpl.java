@@ -10,6 +10,8 @@ import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
@@ -40,6 +42,9 @@ public final class InventoryControllerImpl implements InventoryController {
         this.selectedItem = 0;
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
+            final var factory = new InventoryItemFactoryImpl();
+            this.player.addToInventory(factory.createItem(InventoryItemType.AMULET));
+            this.player.addToInventory(factory.createItem(InventoryItemType.SWORD));
             updateInventory();
         } else {
             throw new UnsupportedOperationException();
@@ -85,7 +90,6 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     private void refresh() {
-        this.inventory = player.getItems();
         this.updateInventory();
         if (this.selectedItem >= this.inventory.size()) {
             this.selectedItem = 0;
@@ -136,6 +140,11 @@ public final class InventoryControllerImpl implements InventoryController {
     @Override
     public int getSelectedItemIndex() {
         return selectedItem;
+    }
+
+    @Override
+    public String getLife() {
+        return String.valueOf(this.player.getLife());
     }
 
     @Override
