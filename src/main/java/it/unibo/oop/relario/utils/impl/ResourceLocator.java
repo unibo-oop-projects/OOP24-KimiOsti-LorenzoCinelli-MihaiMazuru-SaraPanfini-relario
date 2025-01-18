@@ -32,6 +32,20 @@ public final class ResourceLocator {
     private ResourceLocator() { }
 
     /**
+     * Returns the floor's texture.
+     * @return an image representing the floor texture.
+     */
+    public static Image getFloorTexture() {
+        return Toolkit.getDefaultToolkit().getImage(
+            new StringBuilder(TEXTURES_URL)
+                .append(FURNITURE_TEXTURE_URL)
+                .append("floor")
+                .append(TEXTURE_EXTENSION)
+                .toString()
+        );
+    }
+
+    /**
      * Returns a map containing the textures to be represented and their position on the map.
      * @param model the model entities to be processed.
      * @return a map containing textures and their position.

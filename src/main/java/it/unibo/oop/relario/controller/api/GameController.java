@@ -3,7 +3,7 @@ package it.unibo.oop.relario.controller.api;
 /**
  * Controller for managing game loop.
  */
-public interface GameController {
+public interface GameController extends Observer {
     /**
      * Shows the Game view and starts the main loop.
      */

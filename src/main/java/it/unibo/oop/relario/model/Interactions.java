@@ -17,24 +17,6 @@ public final class Interactions {
         throw new UnsupportedOperationException();
     }
 
-    private static boolean isPositionIntoRoomBorder(final Position pos, final int depth, final int width) {
-        return !(pos.getX() < 0 || pos.getY() < 0 || pos.getX() >= width || pos.getY() >= depth);
-    }
-
-    private static boolean isPositionWithEntity(final Position pos, final Map<Position, LivingBeing> entityMap) {
-        return entityMap.containsKey(pos);
-    }
-
-    private static boolean isPositionWithObstructingForniture(final Position pos,
-    final Map<Position, Furniture> furnitureMap) {
-        return furnitureMap.containsKey(pos) && !furnitureMap.get(pos).isWalkable();
-    }
-
-    private static boolean isPositionWithInteractiveFurniture(final Position pos, 
-    final Map<Position, Furniture> furnitureMap) {
-        return furnitureMap.containsKey(pos) && furnitureMap.get(pos).isInteractive();
-    }
-
     /**
      * Checks if the next position is available.
      * @param pos the initial position of the entity.
@@ -65,6 +47,24 @@ public final class Interactions {
         final Position nextPos = dir.move(pos);
         return isPositionWithEntity(nextPos, entityMap)
         || isPositionWithInteractiveFurniture(nextPos, furnitureMap);
+    }
+
+    private static boolean isPositionIntoRoomBorder(final Position pos, final int depth, final int width) {
+        return !(pos.getX() < 0 || pos.getY() < 0 || pos.getX() >= width || pos.getY() >= depth);
+    }
+
+    private static boolean isPositionWithEntity(final Position pos, final Map<Position, LivingBeing> entityMap) {
+        return entityMap.containsKey(pos);
+    }
+
+    private static boolean isPositionWithObstructingForniture(final Position pos,
+    final Map<Position, Furniture> furnitureMap) {
+        return furnitureMap.containsKey(pos) && !furnitureMap.get(pos).isWalkable();
+    }
+
+    private static boolean isPositionWithInteractiveFurniture(final Position pos, 
+    final Map<Position, Furniture> furnitureMap) {
+        return furnitureMap.containsKey(pos) && furnitureMap.get(pos).isInteractive();
     }
 
 }
