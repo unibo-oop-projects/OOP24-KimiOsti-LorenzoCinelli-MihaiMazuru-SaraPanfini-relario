@@ -11,7 +11,9 @@ import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.map.Room;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
+import it.unibo.oop.relario.view.impl.GameView;
 
 /**
  * Implementation for the game's interactions handler.
@@ -21,6 +23,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     private final MainController controller;
     private final MainView view;
     private final Map<String, Consumer<Entity>> classNameToInteraction;
+    private Room curRoom;
 
     /**
      * Constructor for the game's interaction handler.
@@ -39,22 +42,23 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     @Override
     public void handleInteraction(final Room curRoom) {
+        this.curRoom = curRoom;
         if (
             curRoom.getPlayer().getPosition().isPresent()
             && Interactions.canInteract(
-                curRoom.getPlayer().getPosition().get(),
-                curRoom.getPlayer().getDirection(),
-                curRoom.getPopulation(),
-                curRoom.getFurniture()
+                this.curRoom.getPlayer().getPosition().get(),
+                this.curRoom.getPlayer().getDirection(),
+                this.curRoom.getPopulation(),
+                this.curRoom.getFurniture()
             )
         ) {
-            if (curRoom.getPlayer().getPosition().get().equals(curRoom.getExit())
-                && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted())
+            if (this.curRoom.getPlayer().getPosition().get().equals(this.curRoom.getExit())
+                && (this.curRoom.getQuest().isEmpty() || this.curRoom.getQuest().get().isCompleted())
             ) {
                 this.controller.moveToNextRoom();
             } else {
-                final var entity = curRoom.getCellContent(
-                    curRoom.getPlayer().getDirection().move(curRoom.getPlayer().getPosition().get())
+                final var entity = this.curRoom.getCellContent(
+                    this.curRoom.getPlayer().getDirection().move(this.curRoom.getPlayer().getPosition().get())
                 );
                 if (entity.isPresent()) {
                     this.classNameToInteraction.get(entity.get().getClass().getName()).accept(entity.get());
@@ -67,7 +71,11 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void interactWithNpc(final Npc npc) {
-        /* [TODO]: visualizzare il dialogo e ottenere un eventuale oggetto */
+        final var output = npc.interact();
+        if (output.getLoot().isPresent()) {
+            this.curRoom.getPlayer().addToInventory(output.getLoot().get());
+        }
+        ((GameView) this.view.getPanel(GameState.GAME.getState())).showInteractionText(output.getDialogue());
     }
 
     private void startEnemyCombat(final Enemy enemy) {
