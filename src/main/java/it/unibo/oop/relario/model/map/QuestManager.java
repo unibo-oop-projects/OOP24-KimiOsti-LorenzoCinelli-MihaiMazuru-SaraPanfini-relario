@@ -42,7 +42,7 @@ public class QuestManager {
     public QuestManager(final MainCharacter player) {
         this.roomQuests.put(FIRST_ROOM, Optional.empty());
         this.roomQuests.put(SECOND_ROOM, Optional.of(this.questFactory.createCollectItemQuest(player, InventoryItemType.KEY)));
-        this.roomQuests.put(THIRD_ROOM, Optional.of(null)); //this.questFactory.createSolveRiddleQuest()
+        this.roomQuests.put(THIRD_ROOM, Optional.of(null)); //??
         this.roomQuests.put(FOURTH_ROOM, Optional.of(this.questFactory.createDefeatEnemyQuest(EnemyType.KNIGHT))); //EnemyType.BOSS??
         this.roomQuests.put(FIFTH_ROOM, Optional.empty());      
     }
@@ -53,11 +53,7 @@ public class QuestManager {
      * @param indexRoom
      */
     public void assignQuest(final Room room, final int indexRoom) {
-        final Optional<Quest> quest = this.roomQuests.get(indexRoom);
-        if (quest.isEmpty()) {
-            return;
-        }
-        room.setQuest(quest);
+        room.setQuest(this.roomQuests.get(indexRoom));
     }
 
 }
