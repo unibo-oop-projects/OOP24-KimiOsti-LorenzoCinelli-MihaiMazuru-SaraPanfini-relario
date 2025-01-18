@@ -79,7 +79,7 @@ public final class GameControllerImpl implements GameController {
         );
         this.gameLoop.start();
     }
-    
+
     private void changeGameState(final GameState state) {
         this.gameLoop.interrupt();
         this.view.showPanel(state.getState());
