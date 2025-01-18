@@ -31,11 +31,6 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
         this.refresh();
     }
 
-    private void resize(final JPanel panel, final double verticalRatio, final double horizontalRatio) {
-        final var dim = new Dimension((int) (this.getWidth() * horizontalRatio), (int) (this.getHeight() * verticalRatio));
-        panel.setPreferredSize(dim);
-    }
-
     @Override
     public void refresh() {
         final var commandPanel = this.factory.createCommandPanel();
@@ -47,4 +42,10 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
         this.resize(contentPanel, CONTENT_RATIO, CONTENT_RATIO);
         this.validate();
     }
+
+    private void resize(final JPanel panel, final double verticalRatio, final double horizontalRatio) {
+        final var dim = new Dimension((int) (this.getWidth() * horizontalRatio), (int) (this.getHeight() * verticalRatio));
+        panel.setPreferredSize(dim);
+    }
+
 }
