@@ -22,7 +22,6 @@ import it.unibo.oop.relario.view.impl.MainViewImpl;
  * The test class for the game's interaction handler.
  */
 public class InteractionsHandlerTest {
-
     /**
      * A method to test the interaction handling motor.
      */
