@@ -109,11 +109,7 @@ public final class RoomImpl implements Room {
         if (entity instanceof LivingBeing) {
             this.population.put(position, (LivingBeing) entity);
         } else if (entity instanceof Furniture) {
-            this.furniture.put(position, (Furniture) entity);
-        }
-        this.cellStates.put(position, CellState.OCCUPIED);
-        for (Position pos : adjacentCells(position, entity)) {
-            this.cellStates.put(pos, CellState.RESTRICTED);
+            addFurniture(position, (Furniture) entity);
         }
     }
 
@@ -157,6 +153,14 @@ public final class RoomImpl implements Room {
     public List<Position> getCellsByState(final CellState state) {
         return this.cellStates.entrySet().stream().filter(entry -> entry.getValue().equals(state))
         .map(Map.Entry::getKey).collect(Collectors.toList());
+    }
+
+    private void addFurniture(final Position position, final Furniture furniture) {
+        this.furniture.put(position, furniture);
+        this.cellStates.put(position, CellState.OCCUPIED);
+        for (Position pos : adjacentCells(position, furniture)) {
+            this.cellStates.put(pos, CellState.RESTRICTED);
+        }
     }
 
     private Set<Position> adjacentCells(final Position position, final Entity entity) {
