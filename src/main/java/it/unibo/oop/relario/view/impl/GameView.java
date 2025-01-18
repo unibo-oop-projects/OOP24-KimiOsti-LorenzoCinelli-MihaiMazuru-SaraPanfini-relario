@@ -48,13 +48,14 @@ public final class GameView extends JPanel {
         this.upperPanel = new JPanel();
         this.mapPanel = new JPanel();
         this.lowerPanel = new JPanel();
+        this.add(this.upperPanel);
+        this.add(this.mapPanel);
+        this.add(this.lowerPanel);
         this.setBackgroundColor(BACKGROUND_COLOR);
 
         this.background = new LinkedList<>();
         this.foreground = new HashMap<>();
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
-
-        this.setupPanels(this.upperPanel, this.mapPanel, this.lowerPanel);
         this.addKeyListener(new GameKeyListener(controller.getGameController()));
     }
 
@@ -74,13 +75,6 @@ public final class GameView extends JPanel {
      */
     public void renderTextures(final Map<Position, Image> textures) {
         /* [TODO]: implement method. */
-    }
-
-    private void setupPanels(final JPanel... panels) {
-        for (final var panel : panels) {
-            this.add(panel);
-            panel.setBackground(BACKGROUND_COLOR);
-        }
     }
 
     private void setBackgroundColor(final Color color) {
