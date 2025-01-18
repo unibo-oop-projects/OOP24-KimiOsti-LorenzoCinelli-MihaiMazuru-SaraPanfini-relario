@@ -47,8 +47,14 @@ public class InteractionsHandlerTest {
 
         room.addEntity(interactiveNpcPos, npcFactory.createInteractiveNpc(interactiveNpcPos));
         room.addEntity(npcPos, npcFactory.createNotInteractiveNpc(npcPos));
-        room.addEntity(interactiveFurniturePos, furnitureFactory.createRandomInteractiveFurniture(interactiveFurniturePos));
-        room.addEntity(walkableFurniturePos, furnitureFactory.createRandomWalkableFurniture(walkableFurniturePos));
+        room.addEntity(
+            interactiveFurniturePos,
+            furnitureFactory.createRandomInteractiveFurniture(interactiveFurniturePos)
+        );
+        room.addEntity(
+            walkableFurniturePos,
+            furnitureFactory.createRandomWalkableFurniture(walkableFurniturePos)
+        );
 
         room.getPlayer().setPosition(new PositionImpl(0, 1));
         room.getPlayer().setMovement(Direction.RIGHT);
