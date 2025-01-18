@@ -29,7 +29,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
 
     /**
      * Creates an inventory view factory to populate the inventory view. 
-     * @param inventory
+     * @param inventory is the main controller of the game.
      */
     public InventoryViewFactoryImpl(final InventoryController inventory) {
         this.inventory = inventory;
@@ -61,7 +61,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
 
     private JPanel createTitlePanel() {
         final var panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        final var label = new JLabel("Inventario");
+        final var label = new JLabel("Inventario                        Vita: " + this.inventory.getLife());
         label.setForeground(Color.WHITE);
         label.setFont(font);
         panel.setBackground(Color.BLACK);
@@ -127,8 +127,10 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
     public JPanel createCommandPanel() {
         final var panel = new JPanel();
         final var commandsString = """
-            ↑↓ - spostarsi tra gli oggetti Enter - usa un oggetto Backspace -
-            scarta un oggetto I - esci dall\'inventario
+            ↑↓ - spostarsi tra gli oggetti
+            Enter - usa un oggetto
+            Backspace - scarta un oggetto
+            I - esci dall\'inventario
         """;
         final var label = new JLabel(commandsString);
         label.setForeground(Color.WHITE);
