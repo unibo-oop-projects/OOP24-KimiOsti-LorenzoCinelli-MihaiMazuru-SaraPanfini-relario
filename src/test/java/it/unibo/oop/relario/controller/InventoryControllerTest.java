@@ -40,6 +40,7 @@ final class InventoryControllerTest {
 
         final var player = mainController.getCurRoom().get().getPlayer();
         final InventoryItemFactory itemFactory = new InventoryItemFactoryImpl();
+        player.attacked(30);
 
         final var dagger = itemFactory.createItem(InventoryItemType.DAGGER);
         final var shield = itemFactory.createItem(InventoryItemType.SHIELD);
@@ -57,6 +58,8 @@ final class InventoryControllerTest {
      */
     @Test
     void testGetItemsInfo() {
+        assertEquals("50", inventoryController.getLife());
+        
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals("""
@@ -94,6 +97,8 @@ final class InventoryControllerTest {
         assertEquals("""
         Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3""",
         inventoryController.getEquippedWeapon());
+
+        assertEquals("50", inventoryController.getLife());
     }
 
     /**
@@ -101,6 +106,8 @@ final class InventoryControllerTest {
      */
     @Test
     void testUseItem() {
+        assertEquals("50", inventoryController.getLife());
+
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
@@ -117,6 +124,7 @@ final class InventoryControllerTest {
         this.inventoryController.notify(Event.USE_ITEM);
         assertEquals(List.of(PIETRA, "Scudo"),
         this.inventoryController.getItemsNames());
+        assertEquals("65", inventoryController.getLife());
 
         this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(1, this.inventoryController.getSelectedItemIndex());
@@ -131,6 +139,9 @@ final class InventoryControllerTest {
         assertEquals(List.of(ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
+
+        assertEquals("65", inventoryController.getLife());
+
     }
 
     /**
@@ -138,6 +149,8 @@ final class InventoryControllerTest {
      */
     @Test
     void testDiscardItem() {
+        assertEquals("50", inventoryController.getLife());
+
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
@@ -159,6 +172,8 @@ final class InventoryControllerTest {
         this.inventoryController.notify(Event.DISCARD_ITEM);
         assertEquals(List.of(),
         this.inventoryController.getItemsNames());
+
+        assertEquals("50", inventoryController.getLife());
     }
 
 }
