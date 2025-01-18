@@ -36,6 +36,34 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
     }
 
+    @Override
+    public JPanel createCommandPanel() {
+        final var panel = new JPanel();
+        final var commandsString = """
+            ↑↓ - spostarsi tra gli oggetti
+            Enter - usa un oggetto
+            Backspace - scarta un oggetto
+            I - esci dall\'inventario
+        """;
+        final var label = new JLabel(commandsString);
+        label.setForeground(Color.WHITE);
+        label.setFont(font);
+        panel.setBackground(Color.BLACK);
+        panel.add(label);
+        return panel;
+    }
+
+    @Override
+    public JPanel createContentPanel() {
+        final var panel = new JPanel(new BorderLayout());
+        panel.setBackground(Color.BLACK);
+        panel.add(createTitlePanel(), BorderLayout.NORTH);
+        panel.add(createListPanel(), BorderLayout.WEST);
+        panel.add(createDescriptionPanel(), BorderLayout.CENTER);
+        panel.add(createEquippedPanel(), BorderLayout.EAST);
+        return panel;
+    }
+
     private JPanel createContentSubpanel(final String text) {
         final var panel = new JPanel();
         final var label = new JLabel(text);
@@ -120,34 +148,6 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         subpanel.add(this.addTextArea(armor));
         subpanel.add(this.addTextArea(weapon));
         panel.add(subpanel);
-        return panel;
-    }
-
-    @Override
-    public JPanel createCommandPanel() {
-        final var panel = new JPanel();
-        final var commandsString = """
-            ↑↓ - spostarsi tra gli oggetti
-            Enter - usa un oggetto
-            Backspace - scarta un oggetto
-            I - esci dall\'inventario
-        """;
-        final var label = new JLabel(commandsString);
-        label.setForeground(Color.WHITE);
-        label.setFont(font);
-        panel.setBackground(Color.BLACK);
-        panel.add(label);
-        return panel;
-    }
-
-    @Override
-    public JPanel createContentPanel() {
-        final var panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.BLACK);
-        panel.add(createTitlePanel(), BorderLayout.NORTH);
-        panel.add(createListPanel(), BorderLayout.WEST);
-        panel.add(createDescriptionPanel(), BorderLayout.CENTER);
-        panel.add(createEquippedPanel(), BorderLayout.EAST);
         return panel;
     }
 
