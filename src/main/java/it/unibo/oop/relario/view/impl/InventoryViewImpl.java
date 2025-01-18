@@ -17,7 +17,6 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
     private static final double CONTENT_RATIO = 0.6;
     private static final double COMMANDS_RATIO = 0.15;
     private static final double DEFAULT_RATIO = 1;
-    private static final int CONTENT_PANEL_INDEX = 1;
 
     private final InventoryViewFactory factory;
 
@@ -28,14 +27,8 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
     public InventoryViewImpl(final MainController controller) {
         this.factory = new InventoryViewFactoryImpl(controller.getInventoryController());
         this.addKeyListener(new GameKeyListener(controller.getInventoryController()));
-        final var commandPanel = this.factory.createCommandPanel();
-        final var contentPanel = this.factory.createContentPanel();
         this.setBackground(Color.BLACK);
-        this.add(commandPanel);
-        this.add(contentPanel);
-        this.resize(commandPanel, COMMANDS_RATIO, DEFAULT_RATIO);
-        this.resize(contentPanel, CONTENT_RATIO, CONTENT_RATIO);
-        this.validate();
+        this.refresh();
     }
 
     private void resize(final JPanel panel, final double verticalRatio, final double horizontalRatio) {
@@ -45,11 +38,13 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
 
     @Override
     public void refresh() {
+        final var commandPanel = this.factory.createCommandPanel();
         final var contentPanel = this.factory.createContentPanel();
-        this.remove(CONTENT_PANEL_INDEX);
+        this.removeAll();
+        this.add(commandPanel);
         this.add(contentPanel);
+        this.resize(commandPanel, COMMANDS_RATIO, DEFAULT_RATIO);
         this.resize(contentPanel, CONTENT_RATIO, CONTENT_RATIO);
-        this.repaint();
         this.validate();
     }
 }
