@@ -16,13 +16,6 @@ import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.GameView;
 
-/*
- * [TODO]:
- * gestione interazione con la furniture
- * gestione avvio combattimento
- * gestione ripresa del game loop a seconda dello scenario
- */
-
 /**
  * Implementation for the game's interactions handler.
  */
@@ -87,7 +80,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void startEnemyCombat(final Enemy enemy) {
-        /* [TODO]: avviare il combattimento */
+        this.controller.getCombatController().initializeCombat(this.curRoom.getPlayer(), enemy);
     }
 
     private void interactWithFurniture(final InteractiveFurniture furniture) {
