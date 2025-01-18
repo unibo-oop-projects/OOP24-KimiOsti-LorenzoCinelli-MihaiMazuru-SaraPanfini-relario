@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.MainController;
@@ -19,7 +20,7 @@ import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
-/* [TODO]: aggiungere la texture del pavimento, aggiungere le scritte, e gestire l'aggiornamento frame by frame */
+/* [TODO]: aggiungere la texture del pavimento, aggiungere aggiornamento lowerpanel, e gestire l'aggiornamento frame by frame */
 
 /**
  * View implementations for the exploration phase of the game.
@@ -35,6 +36,7 @@ public final class GameView extends JPanel {
     private final JPanel mapPanel;
     private final JPanel lowerPanel;
     private final List<BackgroundTile> background;
+    private final List<String> commands;
     private final Map<Position, ForegroundTile> foreground;
     private final Font font;
     private Dimension mapDimension;
@@ -45,6 +47,12 @@ public final class GameView extends JPanel {
      * @param controller the observer for user input events.
      */
     public GameView(final MainController controller) {
+        this.commands = List.of(
+            "WASD - move",
+            "I - interact",
+            "E - inventory"
+        );
+
         this.upperPanel = new JPanel();
         this.mapPanel = new JPanel();
         this.lowerPanel = new JPanel();
@@ -156,12 +164,7 @@ public final class GameView extends JPanel {
             )
         );
 
-        this.upperPanel.setPreferredSize(
-            new java.awt.Dimension(
-                this.getWidth(),
-                (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 3
-            )
-        );
+        this.updateUpperPanel();
 
         this.lowerPanel.setPreferredSize(
             new java.awt.Dimension(
@@ -173,5 +176,24 @@ public final class GameView extends JPanel {
 
     private int computeIndex(final int x, final int y) {
         return this.mapDimension == null ? 0 : (x + y * this.mapDimension.getWidth());
+    }
+
+    private void updateUpperPanel() {
+        this.upperPanel.removeAll();
+        this.upperPanel.setPreferredSize(
+            new java.awt.Dimension(
+                this.getWidth(),
+                (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 3
+            )
+        );
+        this.commands.forEach(e -> this.upperPanel.add(this.getCustomLabel(this.upperPanel, e)));
+    }
+
+    private JLabel getCustomLabel(final JPanel container, final String text) {
+        final var label = new JLabel();
+        label.setFont(this.font.deriveFont(container.getHeight() / 5));
+        label.setForeground(TEXT_COLOR);
+        label.setText(text);
+        return label;
     }
 }
