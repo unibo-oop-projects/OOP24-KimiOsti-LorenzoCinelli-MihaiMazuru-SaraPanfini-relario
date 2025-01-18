@@ -31,7 +31,7 @@ public final class GameView extends JPanel {
     private static final Color BACKGROUND_COLOR = Color.BLACK;
     private static final Color TEXT_COLOR = Color.WHITE;
     private static final double SCREEN_TO_MAP_RATIO = 1.5;
-    private static final int UPPER_PANEL_TO_TEXT_RATIO = 5;
+    private static final int PANEL_TO_TEXT_RATIO = 3;
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
@@ -84,6 +84,14 @@ public final class GameView extends JPanel {
      */
     public void renderTextures(final Map<Position, Image> textures) {
         /* [TODO]: implement method. */
+    }
+
+    /**
+     * Renders the text resulting from an interaction in the lower panel.
+     * @param text the text to be shown.
+     */
+    public void showInteractionText(final String text) {
+        this.lowerPanel.add(this.getCustomLabel(this.lowerPanel, text));
     }
 
     private void setBackgroundColor(final Color color) {
@@ -169,7 +177,7 @@ public final class GameView extends JPanel {
 
         this.lowerPanel.setPreferredSize(
             new java.awt.Dimension(
-                this.getWidth(),
+                (int) this.mapPanel.getPreferredSize().getWidth(),
                 (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 2
             )
         );
@@ -192,7 +200,7 @@ public final class GameView extends JPanel {
 
     private JLabel getCustomLabel(final JPanel container, final String text) {
         final var label = new JLabel();
-        label.setFont(this.font.deriveFont(container.getHeight() / UPPER_PANEL_TO_TEXT_RATIO));
+        label.setFont(this.font.deriveFont(container.getHeight() / PANEL_TO_TEXT_RATIO));
         label.setForeground(TEXT_COLOR);
         label.setText(text);
         return label;
