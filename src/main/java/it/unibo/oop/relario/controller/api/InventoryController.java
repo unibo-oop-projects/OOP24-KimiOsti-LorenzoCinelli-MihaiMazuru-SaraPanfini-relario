@@ -46,6 +46,12 @@ public interface InventoryController extends Observer {
     int getSelectedItemIndex();
 
     /**
+     * Returns the life of the player.
+     * @return a String containing the life of the player.
+     */
+    String getLife();
+
+    /**
      * Sets the index of the new selected item in the inventory.
      * @param index is the value of the new selected item.
      */
