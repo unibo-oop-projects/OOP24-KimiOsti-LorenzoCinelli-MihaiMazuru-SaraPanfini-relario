@@ -20,7 +20,8 @@ import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
-/* [TODO]: aggiungere la texture del pavimento, aggiungere aggiornamento lowerpanel, e gestire l'aggiornamento frame by frame */
+/* [TODO]: gestire l'aggiornamento frame by frame */
+/* [TODO]: refactoring */
 
 /**
  * View implementations for the exploration phase of the game.
