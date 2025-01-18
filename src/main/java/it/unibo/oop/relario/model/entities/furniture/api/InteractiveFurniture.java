@@ -3,7 +3,7 @@ package it.unibo.oop.relario.model.entities.furniture.api;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 
 /**
- * 
+ * Interface for handling interactive furniture items.
  */
 public interface InteractiveFurniture extends Furniture {
     /**
