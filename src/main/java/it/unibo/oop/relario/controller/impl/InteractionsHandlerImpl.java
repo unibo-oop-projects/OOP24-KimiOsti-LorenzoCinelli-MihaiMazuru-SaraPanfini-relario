@@ -8,12 +8,20 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
-import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
+import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
+import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.GameView;
+
+/*
+ * [TODO]:
+ * gestione interazione con la furniture
+ * gestione avvio combattimento
+ * gestione ripresa del game loop a seconda dello scenario
+ */
 
 /**
  * Implementation for the game's interactions handler.
@@ -36,7 +44,8 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
         this.classNameToInteraction = Map.of(
             Npc.class.getName(), (e) -> this.interactWithNpc((Npc) e),
             Enemy.class.getName(), (e) -> this.startEnemyCombat((Enemy) e),
-            Furniture.class.getName(), (e) -> this.interactWithFurniture((Furniture) e)
+            InteractiveFurniture.class.getName(), (e) -> this.interactWithFurniture((InteractiveFurniture) e),
+            WalkableFurniture.class.getName(), (e) -> this.startEnemyCombat(null/* ((WalkableFurniture) e).removeEnemy() */)
         );
     }
 
@@ -82,8 +91,8 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
         /* [TODO]: avviare il combattimento */
     }
 
-    private void interactWithFurniture(final Furniture furniture) {
-        /* [TODO]: interazione con la furniture, che sia walkable o interactive */
+    private void interactWithFurniture(final InteractiveFurniture furniture) {
+        /* [TODO]: gestire l'interazione con l'arredamento */
     }
 
 }
