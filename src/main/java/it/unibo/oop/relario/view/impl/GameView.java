@@ -31,6 +31,7 @@ public final class GameView extends JPanel {
     private static final Color BACKGROUND_COLOR = Color.BLACK;
     private static final Color TEXT_COLOR = Color.WHITE;
     private static final double SCREEN_TO_MAP_RATIO = 1.5;
+    private static final int UPPER_PANEL_TO_TEXT_RATIO = 5;
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
@@ -191,7 +192,7 @@ public final class GameView extends JPanel {
 
     private JLabel getCustomLabel(final JPanel container, final String text) {
         final var label = new JLabel();
-        label.setFont(this.font.deriveFont(container.getHeight() / 5));
+        label.setFont(this.font.deriveFont(container.getHeight() / UPPER_PANEL_TO_TEXT_RATIO));
         label.setForeground(TEXT_COLOR);
         label.setText(text);
         return label;
