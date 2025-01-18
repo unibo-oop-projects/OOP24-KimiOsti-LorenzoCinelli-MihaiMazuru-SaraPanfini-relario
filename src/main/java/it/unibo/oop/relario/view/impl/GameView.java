@@ -116,11 +116,17 @@ public final class GameView extends JPanel {
             0
         ));
 
+        final var texture = ResourceLocator.getFloorTexture().getScaledInstance(
+            this.tileDimension,
+            this.tileDimension,
+            Image.SCALE_SMOOTH
+        );
+
         for (int y = 0; y < dimension.getHeight(); y++) {
             for (int x = 0; x < dimension.getWidth(); x++) {
                 this.background.add(
                     this.computeIndex(x, y),
-                    new BackgroundTile(null) //aggiungere immagine del floor
+                    new BackgroundTile(texture) //aggiungere immagine del floor
                 );
                 this.add(
                     this.background.get(this.computeIndex(x, y)),
