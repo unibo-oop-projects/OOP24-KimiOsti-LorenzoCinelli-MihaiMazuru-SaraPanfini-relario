@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.model.map;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -29,9 +30,6 @@ public final class RoomImpl implements Room {
 
     /** The range around living beings, used to define restricted areas. */
     public static final int CHARACTERS_EXCLUSION_RANGE = LivingBeingImpl.DIRECTION_RANGE + EXCLUSION_RANGE;
-
-    /** The border value used to define the edges of the room. */
-    public static final int BORDER = 2;
 
     private final MainCharacter player;
     private final Dimension dimension;
@@ -109,9 +107,13 @@ public final class RoomImpl implements Room {
     @Override
     public void addEntity(final Position position, final Entity entity) {
         if (entity instanceof LivingBeing) {
-            addCharacter(position, (LivingBeing) entity);
+            this.population.put(position, (LivingBeing) entity);
         } else if (entity instanceof Furniture) {
-            addFurniture(position, (Furniture) entity);
+            this.furniture.put(position, (Furniture) entity);
+        }
+        this.cellStates.put(position, CellState.OCCUPIED);
+        for (Position pos : adjacentCells(position, entity)) {
+            this.cellStates.put(pos, CellState.RESTRICTED);
         }
     }
 
@@ -151,22 +153,10 @@ public final class RoomImpl implements Room {
         }
     }
 
-    private void addFurniture(final Position position, final Furniture furniture) {
-        Set<Position> adjacentCells = adjacentCells(position, furniture);
-        this.furniture.put(position, furniture);
-        this.cellStates.put(position, CellState.OCCUPIED);
-        for (Position pos : adjacentCells) {
-            this.cellStates.put(pos, CellState.RESTRICTED);
-        }
-    }
-
-    private void addCharacter(final Position position, final LivingBeing character) {
-        Set<Position> adjacentCells = adjacentCells(position, character);
-        this.population.put(position, character);
-        this.cellStates.put(position, CellState.OCCUPIED);
-        for (Position pos : adjacentCells) {
-            this.cellStates.put(pos, CellState.RESTRICTED);
-        }
+    @Override
+    public List<Position> getCellsByState(final CellState state) {
+        return this.cellStates.entrySet().stream().filter(entry -> entry.getValue().equals(state))
+        .map(Map.Entry::getKey).collect(Collectors.toList());
     }
 
     private Set<Position> adjacentCells(final Position position, final Entity entity) {
@@ -175,7 +165,7 @@ public final class RoomImpl implements Room {
 
         return IntStream.rangeClosed(position.getX() - rangeX, position.getX() + rangeX)
         .boxed().flatMap(x -> IntStream.rangeClosed(position.getY() - rangeY, position.getY() + rangeY)
-        .mapToObj(y -> new PositionImpl(x, y))).filter(p -> isPositionValid(p) && p.equals(position))
+        .mapToObj(y -> new PositionImpl(x, y))).filter(p -> isPositionValid(p) && isCellAvailable(p))
         .collect(Collectors.toSet());
     }
 
@@ -184,12 +174,17 @@ public final class RoomImpl implements Room {
         this.cellStates.putAll(IntStream.range(0, this.dimension.getWidth())
         .boxed().flatMap(x -> IntStream.range(0, this.dimension.getHeight())
         .mapToObj(y -> new PositionImpl(x, y))).collect(Collectors.toMap(pos -> pos,
-        pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY : CellState.INNER_EMPTY)));
+        pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY :
+        (isInnerPerimeter(pos.getX(), pos.getY()) ? CellState.RESTRICTED : CellState.INNER_EMPTY))));
         this.cellStates.put(this.entry, CellState.RESTRICTED);
     }
 
     private boolean isPerimeter(final int x, final int y) {
         return x == 0 || y == 0 || x == this.dimension.getWidth() - 1 || y == this.dimension.getHeight() - 1;
+    }
+
+    private boolean isInnerPerimeter(final int x, final int y) {
+        return x == 1 || y == 1 || x == this.dimension.getWidth() - 2 || y == this.dimension.getHeight() - 2;
     }
 
 }

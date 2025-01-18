@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.model.map;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -109,5 +110,7 @@ public interface Room {
      * Updates the state of the room.
      */
     void update();
+
+    List<Position> getCellsByState(CellState state);
 
 }
