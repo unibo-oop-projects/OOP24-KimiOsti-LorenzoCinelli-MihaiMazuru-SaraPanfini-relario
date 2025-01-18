@@ -65,6 +65,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                 && (this.curRoom.getQuest().isEmpty() || this.curRoom.getQuest().get().isCompleted())
             ) {
                 this.controller.moveToNextRoom();
+                this.resumeGame();
             } else {
                 final var entity = this.curRoom.getCellContent(
                     this.curRoom.getPlayer().getDirection().move(this.curRoom.getPlayer().getPosition().get())
@@ -74,9 +75,6 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                 }
             }
         }
-
-        /* [TODO]: risolvi il fatto che qui, se parte un combattimento, comunque fai resume del game loop */
-        this.controller.getGameController().resume(this.controller.getCurRoom().isPresent());
     }
 
     private void interactWithNpc(final Npc npc) {
@@ -85,6 +83,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
             this.curRoom.getPlayer().addToInventory(output.getLoot().get());
         }
         this.showOutputText(output.getDialogue());
+        this.resumeGame();
     }
 
     private void startEnemyCombat(final Enemy enemy) {
@@ -101,10 +100,15 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                 furniture.addLoot(loot);
             }
         }
+        this.resumeGame();
     }
 
     private void showOutputText(final String text) {
         ((GameView) this.view.getPanel(GameState.GAME.getState())).showInteractionText(text);
+    }
+
+    private void resumeGame() {
+        this.controller.getGameController().resume(this.controller.getCurRoom().isPresent());
     }
 
 }
