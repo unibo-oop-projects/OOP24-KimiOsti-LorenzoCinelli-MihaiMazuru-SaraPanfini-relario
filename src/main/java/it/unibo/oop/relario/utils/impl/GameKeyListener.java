@@ -44,7 +44,7 @@ public final class GameKeyListener implements KeyListener {
 
     /**
      * Checks if the key pressed is a valid key.
-     * @param e is the key pressed.
+     * @param keyCode is the key pressed.
      * @return true if the key pressed is a valid key, false otherwise.
      */
     private boolean isValidKey(final int keyCode) {
@@ -62,11 +62,15 @@ public final class GameKeyListener implements KeyListener {
         this.keys.put(KeyEvent.VK_I, Event.INVENTORY);
         this.keys.put(KeyEvent.VK_E, Event.INTERACT);
         this.keys.put(KeyEvent.VK_ESCAPE, Event.ESCAPE);
+        this.keys.put(KeyEvent.VK_ENTER, Event.USE_ITEM);
+        this.keys.put(KeyEvent.VK_BACK_SPACE, Event.DISCARD_ITEM);
+        this.keys.put(KeyEvent.VK_DOWN, Event.NEXT_ITEM);
+        this.keys.put(KeyEvent.VK_UP, Event.PREVIOUS_ITEM);
     }
 
     /**
      * Converts the the key pressed into an event.
-     * @param e is the key pressed.
+     * @param keyCode is the key pressed.
      * @return the event corresponding to the key pressed.
      */
     private Event convertKey(final int keyCode) {
