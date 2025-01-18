@@ -92,7 +92,9 @@ public final class GameView extends JPanel {
      * @param text the text to be shown.
      */
     public void showInteractionText(final String text) {
+        this.lowerPanel.removeAll();
         this.lowerPanel.add(this.getCustomLabel(this.lowerPanel, text));
+        this.refresh(this.lowerPanel);
     }
 
     private void setBackgroundColor(final Color color) {
