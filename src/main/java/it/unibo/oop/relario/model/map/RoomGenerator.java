@@ -34,9 +34,9 @@ public final class RoomGenerator {
     public RoomGenerator() {
         this.dimension = DEFAULT_DIMENSION;
         this.player = new MainCharacterImpl();
-        this.defaultEntry = new PositionImpl(this.dimension.getHeight() / 2, 0);
-        this.defaultExit = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() / 2);
-        this.questManager = new QuestManager(player);
+        this.defaultEntry = new PositionImpl(0, (int) Math.ceil(this.dimension.getHeight() / 2));
+        this.defaultExit = new PositionImpl(this.dimension.getWidth() - 1, (int) Math.ceil(this.dimension.getHeight() / 2));
+        this.questManager = new QuestManager();
         this.furnitureGenerator = new FurnitureGenerator(this.dimension);
         this.livingBeingsGenerator = new LivingBeingsGenerator();
     }
