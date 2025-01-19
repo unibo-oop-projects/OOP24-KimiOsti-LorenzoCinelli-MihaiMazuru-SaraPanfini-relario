@@ -1,32 +1,13 @@
 package it.unibo.oop.relario.model.quest;
 
-import it.unibo.oop.relario.model.entities.enemies.EnemyType;
-import it.unibo.oop.relario.model.entities.living.MainCharacter;
-import it.unibo.oop.relario.model.inventory.InventoryItemType;
+import it.unibo.oop.relario.model.GameEntityType;
+import it.unibo.oop.relario.model.map.Room;
 
 /**
  * 
  */
 public interface QuestFactory {
 
-    /**
-     * 
-     * @param player
-     * @param keyEntity
-     * @return TODO
-     */
-    Quest createCollectItemQuest(MainCharacter player, InventoryItemType keyItem);
-
-    /**
-     * 
-     * @return TODO
-     */
-    Quest createDefeatEnemyQuest(EnemyType keyEnemy);
-
-    /**
-     * 
-     * @return TODO
-     */
-    Quest createPressButtonQuest();
+    Quest createQuestByType(Room room, QuestType questType, GameEntityType keyEntity);
 
 }
