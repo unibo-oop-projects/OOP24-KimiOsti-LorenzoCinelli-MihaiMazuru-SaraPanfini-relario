@@ -8,6 +8,7 @@ import it.unibo.oop.relario.utils.impl.Event;
 public interface Observer {
    /**
     * Handles event.
+    * @param event is the event to handle.
     */
     void notify(Event event);
 
