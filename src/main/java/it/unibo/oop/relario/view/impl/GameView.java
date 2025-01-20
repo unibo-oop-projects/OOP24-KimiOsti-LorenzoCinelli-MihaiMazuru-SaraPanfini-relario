@@ -1,6 +1,5 @@
 package it.unibo.oop.relario.view.impl;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,7 +39,7 @@ public final class GameView extends JPanel {
     private final JPanel lowerPanel;
     private final List<BackgroundTile> background;
     private final List<String> commands;
-    private final Map<Position, ForegroundTile> foreground;
+    private final List<ForegroundTile> foreground;
     private final Font font;
     private Dimension mapDimension;
     private int tileDimension;
@@ -64,7 +64,7 @@ public final class GameView extends JPanel {
         this.setBackgroundColor(BACKGROUND_COLOR);
 
         this.background = new LinkedList<>();
-        this.foreground = new HashMap<>();
+        this.foreground = new LinkedList<>();
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
         this.addKeyListener(new GameKeyListener(controller.getGameController()));
     }
@@ -84,7 +84,19 @@ public final class GameView extends JPanel {
      * @param textures the textures to be rendered on the foreground of the scene.
      */
     public void renderTextures(final Map<Position, Image> textures) {
-        /* [TODO]: implement method. */
+        this.foreground.forEach(this.mapPanel::remove);
+        this.foreground.clear();
+        for (final var texture : textures.entrySet()) {
+            final ForegroundTile newTile = new ForegroundTile();
+            final int index = this.computeIndex
+            (texture.getKey().getX(), texture.getKey().getY());
+            newTile.setIcon(new ImageIcon(texture.getValue()
+            .getScaledInstance(this.tileDimension, 
+            this.tileDimension, Image.SCALE_SMOOTH)));
+            this.foreground.add(index, newTile);
+            this.mapPanel.add(this.foreground.get(index), index);
+        }
+        this.refresh(this.mapPanel);
     }
 
     /**
