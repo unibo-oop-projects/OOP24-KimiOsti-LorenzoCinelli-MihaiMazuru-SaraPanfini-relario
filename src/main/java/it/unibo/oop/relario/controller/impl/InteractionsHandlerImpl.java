@@ -1,12 +1,8 @@
 package it.unibo.oop.relario.controller.impl;
 
-import java.util.Map;
-import java.util.function.Consumer;
-
 import it.unibo.oop.relario.controller.api.InteractionsHandler;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.Interactions;
-import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
@@ -22,7 +18,6 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     private final MainController controller;
     private final GameView view;
-    private final Map<String, Consumer<Entity>> classNameToInteraction;
     private Room curRoom;
 
     /**
@@ -33,12 +28,6 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     public InteractionsHandlerImpl(final MainController controller, final GameView view) {
         this.controller = controller;
         this.view = view;
-        this.classNameToInteraction = Map.of(
-            Npc.class.getName(), (e) -> this.interactWithNpc((Npc) e),
-            Enemy.class.getName(), (e) -> this.startEnemyCombat((Enemy) e),
-            InteractiveFurniture.class.getName(), (e) -> this.interactWithFurniture((InteractiveFurniture) e),
-            WalkableFurniture.class.getName(), (e) -> this.startEnemyCombat(((WalkableFurniture) e).removeEnemy())
-        );
     }
 
     @Override
@@ -63,7 +52,15 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                     this.curRoom.getPlayer().getDirection().move(this.curRoom.getPlayer().getPosition().get())
                 );
                 if (entity.isPresent()) {
-                    this.classNameToInteraction.get(entity.get().getClass().getName()).accept(entity.get());
+                    if (entity.get() instanceof Npc) {
+                        this.interactWithNpc((Npc) entity.get());
+                    } else if (entity.get() instanceof Enemy) {
+                        this.startEnemyCombat((Enemy) entity.get());
+                    } else if (entity.get() instanceof InteractiveFurniture) {
+                        this.interactWithFurniture((InteractiveFurniture) entity.get());
+                    } else if (entity.get() instanceof WalkableFurniture) {
+                        this.startEnemyCombat(((WalkableFurniture) entity.get()).removeEnemy());
+                    }
                 }
             }
         }
