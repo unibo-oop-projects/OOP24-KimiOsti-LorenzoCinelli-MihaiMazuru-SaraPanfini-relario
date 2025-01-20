@@ -1,35 +1,35 @@
 package it.unibo.oop.relario.model.quest;
 
-import it.unibo.oop.relario.model.entities.Entity;
-import it.unibo.oop.relario.model.entities.living.MainCharacter;
-import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
-import it.unibo.oop.relario.model.inventory.InventoryItemType;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiFunction;
+
+import it.unibo.oop.relario.model.GameEntityType;
+import it.unibo.oop.relario.model.map.Room;
 
 /**
  * 
  */
 public final class QuestFactoryImpl implements QuestFactory {
 
-    private QuestImpl createQuest(final String name, final String description, 
-    final ObjectiveStrategy objective, final Entity keyEntity) {
-        return new QuestImpl(name, description, objective, keyEntity);
+    private final Map<QuestType, BiFunction<Room, GameEntityType, Quest>> questCreator = new HashMap<>();
+
+    public QuestFactoryImpl() {
+        questCreator.put(QuestType.COLLECTION_QUEST, (room, keyEntity) -> 
+        createQuest("", "", room, new CollectItemObjective(keyEntity)));
+        questCreator.put(QuestType.DEFEAT_ENEMY_QUEST, (room, keyEntity) -> 
+        createQuest("", "", room, new DefeatEnemyObjective(keyEntity)));
+
     }
 
     @Override
-    public Quest createCollectItemQuest(final MainCharacter player, final InventoryItemType keyItem) {
-        return createQuest("", "", new CollectItemObjective(player), new InventoryItemFactoryImpl().createItem(keyItem));
+    public Quest createQuestByType(final Room room, final QuestType questType, final GameEntityType keyEntity) {
+        return questCreator.get(questType).apply(room, keyEntity);
     }
 
-    @Override
-    public Quest createDefeatEnemyQuest() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createDefeatEnemyQuest'");
-    }
-
-    @Override
-    public Quest createSolvePuzzleQuest() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createSolvePuzzleQuest'");
+    private QuestImpl createQuest(final String name, final String description, final Room room, 
+    final ObjectiveStrategy objective) {
+        return new QuestImpl(name, description, room, objective);
     }
 
 }

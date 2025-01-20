@@ -3,14 +3,14 @@ package it.unibo.oop.relario.model.entities.furniture.api;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 
 /**
- * 
+ * Interface for handling interactive furniture items.
  */
 public interface InteractiveFurniture extends Furniture {
     /**
      * Adds a new loot to the furniture item.
      * @param loot is the inventory item to add to the furnite.
      */
-    void addLoot(final InventoryItem loot);
+    void addLoot(InventoryItem loot);
 
     /**
      * Checks if the furniture item has any loot inside.

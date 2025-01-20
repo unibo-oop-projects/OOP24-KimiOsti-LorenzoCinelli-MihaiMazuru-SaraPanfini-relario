@@ -1,11 +1,14 @@
 package it.unibo.oop.relario.model.inventory;
 
+import it.unibo.oop.relario.model.GameEntityType;
+
 /**
  * Enum representing different types of inventory items.
  * Each type is associated with a specific effect.
  */
 
-public enum InventoryItemType {
+public enum InventoryItemType implements GameEntityType {
+
     /** A sword with damage effect. */
     SWORD(EffectType.DAMAGE),
 
@@ -52,10 +55,7 @@ public enum InventoryItemType {
         this.effect = effect;
     }
 
-    /**
-     * Retrieves the effect associated with the inventory item type.
-     * @return the effect of the item
-     */
+    @Override
     public EffectType getEffect() {
         return this.effect;
     }
