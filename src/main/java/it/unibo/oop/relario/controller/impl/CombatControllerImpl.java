@@ -14,7 +14,7 @@ import it.unibo.oop.relario.view.api.MainView;
  */
 public final class CombatControllerImpl implements CombatController {
 
-    private final static Integer DELAY_TRANSITION = 4000;
+    private static final Integer DELAY_TRANSITION = 4000;
     private final MainView view;
     private MainCharacter player;
     private Enemy enemy;
@@ -80,16 +80,16 @@ public final class CombatControllerImpl implements CombatController {
         }
         //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
 
-        if(enemy.getLife() <= 0) {
+        if (enemy.getLife() <= 0) {
             player.addToInventory(enemy.getReward());
             combatState = this.player.getName() + "You've won the combat";
             //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
-            Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
+            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
             timer.setRepeats(false);
             timer.start();
         } else if (player.getLife() <= 0) {
             this.view.showPanel(GameState.GAME_OVER.getState());
-            Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU.getState()));
+            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU.getState()));
             timer.setRepeats(false);
             timer.start();
         } else if (isPlayerAttacking) {
@@ -103,7 +103,7 @@ public final class CombatControllerImpl implements CombatController {
             combatState = this.enemy.getName() + "accepted your mercy request. /n"
             + "You are free to go.";
             //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
-            Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
+            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
             timer.setRepeats(false);
             timer.start();
         } else {
