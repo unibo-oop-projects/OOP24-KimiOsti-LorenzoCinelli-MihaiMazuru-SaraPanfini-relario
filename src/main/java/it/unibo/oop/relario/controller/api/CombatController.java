@@ -20,7 +20,7 @@ public interface CombatController {
      * @return the combat state.
      */
     String getCombatState();
-    
+
     /**
      * Retrieves the enemy's name.
      * @return enemy's name.

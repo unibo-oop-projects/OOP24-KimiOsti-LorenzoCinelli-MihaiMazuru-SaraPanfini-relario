@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.model.entities.enemies;
 
+import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.inventory.EffectType;
 
 /**
@@ -8,7 +9,7 @@ import it.unibo.oop.relario.model.inventory.EffectType;
  * can drop only a reward with an effect that corresponds to it.
  */
 
-public enum EnemyType {
+public enum EnemyType implements GameEntityType {
 
     /** Represents a thief enemy, who can drop only inventory items with no effect. */
     THIEF("Ladro", EffectType.NONE),
@@ -20,7 +21,9 @@ public enum EnemyType {
     KNIGHT("Cavaliere", EffectType.PROTECTION),
 
     /** Represents a wizard enemy, who can drop only inventory items with healing effect. */
-    WIZARD("Mago", EffectType.HEALING);
+    WIZARD("Mago", EffectType.HEALING),
+
+    BOSS("", EffectType.NONE);
 
     private final EffectType effect;
     private final String name;
@@ -30,10 +33,7 @@ public enum EnemyType {
         this.effect = effect;
     }
 
-    /**
-     * Retrieves the effect associated with the enemy type.
-     * @return the effect type of the enemy
-     */
+    @Override
     public EffectType getEffect() {
         return this.effect;
     }

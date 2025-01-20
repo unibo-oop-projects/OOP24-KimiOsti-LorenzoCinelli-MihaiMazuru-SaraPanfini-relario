@@ -10,7 +10,7 @@ import it.unibo.oop.relario.utils.api.Position;
 /**
  * Implementation of interactive furniture items.
  */
-public class InteractiveFurnitureImpl extends FurnitureImpl implements InteractiveFurniture {
+public final class InteractiveFurnitureImpl extends FurnitureImpl implements InteractiveFurniture {
 
     private Optional<InventoryItem> loot;
 
@@ -29,28 +29,31 @@ public class InteractiveFurnitureImpl extends FurnitureImpl implements Interacti
     }
 
     @Override
-    public final boolean isInteractive() {
-        return true;
-    }
-
-    @Override
-    public boolean isWalkable() {
-        return false;
-    }
-
-    public final InventoryItem dropLoot() {
+    public InventoryItem dropLoot() {
         final InventoryItem lootCopy = new InventoryItemImpl(this.loot.get().getName(),
         this.loot.get().getDescription(), this.loot.get().getType(), this.loot.get().getIntensity());
         this.loot = Optional.empty();
         return lootCopy;
     }
 
-    public final boolean hasLoot() {
+    @Override
+    public boolean hasLoot() {
         return !loot.isEmpty();
     } 
 
-    public final void addLoot(final InventoryItem loot) {
+    @Override
+    public void addLoot(final InventoryItem loot) {
         this.loot = Optional.of(loot);
+    }
+
+    @Override
+    public boolean isInteractive() {
+        return true;
+    }
+
+    @Override
+    public boolean isWalkable() {
+        return false;
     }
 
 }
