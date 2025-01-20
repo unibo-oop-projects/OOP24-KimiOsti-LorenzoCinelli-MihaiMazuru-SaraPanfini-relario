@@ -42,7 +42,7 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     @Override
     public Furniture createWalkableFurnitureByItemEmpty(final Position pos, final FurnitureType type) {
         desc = furnitureInfo.get(type);
-        if (!(type.getFurniturePropriety().equals(FurniturePropriety.WALKABLE))) {
+        if (!type.getFurniturePropriety().equals(FurniturePropriety.WALKABLE)) {
             throw new IllegalArgumentException();
         }
         return new WalkableFurnitureImpl(pos, type.getName(), desc, type);
@@ -51,7 +51,7 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     @Override
     public Furniture createWalkableFurnitureByItem(final Position pos, final FurnitureType type) {
         desc = furnitureInfo.get(type);
-        if (!(type.getFurniturePropriety().equals(FurniturePropriety.WALKABLE))) {
+        if (!type.getFurniturePropriety().equals(FurniturePropriety.WALKABLE)) {
             throw new IllegalArgumentException();
         }
         final EnemyFactory enemy = new EnemyFactoryImpl();
@@ -62,7 +62,7 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     @Override
     public Furniture createObstructingFurnitureByItem(final Position pos, final FurnitureType type) {
         desc = furnitureInfo.get(type);
-        if (!(type.getFurniturePropriety().equals(FurniturePropriety.OBSTRUCTING))) {
+        if (!type.getFurniturePropriety().equals(FurniturePropriety.OBSTRUCTING)) {
             throw new IllegalArgumentException();
         }
         return new ObstructingFurniture(pos, type.getName(), desc, type);
@@ -71,7 +71,7 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     @Override
     public Furniture createInteractiveFurnitureByItem(final Position pos, final FurnitureType type) {
         desc = furnitureInfo.get(type);
-        if (!(type.getFurniturePropriety().equals(FurniturePropriety.INTERACTIVE))) {
+        if (!type.getFurniturePropriety().equals(FurniturePropriety.INTERACTIVE)) {
             throw new IllegalArgumentException();
         }
         final InventoryItemFactory loot = new InventoryItemFactoryImpl();
@@ -93,7 +93,7 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     @Override
     public Furniture createRandomInteractiveFurniture(final Position pos) {
         matchingProperties = filterByPropriety(FurniturePropriety.INTERACTIVE);
-        return createInteractiveFurnitureByItem(pos,matchingProperties.get(random.nextInt(matchingProperties.size())));
+        return createInteractiveFurnitureByItem(pos, matchingProperties.get(random.nextInt(matchingProperties.size())));
     }
 
     @Override
@@ -103,7 +103,7 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     }
 
     @Override
-    public Furniture createInteractiveFurnitureLoot(Position pos, InventoryItem loot) {
+    public Furniture createInteractiveFurnitureLoot(final Position pos, final InventoryItem loot) {
         matchingProperties = filterByPropriety(FurniturePropriety.INTERACTIVE);
         final FurnitureType type = matchingProperties.get(random.nextInt(matchingProperties.size()));
         desc = furnitureInfo.get(type);
@@ -111,7 +111,7 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     }
 
     @Override
-    public Furniture createWalkableFurnitureEnemy(Position pos, Enemy enemy) {
+    public Furniture createWalkableFurnitureEnemy(final Position pos, final Enemy enemy) {
         matchingProperties = filterByPropriety(FurniturePropriety.INTERACTIVE);
         final FurnitureType type = matchingProperties.get(random.nextInt(matchingProperties.size()));
         desc = furnitureInfo.get(type);

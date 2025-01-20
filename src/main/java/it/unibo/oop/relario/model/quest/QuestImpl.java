@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.model.quest;
 
-import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.GameEntityType;
+import it.unibo.oop.relario.model.map.Room;
 
 /**
  * 
@@ -10,20 +11,19 @@ public final class QuestImpl implements Quest {
     private final String name;
     private final String description;
     private final ObjectiveStrategy objective;
-    private final Entity keyEntity;
+    private final Room room;
 
     /**
      * 
      * @param name
      * @param description
      * @param objective
-     * @param keyEntity
      */
-    public QuestImpl(final String name, final String description, final ObjectiveStrategy objective, final Entity keyEntity) {
+    public QuestImpl(final String name, final String description, final Room room, final ObjectiveStrategy objective) {
         this.name = name;
         this.description = description;
+        this.room = room;
         this.objective = objective;
-        this.keyEntity = keyEntity;
     }
 
     @Override
@@ -38,12 +38,17 @@ public final class QuestImpl implements Quest {
 
     @Override
     public boolean isCompleted() {
-        return this.objective.check(this.keyEntity);
+        return this.objective.check(this.room);
     }
 
     @Override
-    public Entity getKeyEntity() {
-        return this.keyEntity;
+    public GameEntityType getKeyEntityType() {
+        return this.objective.getKeyEntityType();
+    }
+
+    @Override
+    public Room getRoom() {
+        return this.room;
     }
 
 }

@@ -1,7 +1,8 @@
 package it.unibo.oop.relario.model.quest;
 
-import it.unibo.oop.relario.model.entities.Entity;
-import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.model.GameEntityType;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
+import it.unibo.oop.relario.model.map.Room;
 
 /**
  * 
@@ -9,19 +10,28 @@ import it.unibo.oop.relario.model.entities.living.MainCharacter;
 
 public final class CollectItemObjective implements ObjectiveStrategy {
 
-    private final MainCharacter player;
+    private final InventoryItemType keyItemType;
 
     /**
      * 
      * @param player
      */
-    public CollectItemObjective(final MainCharacter player) {
-        this.player = player;
+    public CollectItemObjective(final GameEntityType keyItemType) {
+        if (keyItemType instanceof InventoryItemType) {
+            this.keyItemType = (InventoryItemType) keyItemType;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
-    public boolean check(final Entity keyEntity) {
-        return this.player.getItems().contains(keyEntity);
+    public boolean check(final Room room) {
+        return room.getPlayer().getItems().stream().map(i -> i.getType()).anyMatch(t -> t.equals(this.keyItemType));
+    }
+
+    @Override
+    public GameEntityType getKeyEntityType() {
+        return this.keyItemType;
     }
 
 }

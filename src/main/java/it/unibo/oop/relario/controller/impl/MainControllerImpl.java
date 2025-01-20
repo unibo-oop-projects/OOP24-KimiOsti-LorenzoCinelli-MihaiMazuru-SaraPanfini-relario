@@ -9,6 +9,7 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.MenuController;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.model.map.RoomGenerator;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
 
@@ -39,6 +40,8 @@ public final class MainControllerImpl implements MainController {
         this.inventory = new InventoryControllerImpl(this, this.view);
         this.mainMenu = new MenuControllerImpl(this.view);
         this.view.panelsSetup();
+        this.inventory.init();
+        this.view.showPanel(GameState.MENU.getState());
     }
 
     @Override
