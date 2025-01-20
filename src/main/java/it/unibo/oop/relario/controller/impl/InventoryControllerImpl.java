@@ -63,7 +63,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public void init() {
-        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY.getState());
+        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
     }
 
     @Override
