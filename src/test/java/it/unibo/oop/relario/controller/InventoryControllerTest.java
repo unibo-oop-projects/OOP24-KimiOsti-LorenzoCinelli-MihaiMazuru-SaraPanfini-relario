@@ -37,6 +37,8 @@ final class InventoryControllerTest {
     void setUp() {
         final var mainController = new MainControllerImpl();
         this.inventoryController = mainController.getInventoryController();
+        mainController.moveToNextRoom();
+        mainController.getInventoryController().init();
 
         final var player = mainController.getCurRoom().get().getPlayer();
         final InventoryItemFactory itemFactory = new InventoryItemFactoryImpl();

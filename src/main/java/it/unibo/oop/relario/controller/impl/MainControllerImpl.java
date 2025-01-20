@@ -72,5 +72,6 @@ public final class MainControllerImpl implements MainController {
     public void moveToNextRoom() {
         this.roomIndex++;
         this.curRoom = this.roomGenerator.getRoom(roomIndex);
+        this.inventory.init();
     }
 }
