@@ -8,12 +8,22 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/*
+ * CHECKSTYLE: MagicNumber OFF
+ * The above comment shuts down checkstyle: in a test suite, magic numbers may be tolerated.
+ */
+/**
+ * The test class for the menu model.
+ */
 class MenuTest {
 
     private MenuElement elemClose;
     private MenuElement elemPlay;
     private MenuElement elemQuit;
 
+    /**
+     * Sets up the menu elements.
+     */
     @BeforeEach
     void setUp() {
         elemClose = new MenuElement(Command.CLOSE);
@@ -21,6 +31,9 @@ class MenuTest {
         elemQuit = new MenuElement(Command.QUIT);
     }
     
+    /**
+     * Tests menu element's methods.
+     */
     @Test
     void testMenuElement() {
         assertEquals(elemClose.getElemCommad(), Command.CLOSE);
@@ -31,6 +44,9 @@ class MenuTest {
         assertEquals(elemQuit.getElemName(), Command.QUIT.getName());
     }
 
+    /**
+     * Tests menu implementation and its methods.
+     */
     @Test
     void testMenuImpl() {
         final MenuImpl menu = new MenuImpl();
@@ -44,6 +60,9 @@ class MenuTest {
         assertEquals(menu.getElem(), List.of(elemPlay, elemClose, elemQuit, elemClose));
     }
 
+    /**
+     * Tests menu manager and its methods.
+     */
     @Test
     void testMenuManager() {
         final MenuManager manager = new MenuManager();
