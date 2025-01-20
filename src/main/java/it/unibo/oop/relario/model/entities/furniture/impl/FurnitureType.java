@@ -5,7 +5,7 @@ package it.unibo.oop.relario.model.entities.furniture.impl;
  * Each furniture item has a propriety.
  */
 public enum FurnitureType {
-    
+
     /** Represents a carpet, a walkable furniture item that may hide an enemy inside. */
     CARPET("Carpet", FurniturePropriety.WALKABLE),
 

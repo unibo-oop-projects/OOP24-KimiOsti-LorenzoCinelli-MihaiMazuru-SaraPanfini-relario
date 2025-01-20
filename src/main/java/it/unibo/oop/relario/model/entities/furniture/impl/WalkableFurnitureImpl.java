@@ -3,7 +3,6 @@ package it.unibo.oop.relario.model.entities.furniture.impl;
 import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
-import it.unibo.oop.relario.model.entities.enemies.EnemyImpl;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.utils.api.Position;
 
