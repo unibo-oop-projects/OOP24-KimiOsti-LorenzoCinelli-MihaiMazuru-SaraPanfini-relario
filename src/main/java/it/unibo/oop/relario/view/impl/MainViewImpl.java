@@ -22,7 +22,7 @@ public final class MainViewImpl implements MainView {
     private final JFrame frame;
     private final JPanel mainPanel;
     private final MainController mainController;
-    private final Map<JPanel, GameState> panels = new HashMap<>();
+    private final Map<JPanel, GameState> panels;
     private Deque<String> stack = new ArrayDeque<>();
     private String currentPanel;
 
@@ -34,6 +34,7 @@ public final class MainViewImpl implements MainView {
         this.mainController = mainController;
         this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
+        this.panels = new HashMap<>();
         this.frameSetup();
         this.currentPanel = GameState.MENU.getState();
         this.frame.add(mainPanel);
@@ -47,7 +48,7 @@ public final class MainViewImpl implements MainView {
         final JPanel inGameMenuView = new MenuView(this, 
         this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
         final JPanel gameView = new GameView(this.mainController);
-        final JPanel inventoryView = new InventoryView(this.mainController);
+        final JPanel inventoryView = new InventoryViewImpl(this.mainController);
         final JPanel combatView = new CombatView();
         
         panels.put(startMenuView, GameState.MENU);
