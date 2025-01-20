@@ -20,7 +20,7 @@ import it.unibo.oop.relario.view.impl.MainViewImpl;
  * Used to avoid CheckStyle violations for magic numbers, here used for test scenarios. 
  */
 /**
- * Test class for {@MenuControllerImpl} class.
+ * Test class for {@link MenuControllerImpl} class.
  */
 class MenuControllerTest {
 
