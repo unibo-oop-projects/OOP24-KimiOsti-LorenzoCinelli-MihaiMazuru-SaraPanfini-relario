@@ -19,8 +19,9 @@ public interface WalkableFurniture extends Furniture {
     void addEnemy(Enemy enemy);
 
     /**
-     * Removes the enemy from inside the walkable furniture item.
+     * Retrieves the enemy from inside the walkable furniture and removes it.
+     * @return the enemy inside the furniture.
      */
-    void removeEnemy();
+    Enemy removeEnemy();
 
 }
