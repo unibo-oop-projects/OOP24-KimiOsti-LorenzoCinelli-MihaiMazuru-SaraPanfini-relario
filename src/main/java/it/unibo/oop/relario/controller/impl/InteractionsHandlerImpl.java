@@ -10,6 +10,7 @@ import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
+import it.unibo.oop.relario.model.entities.npc.InteractiveNpc;
 import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.utils.impl.GameState;
@@ -38,7 +39,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
             Npc.class.getName(), (e) -> this.interactWithNpc((Npc) e),
             Enemy.class.getName(), (e) -> this.startEnemyCombat((Enemy) e),
             InteractiveFurniture.class.getName(), (e) -> this.interactWithFurniture((InteractiveFurniture) e),
-            WalkableFurniture.class.getName(), (e) -> this.startEnemyCombat(null/* ((WalkableFurniture) e).removeEnemy() */)
+            WalkableFurniture.class.getName(), (e) -> this.startEnemyCombat(((WalkableFurniture) e).removeEnemy())
         );
     }
 
@@ -72,10 +73,16 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     private void interactWithNpc(final Npc npc) {
         final var output = npc.interact();
-        if (output.getLoot().isPresent()) {
-            this.curRoom.getPlayer().addToInventory(output.getLoot().get());
+        if (npc instanceof InteractiveNpc && output.getLoot().isPresent()) {
+            if (this.curRoom.getPlayer().addToInventory(output.getLoot().get())) {
+                ((InteractiveNpc) npc).confirmLootTaken();
+                this.showOutputText(output.getDialogue());
+            } else {
+                this.showOutputText("Sembra che io non abbia spazio per questo oggetto...");
+            }
+        } else {
+            this.showOutputText(output.getDialogue());
         }
-        this.showOutputText(output.getDialogue());
         this.resumeGame();
     }
 
