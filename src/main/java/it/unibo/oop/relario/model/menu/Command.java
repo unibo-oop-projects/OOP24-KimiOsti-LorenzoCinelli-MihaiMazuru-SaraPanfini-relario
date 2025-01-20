@@ -1,10 +1,10 @@
 package it.unibo.oop.relario.model.menu;
 
 /**
- * Different commands that be associated to a menu element, 
+ * Different commands that be associated to a menu element.
  */
 public enum Command {
-    
+
     /** Starts a new game. */
     PLAY("Play"),
 

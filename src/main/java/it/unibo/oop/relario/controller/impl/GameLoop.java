@@ -42,9 +42,9 @@ public final class GameLoop extends Thread {
                 try {
                     sleep(Constants.REFRESH_TIME - System.currentTimeMillis() + prevCycleTS);
                 } catch (InterruptedException e) {
-                    /*
-                     * Exception is here ignored since the thread interruption means stopping the loop.
-                     */
+                    if (!interrupted()) {
+                        this.interrupt();
+                    }
                 }
             }
         }

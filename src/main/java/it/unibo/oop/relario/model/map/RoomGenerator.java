@@ -15,7 +15,7 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 public final class RoomGenerator {
 
     /** The default dimension of a room. */
-    public static final Dimension DEFAULT_DIMENSION = new DimensionImpl(0, 0);
+    public static final Dimension DEFAULT_DIMENSION = new DimensionImpl(20, 13);
 
     /** TODO. */
     public static final int ROOMS_NUMBER = 5;
@@ -23,17 +23,10 @@ public final class RoomGenerator {
     private final Position defaultEntry;
     private final Position defaultExit;
     private final Dimension dimension;
-    private final FurnitureGenerator furnitureGenerator = new FurnitureGenerator();
-    private final LivingBeingsGenerator livingBeingsGenerator = new LivingBeingsGenerator();
+    private final FurnitureGenerator furnitureGenerator;
+    private final LivingBeingsGenerator livingBeingsGenerator;
     private final QuestManager questManager;
     private final MainCharacter player;
-
-    /*public RoomGenerator(final Dimension dimension) {
-        this.dimension = dimension;
-        this.default_entry = new PositionImpl(this.dimension.getHeight() / 2, 0);
-        this.default_exit = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() / 2);
-        this.player = new MainCharacterImpl();
-    }*/
 
     /**
      * Constructs a new RoomGenerator instance.
@@ -41,16 +34,13 @@ public final class RoomGenerator {
     public RoomGenerator() {
         this.dimension = DEFAULT_DIMENSION;
         this.player = new MainCharacterImpl();
-        this.defaultEntry = new PositionImpl(this.dimension.getHeight() / 2, 0);
-        this.defaultExit = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() / 2);
-        this.questManager = new QuestManager(player);
+        this.defaultEntry = new PositionImpl(0, (int) Math.ceil(this.dimension.getHeight() / 2));
+        this.defaultExit = new PositionImpl(this.dimension.getWidth() - 1, (int) Math.ceil(this.dimension.getHeight() / 2));
+        this.questManager = new QuestManager();
+        this.furnitureGenerator = new FurnitureGenerator(this.dimension);
+        this.livingBeingsGenerator = new LivingBeingsGenerator();
     }
 
-    /**
-     * Creates a new room with furniture and living beings.
-     * @param indexRoom TODO
-     * @return a new room
-     */
     private Room createNewRoom(final int indexRoom) {
         final Room newRoom = new RoomImpl(this.player, this.dimension, defaultEntry, defaultExit);
         this.questManager.assignQuest(newRoom, indexRoom);

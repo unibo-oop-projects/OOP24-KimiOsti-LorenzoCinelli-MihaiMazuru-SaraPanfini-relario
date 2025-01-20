@@ -40,6 +40,7 @@ public final class EnemyFactoryImpl implements EnemyFactory {
         enemiesData.put(EnemyType.KNIGHT, new EnemyConfig(EnemyType.KNIGHT.getName(), 
         "Il cavaliere è un nemico potente, caratterizzato da un'armatura pesante e uno scudo resistente", 
         DifficultyLevel.HARD));
+        enemiesData.put(EnemyType.BOSS, new EnemyConfig(EnemyType.BOSS.getName(), "", DifficultyLevel.HARD));
         this.itemFactory = new InventoryItemFactoryImpl();
     }
 
