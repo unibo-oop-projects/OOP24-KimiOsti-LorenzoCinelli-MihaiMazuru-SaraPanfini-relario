@@ -1,8 +1,8 @@
 package it.unibo.oop.relario.controller.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.InventoryController;
@@ -80,11 +80,9 @@ public final class InventoryControllerImpl implements InventoryController {
     @Override
     public List<String> getItemsNames() {
         this.updateInventory();
-        final List<String> temp = new ArrayList<>();
-        for (final var item : inventory) {
-            temp.add(item.getName());
-        }
-        return temp;
+        return this.inventory.stream()
+                .flatMap(t -> t.getName().lines())
+                .collect(Collectors.toList());
     }
 
     @Override
