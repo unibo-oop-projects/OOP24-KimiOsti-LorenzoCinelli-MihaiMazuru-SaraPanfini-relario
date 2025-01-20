@@ -39,7 +39,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
             Npc.class.getName(), (e) -> this.interactWithNpc((Npc) e),
             Enemy.class.getName(), (e) -> this.startEnemyCombat((Enemy) e),
             InteractiveFurniture.class.getName(), (e) -> this.interactWithFurniture((InteractiveFurniture) e),
-            WalkableFurniture.class.getName(), (e) -> this.startEnemyCombat(null/* ((WalkableFurniture) e).removeEnemy() */)
+            WalkableFurniture.class.getName(), (e) -> this.startEnemyCombat(((WalkableFurniture) e).removeEnemy())
         );
     }
 
