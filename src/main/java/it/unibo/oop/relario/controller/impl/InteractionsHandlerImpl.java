@@ -13,8 +13,6 @@ import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.npc.InteractiveNpc;
 import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.map.Room;
-import it.unibo.oop.relario.utils.impl.GameState;
-import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.GameView;
 
 /**
@@ -23,7 +21,7 @@ import it.unibo.oop.relario.view.impl.GameView;
 public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     private final MainController controller;
-    private final MainView view;
+    private final GameView view;
     private final Map<String, Consumer<Entity>> classNameToInteraction;
     private Room curRoom;
 
@@ -32,7 +30,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
      * @param controller the controller for return calls.
      * @param view the game view's access point to display the interaction's effects.
      */
-    public InteractionsHandlerImpl(final MainController controller, final MainView view) {
+    public InteractionsHandlerImpl(final MainController controller, final GameView view) {
         this.controller = controller;
         this.view = view;
         this.classNameToInteraction = Map.of(
@@ -104,7 +102,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void showOutputText(final String text) {
-        ((GameView) this.view.getPanel(GameState.GAME)).showInteractionText(text);
+        this.view.showInteractionText(text);
     }
 
     private void resumeGame() {
