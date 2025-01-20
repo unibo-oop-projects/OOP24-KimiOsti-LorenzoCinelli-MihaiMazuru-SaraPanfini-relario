@@ -61,8 +61,10 @@ public class WalkableFurnitureImpl extends FurnitureImpl implements WalkableFurn
     }
 
     @Override
-    public final void removeEnemy() {
+    public final Enemy removeEnemy() {
+        final Enemy enemyCopy = this.enemy.get();
         this.enemy = Optional.empty();
+        return enemyCopy;
     }
 
 }

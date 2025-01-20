@@ -1,7 +1,9 @@
 package it.unibo.oop.relario.model.quest;
 
-import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
+import it.unibo.oop.relario.model.entities.enemies.EnemyType;
+import it.unibo.oop.relario.model.map.Room;
 
 /**
  * 
@@ -9,12 +11,25 @@ import it.unibo.oop.relario.model.entities.enemies.Enemy;
 
 public final class DefeatEnemyObjective implements ObjectiveStrategy {
 
-    @Override
-    public boolean check(final Entity keyEntity) {
-        if (keyEntity instanceof Enemy) {
-            return ((Enemy) keyEntity).getLife() <= 0;
+    private final EnemyType keyEnemyType;
+
+    public DefeatEnemyObjective(final GameEntityType keyEnemyType) {
+        if (keyEnemyType instanceof EnemyType) {
+            this.keyEnemyType = (EnemyType) keyEnemyType;
+        } else {
+            throw new IllegalArgumentException();
         }
-        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public boolean check(final Room room) {
+        return room.getPopulation().values().stream().filter(lb -> lb instanceof Enemy)
+        .map(e -> (Enemy) e).noneMatch(e -> e.getType().equals(this.keyEnemyType));
+    }
+
+    @Override
+    public GameEntityType getKeyEntityType() {
+        return this.keyEnemyType;
     }
 
 }

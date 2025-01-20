@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
-import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
-import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.model.quest.QuestFactory;
 import it.unibo.oop.relario.model.quest.QuestFactoryImpl;
+import it.unibo.oop.relario.model.quest.QuestType;
+import it.unibo.oop.relario.utils.impl.Pair;
 
 /**
  * 
@@ -33,18 +34,14 @@ public class QuestManager {
     public static final int FIFTH_ROOM = 5;
 
     private final QuestFactory questFactory = new QuestFactoryImpl();
-    private final Map<Integer, Optional<Quest>> roomQuests = new HashMap<>();
+    private final Map<Integer, Pair<QuestType, Optional<GameEntityType>>> roomQuests = new HashMap<>();
 
-    /**
-     * 
-     * @param player
-     */
-    public QuestManager(final MainCharacter player) {
-        this.roomQuests.put(FIRST_ROOM, Optional.empty());
-        this.roomQuests.put(SECOND_ROOM, Optional.of(this.questFactory.createCollectItemQuest(player, InventoryItemType.KEY)));
-        this.roomQuests.put(THIRD_ROOM, Optional.of(null)); //??
-        this.roomQuests.put(FOURTH_ROOM, Optional.of(this.questFactory.createDefeatEnemyQuest(EnemyType.KNIGHT))); //EnemyType.BOSS??
-        this.roomQuests.put(FIFTH_ROOM, Optional.empty());      
+    public QuestManager() {
+        this.roomQuests.put(FIRST_ROOM, new Pair<>(QuestType.NO_QUEST, Optional.empty()));
+        this.roomQuests.put(SECOND_ROOM, new Pair<>(QuestType.COLLECTION_QUEST, Optional.of(InventoryItemType.KEY)));
+        this.roomQuests.put(THIRD_ROOM, null);
+        this.roomQuests.put(FOURTH_ROOM, new Pair<>(QuestType.DEFEAT_ENEMY_QUEST, Optional.of(EnemyType.BOSS)));
+        this.roomQuests.put(FIFTH_ROOM, new Pair<>(QuestType.NO_QUEST, Optional.empty()));
     }
 
     /**
@@ -53,7 +50,9 @@ public class QuestManager {
      * @param indexRoom
      */
     public void assignQuest(final Room room, final int indexRoom) {
-        room.setQuest(this.roomQuests.get(indexRoom));
+        Pair<QuestType, Optional<GameEntityType>> quest = this.roomQuests.get(indexRoom);
+        room.setQuest(quest.getX().equals(QuestType.NO_QUEST) ? Optional.empty() 
+        : Optional.of(this.questFactory.createQuestByType(room, quest.getX(), quest.getY().get())));
     }
 
 }

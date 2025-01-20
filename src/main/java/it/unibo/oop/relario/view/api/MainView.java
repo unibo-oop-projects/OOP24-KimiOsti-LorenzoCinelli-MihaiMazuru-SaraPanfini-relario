@@ -2,6 +2,8 @@ package it.unibo.oop.relario.view.api;
 
 import javax.swing.JPanel;
 
+import it.unibo.oop.relario.utils.impl.GameState;
+
 /**
  * Interface for the main container for View.
  */
@@ -15,14 +17,14 @@ public interface MainView {
      * Display a game panel.
      * @param panelName is the name of the game phase.
      */
-    void showPanel(String panelName);
+    void showPanel(GameState panelName);
 
     /**
      * Retrieves the specified JPanel.
      * @param name is corrisponding name of the panel.
      * @return the requested panel or null.
      */
-    JPanel getPanel(String name);
+    JPanel getPanel(GameState name);
 
     /**
      * Display the previous game panel.
@@ -33,6 +35,6 @@ public interface MainView {
      * Retrieves the current panel.
      * @return the current panel.
      */
-    String getCurrentPanel();
+    GameState getCurrentPanel();
 
 }

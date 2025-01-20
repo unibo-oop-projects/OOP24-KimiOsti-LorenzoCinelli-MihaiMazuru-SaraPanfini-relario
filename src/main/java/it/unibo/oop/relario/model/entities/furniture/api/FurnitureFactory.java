@@ -15,7 +15,7 @@ public interface FurnitureFactory {
      * @param type is the type of the furniture to create.
      * @return a furniture item.
      */
-    Furniture createWalkableFurnitureByItemEmpty(final Position pos, final FurnitureType type);
+    Furniture createWalkableFurnitureByItemEmpty(Position pos, FurnitureType type);
 
     /**
      * Creates the specified type of walkable furniture.
@@ -23,7 +23,7 @@ public interface FurnitureFactory {
      * @param type is the type of the furniture to create.
      * @return a furniture item.
      */
-    Furniture createWalkableFurnitureByItem(final Position pos, final FurnitureType type);
+    Furniture createWalkableFurnitureByItem(Position pos, FurnitureType type);
 
     /**
      * Creates the specified type of interactive furniture. It's empty.
@@ -31,7 +31,7 @@ public interface FurnitureFactory {
      * @param type is the type of the furniture to create.
      * @return a furniture item.
      */
-    Furniture createInteractiveFurnitureByItem(final Position pos, final FurnitureType type);
+    Furniture createInteractiveFurnitureByItem(Position pos, FurnitureType type);
 
     /**
      * Creates the specified type of obstructing furniture. It's empty.
@@ -39,7 +39,7 @@ public interface FurnitureFactory {
      * @param type is the type of the furniture to create.
      * @return a furniture item.
      */
-    Furniture createObstructingFurnitureByItem(final Position pos, final FurnitureType type);
+    Furniture createObstructingFurnitureByItem(Position pos, FurnitureType type);
 
     /**
      * Creates a random empty walkable furniture item.
