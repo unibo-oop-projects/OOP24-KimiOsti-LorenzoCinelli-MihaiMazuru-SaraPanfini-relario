@@ -31,8 +31,8 @@ public final class MenuView extends JPanel {
     private static final int INSETS = 3;
     private static final String GAME_NAME  = "RELARIO";
     private static final int FONT_SIZE = 28;
-    private transient MainView view;
-    private transient MainController controller;
+    private final transient MainView view;
+    private final transient MainController controller;
 
     /**
      * Initializes a new menu view.
@@ -50,7 +50,7 @@ public final class MenuView extends JPanel {
         gridc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
         gridc.fill = GridBagConstraints.CENTER;
 
-        if (this.view.getCurrentPanel().equals(GameState.MENU.getState())) {
+        if (this.view.getCurrentPanel().equals(GameState.MENU)) {
             final JLabel title = new JLabel(GAME_NAME);
             title.setFont(new Font(Constants.MONOSPACE_FONT, Font.BOLD, FONT_SIZE));
             this.add(title, gridc);
