@@ -28,11 +28,11 @@ import it.unibo.oop.relario.view.api.MainView;
 public final class MenuView extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private final static int INSETS = 3;
-    private final static String GAME_NAME  = "RELARIO";
-    private final static int FONT_SIZE = 28;
-    private final MainView view;
-    private final MainController controller;
+    private static final int INSETS = 3;
+    private static final String GAME_NAME  = "RELARIO";
+    private static final int FONT_SIZE = 28;
+    private transient MainView view;
+    private transient MainController controller;
 
     /**
      * Initializes a new menu view.
@@ -67,7 +67,7 @@ public final class MenuView extends JPanel {
         this.addKeyListener(new GameKeyListener(controller.getMenuController()));
     }
 
-    private JButton createButton(MenuElement elem) {
+    private JButton createButton(final MenuElement elem) {
         final JButton mybutton = new JButton(elem.getElemName());
         mybutton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
