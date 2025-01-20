@@ -45,7 +45,7 @@ public final class InventoryControllerImpl implements InventoryController {
         switch (event) {
             case PREVIOUS_ITEM, NEXT_ITEM -> {
                 if (isValidSelection()) {
-                    int direction = (event == Event.PREVIOUS_ITEM) ? -1 : 1;
+                    final int direction = (event == Event.PREVIOUS_ITEM) ? -1 : 1;
                     this.selectedItem = (this.selectedItem + direction + this.inventory.size()) % this.inventory.size();
                 }
             }

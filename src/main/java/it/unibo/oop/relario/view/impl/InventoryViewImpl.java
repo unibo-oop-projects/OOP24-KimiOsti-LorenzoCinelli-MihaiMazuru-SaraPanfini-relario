@@ -47,6 +47,7 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
         this.factory = new InventoryViewFactoryImpl(this.controller.getInventoryController());
         final var commandPanel = this.factory.createCommandPanel();
         final var contentPanel = this.factory.createContentPanel();
+        this.removeAll();
         this.add(commandPanel);
         this.add(contentPanel);
         this.resize(commandPanel, COMMANDS_RATIO, DEFAULT_RATIO);
