@@ -11,10 +11,13 @@ import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.furniture.api.FurnitureFactory;
 import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureFactoryImpl;
 import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureType;
+import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.DimensionImpl;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
+import it.unibo.oop.relario.model.GameEntityType;
 
 /**
  * This class generates and places different types of furniture in the room.
@@ -48,12 +51,16 @@ public final class FurnitureGenerator {
      * @param room where the items are placed
      */
     public void generateFurniture(final Room room) {
-        final int obstructiveItems = random.nextInt(((int) Math.floor(this.perimeterFurnitureItems / 2)) 
+        int obstructiveItems = random.nextInt(((int) Math.floor(this.perimeterFurnitureItems / 2)) 
         - ((int) Math.round(this.perimeterFurnitureItems / 3)) + 1) + ((int) Math.round(this.perimeterFurnitureItems / 3));
-        final int interactiveItems = this.perimeterFurnitureItems - obstructiveItems;
-        final int walkableInteractiveItems = (int) Math.ceil(this.walkableFurnitureItems / 2);
+        int interactiveItems = this.perimeterFurnitureItems - obstructiveItems;
+        int walkableInteractiveItems = (int) Math.ceil(this.walkableFurnitureItems / 2);
         
         this.addExitCarpet(room);
+        if (room.getQuest().isPresent()) {
+            this.addQuestKeyEntity(room);
+            interactiveItems--;
+        }
         placeItems(room, obstructiveItems, this.furnitureFactory::createRandomObstructingFurniture, 
         getRandomPerimeterPosition(room), new DimensionImpl(FURNITURE_ITEMS_SIZE, FURNITURE_ITEMS_SIZE));
         placeItems(room, interactiveItems, this.furnitureFactory::createRandomInteractiveFurniture, 
@@ -62,6 +69,15 @@ public final class FurnitureGenerator {
         getRandomInnerPosition(room), new DimensionImpl(WALKABLE_ITEMS_WIDTH, WALKABLE_ITEMS_HEIGHT));
         placeItems(room, walkableFurnitureItems - walkableInteractiveItems, this.furnitureFactory::createRandomWalkableFurnitureEmpty, 
         getRandomInnerPosition(room), new DimensionImpl(WALKABLE_ITEMS_WIDTH, WALKABLE_ITEMS_HEIGHT));
+    }
+
+    private void addQuestKeyEntity(final Room room) {
+        GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType();
+        if (keyEntityType instanceof InventoryItemType) {
+            Position randomPosition = this.getRandomPerimeterPosition(room).get();
+            room.addEntity(randomPosition, this.furnitureFactory.createInteractiveFurnitureLoot(randomPosition, 
+            new InventoryItemFactoryImpl().createItem((InventoryItemType) keyEntityType))); // passare direttamente il tipo?
+        }
     }
 
     private void addExitCarpet(final Room room) {

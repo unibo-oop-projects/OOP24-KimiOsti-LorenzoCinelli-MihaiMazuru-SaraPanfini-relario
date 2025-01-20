@@ -4,7 +4,7 @@ package it.unibo.oop.relario.model.menu;
  * Implementation of the elements of a menu.
  */
 public class MenuElement {
-    
+
     private final String elemName;
     private final Command elemCommand;
 
@@ -13,7 +13,7 @@ public class MenuElement {
      * @param elemName is the menu element's name.
      * @param elemCommand is the command associated to the menu element. 
      */
-    public MenuElement(final String elemName, Command elemCommand) {
+    public MenuElement(final String elemName, final Command elemCommand) {
         this.elemName = elemName;
         this.elemCommand = elemCommand;
     }

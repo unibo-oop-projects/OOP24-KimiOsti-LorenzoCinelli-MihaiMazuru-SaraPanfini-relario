@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Implementation of a generci menu.
  */
-public class MenuImpl implements Menu {
+public final class MenuImpl implements Menu {
 
     private final List<MenuElement> elements;
 
@@ -19,7 +19,7 @@ public class MenuImpl implements Menu {
     }
 
     @Override
-    public void addElem(MenuElement elem) {
+    public void addElem(final MenuElement elem) {
         elements.add(elem);
     }
 
@@ -27,5 +27,5 @@ public class MenuImpl implements Menu {
     public List<MenuElement> getElem() {
         return Collections.unmodifiableList(elements);
     }
-    
+
 }

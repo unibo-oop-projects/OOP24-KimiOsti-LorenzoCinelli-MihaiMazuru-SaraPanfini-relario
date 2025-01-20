@@ -84,6 +84,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         area.setForeground(Color.WHITE);
         area.setBackground(Color.BLACK);
         area.setEditable(false);
+        area.setFocusable(false);
         return area;
     }
 

@@ -58,5 +58,5 @@ public abstract class FurnitureImpl implements Furniture {
 
     @Override
     public abstract boolean isInteractive();
-    
+
 }

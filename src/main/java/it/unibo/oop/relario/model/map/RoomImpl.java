@@ -11,7 +11,6 @@ import java.util.stream.IntStream;
 import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
-import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
@@ -27,9 +26,6 @@ public final class RoomImpl implements Room {
 
     /** The range around furniture, used to define restricted areas. */
     public static final int EXCLUSION_RANGE = 2;
-
-    /** The range around living beings, used to define restricted areas. */
-    public static final int CHARACTERS_EXCLUSION_RANGE = LivingBeingImpl.DIRECTION_RANGE + EXCLUSION_RANGE;
 
     private final MainCharacter player;
     private final Dimension dimension;
@@ -164,11 +160,8 @@ public final class RoomImpl implements Room {
     }
 
     private Set<Position> adjacentCells(final Position position, final Entity entity) {
-        final int rangeX = entity instanceof Furniture ? EXCLUSION_RANGE : CHARACTERS_EXCLUSION_RANGE;
-        final int rangeY = EXCLUSION_RANGE;
-
-        return IntStream.rangeClosed(position.getX() - rangeX, position.getX() + rangeX)
-        .boxed().flatMap(x -> IntStream.rangeClosed(position.getY() - rangeY, position.getY() + rangeY)
+        return IntStream.rangeClosed(position.getX() - EXCLUSION_RANGE, position.getX() + EXCLUSION_RANGE)
+        .boxed().flatMap(x -> IntStream.rangeClosed(position.getY() - EXCLUSION_RANGE, position.getY() + EXCLUSION_RANGE)
         .mapToObj(y -> new PositionImpl(x, y))).filter(p -> isPositionValid(p) && isCellAvailable(p))
         .collect(Collectors.toSet());
     }
@@ -181,6 +174,8 @@ public final class RoomImpl implements Room {
         pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY :
         (isInnerPerimeter(pos.getX(), pos.getY()) ? CellState.RESTRICTED : CellState.INNER_EMPTY))));
         this.cellStates.put(this.entry, CellState.RESTRICTED);
+        this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() - 1), CellState.RESTRICTED);
+        this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() + 1), CellState.RESTRICTED);
     }
 
     private boolean isPerimeter(final int x, final int y) {

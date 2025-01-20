@@ -104,7 +104,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void showOutputText(final String text) {
-        ((GameView) this.view.getPanel(GameState.GAME.getState())).showInteractionText(text);
+        ((GameView) this.view.getPanel(GameState.GAME)).showInteractionText(text);
     }
 
     private void resumeGame() {

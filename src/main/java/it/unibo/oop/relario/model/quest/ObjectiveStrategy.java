@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.model.quest;
 
-import it.unibo.oop.relario.model.entities.Entity;
+import it.unibo.oop.relario.model.GameEntityType;
+import it.unibo.oop.relario.model.map.Room;
 
 /**
  * 
@@ -10,9 +11,11 @@ public interface ObjectiveStrategy {
 
     /**
      * 
-     * @param keyEntity
+     * @param room
      * @return TODO
      */
-    boolean check(Entity keyEntity);
+    boolean check(Room room);
+
+    GameEntityType getKeyEntityType();
 
 }
