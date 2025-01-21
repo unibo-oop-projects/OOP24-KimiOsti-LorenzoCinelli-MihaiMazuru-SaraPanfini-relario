@@ -68,8 +68,9 @@ public final class MenuView extends JPanel {
     }
 
     private JButton createButton(final MenuElement elem) {
-        final JButton mybutton = new JButton(elem.getElemName());
-        mybutton.addActionListener(e -> {
+        final JButton myButton = new JButton(elem.getElemName());
+        myButton.setFont(new Font(Constants.MONOSPACE_FONT, Font.BOLD, FONT_SIZE));
+        myButton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
                 this.controller.getGameController().run();
             } else if (e.getActionCommand().equals(Command.CLOSE.getName())) {
@@ -88,7 +89,7 @@ public final class MenuView extends JPanel {
                 }
             }
         });
-        return mybutton;
+        return myButton;
     }
 
 }

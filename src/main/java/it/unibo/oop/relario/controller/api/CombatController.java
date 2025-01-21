@@ -46,6 +46,18 @@ public interface CombatController {
     DifficultyLevel getDifficultyLevel();
 
     /**
+     * Retrieves the name of the item equipped by the player.
+     * @return the item's name.
+     */
+    String getItem(); 
+
+    /**
+     * Retrieves the name of the armor equipped by the player.
+     * @return the armor's name.
+     */
+    String getArmor();
+
+    /**
      * Handle attack and mercy request made by the player.
      * @param askingMercy is true if the player's asking for mercy, false otherwise.
      */
