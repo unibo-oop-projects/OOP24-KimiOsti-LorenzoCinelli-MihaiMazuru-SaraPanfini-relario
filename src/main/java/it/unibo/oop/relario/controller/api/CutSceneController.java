@@ -9,7 +9,7 @@ public interface CutSceneController {
 
     /**
      * Shows the view and finally calls the controller for the next state.
-     * @param nextState is the next state of the game after the cut scene.
+     * @param state is the current state of the game.
      */
-    void show(GameState nextState);
+    void show(GameState state);
 }
