@@ -1,6 +1,5 @@
 package it.unibo.oop.relario.view.impl;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,7 @@ public final class GameView extends JPanel {
     private final JPanel lowerPanel;
     private final List<BackgroundTile> background;
     private final List<String> commands;
-    private final Map<Position, ForegroundTile> foreground;
+    private final List<Position> foreground;
     private final Font font;
     private Dimension mapDimension;
     private int tileDimension;
@@ -64,7 +63,7 @@ public final class GameView extends JPanel {
         this.setBackgroundColor(BACKGROUND_COLOR);
 
         this.background = new LinkedList<>();
-        this.foreground = new HashMap<>();
+        this.foreground = new LinkedList<>();
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
         this.addKeyListener(new GameKeyListener(controller.getGameController()));
     }
@@ -84,7 +83,19 @@ public final class GameView extends JPanel {
      * @param textures the textures to be rendered on the foreground of the scene.
      */
     public void renderTextures(final Map<Position, Image> textures) {
-        /* [TODO]: implement method. */
+        this.foreground.forEach(
+            pos -> {
+                this.background.get(this.computeIndex(pos.getX(), pos.getY())).removeAll();
+                this.refresh(this.background.get(this.computeIndex(pos.getX(), pos.getY())));
+            }
+        );
+        for (final var texture : textures.entrySet()) {
+            this.background.get(this.computeIndex(texture.getKey().getX(), texture.getKey().getY())).add(
+                new ForegroundTile(texture.getValue().getScaledInstance(this.tileDimension, this.tileDimension, Image.SCALE_SMOOTH))
+            );
+            this.foreground.add(texture.getKey());
+            this.refresh(this.background.get(this.computeIndex(texture.getKey().getX(), texture.getKey().getY())));
+        }
     }
 
     /**
@@ -92,7 +103,9 @@ public final class GameView extends JPanel {
      * @param text the text to be shown.
      */
     public void showInteractionText(final String text) {
+        this.lowerPanel.removeAll();
         this.lowerPanel.add(this.getCustomLabel(this.lowerPanel, text));
+        this.refresh(this.lowerPanel);
     }
 
     private void setBackgroundColor(final Color color) {
@@ -129,7 +142,7 @@ public final class GameView extends JPanel {
                     this.computeIndex(x, y),
                     new BackgroundTile(texture) //aggiungere immagine del floor
                 );
-                this.add(
+                this.mapPanel.add(
                     this.background.get(this.computeIndex(x, y)),
                     this.computeIndex(x, y)
                 );
