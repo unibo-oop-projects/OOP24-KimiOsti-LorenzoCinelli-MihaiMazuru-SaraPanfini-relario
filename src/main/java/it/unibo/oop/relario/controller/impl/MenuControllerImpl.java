@@ -27,6 +27,11 @@ public final class MenuControllerImpl implements MenuController {
     }
 
     @Override
+    public void showMenu(final GameState menuType) {
+        /* [TODO]: implement method */
+    }
+
+    @Override
     public List<MenuElement> getInGameMenuElements() {
         return this.menuModel.getInGameMenu().getElem();
     }
