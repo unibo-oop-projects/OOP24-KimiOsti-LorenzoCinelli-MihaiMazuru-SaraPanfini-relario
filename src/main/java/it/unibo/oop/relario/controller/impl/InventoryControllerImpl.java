@@ -67,6 +67,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public void init(final GameState prevState) {
+        /* [TODO]: modifica per adattare a nuova funzionalità */
         this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
@@ -144,6 +145,7 @@ public final class InventoryControllerImpl implements InventoryController {
     private void regress() {
         this.mainController.getGameController().resume(true);
         this.mainView.showPreviousPanel();
+        /* [TODO]: gestire transizione tramite controller */
     }
 
 }
