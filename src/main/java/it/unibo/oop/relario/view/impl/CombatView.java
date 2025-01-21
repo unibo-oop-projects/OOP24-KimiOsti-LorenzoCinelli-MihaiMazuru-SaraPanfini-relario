@@ -24,6 +24,7 @@ public class CombatView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final Color BACKGROUND_COLOR = Color.BLACK;
     private static final Color TEXT_COLOR = Color.WHITE;
+    private static final double SCREEN_TO_SCENE_RATIO = 1.5;
     private static final double SIDE_COMPONENTS_RATIO = 0.25;
     private static final double FONT_TO_PANEL_RATIO = 0.25;
     private static final boolean ATTACKING = false;
@@ -36,6 +37,10 @@ public class CombatView extends JPanel {
     private final JPanel message;
     private final Font font;
 
+    /**
+     * Creates the panel showing combat scenes.
+     * @param controller the controller receiving content queries.
+     */
     public CombatView(final CombatController controller) {
         this.setBackground(BACKGROUND_COLOR);
 
@@ -69,8 +74,8 @@ public class CombatView extends JPanel {
 
     private void resizePanels() {
         this.centralScene.setPreferredSize(new java.awt.Dimension(
-            (int) (this.getWidth() / 1.5),
-            (int) (this.getHeight() / 1.5)
+            (int) (this.getWidth() / SCREEN_TO_SCENE_RATIO),
+            (int) (this.getHeight() / SCREEN_TO_SCENE_RATIO)
         ));
         final var sideComponentDim = new java.awt.Dimension(
             (int) (this.centralScene.getPreferredSize().getWidth()),
