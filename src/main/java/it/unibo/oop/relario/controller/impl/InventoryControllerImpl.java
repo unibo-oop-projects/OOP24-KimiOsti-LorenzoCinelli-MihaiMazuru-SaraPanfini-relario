@@ -66,7 +66,7 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     @Override
-    public void init() {
+    public void init(final GameState prevState) {
         this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
