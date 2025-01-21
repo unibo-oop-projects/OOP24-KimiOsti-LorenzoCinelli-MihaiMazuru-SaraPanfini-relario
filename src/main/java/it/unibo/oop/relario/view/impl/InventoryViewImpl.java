@@ -24,7 +24,7 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
     private InventoryViewFactory factory;
 
     /**
-     * Creates and initializes the inventory view.
+     * Creates the inventory view.
      * @param controller is the main controller of the game.
      */
     public InventoryViewImpl(final MainController controller) {
