@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,7 +38,7 @@ public final class GameView extends JPanel {
     private final JPanel lowerPanel;
     private final List<BackgroundTile> background;
     private final List<String> commands;
-    private final List<ForegroundTile> foreground;
+    private final List<Position> foreground;
     private final Font font;
     private Dimension mapDimension;
     private int tileDimension;
@@ -84,19 +83,19 @@ public final class GameView extends JPanel {
      * @param textures the textures to be rendered on the foreground of the scene.
      */
     public void renderTextures(final Map<Position, Image> textures) {
-        this.foreground.forEach(this.mapPanel::remove);
-        this.foreground.clear();
+        this.foreground.forEach(
+            pos -> {
+                this.background.get(this.computeIndex(pos.getX(), pos.getY())).removeAll();
+                this.refresh(this.background.get(this.computeIndex(pos.getX(), pos.getY())));
+            }
+        );
         for (final var texture : textures.entrySet()) {
-            final ForegroundTile newTile = new ForegroundTile();
-            final int index = this.computeIndex
-            (texture.getKey().getX(), texture.getKey().getY());
-            newTile.setIcon(new ImageIcon(texture.getValue()
-            .getScaledInstance(this.tileDimension, 
-            this.tileDimension, Image.SCALE_SMOOTH)));
-            this.foreground.add(index, newTile);
-            this.mapPanel.add(this.foreground.get(index), index);
+            this.background.get(this.computeIndex(texture.getKey().getX(), texture.getKey().getY())).add(
+                new ForegroundTile(texture.getValue().getScaledInstance(this.tileDimension, this.tileDimension, Image.SCALE_SMOOTH))
+            );
+            this.foreground.add(texture.getKey());
+            this.refresh(this.background.get(this.computeIndex(texture.getKey().getX(), texture.getKey().getY())));
         }
-        this.refresh(this.mapPanel);
     }
 
     /**
@@ -143,7 +142,7 @@ public final class GameView extends JPanel {
                     this.computeIndex(x, y),
                     new BackgroundTile(texture) //aggiungere immagine del floor
                 );
-                this.add(
+                this.mapPanel.add(
                     this.background.get(this.computeIndex(x, y)),
                     this.computeIndex(x, y)
                 );
