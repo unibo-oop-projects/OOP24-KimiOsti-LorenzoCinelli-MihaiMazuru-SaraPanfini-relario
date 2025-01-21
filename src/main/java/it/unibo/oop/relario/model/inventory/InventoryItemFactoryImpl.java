@@ -63,6 +63,9 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
 
     @Override
     public InventoryItem createItem(final InventoryItemType type) {
+        if (!this.itemCreator.containsKey(type)) {
+            throw new IllegalArgumentException();
+        }
         return itemCreator.get(type).get();
     }
 
@@ -77,15 +80,17 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
 
     @Override
     public InventoryItem createRandomItem() {
-        return itemCreator.get(InventoryItemType.values()[random.nextInt(InventoryItemType.values().length)]).get();
+        return createItem(InventoryItemType.values()[random.nextInt(InventoryItemType.values().length)]);
     }
 
     @Override
     public InventoryItem createRandomItemByEffect(final EffectType effect) {
         final List<InventoryItemType> matchingTypes = itemCreator.keySet().stream()
             .filter(type -> type.getEffect().equals(effect)).toList();
-
-        return itemCreator.get(matchingTypes.get(random.nextInt(matchingTypes.size()))).get();
+        if (matchingTypes.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return createItem(matchingTypes.get(random.nextInt(matchingTypes.size())));
     }
 
 }
