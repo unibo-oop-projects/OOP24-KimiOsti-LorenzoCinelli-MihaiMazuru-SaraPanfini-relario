@@ -40,8 +40,7 @@ public final class MainControllerImpl implements MainController {
         this.inventory = new InventoryControllerImpl(this, this.view);
         this.mainMenu = new MenuControllerImpl(this.view);
         this.view.panelsSetup();
-        this.inventory.init();
-        this.view.showPanel(GameState.MENU.getState());
+        this.view.showPanel(GameState.MENU);
     }
 
     @Override
@@ -73,5 +72,6 @@ public final class MainControllerImpl implements MainController {
     public void moveToNextRoom() {
         this.roomIndex++;
         this.curRoom = this.roomGenerator.getRoom(roomIndex);
+        this.inventory.init();
     }
 }

@@ -30,7 +30,10 @@ public final class GameControllerImpl implements GameController {
     public GameControllerImpl(final MainController controller, final MainView view) {
         this.controller = controller;
         this.view = view;
-        this.interactionsHandler = new InteractionsHandlerImpl(this.controller, this.view);
+        this.interactionsHandler = new InteractionsHandlerImpl(
+            this.controller,
+            (GameView) this.view.getPanel(GameState.GAME)
+        );
         this.inputToDirection = Map.of(
             Event.MOVE_UP, Direction.UP,
             Event.MOVE_DOWN, Direction.DOWN,
@@ -50,7 +53,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void resume(final boolean isExploring) {
         if (!isExploring) {
-            this.view.showPanel(GameState.GAME_OVER.getState());
+            this.view.showPanel(GameState.GAME_OVER);
         } else {
             this.startGameLoop();
         }
@@ -72,9 +75,9 @@ public final class GameControllerImpl implements GameController {
     }
 
     private void startGameLoop() {
-        this.view.showPanel(GameState.GAME.getState());
+        this.view.showPanel(GameState.GAME);
         this.gameLoop = new GameLoop(
-            (GameView) this.view.getPanel(GameState.GAME.getState()),
+            (GameView) this.view.getPanel(GameState.GAME),
             this.controller.getCurRoom().get()
         );
         this.gameLoop.start();
@@ -82,7 +85,7 @@ public final class GameControllerImpl implements GameController {
 
     private void changeGameState(final GameState state) {
         this.gameLoop.interrupt();
-        this.view.showPanel(state.getState());
+        this.view.showPanel(state);
     }
 
     private void handleMovement(final Event e) {

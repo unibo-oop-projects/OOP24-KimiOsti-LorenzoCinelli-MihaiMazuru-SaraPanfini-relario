@@ -1,8 +1,8 @@
 package it.unibo.oop.relario.controller.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.InventoryController;
@@ -22,7 +22,7 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private final MainController mainController;
     private final MainView mainView;
-    private final MainCharacter player;
+    private MainCharacter player;
     private InventoryView inventoryView;
     private List<InventoryItem> inventory;
     private Optional<EquippableItem> equippedArmor;
@@ -38,42 +38,51 @@ public final class InventoryControllerImpl implements InventoryController {
         this.mainController = mainController;
         this.mainView = mainView;
         this.selectedItem = 0;
+    }
+
+    @Override
+    public void notify(final Event event) {
+        switch (event) {
+            case PREVIOUS_ITEM, NEXT_ITEM -> {
+                if (isValidSelection()) {
+                    final int direction = (event == Event.PREVIOUS_ITEM) ? -1 : 1;
+                    this.selectedItem = (this.selectedItem + direction + this.inventory.size()) % this.inventory.size();
+                }
+            }
+            case USE_ITEM -> {
+                if (isValidSelection()) {
+                    player.useItem(inventory.get(this.selectedItem));
+                }
+            }
+            case DISCARD_ITEM -> {
+                if (isValidSelection()) {
+                    player.discardItem(inventory.get(this.selectedItem));
+                }
+            }
+            case INVENTORY, ESCAPE -> regress();
+            default -> { }
+        }
+        this.refresh();
+    }
+
+    @Override
+    public void init() {
+        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
         if (mainController.getCurRoom().isPresent()) {
             this.player = mainController.getCurRoom().get().getPlayer();
             updateInventory();
+            this.inventoryView.init();
         } else {
             throw new UnsupportedOperationException();
         }
     }
 
     @Override
-    public void notify(final Event event) {
-        if (!inventory.isEmpty() && this.selectedItem >= 0 && this.selectedItem < inventory.size()) {
-            switch (event) {
-                case PREVIOUS_ITEM -> this.selectedItem = (this.selectedItem + this.inventory.size() - 1) % this.inventory.size();
-                case NEXT_ITEM -> this.selectedItem = (this.selectedItem + 1) % this.inventory.size();
-                case USE_ITEM -> player.useItem(inventory.get(this.selectedItem));
-                case DISCARD_ITEM -> player.discardItem(inventory.get(this.selectedItem));
-                case INVENTORY -> regress();
-                default -> { }
-            }
-            this.refresh();
-        }
-    }
-
-    @Override
-    public void init() {
-        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY.getState());
-    }
-
-    @Override
     public List<String> getItemsNames() {
         this.updateInventory();
-        final List<String> temp = new ArrayList<>();
-        for (final var item : inventory) {
-            temp.add(item.getName());
-        }
-        return temp;
+        return this.inventory.stream()
+                .flatMap(t -> t.getName().lines())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -112,6 +121,10 @@ public final class InventoryControllerImpl implements InventoryController {
             this.selectedItem = index;
             this.refresh();
         }
+    }
+
+    private boolean isValidSelection() {
+        return !this.inventory.isEmpty() && this.selectedItem >= 0 && this.selectedItem < inventory.size();
     }
 
     private void updateInventory() {

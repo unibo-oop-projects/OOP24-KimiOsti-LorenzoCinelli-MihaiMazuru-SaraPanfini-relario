@@ -35,7 +35,7 @@ public final class CombatControllerImpl implements CombatController {
     public void initializeCombat(final MainCharacter player, final Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
-        this.view.showPanel(GameState.COMBAT.getState());
+        this.view.showPanel(GameState.COMBAT);
     }
 
     @Override
