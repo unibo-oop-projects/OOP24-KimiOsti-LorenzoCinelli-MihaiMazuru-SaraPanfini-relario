@@ -144,7 +144,6 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private void regress() {
         this.mainController.getGameController().resume(true);
-        this.mainView.showPreviousPanel();
         /* [TODO]: gestire transizione tramite controller */
     }
 
