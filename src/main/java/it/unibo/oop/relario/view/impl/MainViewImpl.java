@@ -23,7 +23,6 @@ public final class MainViewImpl implements MainView {
     private final JPanel mainPanel;
     private final MainController mainController;
     private final Map<GameState, JPanel> panels = new HashMap<>();
-    private Deque<GameState> stack = new ArrayDeque<>();
     private GameState currentPanel;
 
     /**
@@ -65,19 +64,12 @@ public final class MainViewImpl implements MainView {
         this.currentPanel = panelName;
         layout.show(mainPanel, this.currentPanel.getState());
 
-        stack.push(panelName);
         this.getPanel(this.currentPanel).requestFocus();
     } 
 
     @Override
     public JPanel getPanel(final GameState name) {
         return panels.get(name);
-    }
-
-    @Override
-    public void showPreviousPanel() {
-        stack.pop();
-        showPanel(stack.pop());
     }
 
     @Override
