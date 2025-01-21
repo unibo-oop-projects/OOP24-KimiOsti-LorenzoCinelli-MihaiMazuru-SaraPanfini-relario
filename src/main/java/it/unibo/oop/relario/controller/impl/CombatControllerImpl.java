@@ -98,8 +98,8 @@ public final class CombatControllerImpl implements CombatController {
             timer.setRepeats(false);
             timer.start();
         } else if (player.getLife() <= 0) {
-            //this.view.showPanel(GameState.GAME_OVER.getState());
-            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU.getState()));
+            //this.view.showPanel(GameState.GAME_OVER);
+            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU));
             timer.setRepeats(false);
             timer.start();
         } else if (isPlayerAttacking) {
