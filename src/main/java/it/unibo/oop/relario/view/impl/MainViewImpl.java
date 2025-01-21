@@ -2,9 +2,7 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -22,7 +20,7 @@ public final class MainViewImpl implements MainView {
     private final JFrame frame;
     private final JPanel mainPanel;
     private final MainController mainController;
-    private final Map<GameState, JPanel> panels = new HashMap<>();
+    private final Map<GameState, JPanel> panels = new EnumMap<>(GameState.class);
     private GameState currentPanel;
 
     /**
@@ -48,7 +46,7 @@ public final class MainViewImpl implements MainView {
         final JPanel gameView = new GameView(this.mainController);
         final JPanel inventoryView = new InventoryViewImpl(this.mainController);
         final JPanel combatView = new CombatView();
-        
+
         panels.put(GameState.MENU, startMenuView);
         panels.put(GameState.MENU_IN_GAME, inGameMenuView);
         panels.put(GameState.GAME, gameView);

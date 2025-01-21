@@ -5,16 +5,13 @@ package it.unibo.oop.relario.model.menu;
  */
 public class MenuElement {
 
-    private final String elemName;
     private final Command elemCommand;
 
     /**
      * Initializies a new menu element.
-     * @param elemName is the menu element's name.
      * @param elemCommand is the command associated to the menu element. 
      */
-    public MenuElement(final String elemName, final Command elemCommand) {
-        this.elemName = elemName;
+    public MenuElement(final Command elemCommand) {
         this.elemCommand = elemCommand;
     }
 
@@ -23,7 +20,7 @@ public class MenuElement {
      * @return menu element's name:
      */
     public String getElemName() {
-        return this.elemName;
+        return this.elemCommand.getName();
     }
 
     /**
