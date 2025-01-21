@@ -1,8 +1,7 @@
 package it.unibo.oop.relario.controller.impl;
 
-import javax.swing.Timer;
-
 import it.unibo.oop.relario.controller.api.CombatController;
+import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
@@ -16,16 +15,19 @@ public final class CombatControllerImpl implements CombatController {
 
     private static final Integer DELAY_TRANSITION = 4000;
     private final MainView view;
+    private final MainController controller;
     private MainCharacter player;
     private Enemy enemy;
     private String combatState;
 
     /**
-     * Saves reference to main view.
+     * Saves reference to main view and main controller.
      * @param view is the main view.
+     * @param controller is the main controller.
      */
-    public CombatControllerImpl(final MainView view) {
+    public CombatControllerImpl(final MainView view, final MainController controller) {
         this.view = view;
+        this.controller = controller;
         this.player = null;
         this.enemy = null;
         this.combatState = "";
