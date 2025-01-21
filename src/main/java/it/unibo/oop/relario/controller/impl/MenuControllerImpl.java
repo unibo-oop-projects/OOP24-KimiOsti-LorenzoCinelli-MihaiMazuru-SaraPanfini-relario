@@ -43,10 +43,7 @@ public final class MenuControllerImpl implements MenuController {
 
     @Override
     public void notify(final Event event) {
-        if (event.equals(Event.ESCAPE) 
-        && this.view.getCurrentPanel().equals(GameState.MENU_IN_GAME)) {
-            this.view.showPreviousPanel();
-        }
+        /* [TODO]: gestire escape tramite controller */
     }
 
 }
