@@ -31,7 +31,7 @@ public final class InventoryControllerImpl implements InventoryController {
     private int selectedItem;
 
     /**
-     * Creates a new view for the inventory of the player.
+     * Creates a new controller for the inventory of the player.
      * @param mainController the main controller of the game.
      * @param mainView the main view of the game.
      */
