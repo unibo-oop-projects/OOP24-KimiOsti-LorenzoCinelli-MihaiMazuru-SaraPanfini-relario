@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.impl.CombatControllerImpl;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
+import it.unibo.oop.relario.controller.impl.MenuControllerImpl;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
@@ -25,16 +26,29 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
 
+/*
+ * CHECKSTYLE: MagicNumber OFF
+ * Used to avoid CheckStyle violations for magic numbers, here used for test scenarios. 
+ */
+/**
+ * Test class for {@link CombatControllerImpl} class.
+ */
 class CombatControllerTest {
 
     private MainView view;
 
+    /**
+     * Sets up the view needed to create the combat controller.
+     */
     @BeforeEach
     void setUp() {
         view = new MainViewImpl(new MainControllerImpl());
         view.panelsSetup();
     }
 
+    /**
+     * Test combat getters and its method to handle combat.
+     */
     @Test
     void testCombat() {
         final CombatController controller = new CombatControllerImpl(view);
