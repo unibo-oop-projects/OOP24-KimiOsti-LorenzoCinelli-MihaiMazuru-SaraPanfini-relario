@@ -63,4 +63,9 @@ public interface CombatController {
      */
     void handleCombatAction(boolean askingMercy);
 
+    /**
+     * Shows the combat view.
+     */
+    void resumeCombat();
+
 }
