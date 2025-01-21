@@ -14,7 +14,7 @@ import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 
-/* [TODO]: aggiungere il contenuto del component dei comandi */
+/* [TODO]: implementare action listener del comando inventory */
 
 /**
  * View implementation for the combat phase of the game.
@@ -104,6 +104,7 @@ public class CombatView extends JPanel {
         final var attack = new JButton("Attacca");
         attack.addActionListener(e -> this.controller.handleCombatAction(ATTACKING));
         final var inventory = new JButton("Inventario");
+        inventory.addActionListener(null /* [TODO]: implement action listener */);
         final var mercy = new JButton("Chiedi pietà");
         mercy.addActionListener(e -> this.controller.handleCombatAction(BEGGING_MERCY));
         final var buttons = List.of(attack, inventory, mercy);
