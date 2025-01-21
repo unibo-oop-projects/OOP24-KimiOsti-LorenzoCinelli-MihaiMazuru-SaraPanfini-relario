@@ -18,22 +18,29 @@ import it.unibo.oop.relario.utils.impl.ResourceLocator;
 /**
  * Implementation for the central scene of combat environments.
  */
-public class CombatScene extends JPanel {
+public final class CombatScene extends JPanel {
 
-    private final static Color BACKGROUND_COLOR = Color.BLACK;
-    private final static Color TEXT_COLOR = Color.WHITE;
-    private final static int INFO_ROWS = 1;
-    private final static int INFO_COLS = 3;
+    private static final Color BACKGROUND_COLOR = Color.BLACK;
+    private static final Color TEXT_COLOR = Color.WHITE;
+    private static final int INFO_ROWS = 1;
+    private static final int INFO_COLS = 3;
 
     private final CombatController controller;
     private final Font font;
 
+    /**
+     * Creates the combat scene.
+     * @param controller the controller to which content queries are directed.
+     */
     public CombatScene(final CombatController controller) {
         this.setLayout(new BorderLayout());
         this.controller = controller;
         this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
     }
 
+    /**
+     * Updates the combat scene.
+     */
     public void update() {
         this.removeAll();
         this.add(
@@ -64,7 +71,7 @@ public class CombatScene extends JPanel {
         this.repaint();
     }
 
-    private JPanel getInfoPanel(final String ... info) {
+    private JPanel getInfoPanel(final String... info) {
         final var panel = new JPanel(new GridLayout(INFO_ROWS, INFO_COLS));
         panel.setBackground(BACKGROUND_COLOR);
         for (int i = 0; i < info.length && i < INFO_COLS; i++) {
@@ -83,5 +90,5 @@ public class CombatScene extends JPanel {
 
         return panel;
     }
-    
+
 }
