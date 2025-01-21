@@ -19,7 +19,7 @@ public final class InventoryItems {
      */
     public static String getFullDescription(final InventoryItem item) {
         return item.getDescription()
-        + ",\nEffetto: " + item.getEffect().toString()
+        + "\nEffetto: " + item.getEffect().toString()
         + getIntensity(item)
         + getDurability(item);
     }
