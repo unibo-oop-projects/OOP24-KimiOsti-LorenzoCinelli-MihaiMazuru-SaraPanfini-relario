@@ -39,6 +39,6 @@ public final class CutSceneControllerImpl implements CutSceneController {
                 default -> { }
             }
         }
-        this.view.showPanel(null); //TODO
+        this.view.showPanel(GameState.CUT_SCENE);
     }
 }
