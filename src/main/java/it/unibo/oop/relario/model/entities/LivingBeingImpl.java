@@ -52,6 +52,7 @@ public abstract class LivingBeingImpl implements LivingBeing {
         setPosition(this.direction.move(position));
     }
 
+    @Override
     public final Direction getDirection() {
         return this.direction;
     }
