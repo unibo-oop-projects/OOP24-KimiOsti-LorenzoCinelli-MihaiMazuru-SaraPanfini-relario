@@ -94,12 +94,14 @@ public final class CombatControllerImpl implements CombatController {
             player.addToInventory(enemy.getReward());
             combatState = this.player.getName() + "You've won the combat";
             //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
+            /* [TODO]: gestire transizione tramite controller */
             final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
             timer.setRepeats(false);
             timer.start();
         } else if (player.getLife() <= 0) {
-            //this.view.showPanel(GameState.GAME_OVER.getState());
-            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU.getState()));
+            //this.view.showPanel(GameState.GAME_OVER);
+            /* [TODO]: gestire transizione tramite controller */
+            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU));
             timer.setRepeats(false);
             timer.start();
         } else if (isPlayerAttacking) {
@@ -113,6 +115,7 @@ public final class CombatControllerImpl implements CombatController {
             combatState = this.enemy.getName() + "accepted your mercy request. /n"
             + "You are free to go.";
             //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
+            /* [TODO]: gestire transizione tramite controller */
             final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
             timer.setRepeats(false);
             timer.start();
