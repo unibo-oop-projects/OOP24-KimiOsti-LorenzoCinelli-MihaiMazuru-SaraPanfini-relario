@@ -15,6 +15,7 @@ import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.impl.Event;
+import it.unibo.oop.relario.utils.impl.GameState;
 
 /*
  * CHECKSTYLE: MagicNumber OFF
@@ -38,7 +39,7 @@ final class InventoryControllerTest {
         final var mainController = new MainControllerImpl();
         this.inventoryController = mainController.getInventoryController();
         mainController.moveToNextRoom();
-        mainController.getInventoryController().init();
+        mainController.getInventoryController().init(GameState.GAME);
 
         final var player = mainController.getCurRoom().get().getPlayer();
         final InventoryItemFactory itemFactory = new InventoryItemFactoryImpl();
