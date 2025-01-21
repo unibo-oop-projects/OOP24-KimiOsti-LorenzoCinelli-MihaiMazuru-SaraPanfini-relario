@@ -103,9 +103,6 @@ public final class CombatControllerImpl implements CombatController {
         } else if (player.getLife() <= 0) {
             //this.view.showPanel(GameState.GAME_OVER);
             /* [TODO]: gestire transizione tramite controller */
-            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPanel(GameState.MENU));
-            timer.setRepeats(false);
-            timer.start();
         } else if (isPlayerAttacking) {
             this.attack(false);
         }
