@@ -27,6 +27,7 @@ public final class InventoryControllerImpl implements InventoryController {
     private List<InventoryItem> inventory;
     private Optional<EquippableItem> equippedArmor;
     private Optional<EquippableItem> equippedWeapon;
+    private GameState nextState;
     private int selectedItem;
 
     /**
@@ -38,6 +39,16 @@ public final class InventoryControllerImpl implements InventoryController {
         this.mainController = mainController;
         this.mainView = mainView;
         this.selectedItem = 0;
+    }
+
+    @Override
+    public void init(final GameState prevState) {
+        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
+        this.player = mainController.getCurRoom().get().getPlayer();
+        this.nextState = prevState;
+        updateInventory();
+        this.inventoryView.init();
+        this.mainView.showPanel(GameState.INVENTORY);
     }
 
     @Override
@@ -63,19 +74,6 @@ public final class InventoryControllerImpl implements InventoryController {
             default -> { }
         }
         this.refresh();
-    }
-
-    @Override
-    public void init(final GameState prevState) {
-        /* [TODO]: modifica per adattare a nuova funzionalità */
-        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
-        if (mainController.getCurRoom().isPresent()) {
-            this.player = mainController.getCurRoom().get().getPlayer();
-            updateInventory();
-            this.inventoryView.init();
-        } else {
-            throw new UnsupportedOperationException();
-        }
     }
 
     @Override
@@ -143,9 +141,11 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     private void regress() {
-        this.mainController.getGameController().resume(true);
-        this.mainView.showPreviousPanel();
-        /* [TODO]: gestire transizione tramite controller */
+        switch (this.nextState) {
+            case GAME -> this.mainController.getGameController().resume(true);
+            case COMBAT -> this.mainController.getCombatController().resumeCombat();
+            default -> { }
+        }
     }
 
 }
