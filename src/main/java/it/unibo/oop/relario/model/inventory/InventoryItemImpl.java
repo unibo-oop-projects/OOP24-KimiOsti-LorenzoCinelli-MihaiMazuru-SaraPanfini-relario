@@ -56,7 +56,7 @@ public class InventoryItemImpl implements InventoryItem {
     }
 
     @Override
-    public InventoryItemType getType() {
+    public final InventoryItemType getType() {
         return this.type;
     }
 

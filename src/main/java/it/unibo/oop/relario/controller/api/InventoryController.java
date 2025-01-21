@@ -2,15 +2,18 @@ package it.unibo.oop.relario.controller.api;
 
 import java.util.List;
 
+import it.unibo.oop.relario.utils.impl.GameState;
+
 /**
  * Interface for inventory controller, used when the user is interacting with the inventory.
  */
 public interface InventoryController extends Observer {
 
     /**
-     * Initializes the inventory controller. 
+     * Initializes the inventory controller and shows the view.
+     * @param prevState the state in which the game has to resume. 
      */
-    void init();
+    void init(GameState prevState);
 
     /**
      * Returns the names of all items into the player inventory.

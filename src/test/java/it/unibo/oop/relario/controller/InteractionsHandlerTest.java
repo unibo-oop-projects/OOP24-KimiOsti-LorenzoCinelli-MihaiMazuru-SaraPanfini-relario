@@ -16,6 +16,7 @@ import it.unibo.oop.relario.utils.impl.DimensionImpl;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
+import it.unibo.oop.relario.view.impl.GameView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
 
 /**
@@ -29,7 +30,10 @@ public class InteractionsHandlerTest {
     void testInteractionScenarios() {
         final var controller = new MainControllerImpl();
         final var view = new MainViewImpl(controller);
-        final var handler = new InteractionsHandlerImpl(controller, view);
+        final var handler = new InteractionsHandlerImpl(
+            controller,
+            (GameView) view.getPanel(GameState.GAME)
+        );
 
         final var room = new RoomImpl(
             new MainCharacterImpl(),
