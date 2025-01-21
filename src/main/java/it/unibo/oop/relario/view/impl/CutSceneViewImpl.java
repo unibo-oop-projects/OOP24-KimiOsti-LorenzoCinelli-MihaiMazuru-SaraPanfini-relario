@@ -1,20 +1,26 @@
 package it.unibo.oop.relario.view.impl;
 
 import java.awt.Color;
+import java.awt.GridBagLayout;
 
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import it.unibo.oop.relario.controller.api.CutSceneController;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
 import it.unibo.oop.relario.view.api.CutSceneView;
 import it.unibo.oop.relario.view.api.MainView;
 
 public final class CutSceneViewImpl extends JPanel implements CutSceneView {
-    private static final Color BLACK_COLOR = new Color(0, 0, 0, 0);
+    private static final Color TRANSPARENT_BLACK = new Color(0, 0, 0, 0);
     private static final int FADE_SPEED = 10;
     private static final int FADE_LIMIT = 256;
+    private static final int TRANSITION_DELAY = 5000;
+    private static final String DEFEAT_STRING = "GAME OVER";
     
     private final CutSceneController controller;
     private final MainView mainView;
@@ -22,6 +28,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     public CutSceneViewImpl(final MainController controller, final MainView view) {
         this.controller = null;
         this.mainView = view;
+        this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLACK);
     }
 
@@ -30,8 +37,9 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         //panel nero
         //mostra immagini
         //mostra testo
-        //mostra nuovo testo
-        //passa a game controller
+        final var timer = new Timer(TRANSITION_DELAY, null); //TODO fai chiamare il game dal controller
+        timer.setRepeats(false);
+        timer.start();
     }
 
     @Override
@@ -40,7 +48,6 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         audio.start();
         this.fadeOutOverLastView();
         audio.close();
-        
         /*this.controller.moveToNextRoom();
         this.controller.getGameController().run();*/ //TODO: questo lo deve fare il controller
     }
@@ -48,25 +55,32 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showVictoryScene() {
         this.fadeOutOverLastView();
-
         //mostra immagini
         //mostra testo
         //mostra nuovo testo
-        //passa al menu
+        final var timer = new Timer(TRANSITION_DELAY, null); //TODO fai chiamare il menu dal controller
+        timer.setRepeats(false);
+        timer.start();
     }
 
     @Override
     public void showDefeatScene() {
         this.fadeOutOverLastView();
-        
-        //"GAME OVER"
-        //passa al menu
+        final var label = new JLabel(DEFEAT_STRING);
+        label.setBackground(Color.BLACK);
+        label.setForeground(Color.WHITE);
+        label.setFont(ResourceLocator.getGameFont(Constants.MONOSPACE_FONT));
+        this.add(label);
+        this.validate();
+        final var timer = new Timer(TRANSITION_DELAY, null); //TODO fai chiamare il menu dal controller
+        timer.setRepeats(false);
+        timer.start();
     }
 
     private void fadeOutOverLastView() {
         final var pane = new JLayeredPane();
         final var panel = new JPanel();
-        panel.setBackground(BLACK_COLOR);
+        panel.setBackground(TRANSPARENT_BLACK);
         pane.add(this.mainView.getPanel(this.mainView.getCurrentPanel()), JLayeredPane.DEFAULT_LAYER);
         pane.add(panel, JLayeredPane.POPUP_LAYER);
         this.add(pane);
