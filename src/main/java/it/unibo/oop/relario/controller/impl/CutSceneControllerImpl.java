@@ -27,17 +27,13 @@ public final class CutSceneControllerImpl implements CutSceneController {
     }
 
     @Override
-    public void show(final GameState nextState) {
-        final var currentState = this.view.getCurrentPanel();
-        if (currentState == GameState.MENU) {
-            this.cutSceneView.showStartScene();
-        } else {
-            switch (nextState) {
-                case GAME -> this.cutSceneView.showNextRoomScene();
-                case VICTORY -> this.cutSceneView.showVictoryScene();
-                case GAME_OVER -> this.cutSceneView.showDefeatScene();
-                default -> { }
-            }
+    public void show(final GameState state) {
+        switch (state) {
+            case MENU -> this.cutSceneView.showStartScene();
+            case GAME -> this.cutSceneView.showNextRoomScene();
+            case VICTORY -> this.cutSceneView.showVictoryScene();
+            case GAME_OVER -> this.cutSceneView.showDefeatScene();
+            default -> { }
         }
         this.view.showPanel(GameState.CUT_SCENE);
     }
