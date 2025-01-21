@@ -143,7 +143,7 @@ public final class InventoryControllerImpl implements InventoryController {
     private void regress() {
         switch (this.nextState) {
             case GAME -> this.mainController.getGameController().resume(true);
-            // case COMBAT -> this.mainController.getCombatController().resumeCombact();
+            case COMBAT -> this.mainController.getCombatController().resumeCombact();
             default -> { }
         }
     }
