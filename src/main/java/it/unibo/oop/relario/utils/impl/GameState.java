@@ -26,6 +26,9 @@ public enum GameState {
     /** End game. */
     VICTORY("Victory"),
 
+    /** Cut scene. */
+    CUT_SCENE("CutScene"),
+
     /** Initial phase when application is lauched. */
     NONE(null);
 
