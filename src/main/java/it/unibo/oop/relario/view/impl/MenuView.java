@@ -74,7 +74,7 @@ public final class MenuView extends JPanel {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
                 this.controller.getGameController().run();
             } else if (e.getActionCommand().equals(Command.CLOSE.getName())) {
-                this.view.showPreviousPanel();
+                //this.view.showPreviousPanel();
             } else if (e.getActionCommand().equals(Command.QUIT.getName())) {
                 final int dialogResult = JOptionPane.showConfirmDialog(this,
                     "Are you sure you want to quit the game?", "Warning",

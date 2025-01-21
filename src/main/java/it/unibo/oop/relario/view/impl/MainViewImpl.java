@@ -2,8 +2,6 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -23,7 +21,6 @@ public final class MainViewImpl implements MainView {
     private final JPanel mainPanel;
     private final MainController mainController;
     private final Map<GameState, JPanel> panels = new EnumMap<>(GameState.class);
-    private final Deque<GameState> stack = new ArrayDeque<>();
     private GameState currentPanel;
 
     /**
@@ -65,19 +62,12 @@ public final class MainViewImpl implements MainView {
         this.currentPanel = panelName;
         layout.show(mainPanel, this.currentPanel.getState());
 
-        stack.push(panelName);
         this.getPanel(this.currentPanel).requestFocus();
     } 
 
     @Override
     public JPanel getPanel(final GameState name) {
         return panels.get(name);
-    }
-
-    @Override
-    public void showPreviousPanel() {
-        stack.pop();
-        showPanel(stack.pop());
     }
 
     @Override
