@@ -116,9 +116,9 @@ public final class CombatControllerImpl implements CombatController {
             + "You are free to go.";
             //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
             /* [TODO]: gestire transizione tramite controller */
-            final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
-            timer.setRepeats(false);
-            timer.start();
+            //final Timer timer = new Timer(DELAY_TRANSITION, e -> this.view.showPreviousPanel());
+            //timer.setRepeats(false);
+            //timer.start();
         } else {
             //player's skips his turn, he used his turn to ask for mercy
             this.attack(false);
