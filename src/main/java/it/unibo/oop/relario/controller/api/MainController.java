@@ -29,6 +29,11 @@ public interface MainController {
     MenuController getMenuController();
 
     /**
+     * @return the cut scene Controller.
+     */
+    CutSceneController getCutSceneController();
+
+    /**
      * @return the current room in the gameplay.
      */
     Optional<Room> getCurRoom();

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Implementation of the item factory. 
@@ -59,6 +61,9 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
         this.itemCreator.put(InventoryItemType.KEY,
         () -> new InventoryItemImpl("Chiave", "Chiave antica per aprire un passaggio", 
         InventoryItemType.KEY, ItemAttributes.KEY_INTENSITY));
+        this.itemCreator.put(InventoryItemType.BOOK,
+        () -> new InventoryItemImpl("Libro", "Antico manuale di cucina, pieno di ricette deliziose", 
+        InventoryItemType.BOOK, ItemAttributes.BOOK_INTENSITY));
     }
 
     @Override
@@ -80,7 +85,9 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
 
     @Override
     public InventoryItem createRandomItem() {
-        return createItem(InventoryItemType.values()[random.nextInt(InventoryItemType.values().length)]);
+        List<InventoryItemType> availableTypes = Stream.of(InventoryItemType.values())
+        .filter(t -> !t.getEffect().equals(EffectType.QUEST)).collect(Collectors.toList());
+        return createItem(availableTypes.get(random.nextInt(availableTypes.size())));
     }
 
     @Override
