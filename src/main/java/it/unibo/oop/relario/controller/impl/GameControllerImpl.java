@@ -43,15 +43,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void run() {
-        this.controller.moveToNextRoom();
-        if (this.controller.getCurRoom().isPresent()) {
-            this.startGameLoop();
-        }
-    }
-
-    @Override
-    public void resume(final boolean isExploring) {
+    public void run(final boolean isExploring) {
         if (!isExploring) {
             this.changeGameState(GameState.GAME_OVER);
         } else {
