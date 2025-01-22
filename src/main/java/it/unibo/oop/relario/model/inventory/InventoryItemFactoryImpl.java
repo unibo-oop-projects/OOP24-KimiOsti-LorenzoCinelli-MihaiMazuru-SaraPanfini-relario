@@ -85,7 +85,7 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
 
     @Override
     public InventoryItem createRandomItem() {
-        List<InventoryItemType> availableTypes = Stream.of(InventoryItemType.values())
+        final List<InventoryItemType> availableTypes = Stream.of(InventoryItemType.values())
         .filter(t -> !t.getEffect().equals(EffectType.QUEST)).collect(Collectors.toList());
         return createItem(availableTypes.get(random.nextInt(availableTypes.size())));
     }
