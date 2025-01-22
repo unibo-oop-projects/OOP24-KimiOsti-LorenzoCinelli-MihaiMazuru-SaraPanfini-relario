@@ -45,6 +45,11 @@ public final class Constants {
     public static final String LIVING_TEXTURES_URL = "living/";
 
     /**
+     * The base folder for combat state enemy textures.
+     */
+    public static final String COMBAT_TEXTURES_URL = "img/combat/";
+
+    /**
      * Texture files extension.
      */
     public static final String TEXTURES_EXTENSION = ".png";
