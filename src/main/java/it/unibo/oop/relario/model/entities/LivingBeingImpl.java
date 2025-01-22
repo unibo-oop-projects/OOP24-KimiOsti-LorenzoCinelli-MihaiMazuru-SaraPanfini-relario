@@ -15,6 +15,7 @@ public abstract class LivingBeingImpl implements LivingBeing {
     /** The number of updates after which the character changes direction. */
     public static final int DIRECTION_RANGE = 2;
 
+    private boolean moving;
     private final String name;
     private Position position;
     private Direction direction;
@@ -30,6 +31,7 @@ public abstract class LivingBeingImpl implements LivingBeing {
         this.position = new PositionImpl(position.getX(), position.getY());
         this.direction = Direction.RIGHT;
         this.counter = 0;
+        this.moving = true;
     }
 
     @Override
@@ -44,12 +46,14 @@ public abstract class LivingBeingImpl implements LivingBeing {
 
     @Override
     public final void update() {
-        counter++;
-        if (counter > DIRECTION_RANGE) {
-            changeDirection();
-            counter = 1;
-        } 
-        setPosition(this.direction.move(position));
+        if (moving) {
+            counter++;
+            if (counter > DIRECTION_RANGE) {
+                changeDirection();
+                counter = 1;
+            } 
+            setPosition(this.direction.move(position));
+        }
     }
 
     @Override
@@ -62,6 +66,14 @@ public abstract class LivingBeingImpl implements LivingBeing {
      */
     public final void changeDirection() {
         this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
+    }
+
+    /**
+     * Sets the moving status of the living being.
+     * @param moving true if the entity is moving, false otherwise
+     */
+    public void setMoving(final boolean moving) {
+        this.moving = moving;
     }
 
     private void setPosition(final Position position) {
