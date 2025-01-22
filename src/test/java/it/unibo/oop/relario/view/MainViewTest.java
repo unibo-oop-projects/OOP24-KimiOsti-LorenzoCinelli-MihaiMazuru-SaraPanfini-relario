@@ -25,7 +25,6 @@ public class MainViewTest {
 
         view.showPanel(GameState.GAME);
         assertEquals(view.getPanel(GameState.GAME), view.getPanel(view.getCurrentPanel()));
-        view.showPreviousPanel();
         assertEquals(view.getPanel(GameState.MENU), view.getPanel(view.getCurrentPanel()));
     }
 }

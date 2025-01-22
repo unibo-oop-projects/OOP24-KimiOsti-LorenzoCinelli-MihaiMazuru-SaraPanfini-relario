@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
-import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.model.inventory.InventoryItems;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
@@ -27,10 +27,11 @@ public final class InventoryControllerImpl implements InventoryController {
     private List<InventoryItem> inventory;
     private Optional<EquippableItem> equippedArmor;
     private Optional<EquippableItem> equippedWeapon;
+    private GameState nextState;
     private int selectedItem;
 
     /**
-     * Creates a new view for the inventory of the player.
+     * Creates a new controller for the inventory of the player.
      * @param mainController the main controller of the game.
      * @param mainView the main view of the game.
      */
@@ -38,6 +39,16 @@ public final class InventoryControllerImpl implements InventoryController {
         this.mainController = mainController;
         this.mainView = mainView;
         this.selectedItem = 0;
+    }
+
+    @Override
+    public void init(final GameState prevState) {
+        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
+        this.player = mainController.getCurRoom().get().getPlayer();
+        this.nextState = prevState;
+        updateInventory();
+        this.inventoryView.init();
+        this.mainView.showPanel(GameState.INVENTORY);
     }
 
     @Override
@@ -66,18 +77,6 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     @Override
-    public void init() {
-        this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
-        if (mainController.getCurRoom().isPresent()) {
-            this.player = mainController.getCurRoom().get().getPlayer();
-            updateInventory();
-            this.inventoryView.init();
-        } else {
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    @Override
     public List<String> getItemsNames() {
         this.updateInventory();
         return this.inventory.stream()
@@ -89,7 +88,7 @@ public final class InventoryControllerImpl implements InventoryController {
     public String getItemFullDescription() {
         if (selectedItem >= 0 && selectedItem < inventory.size()) {
             final InventoryItem item = inventory.get(selectedItem);
-            return getFullDescription(item);
+            return InventoryItems.getFullDescription(item);
         } else {
             return "";
         }
@@ -97,12 +96,12 @@ public final class InventoryControllerImpl implements InventoryController {
 
     @Override
     public String getEquippedArmor() {
-        return getEquippedItem(equippedArmor);
+        return InventoryItems.getEquippedItem(equippedArmor);
     }
 
     @Override
     public String getEquippedWeapon() {
-        return getEquippedItem(equippedWeapon);
+        return InventoryItems.getEquippedItem(equippedWeapon);
     }
 
     @Override
@@ -133,38 +132,6 @@ public final class InventoryControllerImpl implements InventoryController {
         this.equippedWeapon = this.player.getEquippedWeapon();
     }
 
-    private String getFullDescription(final InventoryItem item) {
-        return item.getDescription()
-        + ",\nEffetto: " + item.getEffect().toString()
-        + this.getIntensity(item)
-        + this.getDurability(item);
-    }
-
-    private String getIntensity(final InventoryItem item) {
-        if (item.getEffect() == EffectType.NONE) {
-            return "";
-        } else {
-            return " " + item.getIntensity();
-        }
-    }
-
-    private String getDurability(final InventoryItem item) {
-        if (item instanceof EquippableItem) {
-            return "\nDurabilità: " + ((EquippableItem) item).getDurability();
-        } else {
-            return "";
-        }
-    }
-
-    private String getEquippedItem(final Optional<EquippableItem> item) {
-        if (item.isPresent()) {
-            final var equippedItem = item.get();
-            return equippedItem.getName() + "\n" + getFullDescription(equippedItem);
-        } else {
-            return "";
-        }
-    }
-
     private void refresh() {
         this.updateInventory();
         if (this.selectedItem >= this.inventory.size()) {
@@ -174,8 +141,11 @@ public final class InventoryControllerImpl implements InventoryController {
     }
 
     private void regress() {
-        this.mainController.getGameController().resume(true);
-        this.mainView.showPreviousPanel();
+        switch (this.nextState) {
+            case GAME -> this.mainController.getGameController().resume(true);
+            case COMBAT -> this.mainController.getCombatController().resumeCombat();
+            default -> { }
+        }
     }
 
 }
