@@ -16,9 +16,9 @@ import javax.swing.Timer;
 import it.unibo.oop.relario.controller.api.CutSceneController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.Constants;
+import it.unibo.oop.relario.utils.impl.FontHandler;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
-import it.unibo.oop.relario.utils.impl.ResourceLocator;
 import it.unibo.oop.relario.utils.impl.SoundLocators;
 import it.unibo.oop.relario.view.api.CutSceneView;
 import it.unibo.oop.relario.view.api.MainView;
@@ -63,7 +63,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     public CutSceneViewImpl(final MainController controller, final MainView view) {
         this.controller = controller.getCutSceneController();
         this.mainView = view;
-        this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
+        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLACK);
     }
@@ -110,7 +110,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private void sceneLoader(final int scene) {
         this.removeAll();
-        
+
         final var image = ImageLocators.getFixedSizeImage(URL.get("castle"), SCENE_RATIO, SCENE_RATIO);
         this.add(new JLabel(image));
 
@@ -128,7 +128,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setForeground(Color.WHITE);
         this.add(label, labelConstraints);
-        
+
         this.repaint();
         this.validate();
     }
