@@ -27,9 +27,27 @@ public final class Constants {
      */
     public static final String MONOSPACE_FONT = "monogram";
     /**
-     * Font file extension.
+     * Font files extension.
      */
     public static final String FONT_EXTENSION = ".ttf";
+
+    /**
+     * The base folder for game state textures.
+     */
+    public static final String GAME_TEXTURES_URL = "img/game";
+    /**
+     * The base folder for furniture textures.
+     */
+    public static final String FURNITURE_TEXTURES_URL = "furniture/";
+    /**
+     * The base folder for living being textures.
+     */
+    public static final String LIVING_TEXTURES_URL = "living/";
+
+    /**
+     * Texture files extension.
+     */
+    public static final String TEXTURES_EXTENSION = ".png";
 
     private Constants() {
         throw new UnsupportedOperationException();
