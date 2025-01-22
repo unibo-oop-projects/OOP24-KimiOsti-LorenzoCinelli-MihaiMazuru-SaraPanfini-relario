@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public final class FontHandler {
 
-    private static float DEFAULT_FONT_SIZE = 10f;
+    private static final float DEFAULT_FONT_SIZE = 10f;
 
     private FontHandler() { }
 
@@ -22,15 +22,6 @@ public final class FontHandler {
         Font font;
 
         try {
-            /*font = Font.createFont(
-                Font.TRUETYPE_FONT,
-                FontHandler.class.getResourceAsStream(
-                    new StringBuilder(Constants.FONT_URL)
-                    .append(fontName.toLowerCase(Locale.ROOT))
-                    .append(Constants.FONT_EXTENSION)
-                    .toString()
-                )
-            );*/
             font = Font.createFont(
                 Font.TRUETYPE_FONT,
                 ClassLoader.getSystemResourceAsStream(
