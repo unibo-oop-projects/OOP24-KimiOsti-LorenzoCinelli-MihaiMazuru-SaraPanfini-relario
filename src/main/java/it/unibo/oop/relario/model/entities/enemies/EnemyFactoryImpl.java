@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -52,25 +53,32 @@ public final class EnemyFactoryImpl implements EnemyFactory {
         final List<EnemyType> availableTypes = Stream.of(EnemyType.values())
         .filter(t -> !t.equals(EnemyType.BOSS)).collect(Collectors.toList());
         final EnemyType randomType = availableTypes.get(random.nextInt(availableTypes.size()));
-        final InventoryItem randomReward = itemFactory.createRandomItemByEffect(randomType.getEffect());
-        return createEnemy(position, randomType, randomReward);
+        return createEnemy(position, randomType, this.itemFactory.createRandomItemByEffect(randomType.getEffect()));
     }
 
     @Override
-    public Enemy createEnemyWithReward(final Position position, final InventoryItem reward) {
+    public Enemy createEnemyWithReward(final Position position, final InventoryItemType reward) {
         final List<EnemyType> matchingTypes = enemiesData.keySet().stream()
         .filter(type -> type.getEffect().equals(reward.getEffect())).toList();
-        return createEnemy(position, matchingTypes.get(random.nextInt(matchingTypes.size())), reward);
+        if (matchingTypes.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return createEnemy(position, matchingTypes.get(random.nextInt(matchingTypes.size())), 
+        this.itemFactory.createItem(reward));
     }
 
     @Override
     public Enemy createEnemyByType(final EnemyType type, final Position position) {
-        return createEnemy(position, type, itemFactory.createRandomItemByEffect(type.getEffect()));
+        if (!this.enemiesData.containsKey(type)) {
+            throw new IllegalArgumentException();
+        }
+        return createEnemy(position, type, this.itemFactory.createRandomItemByEffect(type.getEffect()));
     }
 
     private Enemy createEnemy(final Position position, final EnemyType type, final InventoryItem reward) {
         final EnemyConfig config = enemiesData.get(type);
-        return new EnemyImpl(config.name(), config.description(), position, config.difficulty, reward, random.nextBoolean(), type);
+        return new EnemyImpl(config.name(), config.description(), position, 
+        config.difficulty, reward, random.nextBoolean(), type);
     }
 
     private record EnemyConfig(String name, String description, DifficultyLevel difficulty) { }
