@@ -42,8 +42,11 @@ public enum InventoryItemType implements GameEntityType {
     /** A gemstone with no effect. */
     GEMSTONE(EffectType.NONE),
 
-    /** A key with no effect. */
-    KEY(EffectType.NONE);
+    /** A key that allows to pass a quest. */
+    KEY(EffectType.QUEST),
+
+    /** A book that allows to pass a quest. */
+    BOOK(EffectType.QUEST);
 
     private final EffectType effect;
 
