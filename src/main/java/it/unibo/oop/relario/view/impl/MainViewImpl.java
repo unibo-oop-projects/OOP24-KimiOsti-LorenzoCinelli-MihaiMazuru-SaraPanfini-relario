@@ -46,12 +46,14 @@ public final class MainViewImpl implements MainView {
         final JPanel gameView = new GameView(this.mainController);
         final JPanel inventoryView = new InventoryViewImpl(this.mainController);
         final JPanel combatView = new CombatView();
+        final JPanel cutSceneView = new CutSceneViewImpl(this.mainController, this);
 
         panels.put(GameState.MENU, startMenuView);
         panels.put(GameState.MENU_IN_GAME, inGameMenuView);
         panels.put(GameState.GAME, gameView);
         panels.put(GameState.INVENTORY, inventoryView);
         panels.put(GameState.COMBAT, combatView);
+        panels.put(GameState.CUT_SCENE, cutSceneView);
 
         this.panelsSetFocusable();
     }
