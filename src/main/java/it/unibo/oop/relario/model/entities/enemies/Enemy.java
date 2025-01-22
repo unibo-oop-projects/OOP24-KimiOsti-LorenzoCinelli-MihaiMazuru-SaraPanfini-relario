@@ -56,7 +56,6 @@ public interface Enemy extends LivingBeing {
     /**
      * Reduces the enemy's life when it's attacked by the player and checks if it is still alive.
      * @param playerDamage the damage of the player
-     * @return true if the enemy is alive, false otherwise
      */
     void attacked(int playerDamage);
 
