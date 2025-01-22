@@ -16,8 +16,8 @@ import it.unibo.oop.relario.utils.api.Position;
 /**
  * Locator class for game state textures.
  */
-public class GameTexturesLocator {
-    
+public final class GameTexturesLocator {
+
     private GameTexturesLocator() { }
 
     /**
@@ -56,14 +56,13 @@ public class GameTexturesLocator {
     }
 
     private static Image getFurnitureTexture(final Furniture furnitureItem) {
-        final StringBuilder imgURL = new StringBuilder(Constants.GAME_TEXTURES_URL);
-        imgURL.append(Constants.FURNITURE_TEXTURES_URL);
-
-        imgURL
+        return Toolkit.getDefaultToolkit().getImage(
+            new StringBuilder(Constants.GAME_TEXTURES_URL)
+            .append(Constants.FURNITURE_TEXTURES_URL)
             .append(furnitureItem.getType().getName().toLowerCase(Locale.ENGLISH))
-            .append(Constants.TEXTURES_EXTENSION);
-
-        return Toolkit.getDefaultToolkit().getImage(imgURL.toString());
+            .append(Constants.TEXTURES_EXTENSION)
+            .toString()
+        );
     }
 
     private static Image getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
