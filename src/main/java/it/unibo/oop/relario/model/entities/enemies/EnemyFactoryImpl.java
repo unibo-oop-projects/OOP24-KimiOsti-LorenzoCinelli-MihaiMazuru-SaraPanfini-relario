@@ -4,6 +4,8 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
@@ -47,7 +49,9 @@ public final class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public Enemy createRandomEnemy(final Position position) {
-        final EnemyType randomType = EnemyType.values()[random.nextInt(EnemyType.values().length)];
+        final List<EnemyType> availableTypes = Stream.of(EnemyType.values())
+        .filter(t -> !t.equals(EnemyType.BOSS)).collect(Collectors.toList());
+        final EnemyType randomType = availableTypes.get(random.nextInt(availableTypes.size()));
         final InventoryItem randomReward = itemFactory.createRandomItemByEffect(randomType.getEffect());
         return createEnemy(position, randomType, randomReward);
     }
