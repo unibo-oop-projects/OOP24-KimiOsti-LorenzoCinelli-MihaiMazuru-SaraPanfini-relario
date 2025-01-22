@@ -30,17 +30,18 @@ public final class EnemyFactoryImpl implements EnemyFactory {
     public EnemyFactoryImpl() {
         enemiesData.put(EnemyType.THIEF, new EnemyConfig(EnemyType.THIEF.getName(),
         "Il ladro è un nemico furtivo e abile, specializzato nel rubare oggetti e attaccare di sorpresa", 
-        DifficultyLevel.MEDIUM));
+        DifficultyLevel.EASY));
         enemiesData.put(EnemyType.SOLDIER, new EnemyConfig(EnemyType.SOLDIER.getName(),
         "Il soldato è un nemico ben addestrato e dotato di armatura leggera", 
         DifficultyLevel.EASY));
         enemiesData.put(EnemyType.WIZARD, new EnemyConfig(EnemyType.WIZARD.getName(),
         "Il mago è un nemico abile nelle arti arcane, capace di infliggere danni con incantesimi potenti", 
-        DifficultyLevel.HARD));
+        DifficultyLevel.MEDIUM));
         enemiesData.put(EnemyType.KNIGHT, new EnemyConfig(EnemyType.KNIGHT.getName(), 
         "Il cavaliere è un nemico potente, caratterizzato da un'armatura pesante e uno scudo resistente", 
-        DifficultyLevel.HARD));
-        enemiesData.put(EnemyType.BOSS, new EnemyConfig(EnemyType.BOSS.getName(), "", DifficultyLevel.HARD));
+        DifficultyLevel.MEDIUM));
+        enemiesData.put(EnemyType.BOSS, new EnemyConfig(EnemyType.BOSS.getName(), 
+        "Il boss è un nemico temibile, che solo i più forti riescono a sconfiggere", DifficultyLevel.HARD));
         this.itemFactory = new InventoryItemFactoryImpl();
     }
 
