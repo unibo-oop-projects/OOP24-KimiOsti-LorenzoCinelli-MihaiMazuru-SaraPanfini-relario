@@ -142,3 +142,4 @@ public final class ResourceLocator {
         return Toolkit.getDefaultToolkit().getImage(imgURL.toString());
     }
 }
+
