@@ -37,7 +37,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
      * @param view is the main view of the game.
      */
     public CutSceneViewImpl(final MainController controller, final MainView view) {
-        this.controller = null;
+        this.controller = controller.getCutSceneController();
         this.mainView = view;
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLACK);
