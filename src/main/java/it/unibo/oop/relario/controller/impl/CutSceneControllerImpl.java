@@ -13,7 +13,7 @@ public final class CutSceneControllerImpl implements CutSceneController {
 
     private final MainController controller;
     private final MainView view;
-    private final CutSceneView cutSceneView;
+    private CutSceneView cutSceneView;
 
     /**
      * Initializes the cut scene controller.
@@ -23,11 +23,11 @@ public final class CutSceneControllerImpl implements CutSceneController {
     public CutSceneControllerImpl(final MainController controller, final MainView view) {
         this.controller = controller;
         this.view = view;
-        this.cutSceneView = null;
     }
 
     @Override
     public void show(final GameState state) {
+        this.cutSceneView = (CutSceneView) this.view.getPanel(GameState.CUT_SCENE);
         switch (state) {
             case MENU -> this.cutSceneView.showStartScene();
             case GAME -> this.cutSceneView.showNextRoomScene();
