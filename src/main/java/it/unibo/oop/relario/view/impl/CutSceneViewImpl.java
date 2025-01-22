@@ -13,6 +13,7 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.ResourceLocator;
+import it.unibo.oop.relario.utils.impl.SoundLocators;
 import it.unibo.oop.relario.view.api.CutSceneView;
 import it.unibo.oop.relario.view.api.MainView;
 
@@ -54,7 +55,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     @Override
     public void showNextRoomScene() {
-        final var audio = ResourceLocator.getAudio("door_sound");
+        final var audio = SoundLocators.getAudio("door_sound");
         audio.start();
         this.fadeOutOverLastView();
         audio.close();

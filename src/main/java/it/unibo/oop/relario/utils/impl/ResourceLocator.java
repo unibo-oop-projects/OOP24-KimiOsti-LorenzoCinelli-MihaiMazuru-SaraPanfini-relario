@@ -4,17 +4,11 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
@@ -35,8 +29,6 @@ public final class ResourceLocator {
 
     private static final String FONT_URL = "resources/font/";
     private static final String FONT_EXTENSION = ".ttf";
-    private static final String AUDIO_URL = "resources/audio/";
-    private static final String AUDIO_EXTENSION = ".wav";
 
     private ResourceLocator() { }
 
@@ -87,21 +79,6 @@ public final class ResourceLocator {
         }
 
         return font;
-    }
-
-    // TODO javadoc
-    public static Clip getAudio(String name) {
-        AudioInputStream audioInputStream;
-        Clip clip;
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File(AUDIO_URL + name + AUDIO_EXTENSION).getAbsoluteFile());
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            clip = null;
-            e.printStackTrace();
-        }
-        return clip;
     }
 
     private static Image getTexture(final Entity entity) {
