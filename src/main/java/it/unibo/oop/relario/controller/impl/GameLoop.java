@@ -3,7 +3,7 @@ package it.unibo.oop.relario.controller.impl;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.view.impl.GameView;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.ResourceLocator;
+import it.unibo.oop.relario.utils.impl.GameTexturesLocator;
 
 /**
  * The thread running the game's main loop.
@@ -30,14 +30,14 @@ public final class GameLoop extends Thread {
         this.running = true;
         long prevCycleTS = System.currentTimeMillis();
 
-        view.renderBackground(this.model.getDimension(), ResourceLocator.processModel(this.model.getFurniture()));
+        view.renderBackground(this.model.getDimension(), GameTexturesLocator.processModel(this.model.getFurniture()));
 
         while (this.running) {
             final long currCycleTS = System.currentTimeMillis();
             if (currCycleTS - prevCycleTS >= Constants.REFRESH_TIME) {
                 prevCycleTS = currCycleTS;
                 this.model.update();
-                this.view.renderTextures(ResourceLocator.processModel(this.model.getPopulation()));
+                this.view.renderTextures(GameTexturesLocator.processModel(this.model.getPopulation()));
             } else {
                 try {
                     sleep(Constants.REFRESH_TIME - System.currentTimeMillis() + prevCycleTS);

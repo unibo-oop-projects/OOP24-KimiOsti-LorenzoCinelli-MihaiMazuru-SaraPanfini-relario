@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.ResourceLocator;
+import it.unibo.oop.relario.utils.impl.FontHandler;
 import it.unibo.oop.relario.view.api.InventoryViewFactory;
 
 /**
@@ -33,7 +33,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
      */
     public InventoryViewFactoryImpl(final InventoryController inventory) {
         this.inventory = inventory;
-        this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
+        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
     }
 
     @Override

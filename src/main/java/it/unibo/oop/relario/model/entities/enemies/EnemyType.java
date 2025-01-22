@@ -23,7 +23,8 @@ public enum EnemyType implements GameEntityType {
     /** Represents a wizard enemy, who can drop only inventory items with healing effect. */
     WIZARD("Mago", EffectType.HEALING),
 
-    BOSS("", EffectType.NONE);
+    /** Represents a boss enemy, who can drop only inventory items with quest effect. */
+    BOSS("Boss", EffectType.QUEST);
 
     private final EffectType effect;
     private final String name;

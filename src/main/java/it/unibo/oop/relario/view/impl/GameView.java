@@ -16,8 +16,9 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
+import it.unibo.oop.relario.utils.impl.FontHandler;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
-import it.unibo.oop.relario.utils.impl.ResourceLocator;
+import it.unibo.oop.relario.utils.impl.GameTexturesLocator;
 
 /* [TODO]: gestire l'aggiornamento frame by frame */
 /* [TODO]: refactoring */
@@ -64,7 +65,7 @@ public final class GameView extends JPanel {
 
         this.background = new LinkedList<>();
         this.foreground = new LinkedList<>();
-        this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
+        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
         this.addKeyListener(new GameKeyListener(controller.getGameController()));
     }
 
@@ -130,7 +131,7 @@ public final class GameView extends JPanel {
             0
         ));
 
-        final var texture = ResourceLocator.getFloorTexture().getScaledInstance(
+        final var texture = GameTexturesLocator.getFloorTexture().getScaledInstance(
             this.tileDimension,
             this.tileDimension,
             Image.SCALE_SMOOTH
@@ -140,7 +141,7 @@ public final class GameView extends JPanel {
             for (int x = 0; x < dimension.getWidth(); x++) {
                 this.background.add(
                     this.computeIndex(x, y),
-                    new BackgroundTile(texture) //aggiungere immagine del floor
+                    new BackgroundTile(texture)
                 );
                 this.mapPanel.add(
                     this.background.get(this.computeIndex(x, y)),
@@ -220,7 +221,7 @@ public final class GameView extends JPanel {
 
     private JLabel getCustomLabel(final JPanel container, final String text) {
         final var label = new JLabel();
-        label.setFont(this.font.deriveFont(container.getHeight() / PANEL_TO_TEXT_RATIO));
+        label.setFont(FontHandler.getSizedFont(font, container.getHeight() / PANEL_TO_TEXT_RATIO));
         label.setForeground(TEXT_COLOR);
         label.setText(text);
         return label;
