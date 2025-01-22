@@ -23,7 +23,7 @@ public final class FontHandler {
         try {
             font = Font.createFont(
                 Font.TRUETYPE_FONT,
-                ResourceLocator.class.getResourceAsStream(
+                FontHandler.class.getResourceAsStream(
                     new StringBuilder(Constants.FONT_URL)
                     .append(fontName.toLowerCase(Locale.ROOT))
                     .append(Constants.FONT_EXTENSION)
