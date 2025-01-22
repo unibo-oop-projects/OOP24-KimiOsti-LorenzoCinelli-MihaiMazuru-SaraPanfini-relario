@@ -10,30 +10,45 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class InventoryItemFactoryTest {
-    
+/**
+ * The test class for the inventory item factory.
+ */
+
+final class InventoryItemFactoryTest {
+
     private InventoryItemFactory factory;
 
+    /**
+     * Sets up the factory before each test execution.
+     */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.factory = new InventoryItemFactoryImpl();
     }
 
+    /**
+     * Tests that an inventory item of the given type is created 
+     * and that an exception is thrown if the given type doesn't exist.
+     */
     @Test
-    public void testCreateItem() {
-        for (InventoryItemType type : InventoryItemType.values()) {
-            InventoryItem item = this.factory.createItem(type);
+    void testCreateItem() {
+        for (final InventoryItemType type : InventoryItemType.values()) {
+            final InventoryItem item = this.factory.createItem(type);
             assertNotNull(item);
             assertEquals(type, item.getType());
         }
         assertThrows(IllegalArgumentException.class, () -> this.factory.createItem(null));
     }
 
+    /**
+     * Tests that an equippable item of the given type is created 
+     * and that an exception is thrown for non-equippable item types.
+     */
     @Test
-    public void testCreateEquippableItem() {
-        for (InventoryItemType type : InventoryItemType.values()) {
+    void testCreateEquippableItem() {
+        for (final InventoryItemType type : InventoryItemType.values()) {
             if (type.getEffect().equals(EffectType.DAMAGE) || type.getEffect().equals(EffectType.PROTECTION)) {
-                EquippableItem item = this.factory.createEquippableItem(type);
+                final EquippableItem item = this.factory.createEquippableItem(type);
                 assertNotNull(item);
                 assertEquals(type, item.getType());
             } else {
@@ -42,17 +57,24 @@ public class InventoryItemFactoryTest {
         }
     }
 
+    /**
+     * Tests that a random valid inventory item is created.
+     */
     @Test
-    public void testCreateRandomItem() {
-        InventoryItem item = this.factory.createRandomItem();
+    void testCreateRandomItem() {
+        final InventoryItem item = this.factory.createRandomItem();
         assertNotNull(item);
         assertTrue(List.of(InventoryItemType.values()).contains(item.getType()));
     }
 
+    /**
+     * Tests that a random inventory item with the specified effect is created
+     * and that an exception is thrown if the effect doesn't exist.
+     */
     @Test
-    public void testCreateRandomItemByEffect() {
-        for (EffectType effect : EffectType.values()) {
-            InventoryItem item = this.factory.createRandomItemByEffect(effect);
+    void testCreateRandomItemByEffect() {
+        for (final EffectType effect : EffectType.values()) {
+            final InventoryItem item = this.factory.createRandomItemByEffect(effect);
             assertNotNull(item);
             assertEquals(effect, item.getEffect());
         }
