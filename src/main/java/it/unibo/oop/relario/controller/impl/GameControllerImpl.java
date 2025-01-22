@@ -85,7 +85,7 @@ public final class GameControllerImpl implements GameController {
 
     private void changeGameState(final GameState state) {
         this.gameLoop.interrupt();
-        switch(state) {
+        switch (state) {
             case INVENTORY -> this.controller.getInventoryController().init(GameState.GAME);
             case MENU_IN_GAME -> this.controller.getMenuController().showMenu(GameState.MENU_IN_GAME);
             default -> this.endGame();
