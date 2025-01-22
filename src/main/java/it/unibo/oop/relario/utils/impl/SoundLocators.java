@@ -15,7 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public final class SoundLocators {
     private static final String AUDIO_URL = "resources/audio/";
     private static final String AUDIO_EXTENSION = ".wav";
-    
+
     private SoundLocators() { }
 
     /**
@@ -23,8 +23,8 @@ public final class SoundLocators {
      * @param name is the name of the file. The extension is .wav,
      * @return a reproducible Clip.
      */
-    public static Clip getAudio(String name) {
-        AudioInputStream audioInputStream;
+    public static Clip getAudio(final String name) {
+        final AudioInputStream audioInputStream;
         Clip clip;
         try {
             audioInputStream = AudioSystem.getAudioInputStream(new File(AUDIO_URL + name + AUDIO_EXTENSION).getAbsoluteFile());
