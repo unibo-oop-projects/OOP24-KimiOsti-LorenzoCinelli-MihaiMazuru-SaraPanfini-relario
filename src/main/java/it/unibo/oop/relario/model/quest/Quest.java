@@ -27,7 +27,7 @@ public interface Quest {
      * 
      * @return TODO
      */
-    Optional<GameEntityType> getKeyEntityType();
+    Optional<? extends GameEntityType> getKeyEntityType();
 
     Room getRoom();
 

@@ -25,10 +25,10 @@ public final class MenuControllerImpl implements MenuController {
      * @param view is the main view.
      * @param controller is the main controller.
      */
-    public MenuControllerImpl(final MainView view, final MainController controller) {
+    public MenuControllerImpl(final MainController controller) {
         menuModel = new MenuManager();
-        this.view = view;
         this.controller = controller;
+        this.view = this.controller.getMainView();
     }
 
     @Override

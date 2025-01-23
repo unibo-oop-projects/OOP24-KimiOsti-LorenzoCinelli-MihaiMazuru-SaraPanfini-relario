@@ -17,11 +17,11 @@ public final class QuestFactoryImpl implements QuestFactory {
 
     public QuestFactoryImpl() {
         questCreator.put(QuestType.COLLECTION_QUEST, (room, keyEntity) -> 
-        createQuest("", room, new CollectItemObjective(keyEntity.get())));
+        createQuest("", room, new CollectItemObjective(keyEntity)));
         questCreator.put(QuestType.DEFEAT_ENEMY_QUEST, (room, keyEntity) -> 
-        createQuest("", room, new DefeatEnemyObjective(keyEntity.get())));
+        createQuest("", room, new DefeatEnemyObjective(keyEntity)));
         questCreator.put(QuestType.NPC_INTERACT_QUEST, (room, keyEntity) ->
-        createQuest("", room, new NpcInteractObjective()));
+        createQuest("", room, new NpcInteractObjective(keyEntity)));
 
     }
 

@@ -37,7 +37,7 @@ public final class RoomGenerator {
         this.defaultEntry = new PositionImpl(0, (int) Math.ceil(this.dimension.getHeight() / 2));
         this.defaultExit = new PositionImpl(this.dimension.getWidth() - 1, (int) Math.ceil(this.dimension.getHeight() / 2));
         this.questManager = new QuestManager();
-        this.furnitureGenerator = new FurnitureGenerator(this.dimension);
+        this.furnitureGenerator = new FurnitureGenerator();
         this.livingBeingsGenerator = new LivingBeingsGenerator();
     }
 

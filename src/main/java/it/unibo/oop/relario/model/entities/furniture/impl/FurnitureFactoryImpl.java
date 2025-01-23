@@ -13,6 +13,7 @@ import it.unibo.oop.relario.model.entities.furniture.api.FurnitureFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -103,11 +104,12 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
     }
 
     @Override
-    public Furniture createInteractiveFurnitureLoot(final Position pos, final InventoryItem loot) {
+    public Furniture createInteractiveFurnitureLoot(final Position pos, final InventoryItemType itemType) {
         matchingProperties = filterByPropriety(FurniturePropriety.INTERACTIVE);
         final FurnitureType type = matchingProperties.get(random.nextInt(matchingProperties.size()));
         desc = furnitureInfo.get(type);
-        return new InteractiveFurnitureImpl(pos, type.getName(), desc, type, loot);
+        final InventoryItem item = new InventoryItemFactoryImpl().createItem(itemType);
+        return new InteractiveFurnitureImpl(pos, type.getName(), desc, type, item);
     }
 
     @Override

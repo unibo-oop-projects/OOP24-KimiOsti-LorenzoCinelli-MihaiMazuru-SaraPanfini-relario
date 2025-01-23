@@ -27,9 +27,9 @@ public final class GameControllerImpl implements GameController {
      * @param controller its own container class, used to access the Model.
      * @param view the main View of the application, used to access the Game View.
      */
-    public GameControllerImpl(final MainController controller, final MainView view) {
+    public GameControllerImpl(final MainController controller) {
         this.controller = controller;
-        this.view = view;
+        this.view = this.controller.getMainView();
         this.interactionsHandler = new InteractionsHandlerImpl(
             this.controller,
             (GameView) this.view.getPanel(GameState.GAME)
