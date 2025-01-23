@@ -20,13 +20,12 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  * This class generates and places living beings, such as enemies and NPCs, in the room.
  */
 public final class LivingBeingsGenerator {
-
-    public static final int CHARACTERS_NUMBER = 4;
+    private static final int CHARACTERS_NUMBER = 4;
 
     private final Random random = new Random();
     private final EnemyFactory enemyFactory = new EnemyFactoryImpl();
     private final NpcFactory npcFactory = new NpcFactoryImpl();
-    private List<Area> areas = new ArrayList<>();
+    private final List<Area> areas = new ArrayList<>();
 
     /**
      * Generates and places enemies and NPCs randomly.
@@ -38,7 +37,7 @@ public final class LivingBeingsGenerator {
 
         if (room.getQuest().isPresent()) {
             final Position questNpcPosition = new PositionImpl(room.getExit().getX() - 2, room.getExit().getY() - 1);
-            room.addEntity(questNpcPosition , 
+            room.addEntity(questNpcPosition,
             this.npcFactory.createQuestNpc(questNpcPosition, room.getQuest().get().getDescription()));
         }
         divideRoom(room.getDimension());
@@ -49,7 +48,7 @@ public final class LivingBeingsGenerator {
     private void divideRoom(final Dimension dimension) {
         final int areaWidth = (int) Math.floor(dimension.getWidth() / 2);
         final int areaHeight = (int) Math.floor(dimension.getHeight() / 2);
-        
+
         this.areas.add(new Area(new PositionImpl(0, 0), new DimensionImpl(areaWidth, areaHeight)));
         this.areas.add(new Area(new PositionImpl(areaWidth, 0), new DimensionImpl(areaWidth, areaHeight)));
         this.areas.add(new Area(new PositionImpl(0, areaHeight), new DimensionImpl(areaWidth, areaHeight)));
@@ -69,9 +68,9 @@ public final class LivingBeingsGenerator {
     }
 
     private boolean isAreaPositionValid(final Position position, final Area area) {
-        return position.getX() + LivingBeingImpl.DIRECTION_RANGE < area.initialPosition().getX() + area.dimension().getWidth() - 1 &&
-        position.getX() - LivingBeingImpl.DIRECTION_RANGE > area.initialPosition().getX() &&
-        position.getY() > area.initialPosition.getY() + 1 && position.getY() < area.dimension().getHeight() - 1;
+        return position.getX() + LivingBeingImpl.DIRECTION_RANGE < area.initialPosition().getX() + area.dimension().getWidth() - 1
+        && position.getX() - LivingBeingImpl.DIRECTION_RANGE > area.initialPosition().getX()
+        && position.getY() > area.initialPosition.getY() + 1 && position.getY() < area.dimension().getHeight() - 1;
     }
 
     private Position getRandomPositionInArea(final Area area) {
@@ -79,6 +78,6 @@ public final class LivingBeingsGenerator {
         area.initialPosition().getY() + random.nextInt(area.dimension().getHeight()));
     }
 
-    private record Area(Position initialPosition, Dimension dimension) {}
+    private record Area(Position initialPosition, Dimension dimension) { }
 
 }
