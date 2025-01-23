@@ -44,4 +44,8 @@ public final class InteractiveNpc extends LivingBeingImpl implements Npc {
         this.hasLoot = false;
     }
 
+    public boolean hasLoot() {
+        return this.hasLoot;
+    }
+
 }

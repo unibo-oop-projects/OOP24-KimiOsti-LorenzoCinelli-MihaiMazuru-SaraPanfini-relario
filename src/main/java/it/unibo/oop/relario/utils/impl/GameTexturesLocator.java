@@ -26,11 +26,12 @@ public final class GameTexturesLocator {
      */
     public static Image getFloorTexture() {
         return Toolkit.getDefaultToolkit().getImage(
-            new StringBuilder(Constants.GAME_TEXTURES_URL)
-                .append(Constants.FURNITURE_TEXTURES_URL)
-                .append("floor")
-                .append(Constants.TEXTURES_EXTENSION)
-                .toString()
+            new StringBuilder(Constants.RESOURCES_FOLDER_URL)
+            .append(Constants.GAME_TEXTURES_URL)
+            .append(Constants.FURNITURE_TEXTURES_URL)
+            .append("floor")
+            .append(Constants.TEXTURES_EXTENSION)
+            .toString()
         );
     }
 
@@ -57,7 +58,8 @@ public final class GameTexturesLocator {
 
     private static Image getFurnitureTexture(final Furniture furnitureItem) {
         return Toolkit.getDefaultToolkit().getImage(
-            new StringBuilder(Constants.GAME_TEXTURES_URL)
+            new StringBuilder(Constants.RESOURCES_FOLDER_URL)
+            .append(Constants.GAME_TEXTURES_URL)
             .append(Constants.FURNITURE_TEXTURES_URL)
             .append(furnitureItem.getType().getName().toLowerCase(Locale.ENGLISH))
             .append(Constants.TEXTURES_EXTENSION)
@@ -66,7 +68,8 @@ public final class GameTexturesLocator {
     }
 
     private static Image getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
-        final StringBuilder imgURL = new StringBuilder(Constants.GAME_TEXTURES_URL);
+        final StringBuilder imgURL = new StringBuilder(Constants.RESOURCES_FOLDER_URL)
+        .append(Constants.GAME_TEXTURES_URL);
         imgURL.append(Constants.LIVING_TEXTURES_URL);
 
         if (livingBeing instanceof MainCharacter) {
