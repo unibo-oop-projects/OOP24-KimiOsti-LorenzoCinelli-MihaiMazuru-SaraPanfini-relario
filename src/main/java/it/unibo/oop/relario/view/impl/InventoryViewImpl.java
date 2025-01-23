@@ -2,11 +2,11 @@ package it.unibo.oop.relario.view.impl;
 
 import javax.swing.JPanel;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.view.api.InventoryViewFactory;
 import it.unibo.oop.relario.view.api.InventoryView;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -30,7 +30,7 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
     public InventoryViewImpl(final MainController controller) {
         this.controller = controller;
         this.addKeyListener(new GameKeyListener(this.controller.getInventoryController()));
-        this.setBackground(Color.BLACK);
+        this.setBackground(Constants.BACKGROUND_SCENE_COLOR);
     }
 
     @Override
