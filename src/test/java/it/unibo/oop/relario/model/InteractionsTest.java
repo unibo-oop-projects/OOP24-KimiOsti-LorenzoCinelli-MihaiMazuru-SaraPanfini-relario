@@ -657,11 +657,11 @@ final class InteractionsTest {
 
         //non interactive npc
         p = new PositionImpl(1, 1);
-        entityMap.put(p, nf.createNotInteractiveNpc(p));
+        entityMap.put(p, nf.createDefaultNpc(p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
         p = new PositionImpl(5, 3);
-        entityMap.put(p, nf.createNotInteractiveNpc(p));
+        entityMap.put(p, nf.createDefaultNpc(p));
         obstructingEntity.add(p);
         interactiveEntity.add(p);
 

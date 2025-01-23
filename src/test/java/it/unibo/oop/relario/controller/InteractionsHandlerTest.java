@@ -51,7 +51,7 @@ public class InteractionsHandlerTest {
         final var furnitureFactory = new FurnitureFactoryImpl();
 
         room.addEntity(interactiveNpcPos, npcFactory.createInteractiveNpc(interactiveNpcPos));
-        room.addEntity(npcPos, npcFactory.createNotInteractiveNpc(npcPos));
+        room.addEntity(npcPos, npcFactory.createDefaultNpc(npcPos));
         room.addEntity(
             interactiveFurniturePos,
             furnitureFactory.createRandomInteractiveFurniture(interactiveFurniturePos)
