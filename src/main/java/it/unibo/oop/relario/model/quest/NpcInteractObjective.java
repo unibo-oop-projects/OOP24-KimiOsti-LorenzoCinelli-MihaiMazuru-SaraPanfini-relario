@@ -8,6 +8,12 @@ import it.unibo.oop.relario.model.map.Room;
 
 public class NpcInteractObjective implements ObjectiveStrategy {
 
+    private final Optional<GameEntityType> keyEntityType;
+
+    public NpcInteractObjective(final Optional<GameEntityType> keyEntityType) {
+        this.keyEntityType = keyEntityType;
+    }
+
     @Override
     public boolean check(Room room) {
         return room.getPopulation().values().stream().filter(lb -> lb instanceof InteractiveNpc)
@@ -16,7 +22,7 @@ public class NpcInteractObjective implements ObjectiveStrategy {
 
     @Override
     public Optional<GameEntityType> getKeyEntityType() {
-        return Optional.empty();
+        return this.keyEntityType;
     }
     
 }

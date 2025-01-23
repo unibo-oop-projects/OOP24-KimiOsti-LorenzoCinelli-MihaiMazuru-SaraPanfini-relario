@@ -18,6 +18,6 @@ public interface ObjectiveStrategy {
      */
     boolean check(Room room);
 
-    Optional<GameEntityType> getKeyEntityType();
+    Optional<? extends GameEntityType> getKeyEntityType();
 
 }

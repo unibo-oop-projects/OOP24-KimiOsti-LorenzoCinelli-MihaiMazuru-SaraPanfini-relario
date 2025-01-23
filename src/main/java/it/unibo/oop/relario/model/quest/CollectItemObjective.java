@@ -12,15 +12,15 @@ import it.unibo.oop.relario.model.map.Room;
 
 public final class CollectItemObjective implements ObjectiveStrategy {
 
-    private final InventoryItemType keyItemType;
+    private final Optional<InventoryItemType> keyItemType;
 
     /**
      * 
      * @param player
      */
-    public CollectItemObjective(final GameEntityType keyItemType) {
-        if (keyItemType instanceof InventoryItemType) {
-            this.keyItemType = (InventoryItemType) keyItemType;
+    public CollectItemObjective(final Optional<GameEntityType> keyItemType) {
+        if (keyItemType.isPresent() && keyItemType.get() instanceof InventoryItemType) {
+            this.keyItemType = Optional.of((InventoryItemType) keyItemType.get());
         } else {
             throw new IllegalArgumentException();
         }
@@ -28,12 +28,12 @@ public final class CollectItemObjective implements ObjectiveStrategy {
 
     @Override
     public boolean check(final Room room) {
-        return room.getPlayer().getItems().stream().map(i -> i.getType()).anyMatch(t -> t.equals(this.keyItemType));
+        return room.getPlayer().getItems().stream().map(i -> i.getType()).anyMatch(t -> t.equals(this.keyItemType.get()));
     }
 
     @Override
-    public Optional<GameEntityType> getKeyEntityType() {
-        return Optional.of(this.keyItemType);
+    public Optional<InventoryItemType> getKeyEntityType() {
+        return this.keyItemType;
     }
 
 }
