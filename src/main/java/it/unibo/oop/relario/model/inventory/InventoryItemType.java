@@ -58,7 +58,10 @@ public enum InventoryItemType implements GameEntityType {
         this.effect = effect;
     }
 
-    @Override
+    /**
+     * Retrieves the effect associated with the inventory item.
+     * @return the effect of the item
+     */
     public EffectType getEffect() {
         return this.effect;
     }
