@@ -69,7 +69,7 @@ public final class Constants {
     /**
      * The base color of the text in view's scenes.
      */
-    public static final Color BACKGROUND_TEXT_COLOR = Color.WHITE;
+    public static final Color TEXT_SCENE_COLOR = Color.WHITE;
 
 
     private Constants() {
