@@ -43,17 +43,9 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void run() {
-        this.controller.moveToNextRoom();
-        if (this.controller.getCurRoom().isPresent()) {
-            this.startGameLoop();
-        }
-    }
-
-    @Override
-    public void resume(final boolean isExploring) {
+    public void run(final boolean isExploring) {
         if (!isExploring) {
-            this.view.showPanel(GameState.GAME_OVER);
+            this.changeGameState(GameState.GAME_OVER);
         } else {
             this.startGameLoop();
         }
@@ -85,8 +77,11 @@ public final class GameControllerImpl implements GameController {
 
     private void changeGameState(final GameState state) {
         this.gameLoop.interrupt();
-        //this.view.showPanel(state);
-        /* [TODO]: gestire transizione tramite controller */
+        switch (state) {
+            case INVENTORY -> this.controller.getInventoryController().init(GameState.GAME);
+            case MENU_IN_GAME -> this.controller.getMenuController().showMenu(GameState.MENU_IN_GAME);
+            default -> this.endGame();
+        }
     }
 
     private void handleMovement(final Event e) {
@@ -96,6 +91,14 @@ public final class GameControllerImpl implements GameController {
             this.controller.getCurRoom().get().getPlayer().setMovement(
                 this.inputToDirection.get(e)
             );
+        }
+    }
+
+    private void endGame() {
+        if (this.controller.getCurRoom().isEmpty()) {
+            this.controller.getCutSceneController().show(GameState.VICTORY);
+        } else {
+            this.controller.getCutSceneController().show(GameState.GAME_OVER);
         }
     }
 }

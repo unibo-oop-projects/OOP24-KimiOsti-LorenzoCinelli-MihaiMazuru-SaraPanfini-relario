@@ -5,13 +5,8 @@ package it.unibo.oop.relario.controller.api;
  */
 public interface GameController extends Observer {
     /**
-     * Shows the Game view and starts the main loop.
-     */
-    void run();
-
-    /**
-     * Resumes the main loop, if the game is still running.
+     * Starts the game loop, if the game is still running, otherwise ends the game.
      * @param isExploring indicates whether the game is still running.
      */
-    void resume(boolean isExploring);
+    void run(boolean isExploring);
 }
