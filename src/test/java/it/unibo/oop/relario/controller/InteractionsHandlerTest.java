@@ -30,6 +30,7 @@ public class InteractionsHandlerTest {
     void testInteractionScenarios() {
         final var controller = new MainControllerImpl();
         final var view = new MainViewImpl(controller);
+        view.panelsSetup();
         final var handler = new InteractionsHandlerImpl(
             controller,
             (GameView) view.getPanel(GameState.GAME)

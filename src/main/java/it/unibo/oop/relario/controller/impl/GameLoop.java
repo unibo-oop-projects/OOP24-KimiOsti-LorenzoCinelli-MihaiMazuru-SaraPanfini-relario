@@ -53,6 +53,7 @@ public final class GameLoop extends Thread {
     @Override
     public void interrupt() {
         this.running = false;
+        super.interrupt();
     }
 
 }
