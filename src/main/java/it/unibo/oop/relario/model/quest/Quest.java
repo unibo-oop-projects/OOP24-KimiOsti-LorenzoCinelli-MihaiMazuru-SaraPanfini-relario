@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.model.quest;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.map.Room;
 
@@ -8,12 +10,6 @@ import it.unibo.oop.relario.model.map.Room;
  */
 
 public interface Quest {
-
-    /**
-     * 
-     * @return TODO
-     */
-    String getName();
 
     /**
      * 
@@ -31,7 +27,7 @@ public interface Quest {
      * 
      * @return TODO
      */
-    GameEntityType getKeyEntityType();
+    Optional<GameEntityType> getKeyEntityType();
 
     Room getRoom();
 
