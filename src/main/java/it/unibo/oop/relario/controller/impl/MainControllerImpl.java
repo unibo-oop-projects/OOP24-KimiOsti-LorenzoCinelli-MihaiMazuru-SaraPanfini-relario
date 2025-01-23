@@ -47,6 +47,11 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
+    public MainView getMainView() {
+        return this.view;
+    }
+
+    @Override
     public CombatController getCombatController() {
         return this.combat;
     }
