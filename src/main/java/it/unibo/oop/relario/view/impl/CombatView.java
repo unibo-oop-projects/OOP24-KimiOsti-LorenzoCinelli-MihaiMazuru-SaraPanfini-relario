@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.ResourceLocator;
+import it.unibo.oop.relario.utils.impl.FontHandler;
 
 /* [TODO]: implementare action listener del comando inventory */
 
@@ -45,7 +45,7 @@ public class CombatView extends JPanel {
         this.setBackground(BACKGROUND_COLOR);
 
         this.controller = controller;
-        this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
+        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
 
         this.upperPadding = new JPanel();
         this.setupPanel(this.upperPadding);

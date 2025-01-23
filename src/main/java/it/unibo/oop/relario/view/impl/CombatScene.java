@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.ResourceLocator;
+import it.unibo.oop.relario.utils.impl.FontHandler;
 
 /* [TODO]: implementare getter per image panel */
 
@@ -35,7 +35,7 @@ public final class CombatScene extends JPanel {
     public CombatScene(final CombatController controller) {
         this.setLayout(new BorderLayout());
         this.controller = controller;
-        this.font = ResourceLocator.getGameFont(Constants.MONOSPACE_FONT);
+        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
     }
 
     /**
