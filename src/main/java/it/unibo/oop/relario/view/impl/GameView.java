@@ -24,7 +24,6 @@ public final class GameView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final double SCREEN_TO_MAP_RATIO = 1.5;
-    private static final int PANEL_TO_TEXT_RATIO = 3;
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
@@ -42,11 +41,7 @@ public final class GameView extends JPanel {
      */
     public GameView(final MainController controller) {
         this.componentManager = new GameViewComponentManagerImpl();
-        this.commands = List.of(
-            "WASD - move",
-            "I - interact",
-            "E - inventory"
-        );
+        this.commands = List.of("WASD - move", "I - interact", "E - inventory");
 
         this.upperPanel = this.componentManager.getGamePanel();
         this.mapPanel = this.componentManager.getGamePanel();
@@ -76,19 +71,18 @@ public final class GameView extends JPanel {
      * @param textures the textures to be rendered on the foreground of the scene.
      */
     public void renderTextures(final Map<Position, Image> textures) {
-        this.foreground.forEach(
-            pos -> {
+        this.foreground.forEach(pos -> {
                 this.background.get(this.computeIndex(pos.getX(), pos.getY())).removeAll();
                 this.refresh(this.background.get(this.computeIndex(pos.getX(), pos.getY())));
-            }
-        );
-        for (final var texture : textures.entrySet()) {
-            this.background.get(this.computeIndex(texture.getKey().getX(), texture.getKey().getY())).add(
-                new ForegroundTile(texture.getValue().getScaledInstance(this.tileDimension, this.tileDimension, Image.SCALE_SMOOTH))
+        });
+
+        textures.forEach((pos, texture) -> {
+            this.background.get(this.computeIndex(pos.getX(), pos.getY())).add(
+                this.componentManager.getForegroundTile(texture, this.tileDimension)
             );
-            this.foreground.add(texture.getKey());
-            this.refresh(this.background.get(this.computeIndex(texture.getKey().getX(), texture.getKey().getY())));
-        }
+            this.foreground.add(pos);
+            this.refresh(this.background.get(this.computeIndex(pos.getX(), pos.getY())));
+        });
     }
 
     /**
@@ -96,12 +90,7 @@ public final class GameView extends JPanel {
      * @param text the text to be shown.
      */
     public void showInteractionText(final String text) {
-        this.lowerPanel.removeAll();
-        this.lowerPanel.add(this.componentManager.getCustomLabel(
-            this.lowerPanel.getHeight() / PANEL_TO_TEXT_RATIO,
-            text
-        ));
-        this.refresh(this.lowerPanel);
+        this.updateComponent(this.lowerPanel, List.of(text));
     }
 
     private void renderFloor(final Dimension dimension) {
@@ -148,6 +137,32 @@ public final class GameView extends JPanel {
         });
     }
 
+    private void resizePanels() {
+        this.componentManager.resizeComponent(
+            this.mapPanel,
+            this.mapDimension.getWidth() * this.tileDimension,
+            this.mapDimension.getHeight() * this.tileDimension
+        );
+
+        this.componentManager.resizeComponent(
+            this.upperPanel,
+            this.getWidth(),
+            (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 3
+        );
+        this.updateComponent(this.upperPanel, this.commands);
+
+        this.componentManager.resizeComponent(
+            this.lowerPanel,
+            (int) this.mapPanel.getPreferredSize().getWidth(),
+            (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 2
+        );
+    }
+
+    private void updateComponent(final JComponent component, final List<String> text) {
+        component.removeAll();
+        text.forEach(string -> this.componentManager.showText(this.upperPanel, string));
+    }
+
     private void refresh(final JComponent component) {
         component.revalidate();
         component.repaint();
@@ -157,37 +172,7 @@ public final class GameView extends JPanel {
         return x < y ? x : y;
     }
 
-    private void resizePanels() {
-        this.componentManager.resizeComponent(
-            this.mapPanel,
-            this.mapDimension.getWidth() * this.tileDimension,
-            this.mapDimension.getHeight() * this.tileDimension
-        );
-
-        this.updateUpperPanel();
-
-        this.componentManager.resizeComponent(
-            this.lowerPanel,
-            (int) this.mapPanel.getPreferredSize().getWidth(),
-            (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 2
-        );
-    }
-
     private int computeIndex(final int x, final int y) {
         return this.mapDimension == null ? 0 : (x + y * this.mapDimension.getWidth());
-    }
-
-    private void updateUpperPanel() {
-        this.upperPanel.removeAll();
-        this.componentManager.resizeComponent(
-            this.upperPanel,
-            this.getWidth(),
-            (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 3
-        );
-        this.commands.forEach(e -> this.upperPanel.add(
-            this.componentManager.getCustomLabel(
-                (float) this.upperPanel.getPreferredSize().getHeight() / PANEL_TO_TEXT_RATIO,
-                e
-        )));
     }
 }
