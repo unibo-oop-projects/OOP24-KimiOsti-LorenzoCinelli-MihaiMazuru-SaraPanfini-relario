@@ -2,8 +2,6 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -23,7 +21,6 @@ public final class MainViewImpl implements MainView {
     private final JPanel mainPanel;
     private final MainController mainController;
     private final Map<GameState, JPanel> panels = new EnumMap<>(GameState.class);
-    private final Deque<GameState> stack = new ArrayDeque<>();
     private GameState currentPanel;
 
     /**
@@ -49,12 +46,14 @@ public final class MainViewImpl implements MainView {
         final JPanel gameView = new GameView(this.mainController);
         final JPanel inventoryView = new InventoryViewImpl(this.mainController);
         final JPanel combatView = new CombatView(this.mainController.getCombatController());
+        final JPanel cutSceneView = new CutSceneViewImpl(this.mainController, this);
 
         panels.put(GameState.MENU, startMenuView);
         panels.put(GameState.MENU_IN_GAME, inGameMenuView);
         panels.put(GameState.GAME, gameView);
         panels.put(GameState.INVENTORY, inventoryView);
         panels.put(GameState.COMBAT, combatView);
+        panels.put(GameState.CUT_SCENE, cutSceneView);
 
         this.panelsSetFocusable();
     }
@@ -65,19 +64,12 @@ public final class MainViewImpl implements MainView {
         this.currentPanel = panelName;
         layout.show(mainPanel, this.currentPanel.getState());
 
-        stack.push(panelName);
         this.getPanel(this.currentPanel).requestFocus();
     } 
 
     @Override
     public JPanel getPanel(final GameState name) {
         return panels.get(name);
-    }
-
-    @Override
-    public void showPreviousPanel() {
-        stack.pop();
-        showPanel(stack.pop());
     }
 
     @Override

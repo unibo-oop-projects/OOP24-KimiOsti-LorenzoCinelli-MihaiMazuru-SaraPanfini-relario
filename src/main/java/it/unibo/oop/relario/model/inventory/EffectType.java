@@ -17,7 +17,10 @@ public enum EffectType {
     HEALING("Cura"),
 
     /** No effect, for collectable items. */
-    NONE("Nessuno");
+    NONE("Nessuno"),
+
+    /** An effect that allows the player to pass the quest. */
+    QUEST("Quest");
 
     private final String effect;
 

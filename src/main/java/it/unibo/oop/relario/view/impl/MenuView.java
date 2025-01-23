@@ -72,9 +72,9 @@ public final class MenuView extends JPanel {
         myButton.setFont(new Font(Constants.MONOSPACE_FONT, Font.BOLD, FONT_SIZE));
         myButton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
-                this.controller.getGameController().run();
+                this.controller.getGameController().run(true);
             } else if (e.getActionCommand().equals(Command.CLOSE.getName())) {
-                this.view.showPreviousPanel();
+                //this.view.showPreviousPanel();
             } else if (e.getActionCommand().equals(Command.QUIT.getName())) {
                 final int dialogResult = JOptionPane.showConfirmDialog(this,
                     "Are you sure you want to quit the game?", "Warning",

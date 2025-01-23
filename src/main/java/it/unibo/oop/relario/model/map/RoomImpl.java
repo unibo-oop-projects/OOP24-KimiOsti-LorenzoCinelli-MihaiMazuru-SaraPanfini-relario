@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
+import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
@@ -139,8 +140,11 @@ public final class RoomImpl implements Room {
             this.player.stop();
         }
         this.player.update();
-
         for (LivingBeing chara : this.population.values()) {
+            if (!Interactions.canMove(chara.getPosition().get(), chara.getDirection(), 
+            this.dimension, this.population, this.furniture)) {
+                ((LivingBeingImpl) chara).changeDirection();
+            }
             chara.update();
         }
     }
