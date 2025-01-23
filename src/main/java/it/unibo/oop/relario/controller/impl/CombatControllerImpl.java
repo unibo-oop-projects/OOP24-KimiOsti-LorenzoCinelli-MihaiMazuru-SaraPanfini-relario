@@ -1,10 +1,15 @@
 package it.unibo.oop.relario.controller.impl;
 
+import java.awt.Image;
+
+import javax.swing.Timer;
+
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.utils.impl.CombatTexturesLocator;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
@@ -76,6 +81,11 @@ public final class CombatControllerImpl implements CombatController {
     }
 
     @Override
+    public Image getEnemyTexture() {
+        return CombatTexturesLocator.getTexture(enemy);
+    }
+
+    @Override
     public void resumeCombat() {
         this.view.showPanel(GameState.COMBAT);
     }
@@ -100,12 +110,19 @@ public final class CombatControllerImpl implements CombatController {
 
         if (enemy.getLife() <= 0) {
             player.addToInventory(enemy.getReward());
-            combatState = this.player.getName() + "You've won the combat";
+            combatState = this.player.getName() + " you've won the combat";
             //this.view.getPanel(this.view.getCurrentPanel()).draw();
-            /* [TODO]: gestire transizione tramite controller */
+            final var timer = new Timer(DELAY_TRANSITION, 
+                e -> this.controller.getCutSceneController().show(GameState.VICTORY));
+            timer.setRepeats(false);
+            timer.start();
+
         } else if (player.getLife() <= 0) {
-            //this.view.showPanel(GameState.GAME_OVER);
-            /* [TODO]: gestire transizione tramite controller */
+            final var timer = new Timer(DELAY_TRANSITION, 
+                e -> this.controller.getCutSceneController().show(GameState.GAME_OVER));
+            timer.setRepeats(false);
+            timer.start();
+
         } else if (isPlayerAttacking) {
             this.attack(false);
         }
@@ -114,10 +131,14 @@ public final class CombatControllerImpl implements CombatController {
 
     private void mercyRequest() {
         if (enemy.isMerciful()) {
-            combatState = this.enemy.getName() + "accepted your mercy request. /n"
-            + "You are free to go.";
+            combatState = this.enemy.getName() + " accepted your mercy request."
+            + " You are free to go.";
             //this.view.getPanel(this.view.getCurrentPanel()).draw();
-            /* [TODO]: gestire transizione tramite controller */
+            final var timer = new Timer(DELAY_TRANSITION, 
+                e -> this.controller.getGameController().run(true));
+            timer.setRepeats(false);
+            timer.start();
+            
         } else {
             //player's skips his turn, he used his turn to ask for mercy
             this.attack(false);
