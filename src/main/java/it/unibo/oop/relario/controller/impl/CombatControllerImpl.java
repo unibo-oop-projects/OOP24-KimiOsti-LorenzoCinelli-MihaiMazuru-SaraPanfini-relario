@@ -81,11 +81,12 @@ public final class CombatControllerImpl implements CombatController {
     }
 
     @Override
-    public void handleCombatAction(final boolean askingMercy) {
-        if (askingMercy) {
-            this.mercyRequest();
-        } else {
-            this.attack(true);
+    public void handleAction(final CombatAction combat) {
+        switch (combat) {
+            case ATTACK -> this.attack(true);
+            case MERCY -> this.mercyRequest();
+            case OPEN_INVENTORY -> 
+                this.controller.getInventoryController().init(GameState.COMBAT);
         }
     }
 
@@ -95,12 +96,12 @@ public final class CombatControllerImpl implements CombatController {
         } else {
             this.player.attacked(this.enemy.getDamage());
         }
-        //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
+        //this.view.getPanel(this.view.getCurrentPanel()).draw();
 
         if (enemy.getLife() <= 0) {
             player.addToInventory(enemy.getReward());
             combatState = this.player.getName() + "You've won the combat";
-            //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
+            //this.view.getPanel(this.view.getCurrentPanel()).draw();
             /* [TODO]: gestire transizione tramite controller */
         } else if (player.getLife() <= 0) {
             //this.view.showPanel(GameState.GAME_OVER);
@@ -115,7 +116,7 @@ public final class CombatControllerImpl implements CombatController {
         if (enemy.isMerciful()) {
             combatState = this.enemy.getName() + "accepted your mercy request. /n"
             + "You are free to go.";
-            //this.view.getPanel(this.view.getCurrentPanel()).draw(); catch the exception
+            //this.view.getPanel(this.view.getCurrentPanel()).draw();
             /* [TODO]: gestire transizione tramite controller */
         } else {
             //player's skips his turn, he used his turn to ask for mercy
