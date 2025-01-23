@@ -42,13 +42,22 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final int INSETS = 10;
     private static final int NO_INSETS = 0;
     private static final double SCENE_RATIO = 0.6;
-    private static final double CHARACTER_RATIO = 0.05;
+    private static final double CHARACTER_RATIO = 0.075;
     private static final String CHARACTER_IMAGE_URL = "cutscene/character";
     private static final String DOOR_SOUND_URL = "door_sound";
     private static final Map<Scene, String> MESSAGES = Map.of(
-        Scene.INTRODUCTION, "INTRODUZIONE",
-        Scene.VICTORY, "HAI VINTO",
-        Scene.DEFEAT, "GAME OVER"
+        Scene.INTRODUCTION, """
+        <html>Il vecciho re di Relario sentiva vicino il momento della sua fine, \
+        ma sapeva di non aver lasciato eredi al trono.<br>\
+        Per questo ha deciso che chiunque riuscità a superare tutte le prove del suo castello \
+        erediterà il suo titolo.<br>\
+        Spero di essere all'altezza!</html>
+        """,
+        Scene.VICTORY, """
+        <html><center>HAI VINTO<br>
+        Hai ufficialmente ereditato il trono di Relario</center></html>
+        """,
+        Scene.DEFEAT, "<html><center>HAI PERSO</center></html>"
     );
     private static final Map<Scene, String> URL = Map.of(
         Scene.INTRODUCTION, "cutscene/castle_zoom",
