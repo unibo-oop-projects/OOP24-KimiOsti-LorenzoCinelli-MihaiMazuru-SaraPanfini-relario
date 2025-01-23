@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.utils.impl;
 
+import java.awt.Color;
+
 /**
  * Utility static class containing all of the games' constants.
  */
@@ -58,6 +60,17 @@ public final class Constants {
      * Texture files extension.
      */
     public static final String TEXTURES_EXTENSION = ".png";
+
+    /**
+     * The base color of the background in view's scenes.
+     */
+    public static final Color BACKGROUND_SCENE_COLOR = Color.BLACK;
+
+    /**
+     * The base color of the text in view's scenes.
+     */
+    public static final Color BACKGROUND_TEXT_COLOR = Color.WHITE;
+
 
     private Constants() {
         throw new UnsupportedOperationException();
