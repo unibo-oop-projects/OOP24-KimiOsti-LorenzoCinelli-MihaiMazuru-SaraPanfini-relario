@@ -18,6 +18,7 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.menu.Command;
 import it.unibo.oop.relario.model.menu.MenuElement;
 import it.unibo.oop.relario.utils.impl.Constants;
+import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
@@ -72,9 +73,9 @@ public final class MenuView extends JPanel {
         myButton.setFont(new Font(Constants.MONOSPACE_FONT, Font.BOLD, FONT_SIZE));
         myButton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
-                this.controller.getGameController().run(true);
+                this.controller.getCutSceneController().show(GameState.MENU);
             } else if (e.getActionCommand().equals(Command.CLOSE.getName())) {
-                //this.view.showPreviousPanel();
+                this.controller.getMenuController().notify(Event.ESCAPE);
             } else if (e.getActionCommand().equals(Command.QUIT.getName())) {
                 final int dialogResult = JOptionPane.showConfirmDialog(this,
                     "Are you sure you want to quit the game?", "Warning",
