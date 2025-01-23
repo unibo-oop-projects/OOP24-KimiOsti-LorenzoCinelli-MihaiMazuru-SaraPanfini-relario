@@ -14,6 +14,11 @@ public interface MainController {
      * @return the main View.
      */
     MainView getMainView();
+
+    /**
+     * Starts a new game on a fully restored model.
+     */
+    void startNewGame();
     
     /**
      * @return the combat Controller.

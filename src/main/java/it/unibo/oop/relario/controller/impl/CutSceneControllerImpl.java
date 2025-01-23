@@ -44,7 +44,10 @@ public final class CutSceneControllerImpl implements CutSceneController {
                 this.controller.moveToNextRoom();
                 this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
             }
-            case MENU -> this.controller.getMenuController();
+            case MENU -> {
+                this.controller.startNewGame();
+                this.controller.getMenuController().showMenu(GameState.MENU, GameState.NONE);
+            }
             default -> { }
         }
     }
