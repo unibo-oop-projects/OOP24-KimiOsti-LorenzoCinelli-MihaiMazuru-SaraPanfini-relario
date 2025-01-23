@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
  * Locator class for images.
  */
 public final class ImageLocators {
-    private static final String IMAGE_BASE_URL = "src/main/resources/img/";
+    private static final String IMAGE_BASE_URL = "img/";
     private static final String IMAGE_EXTENSION = ".png";
 
     private ImageLocators() { }
@@ -22,7 +22,7 @@ public final class ImageLocators {
      * @return the image icon of the resource in path.
      */
     public static ImageIcon getFixedSizeImage(final String path, final double horizontalRatio, final double verticalRatio) {
-        final String url = IMAGE_BASE_URL + path + IMAGE_EXTENSION;
+        final String url = Constants.RESOURCES_FOLDER_URL + IMAGE_BASE_URL + path + IMAGE_EXTENSION;
         final var toolKit = Toolkit.getDefaultToolkit();
         final Image img = toolKit.getImage(url).getScaledInstance(
             (int) (toolKit.getScreenSize().getWidth() * horizontalRatio),

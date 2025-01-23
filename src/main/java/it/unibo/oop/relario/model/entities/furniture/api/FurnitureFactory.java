@@ -2,7 +2,7 @@ package it.unibo.oop.relario.model.entities.furniture.api;
 
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureType;
-import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -72,10 +72,10 @@ public interface FurnitureFactory {
     /**
      * Creates a random interactive furniture with a specific loot.
      * @param pos is the position of the furniture item in the map.
-     * @param item is the item inside the furniture.
+     * @param itemType is the item's type.
      * @return a furniture item.
      */
-    Furniture createInteractiveFurnitureLoot(Position pos, InventoryItem item);
+    Furniture createInteractiveFurnitureLoot(Position pos, InventoryItemType itemType);
 
     /**
      * Creates a random walkable furniture with a specific enemy.
