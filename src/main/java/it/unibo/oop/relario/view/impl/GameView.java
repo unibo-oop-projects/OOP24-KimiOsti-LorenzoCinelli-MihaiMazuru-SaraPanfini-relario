@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -16,7 +15,6 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.FontHandler;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.GameTexturesLocator;
 
@@ -40,7 +38,6 @@ public final class GameView extends JPanel {
     private final List<BackgroundTile> background;
     private final List<String> commands;
     private final List<Position> foreground;
-    private final Font font;
     private Dimension mapDimension;
     private int tileDimension;
 
@@ -65,7 +62,6 @@ public final class GameView extends JPanel {
 
         this.background = new LinkedList<>();
         this.foreground = new LinkedList<>();
-        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
         this.addKeyListener(new GameKeyListener(controller.getGameController()));
     }
 
@@ -221,7 +217,7 @@ public final class GameView extends JPanel {
 
     private JLabel getCustomLabel(final JPanel container, final String text) {
         final var label = new JLabel();
-        label.setFont(FontHandler.getSizedFont(font, container.getHeight() / PANEL_TO_TEXT_RATIO));
+        label.setFont(Constants.FONT.deriveFont(container.getHeight() / PANEL_TO_TEXT_RATIO));
         label.setForeground(TEXT_COLOR);
         label.setText(text);
         return label;

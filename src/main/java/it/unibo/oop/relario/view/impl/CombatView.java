@@ -2,7 +2,6 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.FontHandler;
 
 /**
  * View implementation for the combat phase of the game.
@@ -32,7 +30,6 @@ public class CombatView extends JPanel {
     private final CombatScene centralScene;
     private final JPanel commands;
     private final JPanel message;
-    private final Font font;
 
     /**
      * Creates the panel showing combat scenes.
@@ -42,7 +39,6 @@ public class CombatView extends JPanel {
         this.setBackground(BACKGROUND_COLOR);
 
         this.controller = controller;
-        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
 
         this.upperPadding = new JPanel();
         this.setupPanel(this.upperPadding);
@@ -94,7 +90,7 @@ public class CombatView extends JPanel {
         final var label = new JLabel();
         label.setBackground(BACKGROUND_COLOR);
         label.setForeground(TEXT_COLOR);
-        label.setFont(this.font.deriveFont(
+        label.setFont(Constants.FONT.deriveFont(
             (float) (this.message.getPreferredSize().getHeight() * FONT_TO_PANEL_RATIO)
         ));
         label.setText(msg);
@@ -113,7 +109,7 @@ public class CombatView extends JPanel {
 
         buttons.forEach(e -> {
             panel.add(e);
-            e.setFont(this.font);
+            e.setFont(Constants.FONT);
         });
 
         return panel;

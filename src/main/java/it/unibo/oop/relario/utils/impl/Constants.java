@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.utils.impl;
 
 import java.awt.Color;
+import java.awt.Font;
 
 /**
  * Utility static class containing all of the games' constants.
@@ -29,10 +30,7 @@ public final class Constants {
      * Game font base URL.
      */
     public static final String FONT_URL = "font/";
-    /**
-     * Game's monospace font name.
-     */
-    public static final String MONOSPACE_FONT = "monogram";
+
     /**
      * Font files extension.
      */
@@ -71,6 +69,10 @@ public final class Constants {
      */
     public static final Color TEXT_SCENE_COLOR = Color.WHITE;
 
+    /**
+     * The font of the game view.
+     */
+    public static final Font FONT = new Font(Font.MONOSPACED, Font.TRUETYPE_FONT, 16);
 
     private Constants() {
         throw new UnsupportedOperationException();

@@ -1,7 +1,6 @@
 package it.unibo.oop.relario.view.impl;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,7 +14,6 @@ import javax.swing.Timer;
 import it.unibo.oop.relario.controller.api.CutSceneController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.FontHandler;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
 import it.unibo.oop.relario.utils.impl.SoundLocators;
@@ -67,7 +65,6 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private final CutSceneController controller;
     private final MainView mainView;
-    private final Font font;
 
     /**
      * Creates a new cutscene panel.
@@ -77,7 +74,6 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     public CutSceneViewImpl(final MainController controller, final MainView view) {
         this.controller = controller.getCutSceneController();
         this.mainView = view;
-        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
         this.setLayout(new GridBagLayout());
         this.setBackground(Constants.BACKGROUND_SCENE_COLOR);
     }
@@ -133,7 +129,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
             label.setIcon(playerImage);
         }
         label.setText(MESSAGES.get(scene));
-        label.setFont(this.font);
+        label.setFont(Constants.FONT);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setForeground(Constants.TEXT_SCENE_COLOR);
         this.add(label, labelConstraints);
