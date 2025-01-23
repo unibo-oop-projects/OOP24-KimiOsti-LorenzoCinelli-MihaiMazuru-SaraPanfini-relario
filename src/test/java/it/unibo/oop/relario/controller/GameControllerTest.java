@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,6 +11,8 @@ import it.unibo.oop.relario.controller.impl.MainControllerImpl;
 import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
 import it.unibo.oop.relario.model.map.RoomImpl;
 import it.unibo.oop.relario.utils.impl.DimensionImpl;
+import it.unibo.oop.relario.utils.impl.Direction;
+import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 import it.unibo.oop.relario.view.impl.GameView;
@@ -41,11 +44,27 @@ public class GameControllerTest {
     }
 
     /**
-     * Test the event handling of the game controller.
+     * Test the game controller on user input scenarios.
      */
     @Test
     public void testNotify() {
+        final var controller = new MainControllerImpl();
+        controller.moveToNextRoom();
+        controller.getCutSceneController().show(GameState.GAME);
 
+        assertTrue(controller.getCurRoom().isPresent());
+
+        final var gameController = controller.getGameController();
+        gameController.notify(Event.MOVE_RIGHT);
+        assertEquals(Direction.RIGHT, controller.getCurRoom().get().getPlayer().getDirection());
+        gameController.notify(Event.MOVE_UP);
+        assertEquals(Direction.UP, controller.getCurRoom().get().getPlayer().getDirection());
+        gameController.notify(Event.MOVE_DOWN);
+        assertEquals(Direction.DOWN, controller.getCurRoom().get().getPlayer().getDirection());
+        gameController.notify(Event.MOVE_LEFT);
+        assertEquals(Direction.LEFT, controller.getCurRoom().get().getPlayer().getDirection());
+        gameController.notify(Event.RELEASED);
+        assertFalse(controller.getCurRoom().get().getPlayer().isMoving());
     }
 
 }
