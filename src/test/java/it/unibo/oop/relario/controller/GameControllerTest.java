@@ -62,6 +62,7 @@ public final class GameControllerTest {
         assertTrue(this.controller.getCurRoom().isPresent());
 
         final var gameController = this.controller.getGameController();
+        gameController.run(this.controller.getCurRoom().isPresent());
         gameController.notify(Event.MOVE_RIGHT);
         assertEquals(Direction.RIGHT, this.controller.getCurRoom().get().getPlayer().getDirection());
         gameController.notify(Event.MOVE_UP);
