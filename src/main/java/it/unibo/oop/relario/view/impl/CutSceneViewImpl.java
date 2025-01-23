@@ -31,7 +31,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final Color TRANSPARENT_BLACK = new Color(0, 0, 0, 0);
     private static final int FADE_SPEED = 10;
     private static final int FADE_LIMIT = 256;
-    private static final int TRANSITION_DELAY = 5000;
+    private static final int TRANSITION_DELAY = 10000;
     private static final int INTRODUCTION_SCENE = 0;
     private static final int VICTORY_SCENE = 1;
     private static final int DEFEAT_SCENE = 2;
@@ -81,7 +81,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         final var audio = SoundLocators.getAudio(URL.get("door"));
         audio.start();
         this.fadeOutOverLastView();
-        final var timer = new Timer(TRANSITION_DELAY, e -> this.controller.progress(GameState.GAME));
+        final var timer = new Timer(TRANSITION_DELAY / 2, e -> this.controller.progress(GameState.GAME));
         timer.setRepeats(false);
         timer.start();
     }
@@ -111,8 +111,8 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private void sceneLoader(final int scene) {
         this.removeAll();
-        // TODO cambiare gli url
-        final var image = ImageLocators.getFixedSizeImage(URL.get("castle"), SCENE_RATIO, SCENE_RATIO);
+        final var image = ImageLocators.getFixedSizeImage(
+            URL.get(scene == VICTORY_SCENE ? "victory" : "castle"), SCENE_RATIO, SCENE_RATIO);
         this.add(new JLabel(image));
 
         final var labelConstraints = new GridBagConstraints();
@@ -121,7 +121,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
         final var label = new JLabel();
         if (scene == INTRODUCTION_SCENE) {
-            final var playerImage = ImageLocators.getFixedSizeImage(URL.get("player"), CHARACTER_RATIO, CHARACTER_RATIO);
+            final var playerImage = ImageLocators.getFixedSizeImage(URL.get("character"), CHARACTER_RATIO, CHARACTER_RATIO);
             label.setIcon(playerImage);
         }
         label.setText(MESSAGES.get(scene));
