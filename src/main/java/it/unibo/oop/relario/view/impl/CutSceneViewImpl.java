@@ -31,7 +31,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final Color TRANSPARENT_BLACK = new Color(0, 0, 0, 0);
     private static final int FADE_SPEED = 10;
     private static final int FADE_LIMIT = 256;
-    private static final int TRANSITION_DELAY = 5000;
+    private static final int TRANSITION_DELAY = 10000;
     private static final int INTRODUCTION_SCENE = 0;
     private static final int VICTORY_SCENE = 1;
     private static final int DEFEAT_SCENE = 2;
@@ -81,8 +81,9 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         final var audio = SoundLocators.getAudio(URL.get("door"));
         audio.start();
         this.fadeOutOverLastView();
-        audio.close();
-        this.controller.progress(GameState.GAME);
+        final var timer = new Timer(TRANSITION_DELAY / 2, e -> this.controller.progress(GameState.GAME));
+        timer.setRepeats(false);
+        timer.start();
     }
 
     @Override
@@ -110,8 +111,8 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private void sceneLoader(final int scene) {
         this.removeAll();
-
-        final var image = ImageLocators.getFixedSizeImage(URL.get("castle"), SCENE_RATIO, SCENE_RATIO);
+        final var image = ImageLocators.getFixedSizeImage(
+            URL.get(scene == VICTORY_SCENE ? "victory" : "castle"), SCENE_RATIO, SCENE_RATIO);
         this.add(new JLabel(image));
 
         final var labelConstraints = new GridBagConstraints();
@@ -120,7 +121,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
         final var label = new JLabel();
         if (scene == INTRODUCTION_SCENE) {
-            final var playerImage = ImageLocators.getFixedSizeImage(URL.get("player"), CHARACTER_RATIO, CHARACTER_RATIO);
+            final var playerImage = ImageLocators.getFixedSizeImage(URL.get("character"), CHARACTER_RATIO, CHARACTER_RATIO);
             label.setIcon(playerImage);
         }
         label.setText(MESSAGES.get(scene));
@@ -135,30 +136,41 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private void fadeOutOverLastView() {
         final var pane = new JLayeredPane();
+        final var oldPanel = this.mainView.getPanel(this.mainView.getCurrentPanel());
         final var panel = new JPanel();
+
+        oldPanel.setBounds(0, 0, this.getSize().width, this.getSize().height);
         panel.setBackground(TRANSPARENT_BLACK);
-        pane.add(this.mainView.getPanel(this.mainView.getCurrentPanel()), JLayeredPane.DEFAULT_LAYER);
-        pane.add(panel, JLayeredPane.POPUP_LAYER);
+        panel.setBounds(0, 0, this.getSize().width, this.getSize().height);
+        pane.setPreferredSize(this.getSize());
+        pane.add(panel, JLayeredPane.DEFAULT_LAYER);
+        pane.add(oldPanel, JLayeredPane.DEFAULT_LAYER);
+
         this.removeAll();
         this.add(pane);
+        this.repaint();
         this.validate();
-        this.fadeOut(pane, panel, FADE_SPEED);
+
+        final Timer timer = new Timer(FADE_SPEED, null);
+        timer.addActionListener(e -> fadeOut(timer, panel));
+        timer.start();
     }
 
-    private void fadeOut(final JLayeredPane pane, final JPanel panel, final int speed) {
-        int i = 0;
-        while (i < FADE_LIMIT) {
-            final Color color = new Color(panel.getBackground().getRed(),
-                panel.getBackground().getGreen(), panel.getBackground().getBlue(), i);
-            i++;
+    private void fadeOut(final Timer timer, final JPanel panel) {
+        timer.start();
+        final int alpha = panel.getBackground().getAlpha() + 1;
+        if (alpha < FADE_LIMIT) {
+            final Color color = new Color(
+                panel.getBackground().getRed(),
+                panel.getBackground().getGreen(),
+                panel.getBackground().getBlue(),
+                alpha
+            );
             panel.setBackground(color);
-            pane.repaint();
-            pane.validate();
-            try {
-                Thread.sleep(speed);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            this.repaint();
+            this.validate();
+        } else {
+            timer.stop();
         }
     }
 }

@@ -25,7 +25,8 @@ public final class FontHandler {
             font = Font.createFont(
                 Font.TRUETYPE_FONT,
                 ClassLoader.getSystemResourceAsStream(
-                    new StringBuilder(Constants.FONT_URL)
+                    new StringBuilder(Constants.RESOURCES_FOLDER_URL)
+                    .append(Constants.FONT_URL)
                     .append(Constants.MONOSPACE_FONT)
                     .append(Constants.FONT_EXTENSION)
                     .toString()
