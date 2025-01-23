@@ -57,7 +57,7 @@ public final class GameViewComponentManagerImpl implements GameViewComponentMana
         ));
     }
 
-    private JLabel getCustomLabel(float textSize, String text) {
+    private JLabel getCustomLabel(final float textSize, final String text) {
         final var label = new JLabel();
         label.setFont(Constants.FONT.deriveFont(textSize));
         label.setBackground(Constants.BACKGROUND_SCENE_COLOR);
@@ -65,5 +65,5 @@ public final class GameViewComponentManagerImpl implements GameViewComponentMana
         label.setText(text);
         return label;
     }
-    
+
 }
