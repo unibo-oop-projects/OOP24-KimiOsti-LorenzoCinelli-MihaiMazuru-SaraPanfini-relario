@@ -6,7 +6,7 @@ import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.map.Room;
 
 /**
- * 
+ * TODO
  */
 
 public interface ObjectiveStrategy {
