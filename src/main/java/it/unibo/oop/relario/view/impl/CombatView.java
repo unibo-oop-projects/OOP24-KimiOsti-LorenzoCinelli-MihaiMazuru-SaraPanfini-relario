@@ -11,10 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.CombatController;
+import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.FontHandler;
-
-/* [TODO]: implementare action listener del comando inventory */
 
 /**
  * View implementation for the combat phase of the game.
@@ -27,8 +26,6 @@ public class CombatView extends JPanel {
     private static final double SCREEN_TO_SCENE_RATIO = 1.5;
     private static final double SIDE_COMPONENTS_RATIO = 0.25;
     private static final double FONT_TO_PANEL_RATIO = 0.25;
-    private static final boolean ATTACKING = false;
-    private static final boolean BEGGING_MERCY = true;
 
     private final CombatController controller;
     private final JPanel upperPadding;
@@ -107,11 +104,11 @@ public class CombatView extends JPanel {
     private JPanel createCommandPanel() {
         final var panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final var attack = new JButton("Attacca");
-        attack.addActionListener(e -> this.controller.handleCombatAction(ATTACKING));
+        attack.addActionListener(e -> this.controller.handleAction(CombatAction.ATTACK));
         final var inventory = new JButton("Inventario");
-        inventory.addActionListener(null /* [TODO]: implement action listener */);
+        inventory.addActionListener(e -> this.controller.handleAction(CombatAction.OPEN_INVENTORY));
         final var mercy = new JButton("Chiedi pietà");
-        mercy.addActionListener(e -> this.controller.handleCombatAction(BEGGING_MERCY));
+        mercy.addActionListener(e -> this.controller.handleAction(CombatAction.MERCY));
         final var buttons = List.of(attack, inventory, mercy);
 
         buttons.forEach(e -> {
