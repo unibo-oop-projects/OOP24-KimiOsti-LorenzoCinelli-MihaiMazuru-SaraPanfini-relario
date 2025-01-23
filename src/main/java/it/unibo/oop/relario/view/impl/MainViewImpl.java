@@ -39,14 +39,14 @@ public final class MainViewImpl implements MainView {
 
     @Override
     public void panelsSetup() {
-        final JPanel startMenuView = new MenuView(this, 
+        final JPanel startMenuView = new MenuView(
         this.mainController.getMenuController().getStartMenuElements(), this.mainController);
-        final JPanel inGameMenuView = new MenuView(this, 
+        final JPanel inGameMenuView = new MenuView(
         this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
         final JPanel gameView = new GameView(this.mainController);
         final JPanel inventoryView = new InventoryViewImpl(this.mainController);
         final JPanel combatView = new CombatView(this.mainController.getCombatController());
-        final JPanel cutSceneView = new CutSceneViewImpl(this.mainController, this);
+        final JPanel cutSceneView = new CutSceneViewImpl(this.mainController);
 
         panels.put(GameState.MENU, startMenuView);
         panels.put(GameState.MENU_IN_GAME, inGameMenuView);

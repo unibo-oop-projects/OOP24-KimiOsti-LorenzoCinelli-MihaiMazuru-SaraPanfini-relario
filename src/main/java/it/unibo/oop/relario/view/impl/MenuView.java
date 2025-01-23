@@ -40,10 +40,9 @@ public final class MenuView extends JPanel {
      * @param elements are the menu elements that need to be added to the view.
      * @param controller is the main controller.
      */
-    public MenuView(final MainView view, final List<MenuElement> elements, 
-    final MainController controller) {
-        this.view = view;
+    public MenuView(final List<MenuElement> elements, final MainController controller) {
         this.controller = controller;
+        this.view = this.controller.getMainView();
         this.setLayout(new GridBagLayout());
         final GridBagConstraints gridc = new GridBagConstraints();
         gridc.gridy = 0;

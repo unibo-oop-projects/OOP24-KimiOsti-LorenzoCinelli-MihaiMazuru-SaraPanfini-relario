@@ -45,7 +45,7 @@ class CombatControllerTest {
         final Position pos = new PositionImpl(0, 0);
         final InventoryItem item = new InventoryItemFactoryImpl().createRandomItem();
 
-        final CombatController controller = new CombatControllerImpl(view, mainController);
+        final CombatController controller = new CombatControllerImpl(mainController);
         final MainCharacter chara = new MainCharacterImpl();
         final Enemy hostileEnemy = new EnemyImpl(EnemyType.SOLDIER.getName(), 
         "Sono un soldato", pos, DifficultyLevel.EASY, item, false, EnemyType.SOLDIER);
