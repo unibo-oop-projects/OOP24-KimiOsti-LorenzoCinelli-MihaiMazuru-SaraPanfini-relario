@@ -61,9 +61,6 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
         this.itemCreator.put(InventoryItemType.KEY,
         () -> new InventoryItemImpl("Chiave", "Chiave antica per aprire un passaggio", 
         InventoryItemType.KEY, ItemAttributes.KEY_INTENSITY));
-        this.itemCreator.put(InventoryItemType.BOOK,
-        () -> new InventoryItemImpl("Libro", "Antico manuale di cucina, pieno di ricette deliziose", 
-        InventoryItemType.BOOK, ItemAttributes.BOOK_INTENSITY));
     }
 
     @Override
