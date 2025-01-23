@@ -13,8 +13,6 @@ import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.FontHandler;
 
-/* [TODO]: implementare getter per image panel */
-
 /**
  * Implementation for the central scene of combat environments.
  */
@@ -22,6 +20,7 @@ public final class CombatScene extends JPanel {
 
     private static final Color BACKGROUND_COLOR = Color.BLACK;
     private static final Color TEXT_COLOR = Color.WHITE;
+    private static final double TEXTURE_TO_PANEL_RATIO = 0.5;
     private static final int INFO_ROWS = 1;
     private static final int INFO_COLS = 3;
 
@@ -51,7 +50,13 @@ public final class CombatScene extends JPanel {
             BorderLayout.NORTH
         );
         this.add(
-            this.getEnemyImagePanel(null /* [TODO]: aggiungere immagine del nemico */),
+            this.getEnemyImagePanel(
+                this.controller.getEnemyTexture().getScaledInstance(
+                    (int) (this.getWidth() * TEXTURE_TO_PANEL_RATIO),
+                    (int) (this.getHeight() * TEXTURE_TO_PANEL_RATIO),
+                    Image.SCALE_SMOOTH
+                )
+            ),
             BorderLayout.CENTER
         );
         this.add(
