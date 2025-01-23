@@ -52,7 +52,7 @@ public class QuestManager {
     public void assignQuest(final Room room, final int indexRoom) {
         Pair<QuestType, Optional<GameEntityType>> quest = this.roomQuests.get(indexRoom);
         room.setQuest(quest.getX().equals(QuestType.NO_QUEST) ? Optional.empty() 
-        : Optional.of(this.questFactory.createQuestByType(room, quest.getX(), quest.getY().get())));
+        : Optional.of(this.questFactory.createQuestByType(room, quest.getX(), quest.getY())));
     }
 
 }

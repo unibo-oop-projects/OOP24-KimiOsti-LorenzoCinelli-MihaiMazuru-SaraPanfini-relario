@@ -19,6 +19,11 @@ public final class Constants {
     public static final int REFRESH_TIME = 125;
 
     /**
+     * The game's resources container folder.
+     */
+    public static final String RESOURCES_FOLDER_URL = "src/main/resources/";
+
+    /**
      * Game font base URL.
      */
     public static final String FONT_URL = "font/";

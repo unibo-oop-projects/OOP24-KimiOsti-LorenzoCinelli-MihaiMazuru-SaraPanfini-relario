@@ -34,7 +34,10 @@ public enum EnemyType implements GameEntityType {
         this.effect = effect;
     }
 
-    @Override
+    /**
+     * Retrieves the effect associated with the items that the enemy can drop.
+     * @return the effect of the enemy
+     */
     public EffectType getEffect() {
         return this.effect;
     }
