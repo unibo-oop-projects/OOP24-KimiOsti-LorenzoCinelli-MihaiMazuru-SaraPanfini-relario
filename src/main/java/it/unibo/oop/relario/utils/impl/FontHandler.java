@@ -3,12 +3,13 @@ package it.unibo.oop.relario.utils.impl;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
-import java.util.Locale;
 
 /**
  * Handler for the game's fonts.
  */
 public final class FontHandler {
+
+    private static final float DEFAULT_FONT_SIZE = 10f;
 
     private FontHandler() { }
 
@@ -23,13 +24,13 @@ public final class FontHandler {
         try {
             font = Font.createFont(
                 Font.TRUETYPE_FONT,
-                FontHandler.class.getResourceAsStream(
+                ClassLoader.getSystemResourceAsStream(
                     new StringBuilder(Constants.FONT_URL)
-                    .append(fontName.toLowerCase(Locale.ROOT))
+                    .append(Constants.MONOSPACE_FONT)
                     .append(Constants.FONT_EXTENSION)
                     .toString()
                 )
-            );
+            ).deriveFont(DEFAULT_FONT_SIZE);
         } catch (FontFormatException | IOException e) {
             font = null;
         }
