@@ -25,7 +25,7 @@ public final class MainControllerImpl implements MainController {
     private final MenuController mainMenu;
     private final CutSceneController cutScene;
     private final MainView view;
-    private final RoomGenerator roomGenerator;
+    private RoomGenerator roomGenerator;
     private Optional<Room> curRoom;
     private int roomIndex;
 
@@ -34,9 +34,7 @@ public final class MainControllerImpl implements MainController {
      */
     public MainControllerImpl() {
         this.view = new MainViewImpl(this);
-        this.roomIndex = 0;
-        this.roomGenerator = new RoomGenerator();
-        this.curRoom = Optional.empty();
+        this.startNewGame();
         this.combat = new CombatControllerImpl(this);
         this.game = new GameControllerImpl(this);
         this.inventory = new InventoryControllerImpl(this);
@@ -44,6 +42,13 @@ public final class MainControllerImpl implements MainController {
         this.cutScene = new CutSceneControllerImpl(this);
         this.view.panelsSetup();
         this.view.showPanel(GameState.MENU);
+    }
+
+    @Override
+    public void startNewGame() {
+        this.roomGenerator = new RoomGenerator();
+        this.roomIndex = 0;
+        this.curRoom = Optional.empty();
     }
 
     @Override
