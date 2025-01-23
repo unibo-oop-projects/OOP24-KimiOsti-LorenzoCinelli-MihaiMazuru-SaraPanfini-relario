@@ -15,6 +15,8 @@ import it.unibo.oop.relario.view.api.GameViewComponentManager;
  */
 public final class GameViewComponentManagerImpl implements GameViewComponentManager {
 
+    private static final float TEXT_TO_COMPONENT_RATIO = 0.33f;
+
     @Override
     public JPanel getGamePanel() {
         final var panel = new JPanel();
@@ -25,6 +27,16 @@ public final class GameViewComponentManagerImpl implements GameViewComponentMana
     @Override
     public void resizeComponent(final JComponent component, final int width, final int height) {
         component.setPreferredSize(new Dimension(width, height));
+    }
+
+    @Override
+    public void showText(final JComponent component, final String text) {
+        component.add(this.getCustomLabel(
+            component.getHeight() * TEXT_TO_COMPONENT_RATIO,
+            text
+        ));
+        component.revalidate();
+        component.repaint();
     }
 
     @Override
@@ -45,8 +57,7 @@ public final class GameViewComponentManagerImpl implements GameViewComponentMana
         ));
     }
 
-    @Override
-    public JLabel getCustomLabel(float textSize, String text) {
+    private JLabel getCustomLabel(float textSize, String text) {
         final var label = new JLabel();
         label.setFont(Constants.FONT.deriveFont(textSize));
         label.setBackground(Constants.BACKGROUND_SCENE_COLOR);

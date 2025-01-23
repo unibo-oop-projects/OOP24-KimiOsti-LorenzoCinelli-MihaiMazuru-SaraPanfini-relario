@@ -3,7 +3,6 @@ package it.unibo.oop.relario.view.api;
 import java.awt.Image;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.view.impl.BackgroundTile;
@@ -28,6 +27,13 @@ public interface GameViewComponentManager {
     void resizeComponent(JComponent component, int width, int height);
 
     /**
+     * Shows some text in a given component.
+     * @param component the component in which text has to be displayed.
+     * @param text the text to be displayed.
+     */
+    void showText(JComponent component, String text);
+
+    /**
      * Creates a background tile.
      * @param texture the texture to be represented.
      * @param tileDimension the dimension to which the square texture will be scaled.
@@ -43,11 +49,4 @@ public interface GameViewComponentManager {
      */
     ForegroundTile getForegroundTile(Image texture, int tileDimension);
 
-    /**
-     * Creates a custom label, representing a text of a given size.
-     * @param textSize the text desired size.
-     * @param text the text to be shown.
-     * @return a label containing the given text, of the given size.
-     */
-    JLabel getCustomLabel(float textSize, String text);
 }
