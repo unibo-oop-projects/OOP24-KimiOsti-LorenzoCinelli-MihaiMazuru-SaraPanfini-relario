@@ -1,19 +1,15 @@
 package it.unibo.oop.relario.controller.impl;
 
-import java.util.Map;
-import java.util.function.Consumer;
-
 import it.unibo.oop.relario.controller.api.InteractionsHandler;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.Interactions;
-import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
+import it.unibo.oop.relario.model.entities.npc.InteractiveNpc;
 import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.utils.impl.GameState;
-import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.GameView;
 
 /**
@@ -22,8 +18,7 @@ import it.unibo.oop.relario.view.impl.GameView;
 public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     private final MainController controller;
-    private final MainView view;
-    private final Map<String, Consumer<Entity>> classNameToInteraction;
+    private final GameView view;
     private Room curRoom;
 
     /**
@@ -31,15 +26,9 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
      * @param controller the controller for return calls.
      * @param view the game view's access point to display the interaction's effects.
      */
-    public InteractionsHandlerImpl(final MainController controller, final MainView view) {
+    public InteractionsHandlerImpl(final MainController controller, final GameView view) {
         this.controller = controller;
         this.view = view;
-        this.classNameToInteraction = Map.of(
-            Npc.class.getName(), (e) -> this.interactWithNpc((Npc) e),
-            Enemy.class.getName(), (e) -> this.startEnemyCombat((Enemy) e),
-            InteractiveFurniture.class.getName(), (e) -> this.interactWithFurniture((InteractiveFurniture) e),
-            WalkableFurniture.class.getName(), (e) -> this.startEnemyCombat(null/* ((WalkableFurniture) e).removeEnemy() */)
-        );
     }
 
     @Override
@@ -57,14 +46,21 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
             if (this.curRoom.getPlayer().getPosition().get().equals(this.curRoom.getExit())
                 && (this.curRoom.getQuest().isEmpty() || this.curRoom.getQuest().get().isCompleted())
             ) {
-                this.controller.moveToNextRoom();
-                this.resumeGame();
+                this.controller.getCutSceneController().show(GameState.GAME);
             } else {
                 final var entity = this.curRoom.getCellContent(
                     this.curRoom.getPlayer().getDirection().move(this.curRoom.getPlayer().getPosition().get())
                 );
                 if (entity.isPresent()) {
-                    this.classNameToInteraction.get(entity.get().getClass().getName()).accept(entity.get());
+                    if (entity.get() instanceof Npc) {
+                        this.interactWithNpc((Npc) entity.get());
+                    } else if (entity.get() instanceof Enemy) {
+                        this.startEnemyCombat((Enemy) entity.get());
+                    } else if (entity.get() instanceof InteractiveFurniture) {
+                        this.interactWithFurniture((InteractiveFurniture) entity.get());
+                    } else if (entity.get() instanceof WalkableFurniture) {
+                        this.startEnemyCombat(((WalkableFurniture) entity.get()).removeEnemy());
+                    }
                 }
             }
         }
@@ -72,10 +68,16 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     private void interactWithNpc(final Npc npc) {
         final var output = npc.interact();
-        if (output.getLoot().isPresent()) {
-            this.curRoom.getPlayer().addToInventory(output.getLoot().get());
+        if (npc instanceof InteractiveNpc && output.getLoot().isPresent()) {
+            if (this.curRoom.getPlayer().addToInventory(output.getLoot().get())) {
+                ((InteractiveNpc) npc).confirmLootTaken();
+                this.showOutputText(output.getDialogue());
+            } else {
+                this.showOutputText("Sembra che io non abbia spazio per questo oggetto...");
+            }
+        } else {
+            this.showOutputText(output.getDialogue());
         }
-        this.showOutputText(output.getDialogue());
         this.resumeGame();
     }
 
@@ -97,11 +99,11 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void showOutputText(final String text) {
-        ((GameView) this.view.getPanel(GameState.GAME.getState())).showInteractionText(text);
+        this.view.showInteractionText(text);
     }
 
     private void resumeGame() {
-        this.controller.getGameController().resume(this.controller.getCurRoom().isPresent());
+        this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
     }
 
 }

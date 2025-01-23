@@ -1,5 +1,8 @@
 package it.unibo.oop.relario.controller.api;
 
+import java.awt.Image;
+
+import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
@@ -20,7 +23,7 @@ public interface CombatController {
      * @return the combat state.
      */
     String getCombatState();
-    
+
     /**
      * Retrieves the enemy's name.
      * @return enemy's name.
@@ -46,9 +49,32 @@ public interface CombatController {
     DifficultyLevel getDifficultyLevel();
 
     /**
-     * Handle attack and mercy request made by the player.
-     * @param askingMercy is true if the player's asking for mercy, false otherwise.
+     * Retrieves the name of the item equipped by the player.
+     * @return the item's name.
      */
-    void handleCombatAction(boolean askingMercy);
+    String getItem(); 
+
+    /**
+     * Retrieves the name of the armor equipped by the player.
+     * @return the armor's name.
+     */
+    String getArmor();
+
+    /**
+     * Retrieves the enemy's texture.
+     * @return the enemy's texture.
+     */
+    Image getEnemyTexture();
+
+    /**
+     * Handle attack, mercy and open inventory.
+     * @param action perdormed by the player.
+     */
+    void handleAction(CombatAction action);
+
+    /**
+     * Shows the combat view.
+     */
+    void resumeCombat();
 
 }

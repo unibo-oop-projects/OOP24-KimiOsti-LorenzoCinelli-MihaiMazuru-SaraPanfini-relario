@@ -9,4 +9,9 @@ public interface InventoryView {
      * Refresh the inventory view with updated data.
      */
     void refresh();
+
+    /**
+     * Initializes the inventory view.
+     */
+    void init();
 }

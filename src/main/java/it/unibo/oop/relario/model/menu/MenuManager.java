@@ -4,7 +4,7 @@ package it.unibo.oop.relario.model.menu;
  * Manages the two different menu types.
  */
 public class MenuManager {
-    
+
     private final Menu startMenu;
     private final Menu inGameMenu;
 
@@ -14,12 +14,11 @@ public class MenuManager {
     public MenuManager() {
         this.startMenu = new MenuImpl();
         this.inGameMenu = new MenuImpl();
-        final MenuElement quitElem = new MenuElement(Command.QUIT.getName(), Command.QUIT);
 
-        this.startMenu.addElem(new MenuElement(Command.PLAY.getName(), Command.PLAY));
-        this.startMenu.addElem(quitElem);
-        this.inGameMenu.addElem(new MenuElement(Command.CLOSE.getName(), Command.CLOSE));
-        this.inGameMenu.addElem(quitElem);
+        this.startMenu.addElem(new MenuElement(Command.PLAY));
+        this.startMenu.addElem(new MenuElement(Command.QUIT));
+        this.inGameMenu.addElem(new MenuElement(Command.CLOSE));
+        this.inGameMenu.addElem(new MenuElement(Command.QUIT));
     }
 
     /**

@@ -11,7 +11,7 @@ import it.unibo.oop.relario.utils.api.Position;
  */
 public final class NotInteractiveNpc extends LivingBeingImpl implements Npc {
 
-    private final DialoguesGenerator dialoguesGenerator;
+    private final NpcBehavior behavior;
 
     /**
      * Constructs a non-interactive NPC.
@@ -19,14 +19,15 @@ public final class NotInteractiveNpc extends LivingBeingImpl implements Npc {
      * @param position of the NPC
      * @param dialoguesGenerator use to generate a random dialogue for the NPC
      */
-    public NotInteractiveNpc(final String name, final Position position, final DialoguesGenerator dialoguesGenerator) {
+    public NotInteractiveNpc(final String name, final Position position, 
+    final NpcBehavior behavior) {
         super(name, position);
-        this.dialoguesGenerator = dialoguesGenerator;
+        this.behavior = behavior;
     }
 
     @Override
     public InteractionOutput interact() {
-        return new InteractionOutput(this.dialoguesGenerator.getDefaultDialogue(), Optional.empty());
+        return new InteractionOutput(this.behavior.getDialogue(), Optional.empty());
     }
 
 }

@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.model.quest;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.model.map.Room;
@@ -30,8 +32,8 @@ public final class CollectItemObjective implements ObjectiveStrategy {
     }
 
     @Override
-    public GameEntityType getKeyEntityType() {
-        return this.keyItemType;
+    public Optional<GameEntityType> getKeyEntityType() {
+        return Optional.of(this.keyItemType);
     }
 
 }

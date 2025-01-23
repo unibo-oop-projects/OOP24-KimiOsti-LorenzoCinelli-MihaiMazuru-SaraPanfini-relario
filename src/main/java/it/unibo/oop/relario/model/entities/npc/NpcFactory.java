@@ -1,6 +1,6 @@
 package it.unibo.oop.relario.model.entities.npc;
 
-import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -15,12 +15,7 @@ public interface NpcFactory {
      */
     Npc createRandomNpc(Position position);
 
-    /**
-     * Creates a non-interactive NPC.
-     * @param position of the NPC
-     * @return a new non-interactive NPC
-     */
-    Npc createNotInteractiveNpc(Position position);
+    Npc createDefaultNpc(final Position position);
 
     /**
      * Creates an interactive NPC, that gives a random loot to the player.
@@ -35,8 +30,8 @@ public interface NpcFactory {
      * @param loot the NPC will give to the player
      * @return a new interactive NPC with the specified loot
      */
-    Npc createNpcWithLoot(Position position, InventoryItem loot);
+    Npc createNpcWithLoot(Position position, InventoryItemType itemType);
 
-    Npc createQuestNpc(Position position, String dialogue);
+    Npc createQuestNpc(Position position, String questDescription);
 
 }

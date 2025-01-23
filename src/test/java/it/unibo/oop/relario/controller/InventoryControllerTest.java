@@ -15,6 +15,7 @@ import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.impl.Event;
+import it.unibo.oop.relario.utils.impl.GameState;
 
 /*
  * CHECKSTYLE: MagicNumber OFF
@@ -37,6 +38,8 @@ final class InventoryControllerTest {
     void setUp() {
         final var mainController = new MainControllerImpl();
         this.inventoryController = mainController.getInventoryController();
+        mainController.moveToNextRoom();
+        mainController.getInventoryController().init(GameState.GAME);
 
         final var player = mainController.getCurRoom().get().getPlayer();
         final InventoryItemFactory itemFactory = new InventoryItemFactoryImpl();
@@ -63,39 +66,39 @@ final class InventoryControllerTest {
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals("""
-        Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5""",
+        Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilità: 5""",
         inventoryController.getEquippedArmor());
         assertEquals("""
-        Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3""",
+        Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilità: 3""",
         inventoryController.getEquippedWeapon());
 
         assertEquals(0, inventoryController.getSelectedItemIndex());
-        assertEquals("Un ciondolo antico e luminoso che emana un'aura di guarigione,\nEffetto: Cura 15",
+        assertEquals("Un ciondolo antico e luminoso che emana un'aura di guarigione\nEffetto: Cura 15",
         inventoryController.getItemFullDescription());
 
         inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(1, inventoryController.getSelectedItemIndex());
-        assertEquals("Una gemma scintillante di rara bellezza,\nEffetto: Nessuno",
+        assertEquals("Una gemma scintillante di rara bellezza\nEffetto: Nessuno",
         inventoryController.getItemFullDescription());
 
         inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(2, inventoryController.getSelectedItemIndex());
         assertEquals("""
-        Un'armatura leggera che offre protezione di base,\nEffetto: Protezione 5\nDurabilità: 3""",
+        Un'armatura leggera che offre protezione di base\nEffetto: Protezione 5\nDurabilità: 3""",
         inventoryController.getItemFullDescription());
 
         inventoryController.notify(Event.PREVIOUS_ITEM);
         assertEquals(1, inventoryController.getSelectedItemIndex());
-        assertEquals("Una gemma scintillante di rara bellezza,\nEffetto: Nessuno",
+        assertEquals("Una gemma scintillante di rara bellezza\nEffetto: Nessuno",
         inventoryController.getItemFullDescription());
 
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals("""
-        Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti,\nEffetto: Protezione 10\nDurabilità: 5""",
+        Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilità: 5""",
         inventoryController.getEquippedArmor());
         assertEquals("""
-        Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi,\nEffetto: Danno 5\nDurabilità: 3""",
+        Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilità: 3""",
         inventoryController.getEquippedWeapon());
 
         assertEquals("50", inventoryController.getLife());

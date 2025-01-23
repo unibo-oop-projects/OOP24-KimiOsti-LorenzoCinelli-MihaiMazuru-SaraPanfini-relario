@@ -20,17 +20,17 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
     private static final double DEFAULT_RATIO = 1;
     private static final int CONTENT_PANEL_INDEX = 1;
 
-    private final InventoryViewFactory factory;
+    private final MainController controller;
+    private InventoryViewFactory factory;
 
     /**
-     * Creates and initializes the inventory view.
+     * Creates the inventory view.
      * @param controller is the main controller of the game.
      */
     public InventoryViewImpl(final MainController controller) {
-        this.factory = new InventoryViewFactoryImpl(controller.getInventoryController());
-        this.addKeyListener(new GameKeyListener(controller.getInventoryController()));
+        this.controller = controller;
+        this.addKeyListener(new GameKeyListener(this.controller.getInventoryController()));
         this.setBackground(Color.BLACK);
-        this.init();
     }
 
     @Override
@@ -42,9 +42,12 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
         this.validate();
     }
 
-    private void init() {
+    @Override
+    public void init() {
+        this.factory = new InventoryViewFactoryImpl(this.controller.getInventoryController());
         final var commandPanel = this.factory.createCommandPanel();
         final var contentPanel = this.factory.createContentPanel();
+        this.removeAll();
         this.add(commandPanel);
         this.add(contentPanel);
         this.resize(commandPanel, COMMANDS_RATIO, DEFAULT_RATIO);

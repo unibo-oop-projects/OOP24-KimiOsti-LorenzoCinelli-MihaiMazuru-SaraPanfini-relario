@@ -44,7 +44,7 @@ public final class GameKeyListener implements KeyListener {
 
     /**
      * Checks if the key pressed is a valid key.
-     * @param keyCode is the key pressed.
+     * @param keyCode is the code of the key pressed.
      * @return true if the key pressed is a valid key, false otherwise.
      */
     private boolean isValidKey(final int keyCode) {
@@ -70,7 +70,7 @@ public final class GameKeyListener implements KeyListener {
 
     /**
      * Converts the the key pressed into an event.
-     * @param keyCode is the key pressed.
+     * @param keyCode is the code of the key pressed.
      * @return the event corresponding to the key pressed.
      */
     private Event convertKey(final int keyCode) {
