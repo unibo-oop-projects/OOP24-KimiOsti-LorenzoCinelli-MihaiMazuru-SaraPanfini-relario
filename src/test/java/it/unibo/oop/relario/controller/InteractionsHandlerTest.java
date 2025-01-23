@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.impl.InteractionsHandlerImpl;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
 import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureFactoryImpl;
@@ -17,23 +19,33 @@ import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 import it.unibo.oop.relario.view.impl.GameView;
-import it.unibo.oop.relario.view.impl.MainViewImpl;
 
 /**
  * The test class for the game's interaction handler.
  */
 public class InteractionsHandlerTest {
+
+    private MainController controller;
+
+    @BeforeEach
+    void init() {
+        controller = new MainControllerImpl();
+    }
+
     /**
      * A method to test the interaction handling motor.
      */
     @Test
     void testInteractionScenarios() {
-        final var controller = new MainControllerImpl();
-        final var view = new MainViewImpl(controller);
-        view.panelsSetup();
+        this.controller.moveToNextRoom();
+        assertTrue(this.controller.getCurRoom().isPresent());
+
+        this.controller.getGameController().run(true);
+
+        this.controller.getMainView().showPanel(GameState.GAME);
         final var handler = new InteractionsHandlerImpl(
-            controller,
-            (GameView) view.getPanel(GameState.GAME)
+            this.controller,
+            (GameView) this.controller.getMainView().getPanel(GameState.GAME)
         );
 
         final var room = new RoomImpl(
@@ -79,6 +91,6 @@ public class InteractionsHandlerTest {
         room.getPlayer().setPosition(new PositionImpl(3, 4));
         handler.handleInteraction(room);
         assertTrue(room.getPlayer().getItems().isEmpty());
-        assertEquals(view.getPanel(GameState.COMBAT), view.getCurrentPanel());
+        assertEquals(GameState.COMBAT, this.controller.getMainView().getCurrentPanel());
     }
 }
