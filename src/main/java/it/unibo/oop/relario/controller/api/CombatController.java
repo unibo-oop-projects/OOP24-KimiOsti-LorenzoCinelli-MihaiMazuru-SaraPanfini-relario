@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.controller.api;
 
+import java.awt.Image;
+
 import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
@@ -57,6 +59,12 @@ public interface CombatController {
      * @return the armor's name.
      */
     String getArmor();
+
+    /**
+     * Retrieves the enemy's texture.
+     * @return the enemy's texture.
+     */
+    Image getEnemyTexture();
 
     /**
      * Handle attack, mercy and open inventory.
