@@ -103,12 +103,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showDefeatScene() {
         this.fadeOutOverLastView();
-        final var label = new JLabel(MESSAGES.get(Scene.DEFEAT));
-        label.setBackground(Constants.BACKGROUND_SCENE_COLOR);
-        label.setForeground(Constants.TEXT_SCENE_COLOR);
-        label.setFont(this.font);
-        this.add(label);
-        this.validate();
+        this.sceneLoader(Scene.DEFEAT);
         final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progress(GameState.MENU));
         timer.setRepeats(false);
         timer.start();
@@ -116,8 +111,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private void sceneLoader(final Scene scene) {
         this.removeAll();
-        final var image = ImageLocators.getFixedSizeImage(
-            URL.get(scene == Scene.VICTORY ? Scene.VICTORY : Scene.INTRODUCTION), SCENE_RATIO, SCENE_RATIO);
+        final var image = ImageLocators.getFixedSizeImage(URL.get(scene), SCENE_RATIO, SCENE_RATIO);
         this.add(new JLabel(image));
 
         final var labelConstraints = new GridBagConstraints();
