@@ -1,6 +1,6 @@
 package it.unibo.oop.relario.model.entities.enemies;
 
-import it.unibo.oop.relario.model.inventory.InventoryItem;
+import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -22,7 +22,7 @@ public interface EnemyFactory {
      * @param reward dropped by the enemy
      * @return a new enemy with the specified reward
      */
-    Enemy createEnemyWithReward(Position position, InventoryItem reward);
+    Enemy createEnemyWithReward(Position position, InventoryItemType reward);
 
     /**
      * Creates an enemy of a specific type.

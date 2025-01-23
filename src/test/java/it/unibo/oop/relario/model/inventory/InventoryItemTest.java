@@ -8,10 +8,22 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class InventoryItemTest {
+/*
+ * CHECKSTYLE: MagicNumber OFF
+ * Used to avoid CheckStyle violations for magic numbers, here used for test scenarios. 
+ */
+
+ /**
+  * The test class for inventory items.
+  */
+
+final class InventoryItemTest {
 
     private final List<InventoryItemImpl> inventoryItems = new LinkedList<>();
 
+    /**
+     * Sets up a collection of test items.
+     */
     @BeforeEach
     void setUp() {
         this.inventoryItems.add(new InventoryItemImpl("Mela", "Cibo curativo", InventoryItemType.APPLE, 1));
@@ -20,6 +32,9 @@ public class InventoryItemTest {
         this.inventoryItems.add(new EquippableItem("Armatura", "Armatura di ferro", InventoryItemType.BASICARMOR, 4, 2));
     }
 
+    /**
+     * Tests the getter methods of the inventory items.
+     */
     @Test
     void testGetters() {
         InventoryItem inventoryItem = this.inventoryItems.get(0);
@@ -52,5 +67,5 @@ public class InventoryItemTest {
         assertEquals(2, equippableItem.getDurability());
         assertEquals(EffectType.PROTECTION, equippableItem.getEffect());
     }
-    
+
 }
