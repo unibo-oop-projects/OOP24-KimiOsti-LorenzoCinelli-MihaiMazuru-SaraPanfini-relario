@@ -32,12 +32,12 @@ public final class InventoryControllerImpl implements InventoryController {
 
     /**
      * Creates a new controller for the inventory of the player.
-     * @param mainController the main controller of the game.
+     * @param controller the main controller of the game.
      * @param mainView the main view of the game.
      */
-    public InventoryControllerImpl(final MainController mainController, final MainView mainView) {
-        this.mainController = mainController;
-        this.mainView = mainView;
+    public InventoryControllerImpl(final MainController controller) {
+        this.mainController = controller;
+        this.mainView = this.mainController.getMainView();
         this.selectedItem = 0;
     }
 

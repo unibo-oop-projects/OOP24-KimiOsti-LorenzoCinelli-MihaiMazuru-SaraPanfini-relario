@@ -30,9 +30,9 @@ public final class CombatControllerImpl implements CombatController {
      * @param view is the main view.
      * @param controller is the main controller.
      */
-    public CombatControllerImpl(final MainView view, final MainController controller) {
-        this.view = view;
+    public CombatControllerImpl(final MainController controller) {
         this.controller = controller;
+        this.view = this.controller.getMainView();
         this.player = null;
         this.enemy = null;
         this.combatState = "";

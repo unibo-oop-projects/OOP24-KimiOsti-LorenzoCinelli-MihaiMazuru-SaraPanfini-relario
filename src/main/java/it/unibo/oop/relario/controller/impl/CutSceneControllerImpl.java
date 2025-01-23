@@ -19,9 +19,9 @@ public final class CutSceneControllerImpl implements CutSceneController {
      * @param controller the main controller of the game.
      * @param view the main view of the game.
      */
-    public CutSceneControllerImpl(final MainController controller, final MainView view) {
+    public CutSceneControllerImpl(final MainController controller) {
         this.controller = controller;
-        this.view = view;
+        this.view = this.controller.getMainView();
     }
 
     @Override
