@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.controller.api;
 
+import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
@@ -58,10 +59,10 @@ public interface CombatController {
     String getArmor();
 
     /**
-     * Handle attack and mercy request made by the player.
-     * @param askingMercy is true if the player's asking for mercy, false otherwise.
+     * Handle attack, mercy and open inventory.
+     * @param action perdormed by the player.
      */
-    void handleCombatAction(boolean askingMercy);
+    void handleAction(CombatAction action);
 
     /**
      * Shows the combat view.
