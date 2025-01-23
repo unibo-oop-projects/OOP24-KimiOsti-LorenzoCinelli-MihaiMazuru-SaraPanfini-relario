@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.model.quest;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
@@ -28,8 +30,8 @@ public final class DefeatEnemyObjective implements ObjectiveStrategy {
     }
 
     @Override
-    public GameEntityType getKeyEntityType() {
-        return this.keyEnemyType;
+    public Optional<GameEntityType> getKeyEntityType() {
+        return Optional.of(this.keyEnemyType);
     }
 
 }

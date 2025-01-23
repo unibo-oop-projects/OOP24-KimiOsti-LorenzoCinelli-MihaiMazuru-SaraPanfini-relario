@@ -72,7 +72,7 @@ public final class FurnitureGenerator {
     }
 
     private void addQuestKeyEntity(final Room room) {
-        GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType();
+        GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType().get();
         if (keyEntityType instanceof InventoryItemType) {
             Position randomPosition = this.getRandomPerimeterPosition(room).get();
             room.addEntity(randomPosition, this.furnitureFactory.createInteractiveFurnitureLoot(randomPosition, 
