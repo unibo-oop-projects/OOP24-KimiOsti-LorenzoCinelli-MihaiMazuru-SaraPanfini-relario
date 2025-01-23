@@ -6,6 +6,9 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unibo.oop.relario.view.impl.BackgroundTile;
+import it.unibo.oop.relario.view.impl.ForegroundTile;
+
 /**
  * Interface of a game view component manager class.
  */
@@ -30,7 +33,7 @@ public interface GameViewComponentManager {
      * @param tileDimension the dimension to which the square texture will be scaled.
      * @return a panel rendering the given texture scaled to the right dimension.
      */
-    JPanel getBackgroundTile(Image texture, int tileDimension);
+    BackgroundTile getBackgroundTile(Image texture, int tileDimension);
 
     /**
      * Creates a foreground tile.
@@ -38,7 +41,7 @@ public interface GameViewComponentManager {
      * @param tileDimension the dimension to which the square texture will be scaled.
      * @return a label rendering the given texture scaled to the right dimension.
      */
-    JLabel getForegroundTile(Image texture, int tileDimension);
+    ForegroundTile getForegroundTile(Image texture, int tileDimension);
 
     /**
      * Creates a custom label, representing a text of a given size.

@@ -28,7 +28,7 @@ public final class GameViewComponentManagerImpl implements GameViewComponentMana
     }
 
     @Override
-    public JPanel getBackgroundTile(final Image texture, final int tileDimension) {
+    public BackgroundTile getBackgroundTile(final Image texture, final int tileDimension) {
         return new BackgroundTile(texture.getScaledInstance(
             tileDimension,
             tileDimension,
@@ -37,7 +37,7 @@ public final class GameViewComponentManagerImpl implements GameViewComponentMana
     }
 
     @Override
-    public JLabel getForegroundTile(final Image texture, final int tileDimension) {
+    public ForegroundTile getForegroundTile(final Image texture, final int tileDimension) {
         return new ForegroundTile(texture.getScaledInstance(
             tileDimension,
             tileDimension,
