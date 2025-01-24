@@ -46,10 +46,10 @@ public final class FurnitureGenerator {
      * @param room where the items are placed.
      */
     public void generateFurniture(final Room room) {
-        final int obstructiveItems = random.nextInt(((int) Math.floor(PERIMETER_FURNITURE_ITEMS / 2)) 
-        - Math.round(PERIMETER_FURNITURE_ITEMS / 3)) + 1 + Math.round(PERIMETER_FURNITURE_ITEMS / 3);
+        final int obstructiveItems = random.nextInt(PERIMETER_FURNITURE_ITEMS / 2)
+        - Math.round(PERIMETER_FURNITURE_ITEMS / 3) + 1 + Math.round(PERIMETER_FURNITURE_ITEMS / 3);
         int interactiveItems = PERIMETER_FURNITURE_ITEMS - obstructiveItems;
-        final int walkableInteractiveItems = (int) Math.ceil(WALKABLE_FURNITURE_ITEMS / 2);
+        final int walkableInteractiveItems = (WALKABLE_FURNITURE_ITEMS + 1) / 2;
 
         this.addExitCarpet(room);
         if (room.getQuest().isPresent() && room.getQuest().get().getKeyEntityType().isPresent()) {
