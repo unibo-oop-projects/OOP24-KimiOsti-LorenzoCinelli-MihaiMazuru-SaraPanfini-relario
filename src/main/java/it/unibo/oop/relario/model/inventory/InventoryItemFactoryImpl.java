@@ -54,13 +54,13 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
         InventoryItemType.AMULET, ItemAttributes.AMULET_INTENSITY));
         this.itemCreator.put(InventoryItemType.COIN, 
         () -> new InventoryItemImpl("Moneta", "Una moneta luccicante", 
-        InventoryItemType.COIN, ItemAttributes.COIN_INTENSITY));
+        InventoryItemType.COIN, ItemAttributes.COLLECTABLE_INTENSITY));
         this.itemCreator.put(InventoryItemType.GEMSTONE, 
         () -> new InventoryItemImpl("Pietra preziosa", "Una gemma scintillante di rara bellezza", 
-        InventoryItemType.GEMSTONE, ItemAttributes.GEMSTONE_INTENSITY));
+        InventoryItemType.GEMSTONE, ItemAttributes.COLLECTABLE_INTENSITY));
         this.itemCreator.put(InventoryItemType.KEY,
         () -> new InventoryItemImpl("Chiave", "Chiave antica per aprire un passaggio", 
-        InventoryItemType.KEY, ItemAttributes.KEY_INTENSITY));
+        InventoryItemType.KEY, ItemAttributes.COLLECTABLE_INTENSITY));
     }
 
     @Override
