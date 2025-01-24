@@ -27,7 +27,6 @@ public final class CombatControllerImpl implements CombatController {
 
     /**
      * Saves reference to main view and main controller.
-     * @param view is the main view.
      * @param controller is the main controller.
      */
     public CombatControllerImpl(final MainController controller) {
@@ -97,6 +96,7 @@ public final class CombatControllerImpl implements CombatController {
             case MERCY -> this.mercyRequest();
             case OPEN_INVENTORY -> 
                 this.controller.getInventoryController().init(GameState.COMBAT);
+                default -> { }
         }
     }
 
@@ -138,7 +138,6 @@ public final class CombatControllerImpl implements CombatController {
                 e -> this.controller.getGameController().run(true));
             timer.setRepeats(false);
             timer.start();
-            
         } else {
             //player's skips his turn, he used his turn to ask for mercy
             this.attack(false);
