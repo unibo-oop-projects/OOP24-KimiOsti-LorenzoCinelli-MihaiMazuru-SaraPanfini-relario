@@ -35,8 +35,8 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final Color TRANSPARENT_BLACK = new Color(0, 0, 0, 0);
     private static final int FADE_SPEED = 10;
     private static final int FADE_LIMIT = 256;
-    private static final int SCENE_TRANSITION_DELAY = 9000;
-    private static final int ROOM_TRANSITION_DELAY = 3000;
+    private static final int SCENE_TRANSITION_DELAY = 4000;
+    private static final int ROOM_TRANSITION_DELAY = 2500;
     private static final int INSETS = 10;
     private static final int NO_INSETS = 0;
     private static final double SCENE_RATIO = 0.6;
@@ -53,7 +53,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         """,
         Scene.VICTORY, """
         <html><center>HAI VINTO<br>
-        Hai ufficialmente ereditato il trono di Relario</center></html>
+        Hai ufficialmente ereditato il trono di Relario!</center></html>
         """,
         Scene.DEFEAT, "<html><center>HAI PERSO</center></html>"
     );
@@ -80,7 +80,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showStartScene() {
         this.sceneLoader(Scene.INTRODUCTION);
-        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progress(GameState.GAME));
+        final var timer = new Timer(SCENE_TRANSITION_DELAY * 2, e -> this.controller.progress(GameState.GAME));
         timer.setRepeats(false);
         timer.start();
     }
@@ -90,7 +90,10 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         final var audio = SoundLocators.getAudio(DOOR_SOUND_URL);
         audio.start();
         this.fadeOutOverLastView();
-        final var timer = new Timer(ROOM_TRANSITION_DELAY, e -> this.controller.progress(GameState.GAME));
+        final var timer = new Timer(ROOM_TRANSITION_DELAY, e -> {
+            audio.close();
+            this.controller.progress(GameState.GAME);
+        });
         timer.setRepeats(false);
         timer.start();
     }
