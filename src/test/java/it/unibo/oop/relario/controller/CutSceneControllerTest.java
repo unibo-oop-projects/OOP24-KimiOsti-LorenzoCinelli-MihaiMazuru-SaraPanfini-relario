@@ -62,7 +62,7 @@ final class CutSceneControllerTest {
         assertEquals(GameState.CUT_SCENE, this.mainView.getCurrentPanel());
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.addSuppressed(e);
         }
@@ -74,7 +74,7 @@ final class CutSceneControllerTest {
         assertEquals(GameState.CUT_SCENE, this.mainView.getCurrentPanel());
 
         try {
-            Thread.sleep(10_000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.addSuppressed(e);
         }
@@ -86,7 +86,7 @@ final class CutSceneControllerTest {
         assertEquals(GameState.CUT_SCENE, this.mainView.getCurrentPanel());
 
         try {
-            Thread.sleep(10_000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.addSuppressed(e);
         }
