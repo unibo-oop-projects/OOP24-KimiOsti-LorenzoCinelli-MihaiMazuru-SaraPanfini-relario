@@ -26,9 +26,10 @@ public final class BackgroundTile extends JPanel {
         try {
             tracker.waitForAll();
         } catch (InterruptedException e) {
+            tracker.removeImage(img);
         }
 
-        this.img = img;
+        this.img = tracker.isErrorAny() ? null : img;
     }
 
     @Override

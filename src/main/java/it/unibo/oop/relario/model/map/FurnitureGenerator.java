@@ -34,20 +34,23 @@ public final class FurnitureGenerator {
     private final Random random = new Random();
     private final FurnitureFactory furnitureFactory;
 
+    /**
+     * Initializes the furniture generator.
+     */
     public FurnitureGenerator() {
         furnitureFactory = new FurnitureFactoryImpl();
     }
 
     /**
      * Generates and places all the items in the room randomly.
-     * @param room where the items are placed
+     * @param room where the items are placed.
      */
     public void generateFurniture(final Room room) {
         final int obstructiveItems = random.nextInt(((int) Math.floor(PERIMETER_FURNITURE_ITEMS / 2)) 
-        - ((int) Math.round(PERIMETER_FURNITURE_ITEMS / 3)) + 1) + ((int) Math.round(PERIMETER_FURNITURE_ITEMS / 3));
+        - Math.round(PERIMETER_FURNITURE_ITEMS / 3)) + 1 + Math.round(PERIMETER_FURNITURE_ITEMS / 3);
         int interactiveItems = PERIMETER_FURNITURE_ITEMS - obstructiveItems;
         final int walkableInteractiveItems = (int) Math.ceil(WALKABLE_FURNITURE_ITEMS / 2);
-        
+
         this.addExitCarpet(room);
         if (room.getQuest().isPresent() && room.getQuest().get().getKeyEntityType().isPresent()) {
             this.addQuestKeyEntity(room);
@@ -57,21 +60,22 @@ public final class FurnitureGenerator {
         placePerimeterItems(room, obstructiveItems, this.furnitureFactory::createRandomObstructingFurniture);
         placePerimeterItems(room, interactiveItems, this.furnitureFactory::createRandomInteractiveFurniture);
         placeWalkableItems(room, walkableInteractiveItems, this.furnitureFactory::createRandomWalkableFurniture);
-        placeWalkableItems(room, WALKABLE_FURNITURE_ITEMS - walkableInteractiveItems, this.furnitureFactory::createRandomWalkableFurnitureEmpty);
+        placeWalkableItems(room, WALKABLE_FURNITURE_ITEMS - walkableInteractiveItems,
+            this.furnitureFactory::createRandomWalkableFurnitureEmpty);
     }
 
     private void addQuestKeyEntity(final Room room) {
-        GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType().get();
+        final GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType().get();
         if (keyEntityType instanceof InventoryItemType) {
-            Position randomPosition = this.getRandomPerimeterPosition(room).get();
+            final Position randomPosition = this.getRandomPerimeterPosition(room).get();
             room.addEntity(randomPosition, this.furnitureFactory.createInteractiveFurnitureLoot(randomPosition,
             (InventoryItemType) keyEntityType));
         }
     }
 
     private void addExitCarpet(final Room room) {
-        Position initialPosition = new PositionImpl(room.getExit().getX() - 2, room.getExit().getY());
-        Furniture carpet = this.furnitureFactory.createWalkableFurnitureByItemEmpty(initialPosition, FurnitureType.CARPET);
+        final Position initialPosition = new PositionImpl(room.getExit().getX() - 2, room.getExit().getY());
+        final Furniture carpet = this.furnitureFactory.createWalkableFurnitureByItemEmpty(initialPosition, FurnitureType.CARPET);
         for (int i = 0; i < CARPET_WIDTH; i++) {
             room.addEntity(new PositionImpl(initialPosition.getX() + i, initialPosition.getY()), carpet);
         }
@@ -82,12 +86,13 @@ public final class FurnitureGenerator {
         Dimension defaultDimension;
         int attempts = 0;
         while (placedItems < itemsNumber && attempts < LOOP_ATTEMPTS) {
-            Optional<Position> position = getRandomInnerPosition(room);
+            final Optional<Position> position = getRandomInnerPosition(room);
             if (position.isEmpty()) {
                 attempts = LOOP_ATTEMPTS;
             } else {
-                Furniture furniture = createItem.apply(position.get());
-                defaultDimension = furniture.getType().equals(FurnitureType.CARPET) ? new DimensionImpl(CARPET_WIDTH, CARPET_HEIGHT) 
+                final Furniture furniture = createItem.apply(position.get());
+                defaultDimension = furniture.getType().equals(FurnitureType.CARPET)
+                ? new DimensionImpl(CARPET_WIDTH, CARPET_HEIGHT) 
                 : new DimensionImpl(1, 1);
                 if (isAreaAvailable(room, getArea(position.get(), defaultDimension))) {
                     getArea(position.get(), defaultDimension).forEach(p -> room.addEntity(p, furniture));
@@ -97,12 +102,12 @@ public final class FurnitureGenerator {
             attempts++;
         }
     }
-    
+
     private void placePerimeterItems(final Room room, final int itemsNumber, final Function<Position, Furniture> createItem) {
         int placedItems = 0;
         int attempts = 0;
         while (placedItems < itemsNumber && attempts < LOOP_ATTEMPTS) {
-            Optional<Position> position = getRandomPerimeterPosition(room);
+            final Optional<Position> position = getRandomPerimeterPosition(room);
             if (position.isEmpty()) {
                 attempts = LOOP_ATTEMPTS;
             } else if (room.isPositionValid(position.get()) && room.isCellAvailable(position.get())) {
@@ -111,10 +116,10 @@ public final class FurnitureGenerator {
             }
             attempts++;
         }
-    }  
+    }
 
     private Optional<Position> getRandomInnerPosition(final Room room) {
-        List<Position> innerPositions = room.getCellsByState(CellState.INNER_EMPTY);
+        final List<Position> innerPositions = room.getCellsByState(CellState.INNER_EMPTY);
         return !innerPositions.isEmpty() ? Optional.of(innerPositions.get(random.nextInt(innerPositions.size())))
         : Optional.empty();
     }
@@ -130,7 +135,7 @@ public final class FurnitureGenerator {
     }
 
     private Optional<Position> getRandomPerimeterPosition(final Room room) {
-        List<Position> perimeterPositions = room.getCellsByState(CellState.PERIMETER_EMPTY);
+        final List<Position> perimeterPositions = room.getCellsByState(CellState.PERIMETER_EMPTY);
         return !perimeterPositions.isEmpty() ? Optional.of(perimeterPositions.get(random.nextInt(perimeterPositions.size())))
         : Optional.empty();
     }

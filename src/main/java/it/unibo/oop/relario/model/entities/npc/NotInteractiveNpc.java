@@ -17,7 +17,7 @@ public final class NotInteractiveNpc extends LivingBeingImpl implements Npc {
      * Constructs a non-interactive NPC.
      * @param name of the NPC
      * @param position of the NPC
-     * @param dialoguesGenerator use to generate a random dialogue for the NPC
+     * @param behavior use to generate a random dialogue for the NPC
      */
     public NotInteractiveNpc(final String name, final Position position, 
     final NpcBehavior behavior) {

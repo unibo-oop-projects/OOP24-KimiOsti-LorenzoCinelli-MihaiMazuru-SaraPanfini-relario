@@ -69,8 +69,8 @@ public final class GameTexturesLocator {
 
     private static Image getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
         final StringBuilder imgURL = new StringBuilder(Constants.RESOURCES_FOLDER_URL)
-        .append(Constants.GAME_TEXTURES_URL);
-        imgURL.append(Constants.LIVING_TEXTURES_URL);
+        .append(Constants.GAME_TEXTURES_URL)
+        .append(Constants.LIVING_TEXTURES_URL);
 
         if (livingBeing instanceof MainCharacter) {
             imgURL.append("chara");

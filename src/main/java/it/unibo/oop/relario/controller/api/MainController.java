@@ -9,7 +9,7 @@ import it.unibo.oop.relario.view.api.MainView;
  * Interface for container Controller class.
  */
 public interface MainController {
-    
+
     /**
      * @return the main View.
      */
@@ -19,7 +19,7 @@ public interface MainController {
      * Starts a new game on a fully restored model.
      */
     void startNewGame();
-    
+
     /**
      * @return the combat Controller.
      */

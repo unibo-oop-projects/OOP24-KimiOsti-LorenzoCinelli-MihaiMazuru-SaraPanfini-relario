@@ -100,6 +100,7 @@ public final class CombatControllerImpl implements CombatController {
             case MERCY -> this.mercyRequest();
             case OPEN_INVENTORY -> 
                 this.controller.getInventoryController().init(GameState.COMBAT);
+                default -> { }
         }
     }
 
@@ -140,7 +141,6 @@ public final class CombatControllerImpl implements CombatController {
                 e -> this.controller.getGameController().run(true));
             timer.setRepeats(false);
             timer.start();
-            
         } else {
             //player's skips his turn, he used his turn to ask for mercy
             this.attack(false);

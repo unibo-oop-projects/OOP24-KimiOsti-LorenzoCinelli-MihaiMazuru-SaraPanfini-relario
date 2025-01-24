@@ -22,7 +22,6 @@ public final class MenuControllerImpl implements MenuController {
 
     /**
      * Create a new view for the main menu.
-     * @param view is the main view.
      * @param controller is the main controller.
      */
     public MenuControllerImpl(final MainController controller) {

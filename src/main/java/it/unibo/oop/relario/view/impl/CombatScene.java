@@ -16,6 +16,7 @@ import it.unibo.oop.relario.utils.impl.Constants;
  */
 public final class CombatScene extends JPanel {
 
+    private static final long serialVersionUID = 1L;
     private static final Color BACKGROUND_COLOR = Color.BLACK;
     private static final Color TEXT_COLOR = Color.WHITE;
     private static final double TEXTURE_TO_PANEL_RATIO = 0.5;
@@ -87,9 +88,7 @@ public final class CombatScene extends JPanel {
     }
 
     private JPanel getEnemyImagePanel(final Image enemy) {
-        final var panel = new JPanel();
-
-        return panel;
+        return new BackgroundTile(enemy);
     }
 
 }

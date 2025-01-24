@@ -36,7 +36,6 @@ public final class MenuView extends JPanel {
 
     /**
      * Initializes a new menu view.
-     * @param view is the main view that contains all the game panels.
      * @param elements are the menu elements that need to be added to the view.
      * @param controller is the main controller.
      */

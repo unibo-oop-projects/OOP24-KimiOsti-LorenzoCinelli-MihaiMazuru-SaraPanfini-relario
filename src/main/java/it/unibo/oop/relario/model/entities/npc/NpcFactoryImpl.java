@@ -16,22 +16,27 @@ public final class NpcFactoryImpl implements NpcFactory {
     private final Random random = new Random();
     private final InventoryItemFactory inventoryItemFactory = new InventoryItemFactoryImpl();
 
+    @Override
     public Npc createDefaultNpc(final Position position) {
         return this.createNotInteractiveNpc(position, new DefaultBehavior(dialoguesGenerator));
     }
 
+    @Override
     public Npc createQuestNpc(final Position position, final String questDescription) {
         return this.createNotInteractiveNpc(position, new QuestBehavior(questDescription));
     }
 
+    @Override
     public Npc createInteractiveNpc(final Position position) {
         return this.createNpcWithLoot(position, this.inventoryItemFactory.createRandomItem().getType());
     }
 
+    @Override
     public Npc createRandomNpc(final Position position) {
         return random.nextBoolean() ? this.createDefaultNpc(position) : this.createInteractiveNpc(position);
     }
 
+    @Override
     public Npc createNpcWithLoot(final Position position, final InventoryItemType itemType) {
         return new InteractiveNpc("Npc", position, inventoryItemFactory.createItem(itemType), dialoguesGenerator);
     }

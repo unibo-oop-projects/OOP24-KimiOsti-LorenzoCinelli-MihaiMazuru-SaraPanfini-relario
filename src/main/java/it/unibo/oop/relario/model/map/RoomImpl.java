@@ -3,6 +3,7 @@ package it.unibo.oop.relario.model.map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -96,8 +97,8 @@ public final class RoomImpl implements Room {
 
     @Override
     public boolean isCellAvailable(final Position position) {
-        return this.cellStates.get(position).equals(CellState.PERIMETER_EMPTY) || 
-        this.cellStates.get(position).equals(CellState.INNER_EMPTY);
+        return this.cellStates.get(position).equals(CellState.PERIMETER_EMPTY)
+        || this.cellStates.get(position).equals(CellState.INNER_EMPTY);
     }
 
     @Override
@@ -139,7 +140,7 @@ public final class RoomImpl implements Room {
             this.player.stop();
         }
         this.player.update();
-        for (LivingBeing chara : this.population.values()) {
+        for (final LivingBeing chara : this.population.values()) {
             if (!Interactions.canMove(chara.getPosition().get(), chara.getDirection(), 
             this.dimension, this.population, this.furniture)) {
                 ((LivingBeingImpl) chara).changeDirection();
@@ -151,20 +152,23 @@ public final class RoomImpl implements Room {
     @Override
     public List<Position> getCellsByState(final CellState state) {
         return this.cellStates.entrySet().stream().filter(entry -> entry.getValue().equals(state))
-        .map(e -> e.getKey()).collect(Collectors.toList());
+        .map(Entry::getKey).collect(Collectors.toList());
     }
 
     private void addFurniture(final Position position, final Furniture furniture) {
         this.furniture.put(position, furniture);
         this.cellStates.put(position, CellState.OCCUPIED);
-        for (Position pos : adjacentCells(position, furniture)) {
+        for (final Position pos : adjacentCells(position)) {
             this.cellStates.put(pos, CellState.RESTRICTED);
         }
     }
 
-    private Set<Position> adjacentCells(final Position position, final Entity entity) {
+    private Set<Position> adjacentCells(final Position position) {
         return IntStream.rangeClosed(position.getX() - FURNITURE_EXCLUSION_RANGE, position.getX() + FURNITURE_EXCLUSION_RANGE)
-        .boxed().flatMap(x -> IntStream.rangeClosed(position.getY() - FURNITURE_EXCLUSION_RANGE, position.getY() + FURNITURE_EXCLUSION_RANGE)
+        .boxed()
+        .flatMap(x ->
+            IntStream.rangeClosed(position.getY() - FURNITURE_EXCLUSION_RANGE, position.getY() + FURNITURE_EXCLUSION_RANGE
+        )
         .mapToObj(y -> new PositionImpl(x, y))).filter(p -> isPositionValid(p) && isCellAvailable(p))
         .collect(Collectors.toSet());
     }
@@ -174,8 +178,8 @@ public final class RoomImpl implements Room {
         this.cellStates.putAll(IntStream.range(0, this.dimension.getWidth())
         .boxed().flatMap(x -> IntStream.range(0, this.dimension.getHeight())
         .mapToObj(y -> new PositionImpl(x, y))).collect(Collectors.toMap(pos -> pos,
-        pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY :
-        (isInnerPerimeter(pos.getX(), pos.getY()) ? CellState.RESTRICTED : CellState.INNER_EMPTY))));
+        pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY
+        : isInnerPerimeter(pos.getX(), pos.getY()) ? CellState.RESTRICTED : CellState.INNER_EMPTY)));
         this.cellStates.put(this.entry, CellState.RESTRICTED);
         this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() - 1), CellState.RESTRICTED);
         this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() + 1), CellState.RESTRICTED);

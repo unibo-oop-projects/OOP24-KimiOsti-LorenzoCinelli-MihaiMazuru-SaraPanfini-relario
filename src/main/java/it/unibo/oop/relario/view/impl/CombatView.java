@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.view.impl;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import it.unibo.oop.relario.utils.impl.Constants;
 /**
  * View implementation for the combat phase of the game.
  */
-public class CombatView extends JPanel {
+public final class CombatView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final Color BACKGROUND_COLOR = Color.BLACK;
@@ -66,12 +67,12 @@ public class CombatView extends JPanel {
     }
 
     private void resizePanels() {
-        this.centralScene.setPreferredSize(new java.awt.Dimension(
+        this.centralScene.setPreferredSize(new Dimension(
             (int) (this.getWidth() / SCREEN_TO_SCENE_RATIO),
             (int) (this.getHeight() / SCREEN_TO_SCENE_RATIO)
         ));
-        final var sideComponentDim = new java.awt.Dimension(
-            (int) (this.centralScene.getPreferredSize().getWidth()),
+        final var sideComponentDim = new Dimension(
+            (int) this.centralScene.getPreferredSize().getWidth(),
             (int) (this.getHeight() - this.centralScene.getPreferredSize().getHeight() * SIDE_COMPONENTS_RATIO)
         );
         this.upperPadding.setPreferredSize(sideComponentDim);
