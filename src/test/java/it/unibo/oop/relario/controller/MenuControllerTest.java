@@ -12,8 +12,6 @@ import it.unibo.oop.relario.controller.impl.MenuControllerImpl;
 import it.unibo.oop.relario.model.menu.Command;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
-import it.unibo.oop.relario.view.api.MainView;
-import it.unibo.oop.relario.view.impl.MainViewImpl;
 
 /*
  * CHECKSTYLE: MagicNumber OFF
@@ -30,9 +28,7 @@ class MenuControllerTest {
     @Test
     void testMenuController() {
         final MainController mainController = new MainControllerImpl();
-        final MainView view = new MainViewImpl(mainController);
-        view.panelsSetup();
-        final MenuController controller = new MenuControllerImpl(view, mainController);
+        final MenuController controller = new MenuControllerImpl(mainController);
 
         mainController.moveToNextRoom();
         assertEquals(controller.getInGameMenuElements().size(), 2);
@@ -43,20 +39,20 @@ class MenuControllerTest {
         assertEquals(controller.getStartMenuElements().get(1).getElemCommad(), Command.QUIT);
 
         controller.showMenu(GameState.MENU, GameState.GAME);
-        assertEquals(view.getCurrentPanel(), GameState.MENU);
+        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.MENU);
         controller.notify(Event.ESCAPE);
-        assertNotEquals(view.getCurrentPanel(), GameState.GAME);
+        assertNotEquals(mainController.getMainView().getCurrentPanel(), GameState.GAME);
         controller.showMenu(GameState.MENU_IN_GAME, GameState.INVENTORY);
         controller.notify(Event.ESCAPE);
-        assertEquals(view.getCurrentPanel(), GameState.INVENTORY);
+        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.INVENTORY);
         controller.showMenu(GameState.MENU_IN_GAME, GameState.GAME);
         controller.notify(Event.ESCAPE);
-        assertEquals(view.getCurrentPanel(), GameState.GAME);
+        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.GAME);
         controller.showMenu(GameState.MENU_IN_GAME, GameState.COMBAT);
         controller.notify(Event.ESCAPE);
-        assertEquals(view.getCurrentPanel(), GameState.COMBAT);
+        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.COMBAT);
         controller.showMenu(GameState.MENU_IN_GAME, GameState.COMBAT);
         controller.notify(Event.INVENTORY);
-        assertNotEquals(view.getCurrentPanel(), GameState.COMBAT);
+        assertNotEquals(mainController.getMainView().getCurrentPanel(), GameState.COMBAT);
     }
 }
