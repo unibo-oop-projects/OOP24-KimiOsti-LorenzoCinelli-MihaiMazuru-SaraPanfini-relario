@@ -1,6 +1,7 @@
 package it.unibo.oop.relario.model.map;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -24,17 +25,11 @@ import it.unibo.oop.relario.model.GameEntityType;
  */
 public final class FurnitureGenerator {
 
-    /** The width of the walkable items' area. */
-    public static final int CARPET_WIDTH = 3;
-
-    /** The height of the walkable items' area. */
-    public static final int CARPET_HEIGHT = 2;
-
-    public static final int PERIMETER_FURNITURE_ITEMS = 24;
-
-    public static final int WALKABLE_FURNITURE_ITEMS = 6;
-
-    public static final int LOOP_ATTEMPTS = 100;
+    private static final int CARPET_WIDTH = 3;
+    private static final int CARPET_HEIGHT = 2;
+    private static final int PERIMETER_FURNITURE_ITEMS = 10;
+    private static final int WALKABLE_FURNITURE_ITEMS = 6;
+    private static final int LOOP_ATTEMPTS = 100;
 
     private final Random random = new Random();
     private final FurnitureFactory furnitureFactory;
@@ -68,7 +63,7 @@ public final class FurnitureGenerator {
     private void addQuestKeyEntity(final Room room) {
         GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType().get();
         if (keyEntityType instanceof InventoryItemType) {
-            Position randomPosition = this.getRandomPerimeterPosition(room);
+            Position randomPosition = this.getRandomPerimeterPosition(room).get();
             room.addEntity(randomPosition, this.furnitureFactory.createInteractiveFurnitureLoot(randomPosition,
             (InventoryItemType) keyEntityType));
         }
@@ -87,13 +82,17 @@ public final class FurnitureGenerator {
         Dimension defaultDimension;
         int attempts = 0;
         while (placedItems < itemsNumber && attempts < LOOP_ATTEMPTS) {
-            Position position = getRandomInnerPosition(room);
-            Furniture furniture = createItem.apply(position);
-            defaultDimension = furniture.getType().equals(FurnitureType.CARPET) ? new DimensionImpl(CARPET_WIDTH, CARPET_HEIGHT) 
-            : new DimensionImpl(1, 1);
-            if (isAreaAvailable(room, getArea(position, defaultDimension))) {
-                getArea(position, defaultDimension).forEach(p -> room.addEntity(p, furniture));
-                placedItems++;
+            Optional<Position> position = getRandomInnerPosition(room);
+            if (position.isEmpty()) {
+                attempts = LOOP_ATTEMPTS;
+            } else {
+                Furniture furniture = createItem.apply(position.get());
+                defaultDimension = furniture.getType().equals(FurnitureType.CARPET) ? new DimensionImpl(CARPET_WIDTH, CARPET_HEIGHT) 
+                : new DimensionImpl(1, 1);
+                if (isAreaAvailable(room, getArea(position.get(), defaultDimension))) {
+                    getArea(position.get(), defaultDimension).forEach(p -> room.addEntity(p, furniture));
+                    placedItems++;
+                }
             }
             attempts++;
         }
@@ -103,18 +102,21 @@ public final class FurnitureGenerator {
         int placedItems = 0;
         int attempts = 0;
         while (placedItems < itemsNumber && attempts < LOOP_ATTEMPTS) {
-            Position position = getRandomPerimeterPosition(room);
-            if (room.isPositionValid(position) && room.isCellAvailable(position)) {
-                room.addEntity(position, createItem.apply(position));
+            Optional<Position> position = getRandomPerimeterPosition(room);
+            if (position.isEmpty()) {
+                attempts = LOOP_ATTEMPTS;
+            } else if (room.isPositionValid(position.get()) && room.isCellAvailable(position.get())) {
+                room.addEntity(position.get(), createItem.apply(position.get()));
                 placedItems++;
             }
             attempts++;
         }
     }  
 
-    private Position getRandomInnerPosition(final Room room) {
+    private Optional<Position> getRandomInnerPosition(final Room room) {
         List<Position> innerPositions = room.getCellsByState(CellState.INNER_EMPTY);
-        return innerPositions.get(random.nextInt(innerPositions.size()));
+        return !innerPositions.isEmpty() ? Optional.of(innerPositions.get(random.nextInt(innerPositions.size())))
+        : Optional.empty();
     }
 
     private boolean isAreaAvailable(final Room room, final List<Position> area) {
@@ -127,9 +129,10 @@ public final class FurnitureGenerator {
         .mapToObj(y -> new PositionImpl(x, y))).collect(Collectors.toList());
     }
 
-    private Position getRandomPerimeterPosition(final Room room) {
+    private Optional<Position> getRandomPerimeterPosition(final Room room) {
         List<Position> perimeterPositions = room.getCellsByState(CellState.PERIMETER_EMPTY);
-        return perimeterPositions.get(random.nextInt(perimeterPositions.size()));
+        return !perimeterPositions.isEmpty() ? Optional.of(perimeterPositions.get(random.nextInt(perimeterPositions.size())))
+        : Optional.empty();
     }
 
 }

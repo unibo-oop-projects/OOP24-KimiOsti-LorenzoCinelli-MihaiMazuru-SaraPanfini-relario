@@ -24,7 +24,7 @@ import it.unibo.oop.relario.view.api.MainView;
  * Implementation of {@link CutSceneView}.
  */
 public final class CutSceneViewImpl extends JPanel implements CutSceneView {
-    
+
     private enum Scene {
         INTRODUCTION,
         VICTORY,
@@ -45,10 +45,10 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final String DOOR_SOUND_URL = "door_sound";
     private static final Map<Scene, String> MESSAGES = Map.of(
         Scene.INTRODUCTION, """
-        <html>Il vecciho re di Relario sentiva vicino il momento della sua fine, \
-        ma sapeva di non aver lasciato eredi al trono.<br>\
-        Per questo ha deciso che chiunque riuscità a superare tutte le prove del suo castello \
-        erediterà il suo titolo.<br>\
+        <html>Il vecchio re di Relario sentiva vicino il momento della sua fine,<br>
+        ma sapeva di non aver lasciato eredi al trono.<br>
+        Per questo ha deciso che chiunque riuscira\' a superare tutte le prove del suo castello<br>
+        ereditera\' il suo titolo. 
         Spero di essere all'altezza!</html>
         """,
         Scene.VICTORY, """
