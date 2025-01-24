@@ -52,7 +52,7 @@ public final class MenuView extends JPanel {
         gridc.fill = GridBagConstraints.CENTER;
 
         if (this.view.getCurrentPanel().equals(GameState.MENU)) {
-            final ImageIcon image = ImageLocators.getFixedSizeImage(LOGO, RATIO, RATIO);
+            final ImageIcon image = ImageLocators.getFixedSizeImage(LOGO, Constants.IMAGE_EXTENSION, RATIO, RATIO);
             final JLabel title = new JLabel(image);
             title.setFont(Constants.FONT.deriveFont(FONT_SIZE));
             this.add(title, gridc);

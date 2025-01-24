@@ -37,6 +37,16 @@ public final class Constants {
     public static final String FONT_EXTENSION = ".ttf";
 
     /**
+     * Image files extension.
+     */
+    public static final String IMAGE_EXTENSION = ".png";
+
+    /**
+     * Gif files extension.
+     */
+    public static final String GIF_EXTENSION = ".gif";
+
+    /**
      * The base folder for game state textures.
      */
     public static final String GAME_TEXTURES_URL = "img/game";
