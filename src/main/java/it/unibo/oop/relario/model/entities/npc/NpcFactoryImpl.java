@@ -40,11 +40,17 @@ public final class NpcFactoryImpl implements NpcFactory {
 
     @Override
     public Npc createNpcWithLoot(final Position position, final InventoryItemType itemType) {
-        return createNpc("Loot Npc", position, new LootBehavior(dialoguesGenerator), Optional.of(this.inventoryItemFactory.createItem(itemType)));
+        return createNpc(
+            "Loot Npc",
+            position, 
+            new LootBehavior(dialoguesGenerator),
+            Optional.of(this.inventoryItemFactory.createItem(itemType))
+        );
     }
 
-    private Npc createNpc(final String name, final Position position, final NpcBehavior behavior, final Optional<InventoryItem> loot) {
-        return new NpcImpl(name, position, loot, behavior);
+    private Npc createNpc(final String name, final Position position,
+        final NpcBehavior behavior, final Optional<InventoryItem> loot) {
+            return new NpcImpl(name, position, loot, behavior);
     }
 
 }
