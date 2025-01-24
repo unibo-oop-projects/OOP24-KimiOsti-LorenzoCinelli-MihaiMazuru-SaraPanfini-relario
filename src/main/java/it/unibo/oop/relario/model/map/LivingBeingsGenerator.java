@@ -56,7 +56,7 @@ public final class LivingBeingsGenerator {
         final GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType().get();
         if (keyEntityType instanceof EnemyType) {
             final Position enemyPosition = new PositionImpl(room.getExit().getX() - 4, room.getExit().getY());
-            room.addEntity(enemyPosition, this.enemyFactory.createEnemyByType((EnemyType) keyEntityType, enemyPosition));
+            room.addEntity(enemyPosition, this.enemyFactory.createEnemyByTypeEmpty((EnemyType) keyEntityType, enemyPosition));
         }
     }
 

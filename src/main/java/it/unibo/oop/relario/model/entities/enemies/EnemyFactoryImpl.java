@@ -74,7 +74,7 @@ public final class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-    public Enemy createEnemyByItemEmpty(final EnemyType type, final Position position) {
+    public Enemy createEnemyByTypeEmpty(final EnemyType type, final Position position) {
         this.validateEnemyType(type);
         return this.createEnemy(position, type, Optional.empty());
     }
