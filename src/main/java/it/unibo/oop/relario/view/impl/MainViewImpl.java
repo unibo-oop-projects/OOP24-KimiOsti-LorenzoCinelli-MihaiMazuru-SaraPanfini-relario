@@ -78,7 +78,7 @@ public final class MainViewImpl implements MainView {
     }
 
     private void frameSetup() {
-        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setLayout(new BorderLayout());
         this.frame.setLocationByPlatform(true);
