@@ -8,7 +8,7 @@ import it.unibo.oop.relario.utils.api.Dimension;
 
 public final class DimensionImpl implements Dimension {
 
-    private Pair<Integer, Integer> dimension;
+    private final Pair<Integer, Integer> dimension;
 
     /**
      * Creates a position, given a pair of coordinates.
@@ -16,7 +16,7 @@ public final class DimensionImpl implements Dimension {
      * @param y the initial y coordinate.
      */
     public DimensionImpl(final int x, final int y) {
-        this.dimension = new Pair<Integer,Integer>(x, y);
+        this.dimension = new Pair<>(x, y);
     }
 
     @Override

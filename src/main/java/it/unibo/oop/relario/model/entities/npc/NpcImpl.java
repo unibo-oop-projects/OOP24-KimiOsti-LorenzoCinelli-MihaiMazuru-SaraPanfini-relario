@@ -6,13 +6,23 @@ import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
 
-public class NpcImpl extends LivingBeingImpl implements Npc {
+/**
+ * Implementation for the {@link Npc} interface.
+ */
+public final class NpcImpl extends LivingBeingImpl implements Npc {
 
     private final NpcBehavior behavior;
     private boolean hasInteracted;
     private final Optional<InventoryItem> loot;
     private boolean hasLoot;
 
+    /**
+     * Instantiates an NPC.
+     * @param name the NPC's name.
+     * @param position the NPC's position.
+     * @param loot the loot that the NPC carries with himself.
+     * @param behavior the behavior that the NPC implements.
+     */
     public NpcImpl(final String name, final Position position, final Optional<InventoryItem> loot, final NpcBehavior behavior) {
         super(name, position);
         this.behavior = behavior;
@@ -36,5 +46,5 @@ public class NpcImpl extends LivingBeingImpl implements Npc {
     public void confirmLootTaken() {
         this.hasLoot = false;
     }
-    
+
 }

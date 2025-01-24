@@ -1,5 +1,6 @@
 package it.unibo.oop.relario.utils.impl;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -7,7 +8,9 @@ import java.util.Objects;
  * @param <X> the type of the first element.
  * @param <Y> the type of the second element.
  */
-public final class Pair<X, Y> {
+public final class Pair<X, Y> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final X x;
     private final Y y;
