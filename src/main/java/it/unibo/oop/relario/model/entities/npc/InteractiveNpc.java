@@ -40,10 +40,17 @@ public final class InteractiveNpc extends LivingBeingImpl implements Npc {
         }
     }
 
+    /**
+     * Confirms that the loot has been accepted.
+     */
     public void confirmLootTaken() {
         this.hasLoot = false;
     }
 
+    /**
+     * Checks wether the NPC is carrying a loot.
+     * @return true if the NPC carries a loot.
+     */
     public boolean hasLoot() {
         return this.hasLoot;
     }
