@@ -1,9 +1,16 @@
 package it.unibo.oop.relario.model.entities.npc;
 
-public class LootBehavior implements NpcBehavior {
+/**
+ * Implementation for the behavior of an NPC that releases a loot.
+ */
+public final class LootBehavior implements NpcBehavior {
 
     private final DialoguesGenerator dialoguesGenerator;
 
+    /**
+     * Instantiates a loot behavior.
+     * @param dialoguesGenerator the generator for the NPC's dialogue.
+     */
     public LootBehavior(final DialoguesGenerator dialoguesGenerator) {
         this.dialoguesGenerator = dialoguesGenerator;
     }
@@ -16,5 +23,5 @@ public class LootBehavior implements NpcBehavior {
             return this.dialoguesGenerator.getDialogue(DialogueType.NO_LOOT);
         }
     }
-    
+
 }

@@ -19,6 +19,9 @@ public interface Npc extends LivingBeing {
      */
     boolean hasInteracted();
 
+    /**
+     * Confirms that the loot was taken.
+     */
     void confirmLootTaken();
 
 }

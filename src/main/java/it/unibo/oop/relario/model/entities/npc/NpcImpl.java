@@ -7,9 +7,9 @@ import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
- * Implementation for the {@link Npc} interface
+ * Implementation for the {@link Npc} interface.
  */
-public class NpcImpl extends LivingBeingImpl implements Npc {
+public final class NpcImpl extends LivingBeingImpl implements Npc {
 
     private final NpcBehavior behavior;
     private boolean hasInteracted;
