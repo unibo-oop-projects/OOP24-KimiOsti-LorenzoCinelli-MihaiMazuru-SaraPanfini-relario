@@ -15,6 +15,7 @@ public final class InteractiveNpc extends LivingBeingImpl implements Npc {
     private final DialoguesGenerator dialoguesGenerator;
     private final InventoryItem loot;
     private boolean hasLoot;
+    private boolean hasInteracted;
 
     /**
      * Constructs a new interactive NPC.
@@ -29,15 +30,22 @@ public final class InteractiveNpc extends LivingBeingImpl implements Npc {
         this.loot = loot;
         this.hasLoot = true;
         this.dialoguesGenerator = dialoguesGenerator;
+        this.hasInteracted = false;
     }
 
     @Override
     public InteractionOutput interact() {
         if (hasLoot) {
+            this.hasInteracted = true;
             return new InteractionOutput(this.dialoguesGenerator.getDialogue(DialogueType.LOOT), Optional.of(loot));
         } else {
             return new InteractionOutput(this.dialoguesGenerator.getDialogue(DialogueType.NO_LOOT), Optional.empty());
         }
+    }
+
+    @Override
+    public boolean hasInteracted() {
+        return this.hasInteracted;
     }
 
     /**
@@ -45,14 +53,6 @@ public final class InteractiveNpc extends LivingBeingImpl implements Npc {
      */
     public void confirmLootTaken() {
         this.hasLoot = false;
-    }
-
-    /**
-     * Checks wether the NPC is carrying a loot.
-     * @return true if the NPC carries a loot.
-     */
-    public boolean hasLoot() {
-        return this.hasLoot;
     }
 
 }

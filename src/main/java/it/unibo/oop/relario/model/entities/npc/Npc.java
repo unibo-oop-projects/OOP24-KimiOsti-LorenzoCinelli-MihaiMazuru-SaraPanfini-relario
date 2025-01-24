@@ -13,4 +13,6 @@ public interface Npc extends LivingBeing {
      */
     InteractionOutput interact();
 
+    boolean hasInteracted();
+
 }
