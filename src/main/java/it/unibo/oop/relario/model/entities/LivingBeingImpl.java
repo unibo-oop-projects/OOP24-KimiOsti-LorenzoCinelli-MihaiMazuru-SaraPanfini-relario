@@ -13,7 +13,7 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 public abstract class LivingBeingImpl implements LivingBeing {
 
     /** The number of updates after which the character changes direction. */
-    public static final int DIRECTION_RANGE = 2;
+    public static final int DIRECTION_RANGE = 1;
 
     private final String name;
     private Position position;
