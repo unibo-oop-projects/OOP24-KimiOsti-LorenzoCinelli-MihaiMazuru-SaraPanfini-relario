@@ -34,12 +34,12 @@ public final class PositionImpl implements Position {
 
     @Override
     public void setX(final int newX) {
-        this.position = new Pair<Integer,Integer>(newX, this.position.getY());
+        this.position = new Pair<>(newX, this.position.getY());
     }
 
     @Override
     public void setY(final int newY) {
-        this.position = new Pair<Integer,Integer>(this.position.getX(), newY);
+        this.position = new Pair<>(this.position.getX(), newY);
     }
 
     @Override
