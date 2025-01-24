@@ -113,7 +113,9 @@ public final class CombatControllerImpl implements CombatController {
         this.combatView.update();
 
         if (enemy.getLife() <= 0) {
-            player.addToInventory(enemy.getReward());
+            if (enemy.getReward().isPresent()) {
+                player.addToInventory(enemy.getReward().get());
+            }
             combatState = this.player.getName() + " you've won the combat";
             this.combatView.update();
             final var timer = new Timer(DELAY_TRANSITION, 

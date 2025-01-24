@@ -3,6 +3,8 @@ package it.unibo.oop.relario.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 
 import it.unibo.oop.relario.controller.api.CombatController;
@@ -48,9 +50,9 @@ class CombatControllerTest {
         final CombatController controller = new CombatControllerImpl(mainController);
         final MainCharacter chara = new MainCharacterImpl();
         final Enemy hostileEnemy = new EnemyImpl(EnemyType.SOLDIER.getName(), 
-        "Sono un soldato", pos, DifficultyLevel.EASY, item, false, EnemyType.SOLDIER);
+        "Sono un soldato", pos, DifficultyLevel.EASY, Optional.of(item), false, EnemyType.SOLDIER);
         final Enemy mercifulEnemy = new EnemyImpl(EnemyType.WIZARD.getName(), 
-        "Sono un mago", pos, DifficultyLevel.HARD, item, true, EnemyType.WIZARD);
+        "Sono un mago", pos, DifficultyLevel.HARD, Optional.of(item), true, EnemyType.WIZARD);
 
         mainController.moveToNextRoom();
 
