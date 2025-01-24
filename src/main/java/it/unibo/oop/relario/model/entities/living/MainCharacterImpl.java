@@ -3,49 +3,29 @@ package it.unibo.oop.relario.model.entities.living;
 import java.util.List;
 import java.util.Optional;
 
-import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.EquippableItem;
 import it.unibo.oop.relario.model.inventory.Inventory;
 import it.unibo.oop.relario.model.inventory.InventoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
-import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.Direction;
-import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
  * Implementation for the main character.
  */
 public final class MainCharacterImpl implements MainCharacter {
 
-    private static final int DEFAULT_INITIAL_POSITION = 0;
-    private static final Direction DEFAULT_INITIAL_DIRECTION = Direction.RIGHT;
-
     private final Inventory inventory;
     private final String name;
-    private final int initialLife;
-    private final int atk;
-    private int life;
-    private Position position;
-    private boolean moving;
-    private Direction direction;
-    private Optional<EquippableItem> armor;
-    private Optional<EquippableItem> weapon;
+    private final EntityMovementHandler movementHandler;
 
     /**
      * Initialises the main character.
      */
     public MainCharacterImpl() {
         this.name = "Relano";
-        this.initialLife = Constants.DEFAULT_PLAYER_LIFE;
-        this.life = this.initialLife;
-        this.atk = Constants.DEFAULT_PLAYER_ATK;
         this.inventory = new InventoryImpl();
-        this.position = new PositionImpl(DEFAULT_INITIAL_POSITION, DEFAULT_INITIAL_POSITION);
-        this.direction = DEFAULT_INITIAL_DIRECTION;
-        this.moving = false;
-        this.armor = Optional.empty();
-        this.weapon = Optional.empty();
+        this.movementHandler = new EntityMovementHandlerImpl();
     }
 
     @Override
@@ -55,69 +35,47 @@ public final class MainCharacterImpl implements MainCharacter {
 
     @Override
     public Optional<Position> getPosition() {
-        return Optional.of(this.position);
+        return this.movementHandler.getPosition();
     }
 
     @Override
     public void setPosition(final Position position) {
-        this.position.setX(position.getX());
-        this.position.setY(position.getY());
+        this.movementHandler.setPosition(position);
     }
 
     @Override
     public Direction getDirection() {
-        return this.direction;
-    }
-
-    @Override
-    public boolean isMoving() {
-        return this.moving;
+        return this.movementHandler.getDirection();
     }
 
     @Override
     public void setMovement(final Direction direction) {
-        this.moving = true;
-        this.direction = direction;
+        this.movementHandler.setMovement(direction);
     }
 
     @Override
     public void stop() {
-        this.moving = false;
+        this.movementHandler.stop();
     }
 
     @Override
     public void update() {
-        if (this.moving) {
-            this.position = direction.move(position);
-        }
+        this.movementHandler.move();
     }
 
     @Override
     public void attacked(final int damage) {
-        this.life = this.life + (this.armor.isEmpty() ? 0 : this.armor.get().getIntensity()) >= damage
-            ? this.life - damage + (this.armor.isEmpty() ? 0 : this.armor.get().getIntensity()) : 0;
-        if (!this.armor.isEmpty()) {
-            this.armor.get().decreaseDurability();
-        }
+        this.inventory.attacked(damage);
     }
 
     @Override
     public int getLife() {
-        return this.life;
+        return this.inventory.getLife();
     }
 
     @Override
     public int attack() {
-        final int atk;
-        if (!this.weapon.isEmpty()) {
-            atk = this.weapon.get().getIntensity() + this.atk;
-            if (!this.weapon.get().decreaseDurability()) {
-                this.weapon = Optional.empty();
-            }
-        } else {
-            atk = this.atk;
-        }
-        return atk;
+        return this.inventory.attack();
     }
 
     @Override
@@ -127,58 +85,26 @@ public final class MainCharacterImpl implements MainCharacter {
 
     @Override
     public Optional<EquippableItem> getEquippedWeapon() {
-        return this.getEquipped(this.weapon);
+        return this.inventory.getEquippedWeapon();
     }
 
     @Override
     public Optional<EquippableItem> getEquippedArmor() {
-        return this.getEquipped(this.armor);
+        return this.inventory.getEquippedArmor();
     }
 
     @Override
     public boolean useItem(final InventoryItem item) {
-        if (this.inventory.removeItem(item)) {
-            if (item instanceof EquippableItem) {
-                this.equip((EquippableItem) item);
-            } else {
-                if (item.getEffect() == EffectType.HEALING) {
-                    this.life = 
-                        item.getIntensity() + this.life >= this.initialLife 
-                        ? this.initialLife
-                        : this.life + item.getIntensity();
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
+        return this.inventory.useItem(item);
     }
 
     @Override
     public boolean discardItem(final InventoryItem item) {
-        return this.inventory.removeItem(item);
+        return this.inventory.discardItem(item);
     }
 
     @Override
     public boolean addToInventory(final InventoryItem item) {
         return this.inventory.addItem(item);
-    }
-
-    private void equip(final EquippableItem item) {
-        if (item.getEffect() == EffectType.DAMAGE) {
-            if (!weapon.isEmpty()) {
-                inventory.addItem(weapon.get());
-            }
-            weapon = Optional.of(item);
-        } else {
-            if (!armor.isEmpty()) {
-                inventory.addItem(armor.get());
-            }
-            armor = Optional.of(item);
-        }
-    }
-
-    private Optional<EquippableItem> getEquipped(final Optional<EquippableItem> item) {
-        return item.isPresent() ? Optional.of(item.get()) : Optional.empty();
     }
 }
