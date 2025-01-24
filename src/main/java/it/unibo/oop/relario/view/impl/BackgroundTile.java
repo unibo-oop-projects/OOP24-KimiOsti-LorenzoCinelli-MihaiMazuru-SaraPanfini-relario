@@ -13,7 +13,7 @@ public final class BackgroundTile extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private final Image img;
+    private final transient Image img;
 
     /**
      * Constructor for the background tiles.

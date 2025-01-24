@@ -26,10 +26,9 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  * Test class for the furniture factory class.
  */
 class FurnitureFactoryTest {
-    
+
     private FurnitureFactory factory;
     private Position pos;
-    private Furniture furniture;
 
     /**
      * Sets up the generic position and the factory.
@@ -45,6 +44,7 @@ class FurnitureFactoryTest {
      */
     @Test
     void testCreationByItem() {
+        Furniture furniture;
         for (final var type: FurnitureType.values()) {
             if (type.getFurniturePropriety().equals(FurniturePropriety.WALKABLE)) {
                 furniture = factory.createWalkableFurnitureByItem(pos, type);
@@ -87,7 +87,7 @@ class FurnitureFactoryTest {
      */
     @Test
     void testCreationRandom() {
-        furniture = this.factory.createRandomInteractiveFurniture(pos);
+        var furniture = this.factory.createRandomInteractiveFurniture(pos);
         assertNotNull(furniture);
         assertEquals(furniture.getType().getFurniturePropriety(), FurniturePropriety.INTERACTIVE);
 

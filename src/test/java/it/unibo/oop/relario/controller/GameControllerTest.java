@@ -22,7 +22,7 @@ import it.unibo.oop.relario.view.impl.GameView;
 /**
  * The test class for the game controller.
  */
-public final class GameControllerTest {
+final class GameControllerTest {
 
     private MainController controller;
 
@@ -30,7 +30,7 @@ public final class GameControllerTest {
      * Initialises the main controller used in the tests.
      */
     @BeforeEach
-    public void init() {
+    void init() {
         this.controller = new MainControllerImpl();
     }
 
@@ -38,7 +38,7 @@ public final class GameControllerTest {
      * Tests the game loop.
      */
     @Test
-    public void testGameLoop() {
+    void testGameLoop() {
         final var loop = new GameLoop((GameView) this.controller.getMainView().getPanel(GameState.GAME), new RoomImpl(
             new MainCharacterImpl(),
             new DimensionImpl(5, 5),
@@ -55,7 +55,7 @@ public final class GameControllerTest {
      * Test the game controller on user input scenarios.
      */
     @Test
-    public void testNotify() {
+    void testNotify() {
         this.controller.moveToNextRoom();
         this.controller.getMainView().showPanel(GameState.GAME);
 

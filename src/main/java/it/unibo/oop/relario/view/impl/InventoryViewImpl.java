@@ -22,8 +22,8 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
     private static final double DEFAULT_RATIO = 1;
     private static final int CONTENT_PANEL_INDEX = 1;
 
-    private final InventoryController controller;
-    private InventoryViewFactory factory;
+    private final transient InventoryController controller;
+    private transient InventoryViewFactory factory;
 
     /**
      * Creates the inventory view.

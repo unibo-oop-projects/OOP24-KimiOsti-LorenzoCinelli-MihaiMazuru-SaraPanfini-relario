@@ -26,7 +26,7 @@ public final class CombatView extends JPanel {
     private static final double SIDE_COMPONENTS_RATIO = 0.25;
     private static final double FONT_TO_PANEL_RATIO = 0.25;
 
-    private final CombatController controller;
+    private final transient CombatController controller;
     private final JPanel upperPadding;
     private final CombatScene centralScene;
     private final JPanel commands;
