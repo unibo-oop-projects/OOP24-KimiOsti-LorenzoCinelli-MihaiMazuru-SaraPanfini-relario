@@ -27,8 +27,8 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
     private static final String ATTACKED_ANIMATION = "";
     private static final List<String> ATTACK_AUDIO = List.of();
 
-    final private Clip clip;
-    final private ImageIcon icon;
+    private final Clip clip;
+    private final ImageIcon icon;
 
     /**
      * Creates a new label with the attack animation.
