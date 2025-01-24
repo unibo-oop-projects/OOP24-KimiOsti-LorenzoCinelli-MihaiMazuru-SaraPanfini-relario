@@ -24,7 +24,7 @@ import it.unibo.oop.relario.view.api.MainView;
  * Implementation of {@link CutSceneView}.
  */
 public final class CutSceneViewImpl extends JPanel implements CutSceneView {
-    
+
     private enum Scene {
         INTRODUCTION,
         VICTORY,
@@ -69,7 +69,6 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     /**
      * Creates a new cutscene panel.
      * @param controller is the main controller of the game.
-     * @param view is the main view of the game.
      */
     public CutSceneViewImpl(final MainController controller) {
         this.controller = controller.getCutSceneController();
