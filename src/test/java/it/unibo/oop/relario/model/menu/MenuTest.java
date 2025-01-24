@@ -30,7 +30,7 @@ class MenuTest {
         elemPlay = new MenuElement(Command.PLAY);
         elemQuit = new MenuElement(Command.QUIT);
     }
-    
+
     /**
      * Tests menu element's methods.
      */

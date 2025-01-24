@@ -23,7 +23,7 @@ import it.unibo.oop.relario.view.impl.GameView;
 /**
  * The test class for the game's interaction handler.
  */
-public class InteractionsHandlerTest {
+final class InteractionsHandlerTest {
 
     private MainController controller;
 

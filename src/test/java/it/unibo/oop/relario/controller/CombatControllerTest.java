@@ -77,8 +77,8 @@ class CombatControllerTest {
 
         controller.initializeCombat(chara, mercifulEnemy);
         controller.handleAction(CombatAction.MERCY);
-        assertEquals(controller.getCombatState(), controller.getEnemyName() + 
-            " accepted your mercy request." + " You are free to go.");
+        assertEquals(controller.getCombatState(), controller.getEnemyName()
+            + " accepted your mercy request." + " You are free to go.");
 
         final int initMerciLife = mercifulEnemy.getLife();
         controller.initializeCombat(chara, mercifulEnemy);

@@ -11,12 +11,12 @@ import it.unibo.oop.relario.view.impl.MainViewImpl;
 /**
  * Tester class for the game's view entry point.
  */
-public class MainViewTest {
+class MainViewTest {
     /**
      * Testing method for the main view.
      */
     @Test
-    public void testMainView() {
+    void testMainView() {
         final var view = new MainViewImpl(new MainControllerImpl());
         view.panelsSetup();
 
