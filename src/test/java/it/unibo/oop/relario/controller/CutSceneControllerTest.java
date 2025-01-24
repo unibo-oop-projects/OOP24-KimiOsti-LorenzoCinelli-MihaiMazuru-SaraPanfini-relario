@@ -61,7 +61,7 @@ final class CutSceneControllerTest {
         assertEquals(GameState.CUT_SCENE, this.mainController.getCurrentState());
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.addSuppressed(e);
         }

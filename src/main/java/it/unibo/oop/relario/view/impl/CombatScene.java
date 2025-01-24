@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.CombatController;
+import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.Constants;
 
 /**
@@ -36,8 +37,9 @@ public final class CombatScene extends JPanel {
 
     /**
      * Updates the combat scene.
+     * @param direction the direction of the attack.
      */
-    public void update() {
+    public void update(final AttackDirection direction) {
         this.removeAll();
         this.add(
             this.getInfoPanel(
@@ -46,16 +48,19 @@ public final class CombatScene extends JPanel {
             ),
             BorderLayout.NORTH
         );
-        this.add(
-            this.getEnemyImagePanel(
-                this.controller.getEnemyTexture().getScaledInstance(
-                    (int) (this.getWidth() * TEXTURE_TO_PANEL_RATIO),
-                    (int) (this.getHeight() * TEXTURE_TO_PANEL_RATIO),
-                    Image.SCALE_SMOOTH
-                )
-            ),
-            BorderLayout.CENTER
+        final var panel = this.getEnemyImagePanel(
+            this.controller.getEnemyTexture().getScaledInstance(
+                (int) (this.getWidth() * TEXTURE_TO_PANEL_RATIO),
+                (int) (this.getHeight() * TEXTURE_TO_PANEL_RATIO),
+                Image.SCALE_SMOOTH
+            )
         );
+        if (direction != AttackDirection.NONE) {
+            final var animation = new CombatAnimationImpl(direction);
+            panel.add(animation);
+            animation.start();
+        }
+        this.add(panel, BorderLayout.CENTER);
         this.add(
             this.getInfoPanel(
                 String.valueOf(this.controller.getPlayerLife()),
@@ -64,7 +69,6 @@ public final class CombatScene extends JPanel {
             ),
             BorderLayout.SOUTH
         );
-
         this.refresh();
     }
 

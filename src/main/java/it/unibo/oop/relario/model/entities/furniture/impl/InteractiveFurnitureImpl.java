@@ -30,8 +30,8 @@ public final class InteractiveFurnitureImpl extends FurnitureImpl implements Int
 
     @Override
     public InventoryItem dropLoot() {
-        final InventoryItem lootCopy = new InventoryItemImpl(this.loot.get().getName(),
-        this.loot.get().getDescription(), this.loot.get().getType(), this.loot.get().getIntensity());
+        final InventoryItem lootCopy = new InventoryItemImpl(this.loot.get().getDescription(), 
+        this.loot.get().getType(), this.loot.get().getIntensity());
         this.loot = Optional.empty();
         return lootCopy;
     }

@@ -20,7 +20,7 @@ public enum EffectType {
     NONE("Nessuno"),
 
     /** An effect that allows the player to pass the quest. */
-    QUEST("Quest");
+    QUEST("Risolve una quest");
 
     private final String effect;
 

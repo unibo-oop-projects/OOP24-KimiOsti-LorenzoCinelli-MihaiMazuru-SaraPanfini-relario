@@ -31,7 +31,8 @@ public final class MenuView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int INSETS = 3;
     private static final double RATIO = 0.5;
-    private static final String LOGO = "logo/logo";
+    private static final String PATH = "logo/";
+    private static final String EXTENSION = "logo";
     private static final float FONT_SIZE = 28f;
     private final transient MainController controller;
 
@@ -49,7 +50,7 @@ public final class MenuView extends JPanel {
         gridc.fill = GridBagConstraints.CENTER;
 
         if (elements.get(0).getElemCommad().equals(Command.PLAY)) {
-            final ImageIcon image = ImageLocators.getFixedSizeImage(LOGO, RATIO, RATIO);
+            final ImageIcon image = ImageLocators.getFixedSizeImage(PATH, EXTENSION, RATIO, RATIO);
             final JLabel logo = new JLabel(image);
             this.add(logo, gridc);
         }

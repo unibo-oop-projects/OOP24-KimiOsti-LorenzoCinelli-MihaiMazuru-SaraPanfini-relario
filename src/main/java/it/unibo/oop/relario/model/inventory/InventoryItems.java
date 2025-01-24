@@ -40,7 +40,7 @@ public final class InventoryItems {
     }
 
     private static String getIntensity(final InventoryItem item) {
-        if (item.getEffect() == EffectType.NONE) {
+        if (item.getEffect() == EffectType.NONE || item.getEffect() == EffectType.QUEST) {
             return "";
         } else {
             return " " + item.getIntensity();

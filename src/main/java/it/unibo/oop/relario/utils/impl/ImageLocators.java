@@ -10,19 +10,20 @@ import javax.swing.ImageIcon;
  */
 public final class ImageLocators {
     private static final String IMAGE_BASE_URL = "img/";
-    private static final String IMAGE_EXTENSION = ".png";
 
     private ImageLocators() { }
 
     /**
      * Returns an image icon with fixed dimension to screen size.
      * @param path the relative path of the resource.
+     * @param extension the extension of the resource.
      * @param horizontalRatio is the horizontal ratio to screen size.
      * @param verticalRatio is the vertical ratio to screen size.
      * @return the image icon of the resource in path.
      */
-    public static ImageIcon getFixedSizeImage(final String path, final double horizontalRatio, final double verticalRatio) {
-        final String url = Constants.RESOURCES_FOLDER_URL + IMAGE_BASE_URL + path + IMAGE_EXTENSION;
+    public static ImageIcon getFixedSizeImage(final String path, final String extension,
+        final double horizontalRatio, final double verticalRatio) {
+        final String url = Constants.RESOURCES_FOLDER_URL + IMAGE_BASE_URL + path + extension;
         final var toolKit = Toolkit.getDefaultToolkit();
         final Image img = toolKit.getImage(url).getScaledInstance(
             (int) (toolKit.getScreenSize().getWidth() * horizontalRatio),

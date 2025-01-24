@@ -40,12 +40,12 @@ public final class MenuControllerImpl implements MenuController {
 
     @Override
     public List<MenuElement> getInGameMenuElements() {
-        return this.menuModel.getInGameMenu().getElem();
+        return this.menuModel.getInGameMenu();
     }
 
     @Override
     public List<MenuElement> getStartMenuElements() {
-        return this.menuModel.getStartMenu().getElem();
+        return this.menuModel.getStartMenu();
     }
 
     @Override
