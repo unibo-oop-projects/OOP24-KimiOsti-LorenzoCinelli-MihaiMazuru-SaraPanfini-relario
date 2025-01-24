@@ -36,10 +36,7 @@ public final class DialoguesGenerator {
      * @return a random default dialogue
      */
     public String getDialogue(final DialogueType dialogueType) {
-        final List<String> matchingDialogues = this.dialogues.get(dialogueType);
-        if (matchingDialogues.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
+        final List<String> matchingDialogues = this.dialogues.getOrDefault(dialogueType, List.of("Nessun dialogo disponibile"));
         return matchingDialogues.get(random.nextInt(matchingDialogues.size()));
     }
 
