@@ -37,6 +37,7 @@ public final class CombatScene extends JPanel {
 
     /**
      * Updates the combat scene.
+     * @param direction the direction of the attack.
      */
     public void update(final AttackDirection direction) {
         this.removeAll();

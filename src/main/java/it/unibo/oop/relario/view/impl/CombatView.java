@@ -56,6 +56,7 @@ public final class CombatView extends JPanel {
 
     /**
      * Updates the combat view.
+     * @param direction the direction of the attack.
      */
     public void update(final AttackDirection direction) {
         this.centralScene.update(direction);
