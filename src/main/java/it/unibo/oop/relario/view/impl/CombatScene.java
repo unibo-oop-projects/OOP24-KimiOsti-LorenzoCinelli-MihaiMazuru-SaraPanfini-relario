@@ -23,7 +23,7 @@ public final class CombatScene extends JPanel {
     private static final int INFO_ROWS = 1;
     private static final int INFO_COLS = 3;
 
-    private final CombatController controller;
+    private final transient CombatController controller;
 
     /**
      * Creates the combat scene.

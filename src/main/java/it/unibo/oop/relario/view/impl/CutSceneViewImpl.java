@@ -63,8 +63,8 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         Scene.DEFEAT, "cutscene/skull"
     );
 
-    private final CutSceneController controller;
-    private final MainView mainView;
+    private final transient CutSceneController controller;
+    private final transient MainView mainView;
 
     /**
      * Creates a new cutscene panel.
