@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
 import it.unibo.oop.relario.utils.impl.GameState;
-import it.unibo.oop.relario.view.impl.MainViewImpl;
 
 /**
  * Tester class for the game's view entry point.
@@ -17,14 +16,18 @@ class MainViewTest {
      */
     @Test
     void testMainView() {
-        final var view = new MainViewImpl(new MainControllerImpl());
-        view.panelsSetup();
+        final MainControllerImpl controller = new MainControllerImpl();
 
-        view.showPanel(GameState.MENU);
-        assertEquals(view.getPanel(GameState.MENU), view.getPanel(view.getCurrentPanel()));
+        controller.getMenuController().showMenu(GameState.MENU, GameState.NONE);
+        assertEquals(GameState.MENU, controller.getCurrentState());
 
-        view.showPanel(GameState.GAME);
-        assertEquals(view.getPanel(GameState.GAME), view.getPanel(view.getCurrentPanel()));
-        assertEquals(view.getPanel(GameState.MENU), view.getPanel(view.getCurrentPanel()));
+        controller.moveToNextRoom();
+
+        controller.getGameController().run(true);
+        assertEquals(GameState.GAME, controller.getCurrentState());
+        controller.getCombatController().resumeCombat();
+        assertEquals(GameState.COMBAT, controller.getCurrentState());
+        controller.getInventoryController().init(GameState.COMBAT);
+        assertEquals(GameState.INVENTORY, controller.getCurrentState());
     }
 }
