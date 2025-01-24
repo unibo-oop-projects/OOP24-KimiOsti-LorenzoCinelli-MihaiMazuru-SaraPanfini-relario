@@ -1,9 +1,11 @@
 package it.unibo.oop.relario.utils.api;
 
+import java.io.Serializable;
+
 /**
  * Interface to handle positions throughout the game.
  */
-public interface Position {
+public interface Position extends Serializable {
     /**
      * @return the x coordinate of the current position.
      */
