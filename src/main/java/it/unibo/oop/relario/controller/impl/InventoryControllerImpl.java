@@ -49,6 +49,7 @@ public final class InventoryControllerImpl implements InventoryController {
         }
         updateInventory();
         this.inventoryView.init();
+        this.mainController.setCurrentState(GameState.INVENTORY);
         this.mainView.showPanel(GameState.INVENTORY);
     }
 

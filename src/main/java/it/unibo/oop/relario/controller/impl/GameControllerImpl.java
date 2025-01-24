@@ -72,6 +72,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     private void startGameLoop() {
+        this.controller.setCurrentState(GameState.GAME);
         this.mainView.showPanel(GameState.GAME);
         this.gameLoop = new GameLoop(
             (GameView) this.mainView.getPanel(GameState.GAME),

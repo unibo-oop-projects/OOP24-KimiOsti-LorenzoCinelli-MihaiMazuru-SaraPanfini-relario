@@ -51,6 +51,7 @@ public final class CombatControllerImpl implements CombatController {
     public void initializeCombat(final MainCharacter player, final Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
+        this.controller.setCurrentState(GameState.COMBAT);
         this.view.showPanel(GameState.COMBAT);
         SwingUtilities.invokeLater(this.combatView::update);
     }
@@ -97,6 +98,7 @@ public final class CombatControllerImpl implements CombatController {
 
     @Override
     public void resumeCombat() {
+        this.controller.setCurrentState(GameState.COMBAT);
         this.view.showPanel(GameState.COMBAT);
     }
 
