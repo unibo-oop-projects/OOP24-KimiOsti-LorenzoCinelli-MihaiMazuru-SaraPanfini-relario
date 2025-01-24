@@ -30,7 +30,7 @@ public final class FurnitureGenerator {
     /** The height of the walkable items' area. */
     public static final int CARPET_HEIGHT = 2;
 
-    public static final int PERIMETER_FURNITURE_ITEMS = 24;
+    public static final int PERIMETER_FURNITURE_ITEMS = 10;
 
     public static final int WALKABLE_FURNITURE_ITEMS = 6;
 
