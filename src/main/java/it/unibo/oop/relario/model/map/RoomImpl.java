@@ -26,8 +26,7 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  */
 public final class RoomImpl implements Room {
 
-    /** The range around furniture, used to define restricted areas. */
-    public static final int EXCLUSION_RANGE = 2;
+    private static final int FURNITURE_EXCLUSION_RANGE = 2;
 
     private final MainCharacter player;
     private final Dimension dimension;
@@ -165,8 +164,11 @@ public final class RoomImpl implements Room {
     }
 
     private Set<Position> adjacentCells(final Position position) {
-        return IntStream.rangeClosed(position.getX() - EXCLUSION_RANGE, position.getX() + EXCLUSION_RANGE)
-        .boxed().flatMap(x -> IntStream.rangeClosed(position.getY() - EXCLUSION_RANGE, position.getY() + EXCLUSION_RANGE)
+        return IntStream.rangeClosed(position.getX() - FURNITURE_EXCLUSION_RANGE, position.getX() + FURNITURE_EXCLUSION_RANGE)
+        .boxed()
+        .flatMap(x ->
+            IntStream.rangeClosed(position.getY() - FURNITURE_EXCLUSION_RANGE, position.getY() + FURNITURE_EXCLUSION_RANGE
+        )
         .mapToObj(y -> new PositionImpl(x, y))).filter(p -> isPositionValid(p) && isCellAvailable(p))
         .collect(Collectors.toSet());
     }

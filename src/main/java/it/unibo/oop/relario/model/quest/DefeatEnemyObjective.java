@@ -29,7 +29,7 @@ public final class DefeatEnemyObjective implements ObjectiveStrategy {
     @Override
     public boolean check(final Room room) {
         return room.getPopulation().values().stream().filter(lb -> lb instanceof Enemy)
-        .map(e -> (Enemy) e).noneMatch(e -> e.getType().equals(this.keyEnemyType));
+        .map(e -> (Enemy) e).noneMatch(e -> e.getType().equals(this.keyEnemyType.get()));
     }
 
     @Override
