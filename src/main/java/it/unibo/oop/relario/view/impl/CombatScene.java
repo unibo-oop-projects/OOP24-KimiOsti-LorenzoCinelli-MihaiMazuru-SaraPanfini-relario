@@ -46,16 +46,16 @@ public final class CombatScene extends JPanel {
             ),
             BorderLayout.NORTH
         );
-        this.add(
-            this.getEnemyImagePanel(
-                this.controller.getEnemyTexture().getScaledInstance(
-                    (int) (this.getWidth() * TEXTURE_TO_PANEL_RATIO),
-                    (int) (this.getHeight() * TEXTURE_TO_PANEL_RATIO),
-                    Image.SCALE_SMOOTH
-                )
-            ),
-            BorderLayout.CENTER
+        final var panel = this.getEnemyImagePanel(
+            this.controller.getEnemyTexture().getScaledInstance(
+                (int) (this.getWidth() * TEXTURE_TO_PANEL_RATIO),
+                (int) (this.getHeight() * TEXTURE_TO_PANEL_RATIO),
+                Image.SCALE_SMOOTH
+            )
         );
+        final var animation = new CombatAnimationImpl(CombatAnimationImpl.FROM_PLAYER_TO_ENEMY);
+        panel.add(animation);
+        this.add(panel, BorderLayout.CENTER);
         this.add(
             this.getInfoPanel(
                 String.valueOf(this.controller.getPlayerLife()),
@@ -64,7 +64,7 @@ public final class CombatScene extends JPanel {
             ),
             BorderLayout.SOUTH
         );
-
+        animation.start();
         this.refresh();
     }
 
