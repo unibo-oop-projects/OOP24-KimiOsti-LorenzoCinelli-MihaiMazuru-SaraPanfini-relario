@@ -1,7 +1,9 @@
 package it.unibo.oop.relario.model.entities.npc;
 
+import java.util.Optional;
 import java.util.Random;
 
+import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
@@ -18,12 +20,12 @@ public final class NpcFactoryImpl implements NpcFactory {
 
     @Override
     public Npc createDefaultNpc(final Position position) {
-        return this.createNotInteractiveNpc(position, new DefaultBehavior(dialoguesGenerator));
+        return this.createNpc("Default Npc", position, new DefaultBehavior(dialoguesGenerator), Optional.empty());
     }
 
     @Override
     public Npc createQuestNpc(final Position position, final String questDescription) {
-        return this.createNotInteractiveNpc(position, new QuestBehavior(questDescription));
+        return this.createNpc("Quest Npc", position, new QuestBehavior(questDescription), Optional.empty());
     }
 
     @Override
@@ -38,11 +40,11 @@ public final class NpcFactoryImpl implements NpcFactory {
 
     @Override
     public Npc createNpcWithLoot(final Position position, final InventoryItemType itemType) {
-        return new InteractiveNpc("Npc", position, inventoryItemFactory.createItem(itemType), dialoguesGenerator);
+        return createNpc("Loot Npc", position, new LootBehavior(dialoguesGenerator), Optional.of(this.inventoryItemFactory.createItem(itemType)));
     }
 
-    private Npc createNotInteractiveNpc(final Position position, final NpcBehavior behavior) {
-        return new NotInteractiveNpc("Npc", position, behavior);
+    private Npc createNpc(final String name, final Position position, final NpcBehavior behavior, final Optional<InventoryItem> loot) {
+        return new NpcImpl(name, position, loot, behavior);
     }
 
 }
