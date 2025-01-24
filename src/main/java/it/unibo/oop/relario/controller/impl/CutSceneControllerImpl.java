@@ -19,9 +19,9 @@ public final class CutSceneControllerImpl implements CutSceneController {
      * @param controller the main controller of the game.
      * @param view the main view of the game.
      */
-    public CutSceneControllerImpl(final MainController controller, final MainView view) {
+    public CutSceneControllerImpl(final MainController controller) {
         this.controller = controller;
-        this.view = view;
+        this.view = this.controller.getMainView();
     }
 
     @Override
@@ -44,7 +44,10 @@ public final class CutSceneControllerImpl implements CutSceneController {
                 this.controller.moveToNextRoom();
                 this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
             }
-            case MENU -> this.controller.getMenuController();
+            case MENU -> {
+                this.controller.startNewGame();
+                this.controller.getMenuController().showMenu(GameState.MENU, GameState.NONE);
+            }
             default -> { }
         }
     }

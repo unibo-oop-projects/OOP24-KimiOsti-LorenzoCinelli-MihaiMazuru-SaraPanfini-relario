@@ -1,11 +1,9 @@
 package it.unibo.oop.relario.view.impl;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -16,7 +14,6 @@ import javax.swing.Timer;
 import it.unibo.oop.relario.controller.api.CutSceneController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.FontHandler;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
 import it.unibo.oop.relario.utils.impl.SoundLocators;
@@ -27,61 +24,74 @@ import it.unibo.oop.relario.view.api.MainView;
  * Implementation of {@link CutSceneView}.
  */
 public final class CutSceneViewImpl extends JPanel implements CutSceneView {
+    
+    private enum Scene {
+        INTRODUCTION,
+        VICTORY,
+        DEFEAT;
+    }
+
     private static final long serialVersionUID = 1L;
     private static final Color TRANSPARENT_BLACK = new Color(0, 0, 0, 0);
     private static final int FADE_SPEED = 10;
     private static final int FADE_LIMIT = 256;
-    private static final int TRANSITION_DELAY = 10000;
-    private static final int INTRODUCTION_SCENE = 0;
-    private static final int VICTORY_SCENE = 1;
-    private static final int DEFEAT_SCENE = 2;
+    private static final int SCENE_TRANSITION_DELAY = 9000;
+    private static final int ROOM_TRANSITION_DELAY = 3000;
     private static final int INSETS = 10;
     private static final int NO_INSETS = 0;
     private static final double SCENE_RATIO = 0.6;
-    private static final double CHARACTER_RATIO = 0.05;
-    private static final List<String> MESSAGES = List.of(
-        "INTRODUZIONE",
-        "HAI VINTO",
-        "GAME OVER"
+    private static final double CHARACTER_RATIO = 0.075;
+    private static final String CHARACTER_IMAGE_URL = "cutscene/character";
+    private static final String DOOR_SOUND_URL = "door_sound";
+    private static final Map<Scene, String> MESSAGES = Map.of(
+        Scene.INTRODUCTION, """
+        <html>Il vecciho re di Relario sentiva vicino il momento della sua fine, \
+        ma sapeva di non aver lasciato eredi al trono.<br>\
+        Per questo ha deciso che chiunque riuscità a superare tutte le prove del suo castello \
+        erediterà il suo titolo.<br>\
+        Spero di essere all'altezza!</html>
+        """,
+        Scene.VICTORY, """
+        <html><center>HAI VINTO<br>
+        Hai ufficialmente ereditato il trono di Relario</center></html>
+        """,
+        Scene.DEFEAT, "<html><center>HAI PERSO</center></html>"
     );
-    private static final Map<String, String> URL = Map.of(
-        "castle", "cutscene/castle_zoom",
-        "victory", "cutscene/castle_zoom",
-        "character", "cutscene/character",
-        "door", "door_sound"
+    private static final Map<Scene, String> URL = Map.of(
+        Scene.INTRODUCTION, "cutscene/castle_zoom",
+        Scene.VICTORY, "cutscene/throne",
+        Scene.DEFEAT, "cutscene/skull"
     );
 
     private final CutSceneController controller;
     private final MainView mainView;
-    private final Font font;
 
     /**
      * Creates a new cutscene panel.
      * @param controller is the main controller of the game.
      * @param view is the main view of the game.
      */
-    public CutSceneViewImpl(final MainController controller, final MainView view) {
+    public CutSceneViewImpl(final MainController controller) {
         this.controller = controller.getCutSceneController();
-        this.mainView = view;
-        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
+        this.mainView = controller.getMainView();
         this.setLayout(new GridBagLayout());
-        this.setBackground(Color.BLACK);
+        this.setBackground(Constants.BACKGROUND_SCENE_COLOR);
     }
 
     @Override
     public void showStartScene() {
-        this.sceneLoader(INTRODUCTION_SCENE);
-        final var timer = new Timer(TRANSITION_DELAY, e -> this.controller.progress(GameState.GAME));
+        this.sceneLoader(Scene.INTRODUCTION);
+        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progress(GameState.GAME));
         timer.setRepeats(false);
         timer.start();
     }
 
     @Override
     public void showNextRoomScene() {
-        final var audio = SoundLocators.getAudio(URL.get("door"));
+        final var audio = SoundLocators.getAudio(DOOR_SOUND_URL);
         audio.start();
         this.fadeOutOverLastView();
-        final var timer = new Timer(TRANSITION_DELAY / 2, e -> this.controller.progress(GameState.GAME));
+        final var timer = new Timer(ROOM_TRANSITION_DELAY, e -> this.controller.progress(GameState.GAME));
         timer.setRepeats(false);
         timer.start();
     }
@@ -89,8 +99,8 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showVictoryScene() {
         this.fadeOutOverLastView();
-        this.sceneLoader(VICTORY_SCENE);
-        final var timer = new Timer(TRANSITION_DELAY, e -> this.controller.progress(GameState.MENU));
+        this.sceneLoader(Scene.VICTORY);
+        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progress(GameState.MENU));
         timer.setRepeats(false);
         timer.start();
     }
@@ -98,21 +108,15 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showDefeatScene() {
         this.fadeOutOverLastView();
-        final var label = new JLabel(MESSAGES.get(DEFEAT_SCENE));
-        label.setBackground(Color.BLACK);
-        label.setForeground(Color.WHITE);
-        label.setFont(this.font);
-        this.add(label);
-        this.validate();
-        final var timer = new Timer(TRANSITION_DELAY, e -> this.controller.progress(GameState.MENU));
+        this.sceneLoader(Scene.DEFEAT);
+        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progress(GameState.MENU));
         timer.setRepeats(false);
         timer.start();
     }
 
-    private void sceneLoader(final int scene) {
+    private void sceneLoader(final Scene scene) {
         this.removeAll();
-        final var image = ImageLocators.getFixedSizeImage(
-            URL.get(scene == VICTORY_SCENE ? "victory" : "castle"), SCENE_RATIO, SCENE_RATIO);
+        final var image = ImageLocators.getFixedSizeImage(URL.get(scene), SCENE_RATIO, SCENE_RATIO);
         this.add(new JLabel(image));
 
         final var labelConstraints = new GridBagConstraints();
@@ -120,14 +124,14 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         labelConstraints.insets = new Insets(INSETS, NO_INSETS, NO_INSETS, NO_INSETS);
 
         final var label = new JLabel();
-        if (scene == INTRODUCTION_SCENE) {
-            final var playerImage = ImageLocators.getFixedSizeImage(URL.get("character"), CHARACTER_RATIO, CHARACTER_RATIO);
+        if (scene == Scene.INTRODUCTION) {
+            final var playerImage = ImageLocators.getFixedSizeImage(CHARACTER_IMAGE_URL, CHARACTER_RATIO, CHARACTER_RATIO);
             label.setIcon(playerImage);
         }
         label.setText(MESSAGES.get(scene));
-        label.setFont(this.font);
+        label.setFont(Constants.FONT);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setForeground(Color.WHITE);
+        label.setForeground(Constants.TEXT_SCENE_COLOR);
         this.add(label, labelConstraints);
 
         this.repaint();

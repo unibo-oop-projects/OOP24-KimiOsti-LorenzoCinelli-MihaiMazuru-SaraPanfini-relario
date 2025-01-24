@@ -152,7 +152,7 @@ public final class RoomImpl implements Room {
     @Override
     public List<Position> getCellsByState(final CellState state) {
         return this.cellStates.entrySet().stream().filter(entry -> entry.getValue().equals(state))
-        .map(Map.Entry::getKey).collect(Collectors.toList());
+        .map(e -> e.getKey()).collect(Collectors.toList());
     }
 
     private void addFurniture(final Position position, final Furniture furniture) {

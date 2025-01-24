@@ -13,11 +13,11 @@ import it.unibo.oop.relario.model.map.Room;
 
 public final class DefeatEnemyObjective implements ObjectiveStrategy {
 
-    private final EnemyType keyEnemyType;
+    private final Optional<EnemyType> keyEnemyType;
 
-    public DefeatEnemyObjective(final GameEntityType keyEnemyType) {
-        if (keyEnemyType instanceof EnemyType) {
-            this.keyEnemyType = (EnemyType) keyEnemyType;
+    public DefeatEnemyObjective(final Optional<GameEntityType> keyEnemyType) {
+        if (keyEnemyType.isPresent() && keyEnemyType.get() instanceof EnemyType) {
+            this.keyEnemyType = Optional.of((EnemyType) keyEnemyType.get());
         } else {
             throw new IllegalArgumentException();
         }
@@ -30,8 +30,8 @@ public final class DefeatEnemyObjective implements ObjectiveStrategy {
     }
 
     @Override
-    public Optional<GameEntityType> getKeyEntityType() {
-        return Optional.of(this.keyEnemyType);
+    public Optional<EnemyType> getKeyEntityType() {
+        return this.keyEnemyType;
     }
 
 }

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
@@ -16,15 +15,25 @@ import javax.swing.JTextArea;
 
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.FontHandler;
 import it.unibo.oop.relario.view.api.InventoryViewFactory;
 
 /**
  * Implementation of {@link InventoryViewFactory}.
  */
 public final class InventoryViewFactoryImpl implements InventoryViewFactory {
+    private static final String COMMANDS = """
+        ↑↓ - spostarsi tra gli oggetti
+        Enter - usa un oggetto
+        Backspace - scarta un oggetto
+        I - esci dall\'inventario
+    """;
+    private static final String TITLE = "Inventario                        Vita: ";
+    private static final String ITEM_LIST = "Lista oggetti";
+    private static final String ITEM_DESCRIPTION = "Descrizione oggetto";
+    private static final String EQUIPPED_ITEMS = "Oggetti equipaggiati";
+    private static final String ARMOR = "Armatura: ";
+    private static final String WEAPON = "Arma: ";
 
-    private final Font font;
     private final InventoryController inventory;
 
     /**
@@ -33,22 +42,16 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
      */
     public InventoryViewFactoryImpl(final InventoryController inventory) {
         this.inventory = inventory;
-        this.font = FontHandler.getFont(Constants.MONOSPACE_FONT);
     }
 
     @Override
     public JPanel createCommandPanel() {
         final var panel = new JPanel();
-        final var commandsString = """
-            ↑↓ - spostarsi tra gli oggetti
-            Enter - usa un oggetto
-            Backspace - scarta un oggetto
-            I - esci dall\'inventario
-        """;
+        final var commandsString = COMMANDS;
         final var label = new JLabel(commandsString);
-        label.setForeground(Color.WHITE);
-        label.setFont(font);
-        panel.setBackground(Color.BLACK);
+        label.setForeground(Constants.TEXT_SCENE_COLOR);
+        label.setFont(Constants.FONT);
+        panel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         panel.add(label);
         return panel;
     }
@@ -56,7 +59,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
     @Override
     public JPanel createContentPanel() {
         final var panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.BLACK);
+        panel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         panel.add(createTitlePanel(), BorderLayout.NORTH);
         panel.add(createListPanel(), BorderLayout.WEST);
         panel.add(createDescriptionPanel(), BorderLayout.CENTER);
@@ -68,9 +71,9 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         final var panel = new JPanel();
         final var label = new JLabel(text);
         label.setForeground(Color.LIGHT_GRAY);
-        label.setFont(font);
+        label.setFont(Constants.FONT);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(Color.BLACK);
+        panel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(label);
         return panel;
@@ -78,11 +81,11 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
 
     private JTextArea addTextArea(final String string) {
         final JTextArea area = new JTextArea(string);
-        area.setFont(font);
+        area.setFont(Constants.FONT);
         area.setLineWrap(true);
         area.setWrapStyleWord(true);
-        area.setForeground(Color.WHITE);
-        area.setBackground(Color.BLACK);
+        area.setForeground(Constants.TEXT_SCENE_COLOR);
+        area.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         area.setEditable(false);
         area.setFocusable(false);
         return area;
@@ -90,16 +93,16 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
 
     private JPanel createTitlePanel() {
         final var panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        final var label = new JLabel("Inventario                        Vita: " + this.inventory.getLife());
-        label.setForeground(Color.WHITE);
-        label.setFont(font);
-        panel.setBackground(Color.BLACK);
+        final var label = new JLabel(TITLE + this.inventory.getLife());
+        label.setForeground(Constants.TEXT_SCENE_COLOR);
+        label.setFont(Constants.FONT);
+        panel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         panel.add(label);
         return panel;
     }
 
     private JPanel createListPanel() {
-        final var panel = createContentSubpanel("Lista oggetti");
+        final var panel = createContentSubpanel(ITEM_LIST);
         final var list = this.inventory.getItemsNames();
         final var radioButtons = new JRadioButton[list.size()];
         final var buttonGroup = new ButtonGroup();
@@ -116,9 +119,9 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
             radioButtons[i] = new JRadioButton(list.get(i));
             buttonGroup.add(radioButtons[i]);
             radioButtons[i].addActionListener(radioButtonsListener);
-            radioButtons[i].setFont(font);
-            radioButtons[i].setForeground(Color.WHITE);
-            radioButtons[i].setBackground(Color.BLACK);
+            radioButtons[i].setFont(Constants.FONT);
+            radioButtons[i].setForeground(Constants.TEXT_SCENE_COLOR);
+            radioButtons[i].setBackground(Constants.BACKGROUND_SCENE_COLOR);
             radioButtons[i].setFocusable(false);
             panel.add(radioButtons[i]);
         }
@@ -130,9 +133,9 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
 
     private JPanel createDescriptionPanel() {
         final var subpanel = new JPanel();
-        final var panel = createContentSubpanel("Descrizione oggetto");
+        final var panel = createContentSubpanel(ITEM_DESCRIPTION);
         final var description = this.inventory.getItemFullDescription();
-        subpanel.setBackground(Color.BLACK);
+        subpanel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.Y_AXIS));
         subpanel.add(this.addTextArea(description));
         panel.add(subpanel);
@@ -140,11 +143,11 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
     }
 
     private JPanel createEquippedPanel() {
-        final var panel = createContentSubpanel("Oggetti equipaggiati");
-        final var armor = "Armatura: " + this.inventory.getEquippedArmor();
-        final var weapon = "Arma: " + this.inventory.getEquippedWeapon();
+        final var panel = createContentSubpanel(EQUIPPED_ITEMS);
+        final var armor = ARMOR + this.inventory.getEquippedArmor();
+        final var weapon = WEAPON + this.inventory.getEquippedWeapon();
         final var subpanel = new JPanel();
-        subpanel.setBackground(Color.BLACK);
+        subpanel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.Y_AXIS));
         subpanel.add(this.addTextArea(armor));
         subpanel.add(this.addTextArea(weapon));

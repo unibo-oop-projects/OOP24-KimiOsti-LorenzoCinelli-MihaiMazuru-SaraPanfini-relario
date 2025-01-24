@@ -37,7 +37,7 @@ public final class QuestImpl implements Quest {
     }
 
     @Override
-    public Optional<GameEntityType> getKeyEntityType() {
+    public Optional<? extends GameEntityType> getKeyEntityType() {
         return this.objective.getKeyEntityType();
     }
 

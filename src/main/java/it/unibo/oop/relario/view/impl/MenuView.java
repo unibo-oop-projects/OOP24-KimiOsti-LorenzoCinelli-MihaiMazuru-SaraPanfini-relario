@@ -1,7 +1,6 @@
 package it.unibo.oop.relario.view.impl;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,7 +30,7 @@ public final class MenuView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int INSETS = 3;
     private static final String GAME_NAME  = "RELARIO";
-    private static final int FONT_SIZE = 28;
+    private static final float FONT_SIZE = 28f;
     private final transient MainView view;
     private final transient MainController controller;
 
@@ -41,10 +40,9 @@ public final class MenuView extends JPanel {
      * @param elements are the menu elements that need to be added to the view.
      * @param controller is the main controller.
      */
-    public MenuView(final MainView view, final List<MenuElement> elements, 
-    final MainController controller) {
-        this.view = view;
+    public MenuView(final List<MenuElement> elements, final MainController controller) {
         this.controller = controller;
+        this.view = this.controller.getMainView();
         this.setLayout(new GridBagLayout());
         final GridBagConstraints gridc = new GridBagConstraints();
         gridc.gridy = 0;
@@ -53,7 +51,7 @@ public final class MenuView extends JPanel {
 
         if (this.view.getCurrentPanel().equals(GameState.MENU)) {
             final JLabel title = new JLabel(GAME_NAME);
-            title.setFont(new Font(Constants.MONOSPACE_FONT, Font.BOLD, FONT_SIZE));
+            title.setFont(Constants.FONT.deriveFont(FONT_SIZE));
             this.add(title, gridc);
         }
         gridc.gridy++;
@@ -70,7 +68,7 @@ public final class MenuView extends JPanel {
 
     private JButton createButton(final MenuElement elem) {
         final JButton myButton = new JButton(elem.getElemName());
-        myButton.setFont(new Font(Constants.MONOSPACE_FONT, Font.BOLD, FONT_SIZE));
+        myButton.setFont(Constants.FONT.deriveFont(FONT_SIZE));
         myButton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
                 this.controller.getCutSceneController().show(GameState.MENU);
