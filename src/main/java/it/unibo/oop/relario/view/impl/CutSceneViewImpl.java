@@ -36,7 +36,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final int FADE_SPEED = 10;
     private static final int FADE_LIMIT = 256;
     private static final int SCENE_TRANSITION_DELAY = 4000;
-    private static final int ROOM_TRANSITION_DELAY = 2500;
+    private static final int ROOM_TRANSITION_DELAY = 3000;
     private static final int INSETS = 10;
     private static final int NO_INSETS = 0;
     private static final double SCENE_RATIO = 0.6;
