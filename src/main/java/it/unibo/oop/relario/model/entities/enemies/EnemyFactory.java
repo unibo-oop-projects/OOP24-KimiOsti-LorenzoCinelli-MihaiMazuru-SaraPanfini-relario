@@ -6,7 +6,6 @@ import it.unibo.oop.relario.utils.api.Position;
 /**
  * An interface modelling a factory of enemies.
  */
-
 public interface EnemyFactory {
 
     /**
@@ -32,6 +31,12 @@ public interface EnemyFactory {
      */
     Enemy createEnemyByType(EnemyType type, Position position);
 
+    /**
+     * Creates an enemy carrying no loot.
+     * @param type of the enemy.
+     * @param position of the enemy.
+     * @return a new enemy of the specified type, carrying no loot.
+     */
     Enemy createEnemyByTypeEmpty(EnemyType type, Position position);
 
 }

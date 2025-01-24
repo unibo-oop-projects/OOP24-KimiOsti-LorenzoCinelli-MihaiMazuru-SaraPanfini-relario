@@ -89,7 +89,7 @@ public final class EnemyFactoryImpl implements EnemyFactory {
         if (!this.enemiesData.containsKey(type)) {
             throw new IllegalArgumentException();
         }
-    }    
+    }
 
     private record EnemyConfig(String name, String description, DifficultyLevel difficulty) { }
 

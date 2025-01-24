@@ -13,6 +13,10 @@ public interface Npc extends LivingBeing {
      */
     InteractionOutput interact();
 
+    /**
+     * Checks if the player has already interacted with the NPC.
+     * @return a boolean representing if the player had already interacted with the NPC.
+     */
     boolean hasInteracted();
 
 }
