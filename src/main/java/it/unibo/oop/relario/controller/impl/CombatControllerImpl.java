@@ -2,6 +2,7 @@ package it.unibo.oop.relario.controller.impl;
 
 import java.awt.Image;
 
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import it.unibo.oop.relario.controller.api.CombatController;
@@ -44,8 +45,8 @@ public final class CombatControllerImpl implements CombatController {
     public void initializeCombat(final MainCharacter player, final Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
-        this.combatView.update();
         this.view.showPanel(GameState.COMBAT);
+        SwingUtilities.invokeLater(this.combatView::update);
     }
 
     @Override
@@ -100,7 +101,7 @@ public final class CombatControllerImpl implements CombatController {
             case MERCY -> this.mercyRequest();
             case OPEN_INVENTORY -> 
                 this.controller.getInventoryController().init(GameState.COMBAT);
-                default -> { }
+            default -> { }
         }
     }
 
@@ -110,14 +111,14 @@ public final class CombatControllerImpl implements CombatController {
         } else {
             this.player.attacked(this.enemy.getDamage());
         }
-        this.combatView.update();
+        SwingUtilities.invokeLater(this.combatView::update);
 
         if (enemy.getLife() <= 0) {
             if (enemy.getReward().isPresent()) {
                 player.addToInventory(enemy.getReward().get());
             }
             combatState = this.player.getName() + " you've won the combat";
-            this.combatView.update();
+            SwingUtilities.invokeLater(this.combatView::update);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getCutSceneController().show(GameState.VICTORY));
             timer.setRepeats(false);
@@ -138,7 +139,7 @@ public final class CombatControllerImpl implements CombatController {
         if (enemy.isMerciful()) {
             combatState = this.enemy.getName() + " accepted your mercy request."
             + " You are free to go.";
-            this.combatView.update();
+            SwingUtilities.invokeLater(this.combatView::update);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getGameController().run(true));
             timer.setRepeats(false);

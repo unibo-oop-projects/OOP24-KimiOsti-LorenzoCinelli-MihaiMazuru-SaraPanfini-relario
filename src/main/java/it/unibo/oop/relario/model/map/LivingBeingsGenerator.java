@@ -61,8 +61,8 @@ public final class LivingBeingsGenerator {
     }
 
     private void divideRoom(final Dimension dimension) {
-        final int areaWidth = (int) Math.floor(dimension.getWidth() / 2);
-        final int areaHeight = (int) Math.floor(dimension.getHeight() / 2);
+        final int areaWidth = dimension.getWidth() / 2;
+        final int areaHeight = dimension.getHeight() / 2;
 
         this.areas.add(new Area(new PositionImpl(0, 0), new DimensionImpl(areaWidth, areaHeight)));
         this.areas.add(new Area(new PositionImpl(areaWidth, 0), new DimensionImpl(areaWidth, areaHeight)));

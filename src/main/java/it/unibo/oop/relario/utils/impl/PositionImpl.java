@@ -7,6 +7,8 @@ import it.unibo.oop.relario.utils.api.Position;
  */
 public final class PositionImpl implements Position {
 
+    private static final long serialVersionUID = 1L;
+
     private Pair<Integer, Integer> position;
 
     /**
