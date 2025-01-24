@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.impl.CombatAction;
+import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.Constants;
 
 /**
@@ -56,8 +57,8 @@ public final class CombatView extends JPanel {
     /**
      * Updates the combat view.
      */
-    public void update() {
-        this.centralScene.update();
+    public void update(final AttackDirection direction) {
+        this.centralScene.update(direction);
         this.updateMessage(this.controller.getCombatState());
     }
 

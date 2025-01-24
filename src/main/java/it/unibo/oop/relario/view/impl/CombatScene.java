@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.CombatController;
+import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.Constants;
 
 /**
@@ -37,7 +38,7 @@ public final class CombatScene extends JPanel {
     /**
      * Updates the combat scene.
      */
-    public void update() {
+    public void update(final AttackDirection direction) {
         this.removeAll();
         this.add(
             this.getInfoPanel(
@@ -53,8 +54,11 @@ public final class CombatScene extends JPanel {
                 Image.SCALE_SMOOTH
             )
         );
-        final var animation = new CombatAnimationImpl(CombatAnimationImpl.FROM_PLAYER_TO_ENEMY);
-        panel.add(animation);
+        if (direction != AttackDirection.NONE) {
+            final var animation = new CombatAnimationImpl(direction);
+            panel.add(animation);
+            animation.start();
+        }
         this.add(panel, BorderLayout.CENTER);
         this.add(
             this.getInfoPanel(
@@ -64,7 +68,6 @@ public final class CombatScene extends JPanel {
             ),
             BorderLayout.SOUTH
         );
-        animation.start();
         this.refresh();
     }
 

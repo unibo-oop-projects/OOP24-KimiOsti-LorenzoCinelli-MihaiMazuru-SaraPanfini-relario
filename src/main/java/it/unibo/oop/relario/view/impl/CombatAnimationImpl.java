@@ -9,6 +9,7 @@ import javax.swing.Timer;
 
 import org.apache.commons.lang3.RandomUtils;
 
+import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
 import it.unibo.oop.relario.utils.impl.SoundLocators;
@@ -18,11 +19,6 @@ import it.unibo.oop.relario.view.api.CombatAnimation;
  * Implementation of {@link CombatAnimation}.
  */
 public final class CombatAnimationImpl extends JLabel implements CombatAnimation {
-    /** The attack is from the player to the enemy. */
-    public static final boolean FROM_PLAYER_TO_ENEMY = false;
-    /** The attack is from the enemy to the player. */
-    public static final boolean FROM_ENEMY_TO_PLAYER = true;
-
     private static final long serialVersionUID = 1L;
     private static final int ANIMATION_DURATION = 850;
     private static final double RATIO = 0.6;
@@ -47,11 +43,15 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
      * Creates a new label with the attack animation.
      * @param direction is the direction of the attack.
      */
-    public CombatAnimationImpl(final boolean direction) {
+    public CombatAnimationImpl(final AttackDirection direction) {
         this.clip = SoundLocators.getAudio(ATTACK_AUDIO.get(RandomUtils.nextInt(0, ATTACK_AUDIO.size())));
-        this.icon = ImageLocators.getFixedSizeImage(
-            direction ? ATTACKED_ANIMATION : ATTACK_ANIMATION,
-            Constants.GIF_EXTENSION, RATIO, RATIO);
+        switch (direction) {
+            case FROM_ENEMY_TO_PLAYER -> this.icon = ImageLocators.getFixedSizeImage(
+                ATTACKED_ANIMATION, Constants.GIF_EXTENSION, RATIO, RATIO);
+            case FROM_PLAYER_TO_ENEMY -> this.icon = ImageLocators.getFixedSizeImage(
+                ATTACK_ANIMATION, Constants.GIF_EXTENSION, RATIO, RATIO);
+            default -> this.icon = null;
+        }
     }
 
     @Override

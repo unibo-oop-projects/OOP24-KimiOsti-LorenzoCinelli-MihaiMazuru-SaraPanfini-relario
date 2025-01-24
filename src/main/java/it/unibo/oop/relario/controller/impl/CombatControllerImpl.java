@@ -2,7 +2,6 @@ package it.unibo.oop.relario.controller.impl;
 
 import java.awt.Image;
 
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import it.unibo.oop.relario.controller.api.CombatController;
@@ -10,6 +9,7 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
+import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.CombatTexturesLocator;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
@@ -46,7 +46,7 @@ public final class CombatControllerImpl implements CombatController {
         this.player = player;
         this.enemy = enemy;
         this.view.showPanel(GameState.COMBAT);
-        SwingUtilities.invokeLater(this.combatView::update);
+        this.combatView.update(AttackDirection.NONE);
     }
 
     @Override
@@ -108,17 +108,18 @@ public final class CombatControllerImpl implements CombatController {
     private void attack(final boolean isPlayerAttacking) {
         if (isPlayerAttacking) {
             this.enemy.attacked(this.player.attack());
+            this.combatView.update(AttackDirection.FROM_PLAYER_TO_ENEMY);
         } else {
             this.player.attacked(this.enemy.getDamage());
+            this.combatView.update(AttackDirection.FROM_ENEMY_TO_PLAYER);
         }
-        SwingUtilities.invokeLater(this.combatView::update);
 
         if (enemy.getLife() <= 0) {
             if (enemy.getReward().isPresent()) {
                 player.addToInventory(enemy.getReward().get());
             }
             combatState = this.player.getName() + " you've won the combat";
-            SwingUtilities.invokeLater(this.combatView::update);
+            this.combatView.update(AttackDirection.NONE);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getCutSceneController().show(GameState.VICTORY));
             timer.setRepeats(false);
@@ -139,7 +140,7 @@ public final class CombatControllerImpl implements CombatController {
         if (enemy.isMerciful()) {
             combatState = this.enemy.getName() + " accepted your mercy request."
             + " You are free to go.";
-            SwingUtilities.invokeLater(this.combatView::update);
+            this.combatView.update(AttackDirection.NONE);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getGameController().run(true));
             timer.setRepeats(false);
