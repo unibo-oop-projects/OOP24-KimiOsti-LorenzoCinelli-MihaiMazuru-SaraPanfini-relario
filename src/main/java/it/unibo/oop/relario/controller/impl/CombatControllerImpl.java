@@ -5,6 +5,7 @@ import java.awt.Image;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
@@ -18,6 +19,11 @@ import it.unibo.oop.relario.view.impl.CombatView;
 /**
  * Implementation of the combat controller.
  */
+@SuppressFBWarnings(
+    value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    justification = "combatView will always be an instance of CombatView"
+        + "based on how MainView is implemented."
+)
 public final class CombatControllerImpl implements CombatController {
 
     private static final Integer DELAY_TRANSITION = 4000;
