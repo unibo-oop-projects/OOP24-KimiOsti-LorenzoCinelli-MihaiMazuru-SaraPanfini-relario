@@ -58,7 +58,7 @@ class CombatControllerTest {
 
         assertEquals(controller.getCombatState(), "");
         controller.initializeCombat(chara, hostileEnemy);
-        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.COMBAT);
+        assertEquals(mainController.getCurrentState(), GameState.COMBAT);
         assertEquals(controller.getDifficultyLevel(), hostileEnemy.getDifficulty());
         assertEquals(controller.getEnemyLife(), hostileEnemy.getLife());
         assertEquals(controller.getEnemyName(), hostileEnemy.getName());
@@ -92,6 +92,6 @@ class CombatControllerTest {
         assertEquals(mercifulEnemy.getLife(), 10);
 
         controller.handleAction(CombatAction.OPEN_INVENTORY);
-        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.INVENTORY);
+        assertEquals(mainController.getCurrentState(), GameState.INVENTORY);
     }
 }

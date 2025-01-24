@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.oop.relario.controller.api.CutSceneController;
+import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
 import it.unibo.oop.relario.utils.impl.GameState;
-import it.unibo.oop.relario.view.api.MainView;
 
 /*
  * CHECKSTYLE: MagicNumber OFF
@@ -19,7 +19,7 @@ import it.unibo.oop.relario.view.api.MainView;
  */
 final class CutSceneControllerTest {
 
-    private MainView mainView;
+    private MainController mainController;
     private CutSceneController cutscene;
 
     /**
@@ -27,8 +27,7 @@ final class CutSceneControllerTest {
      */
     @BeforeEach
     void setUp() {
-        final var mainController = new MainControllerImpl();
-        this.mainView = mainController.getMainView();
+        this.mainController = new MainControllerImpl();
         this.cutscene = mainController.getCutSceneController();
     }
 
@@ -37,7 +36,7 @@ final class CutSceneControllerTest {
      */
     @Test
     void testShow() {
-        assertEquals(GameState.MENU, this.mainView.getCurrentPanel());
+        assertEquals(GameState.MENU, this.mainController.getCurrentState());
 
         testShowFromMenu();
         testShowFromGame();
@@ -47,49 +46,49 @@ final class CutSceneControllerTest {
 
     private void testShowFromMenu() {
         this.cutscene.show(GameState.MENU);
-        assertEquals(GameState.CUT_SCENE, this.mainView.getCurrentPanel());
+        assertEquals(GameState.CUT_SCENE, this.mainController.getCurrentState());
 
         try {
             Thread.sleep(10_000);
         } catch (InterruptedException e) {
             e.addSuppressed(e);
         }
-        assertEquals(GameState.GAME, this.mainView.getCurrentPanel());
+        assertEquals(GameState.GAME, this.mainController.getCurrentState());
     }
 
     private void testShowFromGame() {
         this.cutscene.show(GameState.GAME);
-        assertEquals(GameState.CUT_SCENE, this.mainView.getCurrentPanel());
+        assertEquals(GameState.CUT_SCENE, this.mainController.getCurrentState());
 
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.addSuppressed(e);
         }
-        assertEquals(GameState.GAME, this.mainView.getCurrentPanel());
+        assertEquals(GameState.GAME, this.mainController.getCurrentState());
     }
 
     private void testShowDefeat() {
         this.cutscene.show(GameState.GAME_OVER);
-        assertEquals(GameState.CUT_SCENE, this.mainView.getCurrentPanel());
+        assertEquals(GameState.CUT_SCENE, this.mainController.getCurrentState());
 
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.addSuppressed(e);
         }
-        assertEquals(GameState.MENU, this.mainView.getCurrentPanel());
+        assertEquals(GameState.MENU, this.mainController.getCurrentState());
     }
 
     private void testShowVictory() {
         this.cutscene.show(GameState.VICTORY);
-        assertEquals(GameState.CUT_SCENE, this.mainView.getCurrentPanel());
+        assertEquals(GameState.CUT_SCENE, this.mainController.getCurrentState());
 
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.addSuppressed(e);
         }
-        assertEquals(GameState.MENU, this.mainView.getCurrentPanel());
+        assertEquals(GameState.MENU, this.mainController.getCurrentState());
     }
 }

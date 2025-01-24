@@ -39,20 +39,20 @@ class MenuControllerTest {
         assertEquals(controller.getStartMenuElements().get(1).getElemCommad(), Command.QUIT);
 
         controller.showMenu(GameState.MENU, GameState.GAME);
-        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.MENU);
+        assertEquals(mainController.getCurrentState(), GameState.MENU);
         controller.notify(Event.ESCAPE);
-        assertNotEquals(mainController.getMainView().getCurrentPanel(), GameState.GAME);
+        assertNotEquals(mainController.getCurrentState(), GameState.GAME);
         controller.showMenu(GameState.MENU_IN_GAME, GameState.INVENTORY);
         controller.notify(Event.ESCAPE);
-        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.INVENTORY);
+        assertEquals(mainController.getCurrentState(), GameState.INVENTORY);
         controller.showMenu(GameState.MENU_IN_GAME, GameState.GAME);
         controller.notify(Event.ESCAPE);
-        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.GAME);
+        assertEquals(mainController.getCurrentState(), GameState.GAME);
         controller.showMenu(GameState.MENU_IN_GAME, GameState.COMBAT);
         controller.notify(Event.ESCAPE);
-        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.COMBAT);
+        assertEquals(mainController.getCurrentState(), GameState.COMBAT);
         controller.showMenu(GameState.MENU_IN_GAME, GameState.COMBAT);
         controller.notify(Event.INVENTORY);
-        assertNotEquals(mainController.getMainView().getCurrentPanel(), GameState.COMBAT);
+        assertNotEquals(mainController.getCurrentState(), GameState.COMBAT);
     }
 }

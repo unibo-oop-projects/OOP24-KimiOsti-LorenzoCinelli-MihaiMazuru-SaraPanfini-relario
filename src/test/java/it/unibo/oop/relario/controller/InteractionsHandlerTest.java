@@ -91,6 +91,6 @@ final class InteractionsHandlerTest {
         room.getPlayer().setPosition(new PositionImpl(3, 4));
         handler.handleInteraction(room);
         assertTrue(room.getPlayer().getItems().isEmpty());
-        assertEquals(GameState.COMBAT, this.controller.getMainView().getCurrentPanel());
+        assertEquals(GameState.COMBAT, this.controller.getCurrentState());
     }
 }
