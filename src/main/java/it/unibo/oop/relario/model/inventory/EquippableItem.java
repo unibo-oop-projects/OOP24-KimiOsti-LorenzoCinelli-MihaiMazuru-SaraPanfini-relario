@@ -11,7 +11,6 @@ public class EquippableItem extends InventoryItemImpl {
 
     /**
      * Constructs an equippable item with the specified name, description, type, intensitity and durability.
-     * @param name of the item
      * @param description of the item
      * @param type of the item
      * @param intensity of the item's effect
