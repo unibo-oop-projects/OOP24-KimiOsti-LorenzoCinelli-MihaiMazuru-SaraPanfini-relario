@@ -16,7 +16,7 @@ public final class QuestBehavior implements NpcBehavior {
     }
 
     @Override
-    public String getDialogue() {
+    public String getDialogue(final boolean hasLoot) {
         return this.questDialogue;
     }
 

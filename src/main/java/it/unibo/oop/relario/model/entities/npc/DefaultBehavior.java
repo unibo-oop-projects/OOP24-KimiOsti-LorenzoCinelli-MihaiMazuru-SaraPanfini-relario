@@ -16,7 +16,7 @@ public final class DefaultBehavior implements NpcBehavior {
     }
 
     @Override
-    public String getDialogue() {
+    public String getDialogue(final boolean hasLoot) {
         return this.dialoguesGenerator.getDialogue(DialogueType.DEFAULT);
     }
 

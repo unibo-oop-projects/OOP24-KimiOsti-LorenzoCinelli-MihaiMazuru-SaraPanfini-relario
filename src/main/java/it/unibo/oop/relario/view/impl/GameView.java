@@ -156,6 +156,7 @@ public final class GameView extends JPanel {
             (int) this.mapPanel.getPreferredSize().getWidth(),
             (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 2
         );
+        this.refresh(this);
     }
 
     private void updateComponent(final JComponent component, final List<String> text) {
