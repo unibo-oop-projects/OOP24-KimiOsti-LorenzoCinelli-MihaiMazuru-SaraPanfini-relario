@@ -12,6 +12,7 @@ import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.utils.impl.CombatTexturesLocator;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
+import it.unibo.oop.relario.view.impl.CombatView;
 
 /**
  * Implementation of the combat controller.
@@ -21,13 +22,13 @@ public final class CombatControllerImpl implements CombatController {
     private static final Integer DELAY_TRANSITION = 4000;
     private final MainView view;
     private final MainController controller;
+    private final CombatView combatView;
     private MainCharacter player;
     private Enemy enemy;
     private String combatState;
 
     /**
      * Saves reference to main view and main controller.
-     * @param view is the main view.
      * @param controller is the main controller.
      */
     public CombatControllerImpl(final MainController controller) {
@@ -36,12 +37,14 @@ public final class CombatControllerImpl implements CombatController {
         this.player = null;
         this.enemy = null;
         this.combatState = "";
+        this.combatView = (CombatView) this.view.getPanel(GameState.COMBAT);
     }
 
     @Override
     public void initializeCombat(final MainCharacter player, final Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
+        this.combatView.update();
         this.view.showPanel(GameState.COMBAT);
     }
 
@@ -106,12 +109,12 @@ public final class CombatControllerImpl implements CombatController {
         } else {
             this.player.attacked(this.enemy.getDamage());
         }
-        //this.view.getPanel(this.view.getCurrentPanel()).draw();
+        this.combatView.update();
 
         if (enemy.getLife() <= 0) {
             player.addToInventory(enemy.getReward());
             combatState = this.player.getName() + " you've won the combat";
-            //this.view.getPanel(this.view.getCurrentPanel()).draw();
+            this.combatView.update();
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getCutSceneController().show(GameState.VICTORY));
             timer.setRepeats(false);
@@ -133,7 +136,7 @@ public final class CombatControllerImpl implements CombatController {
         if (enemy.isMerciful()) {
             combatState = this.enemy.getName() + " accepted your mercy request."
             + " You are free to go.";
-            //this.view.getPanel(this.view.getCurrentPanel()).draw();
+            this.combatView.update();
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getGameController().run(true));
             timer.setRepeats(false);
