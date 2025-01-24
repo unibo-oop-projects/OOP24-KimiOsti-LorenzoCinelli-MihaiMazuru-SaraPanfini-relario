@@ -28,7 +28,7 @@ public final class CombatControllerImpl implements CombatController {
     private String combatState;
 
     /**
-     * Saves reference to main view and main controller.
+     * Saves reference of main controller.
      * @param controller is the main controller.
      */
     public CombatControllerImpl(final MainController controller) {
@@ -129,7 +129,6 @@ public final class CombatControllerImpl implements CombatController {
         } else if (isPlayerAttacking) {
             this.attack(false);
         }
-
     }
 
     private void mercyRequest() {
