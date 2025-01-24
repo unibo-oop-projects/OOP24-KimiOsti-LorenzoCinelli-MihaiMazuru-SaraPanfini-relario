@@ -12,6 +12,7 @@ import it.unibo.oop.relario.utils.api.Position;
 public final class NotInteractiveNpc extends LivingBeingImpl implements Npc {
 
     private final NpcBehavior behavior;
+    private boolean hasInteracted;
 
     /**
      * Constructs a non-interactive NPC.
@@ -23,11 +24,18 @@ public final class NotInteractiveNpc extends LivingBeingImpl implements Npc {
     final NpcBehavior behavior) {
         super(name, position);
         this.behavior = behavior;
+        this.hasInteracted = false;
     }
 
     @Override
     public InteractionOutput interact() {
+        this.hasInteracted = true;
         return new InteractionOutput(this.behavior.getDialogue(), Optional.empty());
+    }
+
+    @Override
+    public boolean hasInteracted() {
+        return this.hasInteracted;
     }
 
 }

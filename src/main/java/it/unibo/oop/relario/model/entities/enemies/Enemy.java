@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.model.entities.enemies;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 
@@ -39,7 +41,7 @@ public interface Enemy extends LivingBeing {
      * Retrieves the reward dropped by the enemy when defeated.
      * @return an inventory item as a reward
      */
-    InventoryItem getReward();
+    Optional<InventoryItem> getReward();
 
     /**
      * Retrieves the type of the enemy.

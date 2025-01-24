@@ -32,4 +32,6 @@ public interface EnemyFactory {
      */
     Enemy createEnemyByType(EnemyType type, Position position);
 
+    Enemy createEnemyByTypeEmpty(EnemyType type, Position position);
+
 }
