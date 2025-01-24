@@ -65,12 +65,14 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private final transient CutSceneController controller;
     private final transient MainView mainView;
+    private final transient MainController mainController;
 
     /**
      * Creates a new cutscene panel.
      * @param controller is the main controller of the game.
      */
     public CutSceneViewImpl(final MainController controller) {
+        this.mainController = controller;
         this.controller = controller.getCutSceneController();
         this.mainView = controller.getMainView();
         this.setLayout(new GridBagLayout());
@@ -142,7 +144,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private void fadeOutOverLastView() {
         final var pane = new JLayeredPane();
-        final var oldPanel = this.mainView.getPanel(this.mainView.getCurrentPanel());
+        final var oldPanel = this.mainView.getPanel(this.mainController.getCurrentState());
         final var panel = new JPanel();
 
         oldPanel.setBounds(0, 0, this.getSize().width, this.getSize().height);
