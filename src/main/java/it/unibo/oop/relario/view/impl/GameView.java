@@ -41,7 +41,7 @@ public final class GameView extends JPanel {
      */
     public GameView(final MainController controller) {
         this.componentManager = new GameViewComponentManagerImpl();
-        this.commands = List.of("WASD - move", "I - interact", "E - inventory");
+        this.commands = List.of("WASD - move / ", "E - interact / ", "I - inventory");
 
         this.upperPanel = this.componentManager.getGamePanel();
         this.mapPanel = this.componentManager.getGamePanel();
@@ -94,6 +94,8 @@ public final class GameView extends JPanel {
     }
 
     private void renderFloor(final Dimension dimension) {
+        this.mapPanel.removeAll();
+        this.background.clear();
         this.mapDimension = dimension;
         this.tileDimension = this.min(
             (int) (this.getHeight() / SCREEN_TO_MAP_RATIO / this.mapDimension.getHeight()),
@@ -112,12 +114,13 @@ public final class GameView extends JPanel {
 
         for (int y = 0; y < dimension.getHeight(); y++) {
             for (int x = 0; x < dimension.getWidth(); x++) {
+                final var tile = this.componentManager.getBackgroundTile(texture, this.tileDimension);
                 this.background.add(
                     this.computeIndex(x, y),
-                    this.componentManager.getBackgroundTile(texture, this.tileDimension)
+                    tile
                 );
                 this.mapPanel.add(
-                    this.background.get(this.computeIndex(x, y)),
+                    tile,
                     this.computeIndex(x, y)
                 );
             }
