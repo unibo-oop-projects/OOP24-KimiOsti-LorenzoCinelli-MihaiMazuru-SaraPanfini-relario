@@ -86,7 +86,6 @@ class FurnitureTest {
         assertEquals(furn.getType(), FurnitureType.CHEST);
         assertTrue(furn.hasLoot());
         furn.dropLoot();
-        //assertNotEquals(furn.dropLoot(), item);
         assertFalse(furn.hasLoot());
         furn.addLoot(item);
         assertTrue(furn.hasLoot());
