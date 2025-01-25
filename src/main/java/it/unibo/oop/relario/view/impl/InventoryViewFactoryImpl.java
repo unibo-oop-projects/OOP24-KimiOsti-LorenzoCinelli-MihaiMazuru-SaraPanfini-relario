@@ -37,7 +37,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
 
     @Override
     public JPanel createCommandPanel() {
-        final var panel = new JPanel();
+        final var panel = new JPanel(new FlowLayout());
         for (final String command : COMMANDS) {
             final var label = new JLabel(command);
             label.setForeground(Constants.TEXT_SCENE_COLOR);
