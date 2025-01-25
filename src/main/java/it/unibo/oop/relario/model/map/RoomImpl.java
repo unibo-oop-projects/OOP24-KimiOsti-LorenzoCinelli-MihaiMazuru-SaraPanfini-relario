@@ -61,11 +61,6 @@ public final class RoomImpl implements Room {
     }
 
     @Override
-    public Room getRoom() {
-        return this;
-    }
-
-    @Override
     public MainCharacter getPlayer() {
         return this.player;
     }
