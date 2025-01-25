@@ -33,7 +33,6 @@ public final class CutSceneControllerImpl implements CutSceneController {
             case GAME_OVER -> cutSceneView.showDefeatScene();
             default -> { }
         }
-        this.controller.setCurrentState(GameState.CUT_SCENE);
         this.view.showPanel(GameState.CUT_SCENE);
     }
 
