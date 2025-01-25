@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -20,13 +21,13 @@ import it.unibo.oop.relario.view.api.InventoryViewFactory;
  * Implementation of {@link InventoryViewFactory}.
  */
 public final class InventoryViewFactoryImpl implements InventoryViewFactory {
-    private static final String COMMANDS = """
-        ↑↓ - spostarsi tra gli oggetti
-        Enter - usa un oggetto
-        Backspace - scarta un oggetto
-        I - esci dall\'inventario
-        Esc - apri il menu
-    """;
+    private static final List<String> COMMANDS = List.of(
+        "Frecce Su/Giu - spostarsi tra gli oggetti  ",
+        " Enter - usa un oggetto  ",
+        " Backspace - scarta un oggetto  ",
+        " I - esci dall\'inventario  ",
+        " Esc - apri il menu"
+    );
     private static final String TITLE = "Inventario                        Vita: ";
     private static final String ITEM_LIST = "Lista oggetti";
     private static final String ITEM_DESCRIPTION = "Descrizione oggetto";
@@ -37,12 +38,13 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
     @Override
     public JPanel createCommandPanel() {
         final var panel = new JPanel();
-        final var commandsString = COMMANDS;
-        final var label = new JLabel(commandsString);
-        label.setForeground(Constants.TEXT_SCENE_COLOR);
-        label.setFont(Constants.FONT);
-        panel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
-        panel.add(label);
+        for (final String command : COMMANDS) {
+            final var label = new JLabel(command);
+            label.setForeground(Constants.TEXT_SCENE_COLOR);
+            label.setFont(Constants.FONT);
+            panel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
+            panel.add(label);
+        }
         return panel;
     }
 
