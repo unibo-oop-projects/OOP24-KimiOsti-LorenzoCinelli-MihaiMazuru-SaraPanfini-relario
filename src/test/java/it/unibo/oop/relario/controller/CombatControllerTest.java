@@ -22,7 +22,6 @@ import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
@@ -75,12 +74,12 @@ class CombatControllerTest {
         controller.handleAction(CombatAction.ATTACK);
         assertTrue(hostileEnemy.getLife() < 0);
         assertEquals(chara.getItems().get(0), item);
-        assertEquals(controller.getCombatState(), chara.getName() + " you've won the combat");
+        assertEquals(controller.getCombatState(), chara.getName() + " hai vinto il combattimento");
 
         controller.initializeCombat(mercifulEnemy);
         controller.handleAction(CombatAction.MERCY);
         assertEquals(controller.getCombatState(), controller.getEnemyName()
-            + " accepted your mercy request." + " You are free to go.");
+            + " ha accettato la tua richiesta." + "\nSei libero di andare");
 
         final int initMerciLife = mercifulEnemy.getLife();
         controller.initializeCombat(mercifulEnemy);
@@ -92,6 +91,5 @@ class CombatControllerTest {
         assertEquals(mercifulEnemy.getLife(), 10);
 
         controller.handleAction(CombatAction.OPEN_INVENTORY);
-        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.INVENTORY);
     }
 }

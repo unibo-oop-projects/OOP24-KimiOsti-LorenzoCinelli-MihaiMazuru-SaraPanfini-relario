@@ -54,4 +54,5 @@ public interface MainController {
      * Moves to the next room.
      */
     void moveToNextRoom();
+
 }

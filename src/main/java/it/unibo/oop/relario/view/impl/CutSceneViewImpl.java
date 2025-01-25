@@ -72,9 +72,10 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showStartScene() {
         this.sceneLoader(Scene.INTRODUCTION);
-        final var timer = new Timer(SCENE_TRANSITION_DELAY * 2, e -> this.controller.progress(GameState.GAME));
+        final var timer = new Timer(SCENE_TRANSITION_DELAY * 2, e -> this.controller.progressView(GameState.GAME));
         timer.setRepeats(false);
         timer.start();
+        this.controller.progressGame(GameState.GAME);
     }
 
     @Override
@@ -83,10 +84,11 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         audio.start();
         final var timer = new Timer(ROOM_TRANSITION_DELAY, e -> {
             audio.close();
-            this.controller.progress(GameState.GAME);
+            this.controller.progressView(GameState.GAME);
         });
         timer.setRepeats(false);
         timer.start();
+        this.controller.progressGame(GameState.GAME);
 
         this.removeAll();
         this.repaint();
@@ -96,17 +98,19 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showVictoryScene() {
         this.sceneLoader(Scene.VICTORY);
-        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progress(GameState.MENU));
+        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progressView(GameState.MENU));
         timer.setRepeats(false);
         timer.start();
+        this.controller.progressGame(GameState.MENU);
     }
 
     @Override
     public void showDefeatScene() {
         this.sceneLoader(Scene.DEFEAT);
-        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progress(GameState.MENU));
+        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progressView(GameState.MENU));
         timer.setRepeats(false);
         timer.start();
+        this.controller.progressGame(GameState.MENU);
     }
 
     private void sceneLoader(final Scene scene) {

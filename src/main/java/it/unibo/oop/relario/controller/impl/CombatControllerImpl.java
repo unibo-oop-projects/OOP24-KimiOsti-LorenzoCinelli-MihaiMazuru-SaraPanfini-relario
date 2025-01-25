@@ -126,7 +126,7 @@ public final class CombatControllerImpl implements CombatController {
             if (enemy.getReward().isPresent()) {
                 player.addToInventory(enemy.getReward().get());
             }
-            combatState = this.player.getName() + " you've won the combat";
+            combatState = this.player.getName() + " hai vinto il combattimento";
             this.combatView.update(AttackDirection.NONE);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getCutSceneController().show(GameState.VICTORY));
@@ -146,8 +146,8 @@ public final class CombatControllerImpl implements CombatController {
 
     private void mercyRequest() {
         if (enemy.isMerciful()) {
-            combatState = this.enemy.getName() + " accepted your mercy request."
-            + " You are free to go.";
+            combatState = this.enemy.getName() + " ha accettato la tua richiesta."
+            + "\nSei libero di andare";
             this.combatView.update(AttackDirection.NONE);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getGameController().run(true));

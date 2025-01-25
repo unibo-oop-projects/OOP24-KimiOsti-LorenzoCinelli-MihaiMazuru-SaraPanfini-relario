@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,6 +63,21 @@ final class EnemyFactoryTest {
             final Enemy enemy = this.factory.createEnemyByType(type, testPosition);
             assertNotNull(enemy);
             assertEquals(type, enemy.getType());
+        }
+        assertThrows(IllegalArgumentException.class, () -> this.factory.createEnemyByType(null, testPosition));
+    }
+
+    /**
+     * Tests the creation of an enemy of the given type with no loot
+     * and that creating an enemy with a not valid type throws an exception.
+     */
+    @Test
+    void testCreateEnemyByTypeEmpty() {
+        for (final EnemyType type : EnemyType.values()) {
+            final Enemy enemy = this.factory.createEnemyByTypeEmpty(type, testPosition);
+            assertNotNull(enemy);
+            assertEquals(type, enemy.getType());
+            assertEquals(Optional.empty(), enemy.getReward());
         }
         assertThrows(IllegalArgumentException.class, () -> this.factory.createEnemyByType(null, testPosition));
     }
