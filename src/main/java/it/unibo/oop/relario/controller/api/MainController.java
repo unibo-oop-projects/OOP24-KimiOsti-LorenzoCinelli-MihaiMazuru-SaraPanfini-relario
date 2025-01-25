@@ -3,7 +3,6 @@ package it.unibo.oop.relario.controller.api;
 import java.util.Optional;
 
 import it.unibo.oop.relario.model.map.Room;
-import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
@@ -55,17 +54,5 @@ public interface MainController {
      * Moves to the next room.
      */
     void moveToNextRoom();
-
-    /**
-     * Retrieves the current state of the game.
-     * @return the current state.
-     */
-    GameState getCurrentState();
-
-    /**
-     * Sets the current state of the game.
-     * @param state is the current state of the game.
-     */
-    void setCurrentState(GameState state);
 
 }
