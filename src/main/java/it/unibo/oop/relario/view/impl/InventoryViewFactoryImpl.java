@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -97,18 +96,9 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         final var radioButtons = new JRadioButton[list.size()];
         final var buttonGroup = new ButtonGroup();
 
-        final ActionListener radioButtonsListener = e -> {
-            for (int i = 0; i < radioButtons.length; i++) {
-                if (radioButtons[i].isSelected()) {
-                    inventory.setSelectedItemIndex(i);
-                }
-            }
-        };
-
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i] = new JRadioButton(list.get(i));
             buttonGroup.add(radioButtons[i]);
-            radioButtons[i].addActionListener(radioButtonsListener);
             radioButtons[i].setFont(Constants.FONT);
             radioButtons[i].setForeground(Constants.TEXT_SCENE_COLOR);
             radioButtons[i].setBackground(Constants.BACKGROUND_SCENE_COLOR);

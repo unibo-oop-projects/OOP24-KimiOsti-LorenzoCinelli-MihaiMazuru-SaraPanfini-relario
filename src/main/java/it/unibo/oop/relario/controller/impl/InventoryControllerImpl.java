@@ -116,14 +116,6 @@ public final class InventoryControllerImpl implements InventoryController {
         return String.valueOf(this.player.getLife());
     }
 
-    @Override
-    public void setSelectedItemIndex(final int index) {
-        if (index >= 0 && index < inventory.size()) {
-            this.selectedItem = index;
-            this.refresh();
-        }
-    }
-
     private boolean isValidSelection() {
         return !this.inventory.isEmpty() && this.selectedItem >= 0 && this.selectedItem < inventory.size();
     }

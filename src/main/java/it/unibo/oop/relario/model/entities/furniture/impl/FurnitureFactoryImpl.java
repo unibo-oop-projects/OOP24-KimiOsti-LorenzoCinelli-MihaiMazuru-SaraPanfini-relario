@@ -23,8 +23,6 @@ public final class FurnitureFactoryImpl implements FurnitureFactory {
 
     private final Map<FurnitureType, String> furnitureInfo = new EnumMap<>(FurnitureType.class);
     private final Random random = new Random();
-    // private List<FurnitureType> matchingProperties;
-    // private String desc;
 
     /**
      * Costructor of furniture factory.
