@@ -61,7 +61,7 @@ class MainCharacterTest {
 
         assertTrue(chara.useItem(armor));
         assertEquals(armor, chara.getEquippedArmor().get());
-        chara.attacked(Constants.DEFAULT_PLAYER_LIFE);
+        chara.attacked(Constants.PLAYER_LIFE);
         assertEquals(armor.getIntensity(), chara.getLife());
 
         assertTrue(chara.useItem(healing));
@@ -113,26 +113,26 @@ class MainCharacterTest {
     void testCombatScenarios() {
         final MainCharacter chara = new MainCharacterImpl();
 
-        assertEquals(chara.attack(), Constants.DEFAULT_PLAYER_ATK);
+        assertEquals(chara.attack(), Constants.PLAYER_ATK);
 
         final InventoryItem toyKnife = new InventoryItemFactoryImpl().createItem(InventoryItemType.DAGGER);
         chara.addToInventory(toyKnife);
         chara.useItem(toyKnife);
 
         for (int i = 0; i < 3; i++) {
-            assertEquals(chara.attack(), Constants.DEFAULT_PLAYER_ATK + toyKnife.getIntensity());
+            assertEquals(chara.attack(), Constants.PLAYER_ATK + toyKnife.getIntensity());
         }
-        assertEquals(chara.attack(), Constants.DEFAULT_PLAYER_ATK);
+        assertEquals(Constants.PLAYER_ATK, chara.attack());
 
         final InventoryItem oldTutu = new InventoryItemFactoryImpl().createItem(InventoryItemType.BASICARMOR);
         chara.addToInventory(oldTutu);
         chara.useItem(oldTutu);
 
         for (int i = 0; i < 3; i++) {
-            chara.attacked(Constants.DEFAULT_PLAYER_LIFE / 3);
+            chara.attacked(Constants.PLAYER_LIFE / 3);
             assertTrue(chara.getLife() > 0);
         }
-        chara.attacked(Constants.DEFAULT_PLAYER_LIFE);
+        chara.attacked(Constants.PLAYER_LIFE);
         assertEquals(0, chara.getLife());
     }
 }

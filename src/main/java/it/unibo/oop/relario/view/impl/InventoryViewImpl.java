@@ -1,12 +1,14 @@
 package it.unibo.oop.relario.view.impl;
 
 import javax.swing.JPanel;
+
+import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.view.api.InventoryViewFactory;
 import it.unibo.oop.relario.view.api.InventoryView;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -20,22 +22,22 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
     private static final double DEFAULT_RATIO = 1;
     private static final int CONTENT_PANEL_INDEX = 1;
 
-    private final MainController controller;
-    private InventoryViewFactory factory;
+    private final transient InventoryController controller;
+    private transient InventoryViewFactory factory;
 
     /**
      * Creates the inventory view.
      * @param controller is the main controller of the game.
      */
     public InventoryViewImpl(final MainController controller) {
-        this.controller = controller;
-        this.addKeyListener(new GameKeyListener(this.controller.getInventoryController()));
-        this.setBackground(Color.BLACK);
+        this.controller = controller.getInventoryController();
+        this.addKeyListener(new GameKeyListener(this.controller));
+        this.setBackground(Constants.BACKGROUND_SCENE_COLOR);
     }
 
     @Override
     public void refresh() {
-        final var contentPanel = this.factory.createContentPanel();
+        final var contentPanel = this.factory.createContentPanel(this.controller);
         this.remove(CONTENT_PANEL_INDEX);
         this.add(contentPanel);
         this.resize(contentPanel, CONTENT_RATIO, CONTENT_RATIO);
@@ -44,9 +46,9 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
 
     @Override
     public void init() {
-        this.factory = new InventoryViewFactoryImpl(this.controller.getInventoryController());
+        this.factory = new InventoryViewFactoryImpl();
         final var commandPanel = this.factory.createCommandPanel();
-        final var contentPanel = this.factory.createContentPanel();
+        final var contentPanel = this.factory.createContentPanel(this.controller);
         this.removeAll();
         this.add(commandPanel);
         this.add(contentPanel);

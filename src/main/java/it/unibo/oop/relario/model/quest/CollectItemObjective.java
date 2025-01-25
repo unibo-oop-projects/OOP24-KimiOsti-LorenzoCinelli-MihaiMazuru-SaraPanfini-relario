@@ -1,24 +1,26 @@
 package it.unibo.oop.relario.model.quest;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.GameEntityType;
+import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.model.map.Room;
 
 /**
- * 
+ * Implementation for an item collection quest's objective.
  */
-
 public final class CollectItemObjective implements ObjectiveStrategy {
 
-    private final InventoryItemType keyItemType;
+    private final Optional<InventoryItemType> keyItemType;
 
     /**
-     * 
-     * @param player
+     * Instantiates an item collection objective.
+     * @param keyItemType the type of the item to be collected.
      */
-    public CollectItemObjective(final GameEntityType keyItemType) {
-        if (keyItemType instanceof InventoryItemType) {
-            this.keyItemType = (InventoryItemType) keyItemType;
+    public CollectItemObjective(final Optional<GameEntityType> keyItemType) {
+        if (keyItemType.isPresent() && keyItemType.get() instanceof InventoryItemType) {
+            this.keyItemType = Optional.of((InventoryItemType) keyItemType.get());
         } else {
             throw new IllegalArgumentException();
         }
@@ -26,11 +28,16 @@ public final class CollectItemObjective implements ObjectiveStrategy {
 
     @Override
     public boolean check(final Room room) {
-        return room.getPlayer().getItems().stream().map(i -> i.getType()).anyMatch(t -> t.equals(this.keyItemType));
+        return room
+        .getPlayer()
+        .getItems()
+        .stream()
+        .map(InventoryItem::getType)
+        .anyMatch(t -> t.equals(this.keyItemType.get()));
     }
 
     @Override
-    public GameEntityType getKeyEntityType() {
+    public Optional<InventoryItemType> getKeyEntityType() {
         return this.keyItemType;
     }
 

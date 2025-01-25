@@ -13,8 +13,9 @@ public interface MenuController extends Observer {
     /**
      * Shows the menu indicated by the state.
      * @param menuType the type of menu to be displayed.
+     * @param prevState the previous state.
      */
-    void showMenu(GameState menuType);
+    void showMenu(GameState menuType, GameState prevState);
 
     /**
      * Retrieves all the menu elements in the in game menu.

@@ -45,17 +45,8 @@ public final class ItemAttributes {
     /** Constant intensity of an amulet. */
     public static final int AMULET_INTENSITY = 15;
 
-    /** Constant intensity of a coin. */
-    public static final int COIN_INTENSITY = 0;
-
-    /** Constant intensity of a gemstone. */
-    public static final int GEMSTONE_INTENSITY = 0;
-
-    /** Constant intensity of a key. */
-    public static final int KEY_INTENSITY = 0;
-
-    /** Constant intensity of a book. */
-    public static final int BOOK_INTENSITY = 0;
+    /** Constant intensity of collectable items. */
+    public static final int COLLECTABLE_INTENSITY = 0;
 
     /**
      * Private constructor that prevents the instantiation of the class.

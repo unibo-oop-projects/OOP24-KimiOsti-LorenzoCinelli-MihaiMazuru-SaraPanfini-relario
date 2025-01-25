@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.model.menu;
 
+import java.util.List;
+
 /**
  * Manages the two different menu types.
  */
@@ -25,16 +27,16 @@ public class MenuManager {
      * Retrieves the start menu.
      * @return the start menu.
      */
-    public Menu getStartMenu() {
-        return this.startMenu;
+    public List<MenuElement> getStartMenu() {
+        return this.startMenu.getElem();
     }
 
     /**
      * Retrieves the in game menu.
      * @return the in game menu.
      */
-    public Menu getInGameMenu() {
-        return this.inGameMenu;
+    public List<MenuElement> getInGameMenu() {
+        return this.inGameMenu.getElem();
     }
 
 }

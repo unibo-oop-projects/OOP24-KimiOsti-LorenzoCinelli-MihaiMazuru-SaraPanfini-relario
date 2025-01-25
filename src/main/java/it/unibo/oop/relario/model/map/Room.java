@@ -15,7 +15,6 @@ import it.unibo.oop.relario.utils.api.Position;
 /**
  * Interface representing a room in the game map.
  */
-
 public interface Room {
 
     /**
@@ -111,6 +110,11 @@ public interface Room {
      */
     void update();
 
+    /**
+     * A getter for cells in a given state.
+     * @param state the desired state of the cells.
+     * @return a list containing the cells' coordinates.
+     */
     List<Position> getCellsByState(CellState state);
 
 }

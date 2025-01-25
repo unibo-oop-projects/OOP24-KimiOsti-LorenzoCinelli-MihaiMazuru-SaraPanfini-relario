@@ -6,9 +6,9 @@ import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
-import it.unibo.oop.relario.model.entities.npc.InteractiveNpc;
 import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.map.Room;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.impl.GameView;
 
 /**
@@ -18,7 +18,6 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     private final MainController controller;
     private final GameView view;
-    private Room curRoom;
 
     /**
      * Constructor for the game's interaction handler.
@@ -32,45 +31,43 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     @Override
     public void handleInteraction(final Room curRoom) {
-        this.curRoom = curRoom;
         if (
             curRoom.getPlayer().getPosition().isPresent()
             && Interactions.canInteract(
-                this.curRoom.getPlayer().getPosition().get(),
-                this.curRoom.getPlayer().getDirection(),
-                this.curRoom.getPopulation(),
-                this.curRoom.getFurniture()
+                curRoom.getPlayer().getPosition().get(),
+                curRoom.getPlayer().getDirection(),
+                curRoom.getPopulation(),
+                curRoom.getFurniture()
             )
         ) {
-            if (this.curRoom.getPlayer().getPosition().get().equals(this.curRoom.getExit())
-                && (this.curRoom.getQuest().isEmpty() || this.curRoom.getQuest().get().isCompleted())
+            if (curRoom.getPlayer().getPosition().get().equals(curRoom.getExit())
+                && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted(curRoom))
             ) {
-                this.controller.moveToNextRoom();
-                this.resumeGame();
+                this.controller.getCutSceneController().show(GameState.GAME);
             } else {
-                final var entity = this.curRoom.getCellContent(
-                    this.curRoom.getPlayer().getDirection().move(this.curRoom.getPlayer().getPosition().get())
+                final var entity = curRoom.getCellContent(
+                    curRoom.getPlayer().getDirection().move(curRoom.getPlayer().getPosition().get())
                 );
                 if (entity.isPresent()) {
                     if (entity.get() instanceof Npc) {
-                        this.interactWithNpc((Npc) entity.get());
+                        this.interactWithNpc((Npc) entity.get(), curRoom);
                     } else if (entity.get() instanceof Enemy) {
-                        this.startEnemyCombat((Enemy) entity.get());
+                        this.startEnemyCombat((Enemy) entity.get(), curRoom);
                     } else if (entity.get() instanceof InteractiveFurniture) {
-                        this.interactWithFurniture((InteractiveFurniture) entity.get());
+                        this.interactWithFurniture((InteractiveFurniture) entity.get(), curRoom);
                     } else if (entity.get() instanceof WalkableFurniture) {
-                        this.startEnemyCombat(((WalkableFurniture) entity.get()).removeEnemy());
+                        this.startEnemyCombat(((WalkableFurniture) entity.get()).removeEnemy(), curRoom);
                     }
                 }
             }
         }
     }
 
-    private void interactWithNpc(final Npc npc) {
+    private void interactWithNpc(final Npc npc, final Room curRoom) {
         final var output = npc.interact();
-        if (npc instanceof InteractiveNpc && output.getLoot().isPresent()) {
-            if (this.curRoom.getPlayer().addToInventory(output.getLoot().get())) {
-                ((InteractiveNpc) npc).confirmLootTaken();
+        if (output.getLoot().isPresent()) {
+            if (curRoom.getPlayer().addToInventory(output.getLoot().get())) {
+                npc.confirmLootTaken();
                 this.showOutputText(output.getDialogue());
             } else {
                 this.showOutputText("Sembra che io non abbia spazio per questo oggetto...");
@@ -81,14 +78,14 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
         this.resumeGame();
     }
 
-    private void startEnemyCombat(final Enemy enemy) {
-        this.controller.getCombatController().initializeCombat(this.curRoom.getPlayer(), enemy);
+    private void startEnemyCombat(final Enemy enemy, final Room curRoom) {
+        this.controller.getCombatController().initializeCombat(curRoom.getPlayer(), enemy);
     }
 
-    private void interactWithFurniture(final InteractiveFurniture furniture) {
+    private void interactWithFurniture(final InteractiveFurniture furniture, final Room curRoom) {
         if (furniture.hasLoot()) {
             final var loot = furniture.dropLoot();
-            if (this.curRoom.getPlayer().addToInventory(loot)) {
+            if (curRoom.getPlayer().addToInventory(loot)) {
                 this.showOutputText("Ecco qualcosa che mi tornerà utile!");
             } else {
                 this.showOutputText("Sembra che io non abbia più spazio per portarmelo dietro...");
@@ -103,7 +100,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void resumeGame() {
-        this.controller.getGameController().resume(this.controller.getCurRoom().isPresent());
+        this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
     }
 
 }

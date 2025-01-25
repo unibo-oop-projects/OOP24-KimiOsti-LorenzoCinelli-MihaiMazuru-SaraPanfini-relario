@@ -3,11 +3,23 @@ package it.unibo.oop.relario.controller.api;
 import java.util.Optional;
 
 import it.unibo.oop.relario.model.map.Room;
+import it.unibo.oop.relario.view.api.MainView;
 
 /**
  * Interface for container Controller class.
  */
 public interface MainController {
+
+    /**
+     * @return the main View.
+     */
+    MainView getMainView();
+
+    /**
+     * Starts a new game on a fully restored model.
+     */
+    void startNewGame();
+
     /**
      * @return the combat Controller.
      */
@@ -29,6 +41,11 @@ public interface MainController {
     MenuController getMenuController();
 
     /**
+     * @return the cut scene Controller.
+     */
+    CutSceneController getCutSceneController();
+
+    /**
      * @return the current room in the gameplay.
      */
     Optional<Room> getCurRoom();
@@ -37,4 +54,5 @@ public interface MainController {
      * Moves to the next room.
      */
     void moveToNextRoom();
+
 }

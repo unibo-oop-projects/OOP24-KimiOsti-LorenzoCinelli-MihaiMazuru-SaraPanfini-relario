@@ -13,7 +13,7 @@ public final class BackgroundTile extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private final Image img;
+    private final transient Image img;
 
     /**
      * Constructor for the background tiles.
@@ -26,9 +26,10 @@ public final class BackgroundTile extends JPanel {
         try {
             tracker.waitForAll();
         } catch (InterruptedException e) {
+            tracker.removeImage(img);
         }
 
-        this.img = img;
+        this.img = tracker.isErrorAny() ? null : img;
     }
 
     @Override

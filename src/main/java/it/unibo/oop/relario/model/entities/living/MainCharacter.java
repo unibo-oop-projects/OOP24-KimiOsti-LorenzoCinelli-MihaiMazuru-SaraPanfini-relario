@@ -19,12 +19,6 @@ public interface MainCharacter extends LivingBeing {
     void setPosition(Position position);
 
     /**
-     * Asks whether the player is moving.
-     * @return true if the player is moving, false otherwise.
-     */
-    boolean isMoving();
-
-    /**
      * Sets the player's movement.
      * @param direction the direction where the player is moving.
      */

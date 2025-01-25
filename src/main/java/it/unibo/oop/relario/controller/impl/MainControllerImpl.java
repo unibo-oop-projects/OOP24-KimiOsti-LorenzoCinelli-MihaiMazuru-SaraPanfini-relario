@@ -3,6 +3,7 @@ package it.unibo.oop.relario.controller.impl;
 import java.util.Optional;
 
 import it.unibo.oop.relario.controller.api.CombatController;
+import it.unibo.oop.relario.controller.api.CutSceneController;
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InventoryController;
 import it.unibo.oop.relario.controller.api.MainController;
@@ -21,9 +22,10 @@ public final class MainControllerImpl implements MainController {
     private final CombatController combat;
     private final GameController game;
     private final InventoryController inventory;
-    private final MenuController mainMenu;
+    private final MenuController menu;
+    private final CutSceneController cutScene;
     private final MainView view;
-    private final RoomGenerator roomGenerator;
+    private RoomGenerator roomGenerator;
     private Optional<Room> curRoom;
     private int roomIndex;
 
@@ -32,15 +34,26 @@ public final class MainControllerImpl implements MainController {
      */
     public MainControllerImpl() {
         this.view = new MainViewImpl(this);
-        this.roomIndex = 0;
-        this.roomGenerator = new RoomGenerator();
-        this.curRoom = Optional.empty();
-        this.combat = new CombatControllerImpl(this.view);
-        this.game = new GameControllerImpl(this, this.view);
-        this.inventory = new InventoryControllerImpl(this, this.view);
-        this.mainMenu = new MenuControllerImpl(this.view);
+        this.startNewGame();
+        this.combat = new CombatControllerImpl(this);
+        this.game = new GameControllerImpl(this);
+        this.inventory = new InventoryControllerImpl(this);
+        this.menu = new MenuControllerImpl(this);
+        this.cutScene = new CutSceneControllerImpl(this);
         this.view.panelsSetup();
-        this.view.showPanel(GameState.MENU);
+        this.menu.showMenu(GameState.MENU, GameState.NONE);
+    }
+
+    @Override
+    public void startNewGame() {
+        this.roomGenerator = new RoomGenerator();
+        this.roomIndex = 0;
+        this.curRoom = Optional.empty();
+    }
+
+    @Override
+    public MainView getMainView() {
+        return this.view;
     }
 
     @Override
@@ -60,7 +73,12 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public MenuController getMenuController() {
-        return this.mainMenu;
+        return this.menu;
+    }
+
+    @Override
+    public CutSceneController getCutSceneController() {
+        return this.cutScene;
     }
 
     @Override
@@ -73,4 +91,5 @@ public final class MainControllerImpl implements MainController {
         this.roomIndex++;
         this.curRoom = this.roomGenerator.getRoom(roomIndex);
     }
+
 }

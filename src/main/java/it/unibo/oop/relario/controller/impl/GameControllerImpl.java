@@ -2,6 +2,7 @@ package it.unibo.oop.relario.controller.impl;
 
 import java.util.Map;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InteractionsHandler;
 import it.unibo.oop.relario.controller.api.MainController;
@@ -14,25 +15,29 @@ import it.unibo.oop.relario.view.impl.GameView;
 /**
  * Implementation for the Game Controller.
  */
+@SuppressFBWarnings(
+    value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    justification = "The panel mapped to the game state is always"
+        + "an instance of GameView, for how MainView is implemented"
+)
 public final class GameControllerImpl implements GameController {
 
     private final InteractionsHandler interactionsHandler;
     private final Map<Event, Direction> inputToDirection;
     private final MainController controller;
-    private final MainView view;
+    private final MainView mainView;
     private Thread gameLoop;
 
     /**
      * Constructor for the game controller.
      * @param controller its own container class, used to access the Model.
-     * @param view the main View of the application, used to access the Game View.
      */
-    public GameControllerImpl(final MainController controller, final MainView view) {
+    public GameControllerImpl(final MainController controller) {
         this.controller = controller;
-        this.view = view;
+        this.mainView = this.controller.getMainView();
         this.interactionsHandler = new InteractionsHandlerImpl(
             this.controller,
-            (GameView) this.view.getPanel(GameState.GAME)
+            (GameView) this.mainView.getPanel(GameState.GAME)
         );
         this.inputToDirection = Map.of(
             Event.MOVE_UP, Direction.UP,
@@ -43,17 +48,9 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void run() {
-        this.controller.moveToNextRoom();
-        if (this.controller.getCurRoom().isPresent()) {
-            this.startGameLoop();
-        }
-    }
-
-    @Override
-    public void resume(final boolean isExploring) {
+    public void run(final boolean isExploring) {
         if (!isExploring) {
-            this.view.showPanel(GameState.GAME_OVER);
+            this.changeGameState(GameState.GAME_OVER);
         } else {
             this.startGameLoop();
         }
@@ -75,9 +72,9 @@ public final class GameControllerImpl implements GameController {
     }
 
     private void startGameLoop() {
-        this.view.showPanel(GameState.GAME);
+        this.mainView.showPanel(GameState.GAME);
         this.gameLoop = new GameLoop(
-            (GameView) this.view.getPanel(GameState.GAME),
+            (GameView) this.mainView.getPanel(GameState.GAME),
             this.controller.getCurRoom().get()
         );
         this.gameLoop.start();
@@ -85,8 +82,11 @@ public final class GameControllerImpl implements GameController {
 
     private void changeGameState(final GameState state) {
         this.gameLoop.interrupt();
-        //this.view.showPanel(state);
-        /* [TODO]: gestire transizione tramite controller */
+        switch (state) {
+            case INVENTORY -> this.controller.getInventoryController().init(GameState.GAME);
+            case MENU_IN_GAME -> this.controller.getMenuController().showMenu(GameState.MENU_IN_GAME, GameState.GAME);
+            default -> this.endGame();
+        }
     }
 
     private void handleMovement(final Event e) {
@@ -96,6 +96,14 @@ public final class GameControllerImpl implements GameController {
             this.controller.getCurRoom().get().getPlayer().setMovement(
                 this.inputToDirection.get(e)
             );
+        }
+    }
+
+    private void endGame() {
+        if (this.controller.getCurRoom().isEmpty()) {
+            this.controller.getCutSceneController().show(GameState.VICTORY);
+        } else {
+            this.controller.getCutSceneController().show(GameState.GAME_OVER);
         }
     }
 }

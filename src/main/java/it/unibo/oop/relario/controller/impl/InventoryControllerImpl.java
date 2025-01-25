@@ -32,12 +32,11 @@ public final class InventoryControllerImpl implements InventoryController {
 
     /**
      * Creates a new controller for the inventory of the player.
-     * @param mainController the main controller of the game.
-     * @param mainView the main view of the game.
+     * @param controller the main controller of the game.
      */
-    public InventoryControllerImpl(final MainController mainController, final MainView mainView) {
-        this.mainController = mainController;
-        this.mainView = mainView;
+    public InventoryControllerImpl(final MainController controller) {
+        this.mainController = controller;
+        this.mainView = this.mainController.getMainView();
         this.selectedItem = 0;
     }
 
@@ -45,7 +44,9 @@ public final class InventoryControllerImpl implements InventoryController {
     public void init(final GameState prevState) {
         this.inventoryView = (InventoryView) mainView.getPanel(GameState.INVENTORY);
         this.player = mainController.getCurRoom().get().getPlayer();
-        this.nextState = prevState;
+        if (prevState != GameState.MENU_IN_GAME) {
+            this.nextState = prevState;
+        }
         updateInventory();
         this.inventoryView.init();
         this.mainView.showPanel(GameState.INVENTORY);
@@ -70,7 +71,8 @@ public final class InventoryControllerImpl implements InventoryController {
                     player.discardItem(inventory.get(this.selectedItem));
                 }
             }
-            case INVENTORY, ESCAPE -> regress();
+            case INVENTORY -> regress();
+            case ESCAPE -> openMenu();
             default -> { }
         }
         this.refresh();
@@ -142,10 +144,14 @@ public final class InventoryControllerImpl implements InventoryController {
 
     private void regress() {
         switch (this.nextState) {
-            case GAME -> this.mainController.getGameController().resume(true);
+            case GAME -> this.mainController.getGameController().run(true);
             case COMBAT -> this.mainController.getCombatController().resumeCombat();
             default -> { }
         }
+    }
+
+    private void openMenu() {
+        this.mainController.getMenuController().showMenu(GameState.MENU_IN_GAME, GameState.INVENTORY);
     }
 
 }

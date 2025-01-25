@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.model.entities.enemies;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.utils.api.Position;
@@ -13,7 +15,7 @@ public final class EnemyImpl extends LivingBeingImpl implements Enemy {
     private final String description;
     private int life;
     private final DifficultyLevel difficulty;
-    private final InventoryItem reward;
+    private final Optional<InventoryItem> reward;
     private final boolean merciful;
     private final EnemyType type;
 
@@ -28,7 +30,7 @@ public final class EnemyImpl extends LivingBeingImpl implements Enemy {
      * @param type of the enemy
      */
     public EnemyImpl(final String name, final String description, final Position position,
-        final DifficultyLevel difficulty, final InventoryItem reward, final boolean merciful, final EnemyType type) {
+        final DifficultyLevel difficulty, final Optional<InventoryItem> reward, final boolean merciful, final EnemyType type) {
         super(name, position);
         this.description = description;
         this.difficulty = difficulty;
@@ -59,7 +61,7 @@ public final class EnemyImpl extends LivingBeingImpl implements Enemy {
     }
 
     @Override
-    public InventoryItem getReward() {
+    public Optional<InventoryItem> getReward() {
         return this.reward;
     }
 

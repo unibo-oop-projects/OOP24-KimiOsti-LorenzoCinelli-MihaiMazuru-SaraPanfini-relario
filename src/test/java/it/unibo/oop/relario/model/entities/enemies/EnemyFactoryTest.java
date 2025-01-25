@@ -49,7 +49,7 @@ final class EnemyFactoryTest {
     void testCreateEnemyWithReward() {
         final Enemy enemy = this.factory.createEnemyWithReward(testPosition, InventoryItemType.APPLE);
         assertNotNull(enemy);
-        assertEquals(InventoryItemType.APPLE, enemy.getReward().getType());
+        assertEquals(InventoryItemType.APPLE, enemy.getReward().get().getType());
     }
 
     /**

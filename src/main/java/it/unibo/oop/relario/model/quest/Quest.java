@@ -1,38 +1,32 @@
 package it.unibo.oop.relario.model.quest;
 
+import java.util.Optional;
+
 import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.map.Room;
 
 /**
- * 
+ * Interface for a game's quest.
  */
-
 public interface Quest {
 
     /**
-     * 
-     * @return TODO
-     */
-    String getName();
-
-    /**
-     * 
-     * @return TODO
+     * Getter for the quest description.
+     * @return the description of the quest.
      */
     String getDescription();
 
     /**
-     * 
-     * @return TODO
+     * Checks if the quest is completed.
+     * @param room the room hosting the quest.
+     * @return a boolean representing if the quest is completed.
      */
-    boolean isCompleted();
+    boolean isCompleted(Room room);
 
     /**
-     * 
-     * @return TODO
+     * Getter for the type of the entity concerned by the quest.
+     * @return the type of the entity concerned by the quest.
      */
-    GameEntityType getKeyEntityType();
-
-    Room getRoom();
+    Optional<? extends GameEntityType> getKeyEntityType();
 
 }
