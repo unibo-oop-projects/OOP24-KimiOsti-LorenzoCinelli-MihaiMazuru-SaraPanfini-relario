@@ -117,7 +117,8 @@ final class InventoryControllerTest {
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
-        this.inventoryController.setSelectedItemIndex(2);
+        this.inventoryController.notify(Event.NEXT_ITEM);
+        this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
 
         this.inventoryController.notify(Event.USE_ITEM);
@@ -160,7 +161,8 @@ final class InventoryControllerTest {
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
-        this.inventoryController.setSelectedItemIndex(2);
+        this.inventoryController.notify(Event.NEXT_ITEM);
+        this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
 
         this.inventoryController.notify(Event.DISCARD_ITEM);
