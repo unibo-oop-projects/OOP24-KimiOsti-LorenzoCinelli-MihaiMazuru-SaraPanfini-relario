@@ -62,6 +62,11 @@ public final class GameView extends JPanel {
      * @param textures the textures to be rendered on the background, apart from the floor.
      */
     public void renderBackground(final Dimension dimension, final Map<Position, Image> textures) {
+        this.mapDimension = dimension;
+        this.tileDimension = this.min(
+            (int) (this.getHeight() / SCREEN_TO_MAP_RATIO / this.mapDimension.getHeight()),
+            (int) (this.getWidth() / SCREEN_TO_MAP_RATIO / this.mapDimension.getWidth())
+        );
         this.renderFloor(dimension);
         this.renderBackgroundTextures(textures);
     }
@@ -96,11 +101,6 @@ public final class GameView extends JPanel {
     private void renderFloor(final Dimension dimension) {
         this.mapPanel.removeAll();
         this.background.clear();
-        this.mapDimension = dimension;
-        this.tileDimension = this.min(
-            (int) (this.getHeight() / SCREEN_TO_MAP_RATIO / this.mapDimension.getHeight()),
-            (int) (this.getWidth() / SCREEN_TO_MAP_RATIO / this.mapDimension.getWidth())
-        );
 
         this.resizePanels();
         this.mapPanel.setLayout(new GridLayout(
@@ -130,12 +130,11 @@ public final class GameView extends JPanel {
     private void renderBackgroundTextures(final Map<Position, Image> textures) {
         textures.forEach((pos, texture) -> {
             final var innerTile = this.componentManager.getBackgroundTile(texture, this.tileDimension);
-            final var outerTile = this.background.get(this.computeIndex(pos.getX(), pos.getY()));
 
-            outerTile.add(innerTile);
-            this.refresh(outerTile);
+            this.background.get(this.computeIndex(pos.getX(), pos.getY())).add(innerTile);
+            this.refresh(this.background.get(this.computeIndex(pos.getX(), pos.getY())));
 
-            this.background.remove(outerTile);
+            this.background.remove(this.computeIndex(pos.getX(), pos.getY()));
             this.background.add(this.computeIndex(pos.getX(), pos.getY()), innerTile);
         });
     }
@@ -156,7 +155,7 @@ public final class GameView extends JPanel {
 
         this.componentManager.resizeComponent(
             this.lowerPanel,
-            (int) this.mapPanel.getPreferredSize().getWidth(),
+            this.getWidth(),
             (this.getHeight() - (int) this.mapPanel.getPreferredSize().getHeight()) / 2
         );
         this.refresh(this);
@@ -164,7 +163,7 @@ public final class GameView extends JPanel {
 
     private void updateComponent(final JComponent component, final List<String> text) {
         component.removeAll();
-        text.forEach(string -> this.componentManager.showText(this.upperPanel, string));
+        text.forEach(string -> this.componentManager.showText(component, string));
     }
 
     private void refresh(final JComponent component) {
