@@ -62,7 +62,7 @@ public final class Constants {
     /**
      * The base folder for game state textures.
      */
-    public static final String GAME_TEXTURES_URL = "img/game";
+    public static final String GAME_TEXTURES_URL = "img/game/";
     /**
      * The base folder for furniture textures.
      */
