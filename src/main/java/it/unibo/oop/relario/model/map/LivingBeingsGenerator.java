@@ -74,13 +74,16 @@ public final class LivingBeingsGenerator {
     LivingBeing> createCharacter) {
         int placedCharacters = 0;
         int attempts = 0;
-        while (placedCharacters < charactersNumber) {
-            final Position position = getRandomPositionInArea(this.areas.get(placedCharacters));
-            if (room.isPositionValid(position) && isAreaPositionValid(position, this.areas.get(placedCharacters))) {
+        while (placedCharacters < charactersNumber && attempts < LOOP_ATTEMPTS) {
+            final Area area = this.areas.get(random.nextInt(areas.size()));
+            final Position position = getRandomPositionInArea(area);
+            if (room.isPositionValid(position) && isAreaPositionValid(position, area)) {
                 room.addEntity(position, createCharacter.apply(position));
+                this.areas.remove(area);
                 placedCharacters++;
+                attempts = -1;
             } else if (attempts > LOOP_ATTEMPTS) {
-                attempts = 0;
+                attempts = -1;
                 placedCharacters++;
             }
             attempts++;
@@ -89,9 +92,10 @@ public final class LivingBeingsGenerator {
 
     private boolean isAreaPositionValid(final Position position, final Area area) {
         return position.getX() + LivingBeingImpl.DIRECTION_RANGE
-        < area.initialPosition().getX() + area.dimension().getWidth() - 1
+        < area.initialPosition().getX() + area.dimension().getWidth() - 2
         && position.getX() - LivingBeingImpl.DIRECTION_RANGE > area.initialPosition().getX() + 1
-        && position.getY() > area.initialPosition.getY() + 1 && position.getY() < area.dimension().getHeight() - 1;
+        && position.getY() > area.initialPosition.getY() + 1 && position.getY() < area.initialPosition.getY() 
+        + area.dimension().getHeight() - 2;
     }
 
     private Position getRandomPositionInArea(final Area area) {
