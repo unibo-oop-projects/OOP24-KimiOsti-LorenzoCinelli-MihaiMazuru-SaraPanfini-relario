@@ -57,7 +57,7 @@ class CombatControllerTest {
         mainController.moveToNextRoom();
 
         assertEquals(controller.getCombatState(), "");
-        controller.initializeCombat(chara, hostileEnemy);
+        controller.initializeCombat(hostileEnemy);
         assertEquals(mainController.getMainView().getCurrentPanel(), GameState.COMBAT);
         assertEquals(controller.getDifficultyLevel(), hostileEnemy.getDifficulty());
         assertEquals(controller.getEnemyLife(), hostileEnemy.getLife());
@@ -77,13 +77,13 @@ class CombatControllerTest {
         assertEquals(chara.getItems().get(0), item);
         assertEquals(controller.getCombatState(), chara.getName() + " you've won the combat");
 
-        controller.initializeCombat(chara, mercifulEnemy);
+        controller.initializeCombat(mercifulEnemy);
         controller.handleAction(CombatAction.MERCY);
         assertEquals(controller.getCombatState(), controller.getEnemyName()
             + " accepted your mercy request." + " You are free to go.");
 
         final int initMerciLife = mercifulEnemy.getLife();
-        controller.initializeCombat(chara, mercifulEnemy);
+        controller.initializeCombat(mercifulEnemy);
         for (int i = 0; i < 4; i++) {
             assertEquals(mercifulEnemy.getLife(), initMerciLife - i * Constants.PLAYER_ATK);
             controller.handleAction(CombatAction.ATTACK);
