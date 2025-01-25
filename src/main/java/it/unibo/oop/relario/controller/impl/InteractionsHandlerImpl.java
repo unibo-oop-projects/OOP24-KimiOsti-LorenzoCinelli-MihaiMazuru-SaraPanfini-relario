@@ -57,6 +57,8 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                     }
                 }
             }
+        } else {
+            this.resumeGame();
         }
     }
 
