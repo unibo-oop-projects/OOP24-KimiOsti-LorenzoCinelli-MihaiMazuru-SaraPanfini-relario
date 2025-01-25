@@ -146,7 +146,9 @@ public final class RoomImpl implements Room {
             this.dimension, this.population, this.furniture)) {
                 ((LivingBeingImpl) chara).changeDirection();
             }
+            this.population.remove(chara.getPosition().get());
             chara.update();
+            this.population.put(chara.getPosition().get(), chara);
         }
     }
 
