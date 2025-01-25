@@ -28,8 +28,9 @@ public final class QuestFactoryImpl implements QuestFactory {
     }
 
     @Override
-    public Quest createQuestByType(final String description, final QuestType questType, final Optional<GameEntityType> keyEntity) {
-        return questCreator.get(questType).apply(description, keyEntity);
+    public Quest createQuestByType(final String description, final QuestType questType,
+        final Optional<GameEntityType> keyEntity) {
+            return questCreator.get(questType).apply(description, keyEntity);
     }
 
     private QuestImpl createQuest(final String description, final ObjectiveStrategy objective) {

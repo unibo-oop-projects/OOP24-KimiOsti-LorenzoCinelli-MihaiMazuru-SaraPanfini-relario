@@ -11,7 +11,7 @@ public interface QuestFactory {
 
     /**
      * Creates a quest instance from a given type.
-     * @param room the room hosting the quest.
+     * @param description the description of the quest.
      * @param questType the type of the quest.
      * @param keyEntity the type of the entity related to the quest.
      * @return an instance of a quest with all the given specifications.
