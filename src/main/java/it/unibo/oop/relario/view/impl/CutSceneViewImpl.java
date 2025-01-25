@@ -41,9 +41,9 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         Scene.INTRODUCTION, """
         <html>Il vecchio re di Relario sentiva vicino il momento della sua fine,<br>
         ma sapeva di non aver lasciato eredi al trono.<br>
-        Per questo ha deciso che chiunque riuscira\' a superare tutte le prove del suo castello<br>
-        ereditera\' il suo titolo. 
-        Spero di essere all'altezza!</html>
+        Per questo ha deciso che chiunque sarebbe riuscito a superare tutte le prove<br>
+        del suo castello avrebbe ereditato il suo titolo.<br>
+        Relano decide di tentare nell'impresa.</html>
         """,
         Scene.VICTORY, """
         <html><center>HAI VINTO<br>
@@ -72,7 +72,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showStartScene() {
         this.sceneLoader(Scene.INTRODUCTION);
-        final var timer = new Timer(SCENE_TRANSITION_DELAY * 2, e -> this.controller.progressView(GameState.GAME));
+        final var timer = new Timer(Constants.INTRODUCTION_SCENE_TIME, e -> this.controller.progressView(GameState.GAME));
         timer.setRepeats(false);
         timer.start();
         this.controller.progressGame(GameState.GAME);
