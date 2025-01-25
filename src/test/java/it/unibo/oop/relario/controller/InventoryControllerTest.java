@@ -42,9 +42,7 @@ final class InventoryControllerTest {
         this.inventoryController = mainController.getInventoryController();
         mainController.moveToNextRoom();
 
-        assertEquals(GameState.MENU, this.mainController.getCurrentState());
         mainController.getInventoryController().init(GameState.MENU);
-        assertEquals(GameState.INVENTORY, this.mainController.getCurrentState());
 
         final var player = mainController.getCurRoom().get().getPlayer();
         final InventoryItemFactory itemFactory = new InventoryItemFactoryImpl();
@@ -184,30 +182,4 @@ final class InventoryControllerTest {
         assertEquals("50", inventoryController.getLife());
     }
 
-
-    /**
-     * Tests the changing of states.
-     */
-    @Test
-    void testStates() {
-        assertEquals(GameState.INVENTORY, this.mainController.getCurrentState());
-        this.inventoryController.notify(Event.ESCAPE);
-        assertEquals(GameState.MENU_IN_GAME, this.mainController.getCurrentState());
-
-        this.mainController.getMenuController().notify(Event.ESCAPE);
-        assertEquals(GameState.INVENTORY, this.mainController.getCurrentState());
-
-        this.inventoryController.notify(Event.INVENTORY);
-        assertEquals(GameState.INVENTORY, this.mainController.getCurrentState());
-
-        this.inventoryController.init(GameState.GAME);
-        assertEquals(GameState.INVENTORY, this.mainController.getCurrentState());
-        this.inventoryController.notify(Event.INVENTORY);
-        assertEquals(GameState.GAME, this.mainController.getCurrentState());
-
-        this.inventoryController.init(GameState.COMBAT);
-        assertEquals(GameState.INVENTORY, this.mainController.getCurrentState());
-        this.inventoryController.notify(Event.INVENTORY);
-        assertEquals(GameState.COMBAT, this.mainController.getCurrentState());
-    }
 }

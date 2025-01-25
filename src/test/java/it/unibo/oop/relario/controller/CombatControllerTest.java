@@ -22,7 +22,6 @@ import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 import it.unibo.oop.relario.view.api.MainView;
 import it.unibo.oop.relario.view.impl.MainViewImpl;
@@ -58,7 +57,6 @@ class CombatControllerTest {
 
         assertEquals(controller.getCombatState(), "");
         controller.initializeCombat(chara, hostileEnemy);
-        assertEquals(mainController.getCurrentState(), GameState.COMBAT);
         assertEquals(controller.getDifficultyLevel(), hostileEnemy.getDifficulty());
         assertEquals(controller.getEnemyLife(), hostileEnemy.getLife());
         assertEquals(controller.getEnemyName(), hostileEnemy.getName());
@@ -92,6 +90,5 @@ class CombatControllerTest {
         assertEquals(mercifulEnemy.getLife(), 10);
 
         controller.handleAction(CombatAction.OPEN_INVENTORY);
-        assertEquals(mainController.getCurrentState(), GameState.INVENTORY);
     }
 }

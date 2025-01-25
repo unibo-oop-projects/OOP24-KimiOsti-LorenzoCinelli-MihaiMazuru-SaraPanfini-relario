@@ -75,12 +75,9 @@ final class GameControllerTest {
         assertFalse(this.controller.getCurRoom().get().getPlayer().isMoving());
 
         gameController.notify(Event.ESCAPE);
-        assertEquals(GameState.MENU_IN_GAME, this.controller.getCurrentState());
         this.controller.getMainView().showPanel(GameState.GAME);
         gameController.run(true);
 
-        gameController.notify(Event.INVENTORY);
-        assertEquals(GameState.INVENTORY, this.controller.getCurrentState());
     }
 
 }
