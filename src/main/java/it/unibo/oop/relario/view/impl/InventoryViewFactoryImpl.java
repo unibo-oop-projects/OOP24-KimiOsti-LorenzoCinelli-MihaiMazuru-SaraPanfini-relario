@@ -25,6 +25,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         Enter - usa un oggetto
         Backspace - scarta un oggetto
         I - esci dall\'inventario
+        Esc - apri il menu
     """;
     private static final String TITLE = "Inventario                        Vita: ";
     private static final String ITEM_LIST = "Lista oggetti";
