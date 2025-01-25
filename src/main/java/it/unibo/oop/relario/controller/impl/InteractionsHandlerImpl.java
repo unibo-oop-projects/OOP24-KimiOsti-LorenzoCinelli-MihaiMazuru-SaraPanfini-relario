@@ -79,7 +79,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void startEnemyCombat(final Enemy enemy, final Room curRoom) {
-        this.controller.getCombatController().initializeCombat(curRoom.getPlayer(), enemy);
+        this.controller.getCombatController().initializeCombat(enemy);
     }
 
     private void interactWithFurniture(final InteractiveFurniture furniture, final Room curRoom) {
