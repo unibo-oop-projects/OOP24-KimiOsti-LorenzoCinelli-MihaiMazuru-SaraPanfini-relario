@@ -9,6 +9,7 @@ import it.unibo.oop.relario.model.menu.MenuManager;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
+import it.unibo.oop.relario.view.impl.MenuView;
 
 /**
  * Implementation of the main menu controller.
@@ -34,6 +35,10 @@ public final class MenuControllerImpl implements MenuController {
     @Override
     public void showMenu(final GameState menuType, final GameState prevState) {
         this.prevState = prevState;
+        final var panel = this.view.getPanel(menuType);
+        if (menuType.equals(GameState.MENU) && panel instanceof MenuView) {
+            ((MenuView) panel).startSong();
+        }
         this.view.showPanel(menuType);
     }
 
