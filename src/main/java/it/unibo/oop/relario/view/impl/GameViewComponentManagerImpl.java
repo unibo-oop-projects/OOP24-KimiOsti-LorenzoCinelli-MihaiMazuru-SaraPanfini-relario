@@ -15,7 +15,7 @@ import it.unibo.oop.relario.view.api.GameViewComponentManager;
  */
 public final class GameViewComponentManagerImpl implements GameViewComponentManager {
 
-    private static final float TEXT_TO_COMPONENT_RATIO = 0.33f;
+    private static final float TEXT_TO_COMPONENT_RATIO = 0.30f;
 
     @Override
     public JPanel getGamePanel() {
@@ -32,7 +32,7 @@ public final class GameViewComponentManagerImpl implements GameViewComponentMana
     @Override
     public void showText(final JComponent component, final String text) {
         component.add(this.getCustomLabel(
-            component.getHeight() * TEXT_TO_COMPONENT_RATIO,
+            (float) component.getPreferredSize().getHeight() * TEXT_TO_COMPONENT_RATIO,
             text
         ));
         component.revalidate();
