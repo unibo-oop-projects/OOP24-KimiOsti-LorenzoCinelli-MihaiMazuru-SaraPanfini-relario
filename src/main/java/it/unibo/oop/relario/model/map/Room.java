@@ -18,12 +18,6 @@ import it.unibo.oop.relario.utils.api.Position;
 public interface Room {
 
     /**
-     * Retrieves the current room instance.
-     * @return the current room
-     */
-    Room getRoom();
-
-    /**
      * Retrieves the main character in the room.
      * @return the player
      */
