@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.controller.impl;
 
+import java.util.HashMap;
+
 import javax.swing.SwingUtilities;
 
 import it.unibo.oop.relario.controller.api.MainController;
@@ -72,7 +74,7 @@ public final class GameLoop extends Thread {
         final var gameView = this.controller.getMainView().getPanel(GameState.GAME);
         final var model = this.controller.getCurRoom();
         if (gameView instanceof GameView && model.isPresent()) {
-            final var population = model.get().getPopulation();
+            final var population = new HashMap<>(model.get().getPopulation());
             population.put(model.get().getPlayer().getPosition().get(), model.get().getPlayer());
             ((GameView) gameView).renderTextures(GameTexturesLocator.processModel(population));
         }
