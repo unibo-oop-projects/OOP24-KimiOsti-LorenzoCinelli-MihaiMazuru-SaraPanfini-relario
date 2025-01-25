@@ -40,16 +40,6 @@ public final class Constants {
     public static final String RESOURCES_FOLDER_URL = "src/main/resources/";
 
     /**
-     * Game font base URL.
-     */
-    public static final String FONT_URL = "font/";
-
-    /**
-     * Font files extension.
-     */
-    public static final String FONT_EXTENSION = ".ttf";
-
-    /**
      * Image files extension.
      */
     public static final String IMAGE_EXTENSION = ".png";
