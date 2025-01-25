@@ -34,9 +34,7 @@ public final class BackgroundTile extends JPanel {
 
     @Override
     public void paintComponent(final Graphics g) {
-        if (this.img != null) {
-            g.drawImage(img, 0, 0, this);
-        }
+        g.drawImage(img, 0, 0, this);
     }
 
 }
