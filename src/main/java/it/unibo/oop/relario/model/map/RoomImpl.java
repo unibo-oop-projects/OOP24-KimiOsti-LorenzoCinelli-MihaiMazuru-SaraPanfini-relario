@@ -37,7 +37,7 @@ public final class RoomImpl implements Room {
     private final MainCharacter player;
     private final Dimension dimension;
     private final Map<Position, CellState> cellStates = new HashMap<>();
-    private final Map<Position, LivingBeing> population = new HashMap<>();
+    private Map<Position, LivingBeing> population = new HashMap<>();
     private final Map<Position, Furniture> furniture = new HashMap<>();
     private final Position entry;
     private final Position exit;
@@ -136,6 +136,7 @@ public final class RoomImpl implements Room {
 
     @Override
     public void update() {
+        final Map<Position, LivingBeing> buffer = new HashMap<>();
         if (!Interactions.canMove(this.player.getPosition().get(), this.player.getDirection(), 
         this.dimension, this.population, this.furniture)) {
             this.player.stop();
@@ -146,10 +147,10 @@ public final class RoomImpl implements Room {
             this.dimension, this.population, this.furniture)) {
                 ((LivingBeingImpl) chara).changeDirection();
             }
-            this.population.remove(chara.getPosition().get());
             chara.update();
-            this.population.put(chara.getPosition().get(), chara);
+            buffer.put(chara.getPosition().get(), chara);
         }
+        this.population = buffer;
     }
 
     @Override
