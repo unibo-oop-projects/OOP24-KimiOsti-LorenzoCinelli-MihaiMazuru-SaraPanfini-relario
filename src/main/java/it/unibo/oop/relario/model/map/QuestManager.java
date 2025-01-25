@@ -34,6 +34,7 @@ public class QuestManager {
 
     private final QuestFactory questFactory = new QuestFactoryImpl();
     private final Map<Integer, Pair<QuestType, Optional<GameEntityType>>> roomQuests = new HashMap<>();
+    private final Map<Integer, String> questDescriptions = new HashMap<>();
 
     /**
      * Instantiates a quest manager.
@@ -41,9 +42,11 @@ public class QuestManager {
     public QuestManager() {
         this.roomQuests.put(FIRST_ROOM, new Pair<>(QuestType.NO_QUEST, Optional.empty()));
         this.roomQuests.put(SECOND_ROOM, new Pair<>(QuestType.COLLECTION_QUEST, Optional.of(InventoryItemType.KEY)));
+        this.questDescriptions.put(SECOND_ROOM, "");
         this.roomQuests.put(THIRD_ROOM, new Pair<>(QuestType.NPC_INTERACT_QUEST, Optional.empty()));
+        this.questDescriptions.put(THIRD_ROOM, "");
         this.roomQuests.put(FOURTH_ROOM, new Pair<>(QuestType.DEFEAT_ENEMY_QUEST, Optional.of(EnemyType.BOSS)));
-        this.roomQuests.put(FIFTH_ROOM, new Pair<>(QuestType.NO_QUEST, Optional.empty()));
+        this.questDescriptions.put(FOURTH_ROOM, "");
     }
 
     /**
@@ -54,7 +57,7 @@ public class QuestManager {
     public void assignQuest(final Room room, final int indexRoom) {
         final Pair<QuestType, Optional<GameEntityType>> quest = this.roomQuests.get(indexRoom);
         room.setQuest(quest.getX().equals(QuestType.NO_QUEST) ? Optional.empty() 
-        : Optional.of(this.questFactory.createQuestByType(room, quest.getX(), quest.getY())));
+        : Optional.of(this.questFactory.createQuestByType(questDescriptions.get(indexRoom), quest.getX(), quest.getY())));
     }
 
 }
