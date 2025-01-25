@@ -1,8 +1,11 @@
 package it.unibo.oop.relario.controller.impl;
 
-import it.unibo.oop.relario.model.map.Room;
+import javax.swing.SwingUtilities;
+
+import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.view.impl.GameView;
 import it.unibo.oop.relario.utils.impl.Constants;
+import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.GameTexturesLocator;
 
 /**
@@ -10,34 +13,32 @@ import it.unibo.oop.relario.utils.impl.GameTexturesLocator;
  */
 public final class GameLoop extends Thread {
 
-    private final GameView view;
-    private final Room model;
+    private final MainController controller;
     private boolean running; //NOPMD suppressed as it is a false positive due to multithreading.
 
     /**
      * Constructor for the game loop thread.
-     * @param view the panel showing the game.
-     * @param model the model entry point.
+     * @param controller the main controller handling the application.
      */
-    public GameLoop(final GameView view, final Room model) {
-        this.view = view;
-        this.model = model;
+    public GameLoop(final MainController controller) {
+        this.controller = controller;
         this.running = false;
     }
 
     @Override
     public void run() {
         this.running = true;
+        final var model = this.controller.getCurRoom();
         long prevCycleTS = System.currentTimeMillis();
 
-        view.renderBackground(this.model.getDimension(), GameTexturesLocator.processModel(this.model.getFurniture()));
+        SwingUtilities.invokeLater(this::renderBackgroundScene);
 
-        while (this.running) {
+        while (this.running && model.isPresent()) {
             final long currCycleTS = System.currentTimeMillis();
             if (currCycleTS - prevCycleTS >= Constants.REFRESH_TIME) {
                 prevCycleTS = currCycleTS;
-                this.model.update();
-                this.view.renderTextures(GameTexturesLocator.processModel(this.model.getPopulation()));
+                model.get().update();
+                SwingUtilities.invokeLater(this::renderForegroundScene);
             } else {
                 try {
                     sleep(Constants.REFRESH_TIME - System.currentTimeMillis() + prevCycleTS);
@@ -54,6 +55,27 @@ public final class GameLoop extends Thread {
     public void interrupt() {
         this.running = false;
         super.interrupt();
+    }
+
+    private void renderBackgroundScene() {
+        final var gameView = this.controller.getMainView().getPanel(GameState.GAME);
+        final var model = this.controller.getCurRoom();
+        if (gameView instanceof GameView && model.isPresent()) {
+            ((GameView) gameView).renderBackground(
+                model.get().getDimension(),
+                GameTexturesLocator.processModel(model.get().getFurniture())
+            );
+        }
+    }
+
+    private void renderForegroundScene() {
+        final var gameView = this.controller.getMainView().getPanel(GameState.GAME);
+        final var model = this.controller.getCurRoom();
+        if (gameView instanceof GameView && model.isPresent()) {
+            final var population = model.get().getPopulation();
+            population.put(model.get().getPlayer().getPosition().get(), model.get().getPlayer());
+            ((GameView) gameView).renderTextures(GameTexturesLocator.processModel(population));
+        }
     }
 
 }

@@ -5,7 +5,6 @@ import java.awt.Image;
 import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
-import it.unibo.oop.relario.model.entities.living.MainCharacter;
 
 /**
  * Controller for managing cambat options.
@@ -13,10 +12,9 @@ import it.unibo.oop.relario.model.entities.living.MainCharacter;
 public interface CombatController {
     /**
      * Initializes combat. 
-     * @param player is the first fighter.
-     * @param enemy is the second fighter.
+     * @param enemy is the fighter facing the main character.
      */
-    void initializeCombat(MainCharacter player, Enemy enemy);
+    void initializeCombat(Enemy enemy);
 
     /**
      * Retrieves combat state.

@@ -2,7 +2,6 @@ package it.unibo.oop.relario.controller.impl;
 
 import java.util.Map;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InteractionsHandler;
 import it.unibo.oop.relario.controller.api.MainController;
@@ -10,16 +9,10 @@ import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
-import it.unibo.oop.relario.view.impl.GameView;
 
 /**
  * Implementation for the Game Controller.
  */
-@SuppressFBWarnings(
-    value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-    justification = "The panel mapped to the game state is always"
-        + "an instance of GameView, for how MainView is implemented"
-)
 public final class GameControllerImpl implements GameController {
 
     private final InteractionsHandler interactionsHandler;
@@ -35,10 +28,7 @@ public final class GameControllerImpl implements GameController {
     public GameControllerImpl(final MainController controller) {
         this.controller = controller;
         this.mainView = this.controller.getMainView();
-        this.interactionsHandler = new InteractionsHandlerImpl(
-            this.controller,
-            (GameView) this.mainView.getPanel(GameState.GAME)
-        );
+        this.interactionsHandler = new InteractionsHandlerImpl(this.controller);
         this.inputToDirection = Map.of(
             Event.MOVE_UP, Direction.UP,
             Event.MOVE_DOWN, Direction.DOWN,
@@ -73,10 +63,7 @@ public final class GameControllerImpl implements GameController {
 
     private void startGameLoop() {
         this.mainView.showPanel(GameState.GAME);
-        this.gameLoop = new GameLoop(
-            (GameView) this.mainView.getPanel(GameState.GAME),
-            this.controller.getCurRoom().get()
-        );
+        this.gameLoop = new GameLoop(this.controller);
         this.gameLoop.start();
     }
 
