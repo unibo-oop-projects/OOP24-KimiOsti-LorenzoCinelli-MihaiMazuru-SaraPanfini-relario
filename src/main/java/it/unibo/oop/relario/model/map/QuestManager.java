@@ -42,11 +42,23 @@ public class QuestManager {
     public QuestManager() {
         this.roomQuests.put(FIRST_ROOM, new Pair<>(QuestType.NO_QUEST, Optional.empty()));
         this.roomQuests.put(SECOND_ROOM, new Pair<>(QuestType.COLLECTION_QUEST, Optional.of(InventoryItemType.KEY)));
-        this.questDescriptions.put(SECOND_ROOM, "");
+        this.questDescriptions.put(SECOND_ROOM, """
+                La chiave per aprire la porta è scomparsa! Sono sicuro che è da qualche parte qui vicino. 
+                Ti prego, puoi aiutarmi a trovarla?
+                """);
         this.roomQuests.put(THIRD_ROOM, new Pair<>(QuestType.NPC_INTERACT_QUEST, Optional.empty()));
-        this.questDescriptions.put(THIRD_ROOM, "");
+        this.questDescriptions.put(THIRD_ROOM, """
+                Per proseguire parla con tutti gli abitanti della stanza.
+                Se sei fortunato, alcuni potrebbero anche volerti donare oggetti 
+                che ti saranno utili durante la tua impresa.
+                """);
         this.roomQuests.put(FOURTH_ROOM, new Pair<>(QuestType.DEFEAT_ENEMY_QUEST, Optional.of(EnemyType.BOSS)));
-        this.questDescriptions.put(FOURTH_ROOM, "");
+        this.questDescriptions.put(FOURTH_ROOM, """
+                "Complimenti, per essere riuscito ad arrivare fino a qui, 
+                ma l'ultima sfida che ti aspetta è la più difficile. 
+                Affronta il re in un combattimento decisivo e solo se riuscirai a sconfiggerlo, 
+                potrai reclamare il trono e diventare il nuovo sovrano del regno!"
+                """);
     }
 
     /**
