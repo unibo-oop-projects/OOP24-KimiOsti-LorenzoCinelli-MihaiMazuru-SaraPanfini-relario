@@ -50,6 +50,7 @@ public enum InventoryItemType implements GameEntityType {
 
     /**
      * Constructor for initializing the inventory item type with the corresponding effect.
+     * @param name of the item.
      * @param effect of the item
      */
     InventoryItemType(final String name, final EffectType effect) {

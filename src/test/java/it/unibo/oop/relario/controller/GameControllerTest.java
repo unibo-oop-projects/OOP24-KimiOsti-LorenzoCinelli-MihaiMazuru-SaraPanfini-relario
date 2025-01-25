@@ -72,7 +72,9 @@ final class GameControllerTest {
         gameController.notify(Event.MOVE_LEFT);
         assertEquals(Direction.LEFT, this.controller.getCurRoom().get().getPlayer().getDirection());
         gameController.notify(Event.RELEASED);
-        assertFalse(this.controller.getCurRoom().get().getPlayer().isMoving());
+        final var pos = this.controller.getCurRoom().get().getPlayer().getPosition();
+        this.controller.getCurRoom().get().update();
+        assertEquals(pos, this.controller.getCurRoom().get().getPlayer().getPosition());
 
         gameController.notify(Event.ESCAPE);
         this.controller.getMainView().showPanel(GameState.GAME);

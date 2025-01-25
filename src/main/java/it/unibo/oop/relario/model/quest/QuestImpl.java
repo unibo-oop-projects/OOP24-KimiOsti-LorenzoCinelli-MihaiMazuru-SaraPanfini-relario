@@ -12,17 +12,14 @@ public final class QuestImpl implements Quest {
 
     private final String description;
     private final ObjectiveStrategy objective;
-    private final Room room;
 
     /**
      * Instantiates the room's quest.
      * @param description a description of the quest.
-     * @param room the room in which the quest has to be achieved.s
      * @param objective the objective to be satisfied.
      */
-    public QuestImpl(final String description, final Room room, final ObjectiveStrategy objective) {
+    public QuestImpl(final String description, final ObjectiveStrategy objective) {
         this.description = description;
-        this.room = room;
         this.objective = objective;
     }
 
@@ -32,18 +29,13 @@ public final class QuestImpl implements Quest {
     }
 
     @Override
-    public boolean isCompleted() {
-        return this.objective.check(this.room);
+    public boolean isCompleted(final Room room) {
+        return this.objective.check(room);
     }
 
     @Override
     public Optional<? extends GameEntityType> getKeyEntityType() {
         return this.objective.getKeyEntityType();
-    }
-
-    @Override
-    public Room getRoom() {
-        return this.room;
     }
 
 }

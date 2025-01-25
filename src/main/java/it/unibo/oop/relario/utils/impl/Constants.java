@@ -10,11 +10,19 @@ public final class Constants {
     /**
      * Default player's initial life.
      */
-    public static final int DEFAULT_PLAYER_LIFE = 80;
+    public static final int PLAYER_LIFE = 80;
     /**
      * Default player's base attack.
      */
-    public static final int DEFAULT_PLAYER_ATK = 20;
+    public static final int PLAYER_ATK = 20;
+    /**
+     * Default player's inventory capacity.
+     */
+    public static final int PLAYER_INVENTORY_CAPACITY = 8;
+    /**
+     * Player's initial direction.
+     */
+    public static final Direction ENTITY_INITIAL_DIRECTION = Direction.RIGHT;
 
     /**
      * Game engine refresh time.

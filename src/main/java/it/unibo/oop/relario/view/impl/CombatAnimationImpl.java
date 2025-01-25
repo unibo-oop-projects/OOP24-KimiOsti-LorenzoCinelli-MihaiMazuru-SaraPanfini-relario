@@ -36,7 +36,7 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
         "combat/String_Jab"
     );
 
-    private final Clip clip;
+    private final transient Clip clip;
     private final ImageIcon icon;
 
     /**
