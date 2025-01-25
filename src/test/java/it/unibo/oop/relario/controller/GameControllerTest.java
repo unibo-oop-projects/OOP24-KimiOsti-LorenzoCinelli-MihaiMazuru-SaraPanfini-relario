@@ -10,14 +10,9 @@ import org.junit.jupiter.api.Test;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.impl.GameLoop;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
-import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
-import it.unibo.oop.relario.model.map.RoomImpl;
-import it.unibo.oop.relario.utils.impl.DimensionImpl;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
-import it.unibo.oop.relario.utils.impl.PositionImpl;
-import it.unibo.oop.relario.view.impl.GameView;
 
 /**
  * The test class for the game controller.
@@ -39,12 +34,7 @@ final class GameControllerTest {
      */
     @Test
     void testGameLoop() {
-        final var loop = new GameLoop((GameView) this.controller.getMainView().getPanel(GameState.GAME), new RoomImpl(
-            new MainCharacterImpl(),
-            new DimensionImpl(5, 5),
-            new PositionImpl(0, 0),
-            new PositionImpl(5, 5)
-        ));
+        final var loop = new GameLoop(new MainControllerImpl());
         loop.start();
         assertFalse(loop.isInterrupted());
         loop.interrupt();
