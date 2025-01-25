@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.oop.relario.controller.api.InventoryController;
-import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.impl.InventoryControllerImpl;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactory;
@@ -31,14 +30,13 @@ final class InventoryControllerTest {
     private static final String ARMATURA = "Armatura semplice";
 
     private InventoryController inventoryController;
-    private MainController mainController;
 
     /**
      * Sets up the testing.
      */
     @BeforeEach
     void setUp() {
-        this.mainController = new MainControllerImpl();
+        final var mainController = new MainControllerImpl();
         this.inventoryController = mainController.getInventoryController();
         mainController.moveToNextRoom();
 
