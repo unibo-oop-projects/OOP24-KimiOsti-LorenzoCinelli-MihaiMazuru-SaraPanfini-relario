@@ -122,7 +122,7 @@ class MainCharacterTest {
         for (int i = 0; i < 3; i++) {
             assertEquals(chara.attack(), Constants.PLAYER_ATK + toyKnife.getIntensity());
         }
-        assertEquals(chara.attack(), Constants.PLAYER_ATK);
+        assertEquals(Constants.PLAYER_ATK, chara.attack());
 
         final InventoryItem oldTutu = new InventoryItemFactoryImpl().createItem(InventoryItemType.BASICARMOR);
         chara.addToInventory(oldTutu);

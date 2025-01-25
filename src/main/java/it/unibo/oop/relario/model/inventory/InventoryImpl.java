@@ -38,14 +38,26 @@ public final class InventoryImpl implements Inventory {
 
     @Override
     public int attack() {
-        return this.weapon.isPresent() ? this.baseAtk + this.weapon.get().getIntensity() : this.baseAtk;
+        final var atk = this.baseAtk + (weapon.isPresent() ? weapon.get().getIntensity() : 0);
+        this.weapon.ifPresent(e -> {
+            e.decreaseDurability();
+            if (e.getDurability() == 0) {
+                this.weapon = Optional.empty();
+            }
+        });
+        return atk;
     }
 
     @Override
     public void attacked(final int damage) {
         final var resistance = this.life + (this.armor.isPresent() ? this.armor.get().getIntensity() : 0);
         this.life = resistance > damage ? resistance - damage : 0;
-        armor.ifPresent(EquippableItem::decreaseDurability);
+        armor.ifPresent(e -> {
+            e.decreaseDurability();
+            if (e.getDurability() == 0) {
+                this.armor = Optional.empty();
+            }
+        });
     }
 
     @Override
