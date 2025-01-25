@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,19 @@ final class InventoryControllerTest {
     private static final String AMULETO = "Amuleto";
     private static final String PIETRA = "Pietra preziosa";
     private static final String ARMATURA = "Armatura semplice";
+    private static final String SCUDO = "Scudo";
+    private static final Map<InventoryItemType, String> FULL_DESCRIPTION = Map.of(
+        InventoryItemType.AMULET,
+        "Un ciondolo antico e luminoso che emana un'aura di guarigione\nEffetto: Cura 15",
+        InventoryItemType.GEMSTONE,
+        "Una gemma scintillante di rara bellezza\nEffetto: Nessuno",
+        InventoryItemType.BASICARMOR,
+        "Un'armatura leggera che offre protezione di base\nEffetto: Protezione 5\nDurabilità: 3",
+        InventoryItemType.DAGGER,
+        "Un'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilità: 3",
+        InventoryItemType.SHIELD,
+        "Uno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilità: 5"
+    );
 
     private InventoryController inventoryController;
 
@@ -64,43 +78,29 @@ final class InventoryControllerTest {
     void testGetItemsInfo() {
         assertEquals("50", inventoryController.getLife());
 
-        assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
-        this.inventoryController.getItemsNames());
-        assertEquals("""
-        Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilità: 5""",
-        inventoryController.getEquippedArmor());
-        assertEquals("""
-        Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilità: 3""",
-        inventoryController.getEquippedWeapon());
+        assertEquals(List.of(AMULETO, PIETRA, ARMATURA), this.inventoryController.getItemsNames());
+        assertEquals("Scudo\n" + FULL_DESCRIPTION.get(InventoryItemType.SHIELD), inventoryController.getEquippedArmor());
+        assertEquals("Pugnale\n" + FULL_DESCRIPTION.get(InventoryItemType.DAGGER), inventoryController.getEquippedWeapon());
 
         assertEquals(0, inventoryController.getSelectedItemIndex());
-        assertEquals("Un ciondolo antico e luminoso che emana un'aura di guarigione\nEffetto: Cura 15",
-        inventoryController.getItemFullDescription());
+        assertEquals(FULL_DESCRIPTION.get(InventoryItemType.AMULET), inventoryController.getItemFullDescription());
 
         inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(1, inventoryController.getSelectedItemIndex());
-        assertEquals("Una gemma scintillante di rara bellezza\nEffetto: Nessuno",
-        inventoryController.getItemFullDescription());
+        assertEquals(FULL_DESCRIPTION.get(InventoryItemType.GEMSTONE), inventoryController.getItemFullDescription());
 
         inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(2, inventoryController.getSelectedItemIndex());
-        assertEquals("""
-        Un'armatura leggera che offre protezione di base\nEffetto: Protezione 5\nDurabilità: 3""",
-        inventoryController.getItemFullDescription());
+        assertEquals(FULL_DESCRIPTION.get(InventoryItemType.BASICARMOR), inventoryController.getItemFullDescription());
 
         inventoryController.notify(Event.PREVIOUS_ITEM);
         assertEquals(1, inventoryController.getSelectedItemIndex());
-        assertEquals("Una gemma scintillante di rara bellezza\nEffetto: Nessuno",
-        inventoryController.getItemFullDescription());
+        assertEquals(FULL_DESCRIPTION.get(InventoryItemType.GEMSTONE), inventoryController.getItemFullDescription());
 
         assertEquals(List.of(AMULETO, PIETRA, ARMATURA),
         this.inventoryController.getItemsNames());
-        assertEquals("""
-        Scudo\nUno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilità: 5""",
-        inventoryController.getEquippedArmor());
-        assertEquals("""
-        Pugnale\nUn'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilità: 3""",
-        inventoryController.getEquippedWeapon());
+        assertEquals("Scudo\n" + FULL_DESCRIPTION.get(InventoryItemType.SHIELD), inventoryController.getEquippedArmor());
+        assertEquals("Pugnale\n" + FULL_DESCRIPTION.get(InventoryItemType.DAGGER), inventoryController.getEquippedWeapon());
 
         assertEquals("50", inventoryController.getLife());
     }
@@ -120,14 +120,14 @@ final class InventoryControllerTest {
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
 
         this.inventoryController.notify(Event.USE_ITEM);
-        assertEquals(List.of(AMULETO, PIETRA, "Scudo"),
+        assertEquals(List.of(AMULETO, PIETRA, SCUDO),
         this.inventoryController.getItemsNames());
         assertEquals(2, this.inventoryController.getSelectedItemIndex());
 
         this.inventoryController.notify(Event.NEXT_ITEM);
         assertEquals(0, this.inventoryController.getSelectedItemIndex());
         this.inventoryController.notify(Event.USE_ITEM);
-        assertEquals(List.of(PIETRA, "Scudo"),
+        assertEquals(List.of(PIETRA, SCUDO),
         this.inventoryController.getItemsNames());
         assertEquals("65", inventoryController.getLife());
 
