@@ -106,14 +106,14 @@ public final class InventoryImpl implements Inventory {
 
     private void equipWeapon(final InventoryItem weapon) {
         if (weapon instanceof EquippableItem) {
-            this.weapon.ifPresent(e -> this.addItem(e));
+            this.weapon.ifPresent(this::addItem);
             this.weapon = Optional.of((EquippableItem) weapon);
         }
     }
 
     private void equipArmor(final InventoryItem armor) {
         if (armor instanceof EquippableItem) {
-            this.armor.ifPresent(e -> this.addItem(e));
+            this.armor.ifPresent(this::addItem);
             this.armor = Optional.of((EquippableItem) armor);
         }
     }
