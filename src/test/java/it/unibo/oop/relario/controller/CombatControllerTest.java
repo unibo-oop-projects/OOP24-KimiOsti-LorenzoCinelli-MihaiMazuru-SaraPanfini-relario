@@ -64,13 +64,13 @@ class CombatControllerTest {
         assertEquals(controller.getEnemyName(), hostileEnemy.getName());
         assertEquals(controller.getPlayerLife(), chara.getLife());
 
-        final int initCharaLife = Constants.DEFAULT_PLAYER_LIFE;
+        final int initCharaLife = Constants.PLAYER_LIFE;
         final int initEnemyLife = hostileEnemy.getLife();
 
         controller.handleAction(CombatAction.MERCY);
         assertEquals(chara.getLife(), initCharaLife - hostileEnemy.getDamage());
         controller.handleAction(CombatAction.ATTACK);
-        assertEquals(hostileEnemy.getLife(), initEnemyLife - Constants.DEFAULT_PLAYER_ATK);
+        assertEquals(hostileEnemy.getLife(), initEnemyLife - Constants.PLAYER_ATK);
         assertEquals(chara.getLife(), initCharaLife - 2 * hostileEnemy.getDamage());
         controller.handleAction(CombatAction.ATTACK);
         assertTrue(hostileEnemy.getLife() < 0);
@@ -85,7 +85,7 @@ class CombatControllerTest {
         final int initMerciLife = mercifulEnemy.getLife();
         controller.initializeCombat(chara, mercifulEnemy);
         for (int i = 0; i < 4; i++) {
-            assertEquals(mercifulEnemy.getLife(), initMerciLife - i * Constants.DEFAULT_PLAYER_ATK);
+            assertEquals(mercifulEnemy.getLife(), initMerciLife - i * Constants.PLAYER_ATK);
             controller.handleAction(CombatAction.ATTACK);
         }
         assertTrue(chara.getLife() <= 0);

@@ -35,7 +35,7 @@ public final class QuestFactoryImpl implements QuestFactory {
 
     private QuestImpl createQuest(final String description, final Room room, 
     final ObjectiveStrategy objective) {
-        return new QuestImpl(description, room, objective);
+        return new QuestImpl(description, objective);
     }
 
 }

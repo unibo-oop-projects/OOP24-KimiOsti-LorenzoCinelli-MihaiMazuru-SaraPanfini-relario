@@ -37,7 +37,7 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
 
     @Override
     public void refresh() {
-        final var contentPanel = this.factory.createContentPanel();
+        final var contentPanel = this.factory.createContentPanel(this.controller);
         this.remove(CONTENT_PANEL_INDEX);
         this.add(contentPanel);
         this.resize(contentPanel, CONTENT_RATIO, CONTENT_RATIO);
@@ -46,9 +46,9 @@ public final class InventoryViewImpl extends JPanel implements InventoryView {
 
     @Override
     public void init() {
-        this.factory = new InventoryViewFactoryImpl(this.controller);
+        this.factory = new InventoryViewFactoryImpl();
         final var commandPanel = this.factory.createCommandPanel();
-        final var contentPanel = this.factory.createContentPanel();
+        final var contentPanel = this.factory.createContentPanel(this.controller);
         this.removeAll();
         this.add(commandPanel);
         this.add(contentPanel);

@@ -41,7 +41,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
             )
         ) {
             if (curRoom.getPlayer().getPosition().get().equals(curRoom.getExit())
-                && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted())
+                && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted(curRoom))
             ) {
                 this.controller.getCutSceneController().show(GameState.GAME);
             } else {

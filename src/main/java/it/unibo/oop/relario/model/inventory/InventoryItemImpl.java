@@ -17,7 +17,6 @@ public class InventoryItemImpl implements InventoryItem {
 
     /**
      * Constructs an inventory item, with the specified name, description, type and intensity.
-     * @param name of the inventory item
      * @param description of the inventory item
      * @param type of the inventory item
      * @param intensity of the inventory item
