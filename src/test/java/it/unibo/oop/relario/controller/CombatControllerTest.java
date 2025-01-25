@@ -73,12 +73,12 @@ class CombatControllerTest {
         controller.handleAction(CombatAction.ATTACK);
         assertTrue(hostileEnemy.getLife() < 0);
         assertEquals(chara.getItems().get(0), item);
-        assertEquals(controller.getCombatState(), chara.getName() + " you've won the combat");
+        assertEquals(controller.getCombatState(), chara.getName() + " hai vinto il combattimento");
 
         controller.initializeCombat(chara, mercifulEnemy);
         controller.handleAction(CombatAction.MERCY);
         assertEquals(controller.getCombatState(), controller.getEnemyName()
-            + " accepted your mercy request." + " You are free to go.");
+            + " ha accettato la tua richiesta." + "\nSei libero di andare");
 
         final int initMerciLife = mercifulEnemy.getLife();
         controller.initializeCombat(chara, mercifulEnemy);
