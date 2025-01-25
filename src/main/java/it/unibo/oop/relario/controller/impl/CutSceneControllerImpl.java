@@ -40,7 +40,7 @@ public final class CutSceneControllerImpl implements CutSceneController {
     public void progressGame(final GameState nextState) {
         switch (nextState) {
             case GAME -> this.controller.moveToNextRoom();
-            case MENU -> this.controller.getMenuController().showMenu(GameState.MENU, GameState.NONE);
+            case MENU -> this.controller.startNewGame();
             default -> { }
         }
     }
@@ -48,8 +48,8 @@ public final class CutSceneControllerImpl implements CutSceneController {
     @Override
     public void progressView(final GameState nextState) {
         switch (nextState) {
-            case GAME -> this.controller.moveToNextRoom();
-            case MENU -> this.controller.startNewGame();
+            case GAME -> this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
+            case MENU -> this.controller.getMenuController().showMenu(GameState.MENU, GameState.NONE);
             default -> { }
         }
     }
