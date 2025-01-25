@@ -24,6 +24,8 @@ public final class GameView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final double SCREEN_TO_MAP_RATIO = 1.5;
+    private static final int GRID_GAP = 0;
+    private static final int GRID_DIMENSION_IN_TILE = 1;
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
@@ -106,8 +108,8 @@ public final class GameView extends JPanel {
         this.mapPanel.setLayout(new GridLayout(
             this.mapDimension.getHeight(),
             this.mapDimension.getWidth(),
-            0,
-            0
+            GRID_GAP,
+            GRID_GAP
         ));
 
         final var texture = GameTexturesLocator.getFloorTexture();
@@ -115,6 +117,7 @@ public final class GameView extends JPanel {
         for (int y = 0; y < dimension.getHeight(); y++) {
             for (int x = 0; x < dimension.getWidth(); x++) {
                 final var tile = this.componentManager.getBackgroundTile(texture, this.tileDimension);
+                tile.setLayout(new GridLayout(GRID_DIMENSION_IN_TILE, GRID_DIMENSION_IN_TILE, GRID_GAP, GRID_GAP));
                 this.background.add(
                     this.computeIndex(x, y),
                     tile
@@ -130,9 +133,11 @@ public final class GameView extends JPanel {
     private void renderBackgroundTextures(final Map<Position, Image> textures) {
         textures.forEach((pos, texture) -> {
             final var innerTile = this.componentManager.getBackgroundTile(texture, this.tileDimension);
+            innerTile.setOpaque(false);
+            final var outerTile = this.background.get(this.computeIndex(pos.getX(), pos.getY()));
 
-            this.background.get(this.computeIndex(pos.getX(), pos.getY())).add(innerTile);
-            this.refresh(this.background.get(this.computeIndex(pos.getX(), pos.getY())));
+            outerTile.add(innerTile);
+            this.refresh(outerTile);
 
             this.background.remove(this.computeIndex(pos.getX(), pos.getY()));
             this.background.add(this.computeIndex(pos.getX(), pos.getY()), innerTile);
