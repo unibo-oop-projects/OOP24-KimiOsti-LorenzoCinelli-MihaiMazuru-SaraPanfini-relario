@@ -49,7 +49,7 @@ public final class MenuControllerImpl implements MenuController {
 
     @Override
     public void notify(final Event event) {
-        if (event.equals(Event.ESCAPE) && this.view.getCurrentPanel().equals(GameState.MENU_IN_GAME)) {
+        if (event.equals(Event.ESCAPE) && !this.prevState.equals(GameState.NONE)) {
             switch (prevState) {
                 case INVENTORY -> this.controller.getInventoryController().init(GameState.MENU_IN_GAME);
                 case COMBAT -> this.controller.getCombatController().resumeCombat();

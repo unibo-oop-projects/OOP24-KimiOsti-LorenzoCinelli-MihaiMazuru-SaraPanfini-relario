@@ -67,11 +67,11 @@ class MenuTest {
     void testMenuManager() {
         final MenuManager manager = new MenuManager();
 
-        assertEquals(manager.getStartMenu().getElem().size(), 2);
-        assertEquals(manager.getStartMenu().getElem().get(0).getElemCommad(), Command.PLAY);
-        assertEquals(manager.getStartMenu().getElem().get(1).getElemCommad(), Command.QUIT);
-        assertEquals(manager.getInGameMenu().getElem().size(), 2);
-        assertEquals(manager.getInGameMenu().getElem().get(0).getElemCommad(), Command.CLOSE);
-        assertEquals(manager.getInGameMenu().getElem().get(1).getElemCommad(), Command.QUIT);
+        assertEquals(manager.getStartMenu().size(), 2);
+        assertEquals(manager.getStartMenu().get(0).getElemCommad(), Command.PLAY);
+        assertEquals(manager.getStartMenu().get(1).getElemCommad(), Command.QUIT);
+        assertEquals(manager.getInGameMenu().size(), 2);
+        assertEquals(manager.getInGameMenu().get(0).getElemCommad(), Command.CLOSE);
+        assertEquals(manager.getInGameMenu().get(1).getElemCommad(), Command.QUIT);
     }
 }
