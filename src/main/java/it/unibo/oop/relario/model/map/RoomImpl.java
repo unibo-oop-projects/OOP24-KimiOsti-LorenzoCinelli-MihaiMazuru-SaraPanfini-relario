@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
@@ -24,6 +25,11 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 /**
  * Implementation of a room in the game, containing the player, furniture and living beings.
  */
+@SuppressFBWarnings(
+    value = {"EI_EXPOSE_REP2", "EI_EXPOSE_REP"},
+    justification = "The room serves as an entry point for the model,"
+        + "and therefore stores a reference to the player and offers a getter to access it."
+)
 public final class RoomImpl implements Room {
 
     private static final int FURNITURE_EXCLUSION_RANGE = 2;
