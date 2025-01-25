@@ -52,7 +52,7 @@ final class InventoryItemsTest {
         desc.add("Un'arma pesante e devastante, progettata per infliggere danni enormi\nEffetto: Danno 15\nDurabilità: 8");
 
         list.add(itemFactory.createItem(InventoryItemType.KEY));
-        desc.add("Chiave antica per aprire un passaggio\nEffetto: Nessuno");
+        desc.add("Chiave antica per aprire un passaggio\nEffetto: Risolve una quest");
 
         list.add(itemFactory.createItem(InventoryItemType.POTION));
         desc.add("Un liquido rosso che ripristina rapidamente la salute\nEffetto: Cura 10");

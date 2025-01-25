@@ -22,13 +22,13 @@ public final class MenuControllerImpl implements MenuController {
 
     /**
      * Create a new view for the main menu.
-     * @param view is the main view.
      * @param controller is the main controller.
      */
     public MenuControllerImpl(final MainController controller) {
         menuModel = new MenuManager();
         this.controller = controller;
         this.view = this.controller.getMainView();
+        this.prevState = GameState.NONE;
     }
 
     @Override
@@ -39,12 +39,12 @@ public final class MenuControllerImpl implements MenuController {
 
     @Override
     public List<MenuElement> getInGameMenuElements() {
-        return this.menuModel.getInGameMenu().getElem();
+        return this.menuModel.getInGameMenu();
     }
 
     @Override
     public List<MenuElement> getStartMenuElements() {
-        return this.menuModel.getStartMenu().getElem();
+        return this.menuModel.getStartMenu();
     }
 
     @Override

@@ -26,41 +26,41 @@ public final class InventoryItemFactoryImpl implements InventoryItemFactory {
      */
     public InventoryItemFactoryImpl() {
         this.itemCreator.put(InventoryItemType.SWORD, 
-        () -> new EquippableItem("Spada", "Spada affilata, perfetta per attacchi rapidi e precisi", 
+        () -> new EquippableItem("Spada affilata, perfetta per attacchi rapidi e precisi", 
         InventoryItemType.SWORD, ItemAttributes.SWORD_INTENSITY, ItemAttributes.SWORD_DURABILITY));
         this.itemCreator.put(InventoryItemType.BOW, 
-        () -> new EquippableItem("Arco", "Arco leggero e preciso, ideale per attacchi a lunga distanza", 
+        () -> new EquippableItem("Arco leggero e preciso, ideale per attacchi a lunga distanza", 
         InventoryItemType.BOW, ItemAttributes.BOW_INTENSITY, ItemAttributes.BOW_DURABILITY));
         this.itemCreator.put(InventoryItemType.DAGGER, 
-        () -> new EquippableItem("Pugnale", "Un'arma leggera e affilata, perfetta per attacchi rapidi e furtivi", 
+        () -> new EquippableItem("Un'arma leggera e affilata, perfetta per attacchi rapidi e furtivi", 
         InventoryItemType.DAGGER, ItemAttributes.DAGGER_INTENSITY, ItemAttributes.DAGGER_DURABILITY));
         this.itemCreator.put(InventoryItemType.HAMMER, 
-        () -> new EquippableItem("Martello", "Un'arma pesante e devastante, progettata per infliggere danni enormi", 
+        () -> new EquippableItem("Un'arma pesante e devastante, progettata per infliggere danni enormi", 
         InventoryItemType.HAMMER, ItemAttributes.HAMMER_INTENSITY, ItemAttributes.HAMMER_DURABILITY));
         this.itemCreator.put(InventoryItemType.SHIELD, 
-        () -> new EquippableItem("Scudo", "Uno scudo robusto e affidabile, capace di bloccare colpi potenti", 
+        () -> new EquippableItem("Uno scudo robusto e affidabile, capace di bloccare colpi potenti", 
         InventoryItemType.SHIELD, ItemAttributes.SHIELD_INTENSITY, ItemAttributes.SHIELD_DURABILITY));
         this.itemCreator.put(InventoryItemType.BASICARMOR, 
-        () -> new EquippableItem("Armatura semplice", "Un'armatura leggera che offre protezione di base", 
+        () -> new EquippableItem("Un'armatura leggera che offre protezione di base", 
         InventoryItemType.BASICARMOR, ItemAttributes.BASICARMOR_INTENSITY, ItemAttributes.BASICARMOR_DURABILITY));
         this.itemCreator.put(InventoryItemType.POTION, 
-        () -> new InventoryItemImpl("Pozione", "Un liquido rosso che ripristina rapidamente la salute", 
+        () -> new InventoryItemImpl("Un liquido rosso che ripristina rapidamente la salute", 
         InventoryItemType.POTION, ItemAttributes.POTION_INTENSITY));
         this.itemCreator.put(InventoryItemType.APPLE, 
-        () -> new InventoryItemImpl("Mela", "Una mela fresca e succosa, perfetta per recuperare un po' di energia", 
+        () -> new InventoryItemImpl("Una mela fresca e succosa, perfetta per recuperare un po' di energia", 
         InventoryItemType.APPLE, ItemAttributes.APPLE_INTENSITY));
         this.itemCreator.put(InventoryItemType.AMULET, 
-        () -> new InventoryItemImpl("Amuleto", "Un ciondolo antico e luminoso che emana un'aura di guarigione", 
+        () -> new InventoryItemImpl("Un ciondolo antico e luminoso che emana un'aura di guarigione", 
         InventoryItemType.AMULET, ItemAttributes.AMULET_INTENSITY));
         this.itemCreator.put(InventoryItemType.COIN, 
-        () -> new InventoryItemImpl("Moneta", "Una moneta luccicante", 
-        InventoryItemType.COIN, ItemAttributes.COIN_INTENSITY));
+        () -> new InventoryItemImpl("Una moneta luccicante", 
+        InventoryItemType.COIN, ItemAttributes.COLLECTABLE_INTENSITY));
         this.itemCreator.put(InventoryItemType.GEMSTONE, 
-        () -> new InventoryItemImpl("Pietra preziosa", "Una gemma scintillante di rara bellezza", 
-        InventoryItemType.GEMSTONE, ItemAttributes.GEMSTONE_INTENSITY));
+        () -> new InventoryItemImpl("Una gemma scintillante di rara bellezza", 
+        InventoryItemType.GEMSTONE, ItemAttributes.COLLECTABLE_INTENSITY));
         this.itemCreator.put(InventoryItemType.KEY,
-        () -> new InventoryItemImpl("Chiave", "Chiave antica per aprire un passaggio", 
-        InventoryItemType.KEY, ItemAttributes.KEY_INTENSITY));
+        () -> new InventoryItemImpl("Chiave antica per aprire un passaggio", 
+        InventoryItemType.KEY, ItemAttributes.COLLECTABLE_INTENSITY));
     }
 
     @Override

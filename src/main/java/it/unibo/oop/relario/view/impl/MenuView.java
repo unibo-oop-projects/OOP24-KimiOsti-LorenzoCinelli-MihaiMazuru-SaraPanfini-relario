@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.GameState;
+import it.unibo.oop.relario.utils.impl.ImageLocators;
 import it.unibo.oop.relario.view.api.MainView;
 
 /**
@@ -29,14 +31,14 @@ public final class MenuView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final int INSETS = 3;
-    private static final String GAME_NAME  = "RELARIO";
+    private static final double RATIO = 0.5;
+    private static final String LOGO = "logo/logo";
     private static final float FONT_SIZE = 28f;
     private final transient MainView view;
     private final transient MainController controller;
 
     /**
      * Initializes a new menu view.
-     * @param view is the main view that contains all the game panels.
      * @param elements are the menu elements that need to be added to the view.
      * @param controller is the main controller.
      */
@@ -50,12 +52,13 @@ public final class MenuView extends JPanel {
         gridc.fill = GridBagConstraints.CENTER;
 
         if (this.view.getCurrentPanel().equals(GameState.MENU)) {
-            final JLabel title = new JLabel(GAME_NAME);
+            final ImageIcon image = ImageLocators.getFixedSizeImage(LOGO, Constants.IMAGE_EXTENSION, RATIO, RATIO);
+            final JLabel title = new JLabel(image);
             title.setFont(Constants.FONT.deriveFont(FONT_SIZE));
             this.add(title, gridc);
         }
         gridc.gridy++;
-        gridc.fill = GridBagConstraints.BOTH;
+        gridc.fill = GridBagConstraints.CENTER;
 
         for (final var elem: elements) {
             this.add(createButton(elem), gridc);

@@ -10,49 +10,59 @@ import it.unibo.oop.relario.model.GameEntityType;
 public enum InventoryItemType implements GameEntityType {
 
     /** A sword with damage effect. */
-    SWORD(EffectType.DAMAGE),
+    SWORD("Spada", EffectType.DAMAGE),
 
     /** A bow with damage effect. */
-    BOW(EffectType.DAMAGE),
+    BOW("Arco", EffectType.DAMAGE),
 
     /** A dagger with damage effect. */
-    DAGGER(EffectType.DAMAGE),
+    DAGGER("Pugnale", EffectType.DAMAGE),
 
     /** A hammer with damage effect. */
-    HAMMER(EffectType.DAMAGE),
+    HAMMER("Martello", EffectType.DAMAGE),
 
     /** A shield with protection effect. */
-    SHIELD(EffectType.PROTECTION),
+    SHIELD("Scudo", EffectType.PROTECTION),
 
     /** A basic armor with protection effect. */
-    BASICARMOR(EffectType.PROTECTION),
+    BASICARMOR("Armatura semplice", EffectType.PROTECTION),
 
     /** A potion with healing effect. */
-    POTION(EffectType.HEALING),
+    POTION("Pozione", EffectType.HEALING),
 
     /** An apple with healing effect. */
-    APPLE(EffectType.HEALING),
+    APPLE("Mela", EffectType.HEALING),
 
     /** An amulet with healing effect. */
-    AMULET(EffectType.HEALING),
+    AMULET("Amuleto", EffectType.HEALING),
 
     /** A coin with no effect. */
-    COIN(EffectType.NONE),
+    COIN("Moneta", EffectType.NONE),
 
     /** A gemstone with no effect. */
-    GEMSTONE(EffectType.NONE),
+    GEMSTONE("Pietra preziosa", EffectType.NONE),
 
     /** A key that allows to pass a quest. */
-    KEY(EffectType.QUEST);
+    KEY("Chiave", EffectType.QUEST);
 
+    private final String name;
     private final EffectType effect;
 
     /**
      * Constructor for initializing the inventory item type with the corresponding effect.
      * @param effect of the item
      */
-    InventoryItemType(final EffectType effect) {
+    InventoryItemType(final String name, final EffectType effect) {
+        this.name = name;
         this.effect = effect;
+    }
+
+    /**
+     * Retrieves the name of the inventory item.
+     * @return the name of the item
+     */
+    public String getName() {
+        return this.name;
     }
 
     /**

@@ -10,14 +10,14 @@ import javax.swing.JLabel;
  */
 public class ForegroundTile extends JLabel {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates new ForegroundTile.
      * @param scaledInstance
      */
-    public ForegroundTile(Image scaledInstance) {
+    public ForegroundTile(final Image scaledInstance) {
         super(new ImageIcon(scaledInstance));
     }
-
-    private static final long serialVersionUID = 1L;
 
 }

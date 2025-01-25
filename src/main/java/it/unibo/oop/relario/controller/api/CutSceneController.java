@@ -18,7 +18,7 @@ public interface CutSceneController {
      * @param nextState is the next state of the game.
      */
     void progressGame(GameState nextState);
-    
+
     /**
      * Calls the next controller based on the next state.
      * @param nextState is the next state of the game.

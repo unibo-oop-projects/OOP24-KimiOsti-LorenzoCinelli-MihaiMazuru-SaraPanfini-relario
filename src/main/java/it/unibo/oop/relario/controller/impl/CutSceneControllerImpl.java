@@ -17,7 +17,6 @@ public final class CutSceneControllerImpl implements CutSceneController {
     /**
      * Initializes the cut scene controller.
      * @param controller the main controller of the game.
-     * @param view the main view of the game.
      */
     public CutSceneControllerImpl(final MainController controller) {
         this.controller = controller;
@@ -45,7 +44,7 @@ public final class CutSceneControllerImpl implements CutSceneController {
             default -> { }
         }
     }
-    
+
     @Override
     public void progressView(final GameState nextState) {
         switch (nextState) {

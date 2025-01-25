@@ -6,7 +6,7 @@ import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.map.Room;
 
 /**
- * 
+ * Implementation for a room's quest.
  */
 public final class QuestImpl implements Quest {
 
@@ -15,10 +15,10 @@ public final class QuestImpl implements Quest {
     private final Room room;
 
     /**
-     * 
-     * @param name
-     * @param description
-     * @param objective
+     * Instantiates the room's quest.
+     * @param description a description of the quest.
+     * @param room the room in which the quest has to be achieved.s
+     * @param objective the objective to be satisfied.
      */
     public QuestImpl(final String description, final Room room, final ObjectiveStrategy objective) {
         this.description = description;

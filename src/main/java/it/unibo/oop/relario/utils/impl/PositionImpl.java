@@ -9,8 +9,9 @@ import it.unibo.oop.relario.utils.api.Position;
  */
 public final class PositionImpl implements Position {
 
-    private int x;
-    private int y;
+    private static final long serialVersionUID = 1L;
+
+    private Pair<Integer, Integer> position;
 
     /**
      * Creates a position, given a pair of coordinates.
@@ -18,44 +19,38 @@ public final class PositionImpl implements Position {
      * @param y the initial y coordinate.
      */
     public PositionImpl(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+        this.position = new Pair<>(x, y);
     }
 
     @Override
     public int getX() {
-        return this.x;
+        return this.position.getX();
     }
 
     @Override
     public int getY() {
-        return this.y;
+        return this.position.getY();
     }
 
     @Override
     public void setX(final int newX) {
-        this.x = newX;
+        this.position = new Pair<>(newX, this.position.getY());
     }
 
     @Override
     public void setY(final int newY) {
-        this.y = newY;
+        this.position = new Pair<>(this.position.getX(), newY);
     }
 
     @Override
     public boolean equals(final Object pos) {
-        if (this == pos) {
-            return true;
-        }
-        if (pos == null || getClass() != pos.getClass()) {
-            return false;
-        }
-        final Position p = (Position) pos;
-        return Objects.equals(this.getX(), p.getX()) && Objects.equals(this.getY(), p.getY());
+        return pos instanceof Position
+            && ((Position) pos).getX() == this.position.getX()
+            && ((Position) pos).getY() == this.position.getY();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(this.position.getX(), this.position.getY());
     }
 }

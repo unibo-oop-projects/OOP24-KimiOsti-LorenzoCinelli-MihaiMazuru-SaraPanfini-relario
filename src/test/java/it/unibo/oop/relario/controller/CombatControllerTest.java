@@ -3,6 +3,8 @@ package it.unibo.oop.relario.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 
 import it.unibo.oop.relario.controller.api.CombatController;
@@ -48,15 +50,15 @@ class CombatControllerTest {
         final CombatController controller = new CombatControllerImpl(mainController);
         final MainCharacter chara = new MainCharacterImpl();
         final Enemy hostileEnemy = new EnemyImpl(EnemyType.SOLDIER.getName(), 
-        "Sono un soldato", pos, DifficultyLevel.EASY, item, false, EnemyType.SOLDIER);
+        "Sono un soldato", pos, DifficultyLevel.EASY, Optional.of(item), false, EnemyType.SOLDIER);
         final Enemy mercifulEnemy = new EnemyImpl(EnemyType.WIZARD.getName(), 
-        "Sono un mago", pos, DifficultyLevel.HARD, item, true, EnemyType.WIZARD);
+        "Sono un mago", pos, DifficultyLevel.HARD, Optional.of(item), true, EnemyType.WIZARD);
 
         mainController.moveToNextRoom();
 
         assertEquals(controller.getCombatState(), "");
         controller.initializeCombat(chara, hostileEnemy);
-        assertEquals(view.getCurrentPanel(), GameState.COMBAT);
+        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.COMBAT);
         assertEquals(controller.getDifficultyLevel(), hostileEnemy.getDifficulty());
         assertEquals(controller.getEnemyLife(), hostileEnemy.getLife());
         assertEquals(controller.getEnemyName(), hostileEnemy.getName());
@@ -77,8 +79,8 @@ class CombatControllerTest {
 
         controller.initializeCombat(chara, mercifulEnemy);
         controller.handleAction(CombatAction.MERCY);
-        assertEquals(controller.getCombatState(), controller.getEnemyName() + 
-            " accepted your mercy request." + " You are free to go.");
+        assertEquals(controller.getCombatState(), controller.getEnemyName()
+            + " accepted your mercy request." + " You are free to go.");
 
         final int initMerciLife = mercifulEnemy.getLife();
         controller.initializeCombat(chara, mercifulEnemy);
@@ -90,6 +92,6 @@ class CombatControllerTest {
         assertEquals(mercifulEnemy.getLife(), 10);
 
         controller.handleAction(CombatAction.OPEN_INVENTORY);
-        assertEquals(view.getCurrentPanel(), GameState.INVENTORY);
+        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.INVENTORY);
     }
 }

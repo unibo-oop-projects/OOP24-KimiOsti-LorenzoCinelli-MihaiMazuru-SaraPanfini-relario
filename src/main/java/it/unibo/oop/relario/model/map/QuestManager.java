@@ -13,9 +13,8 @@ import it.unibo.oop.relario.model.quest.QuestType;
 import it.unibo.oop.relario.utils.impl.Pair;
 
 /**
- * 
+ * Implementation for the quest manager.
  */
-
 public class QuestManager {
 
     /** Index of the first room. */
@@ -36,6 +35,9 @@ public class QuestManager {
     private final QuestFactory questFactory = new QuestFactoryImpl();
     private final Map<Integer, Pair<QuestType, Optional<GameEntityType>>> roomQuests = new HashMap<>();
 
+    /**
+     * Instantiates a quest manager.
+     */
     public QuestManager() {
         this.roomQuests.put(FIRST_ROOM, new Pair<>(QuestType.NO_QUEST, Optional.empty()));
         this.roomQuests.put(SECOND_ROOM, new Pair<>(QuestType.COLLECTION_QUEST, Optional.of(InventoryItemType.KEY)));
@@ -45,12 +47,12 @@ public class QuestManager {
     }
 
     /**
-     * 
-     * @param room
-     * @param indexRoom
+     * Assigns a quest to a given room.
+     * @param room the room to which the quest is assigned.
+     * @param indexRoom the room's index.
      */
     public void assignQuest(final Room room, final int indexRoom) {
-        Pair<QuestType, Optional<GameEntityType>> quest = this.roomQuests.get(indexRoom);
+        final Pair<QuestType, Optional<GameEntityType>> quest = this.roomQuests.get(indexRoom);
         room.setQuest(quest.getX().equals(QuestType.NO_QUEST) ? Optional.empty() 
         : Optional.of(this.questFactory.createQuestByType(room, quest.getX(), quest.getY())));
     }
