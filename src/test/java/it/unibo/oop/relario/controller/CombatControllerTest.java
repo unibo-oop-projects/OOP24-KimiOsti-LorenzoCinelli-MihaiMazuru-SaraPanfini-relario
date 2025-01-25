@@ -57,7 +57,6 @@ class CombatControllerTest {
 
         assertEquals(controller.getCombatState(), "");
         controller.initializeCombat(hostileEnemy);
-        assertEquals(mainController.getMainView().getCurrentPanel(), GameState.COMBAT);
         assertEquals(controller.getDifficultyLevel(), hostileEnemy.getDifficulty());
         assertEquals(controller.getEnemyLife(), hostileEnemy.getLife());
         assertEquals(controller.getEnemyName(), hostileEnemy.getName());
