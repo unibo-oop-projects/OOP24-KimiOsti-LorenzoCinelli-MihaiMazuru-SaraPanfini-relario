@@ -65,14 +65,22 @@ public final class InventoryImpl implements Inventory {
 
     @Override
     public boolean useItem(final InventoryItem item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'useItem'");
+        if (this.items.remove(item)) {
+            switch (item.getEffect()) {
+                case DAMAGE -> this.equipWeapon(item);
+                case PROTECTION -> this.equipArmor(item);
+                case HEALING -> this.healPlayer(item.getIntensity());
+                default -> { }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean discardItem(final InventoryItem item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'discardItem'");
+        return this.items.remove(item);
     }
 
     @Override
@@ -82,6 +90,26 @@ public final class InventoryImpl implements Inventory {
 
     private Optional<EquippableItem> getIfEquipped(final Optional<EquippableItem> item) {
         return item.isPresent() ? Optional.of(item.get()) : Optional.empty();
+    }
+
+    private void equipWeapon(final InventoryItem weapon) {
+        if (weapon instanceof EquippableItem) {
+            this.weapon.ifPresent(e -> this.addItem(e));
+            this.weapon = Optional.of((EquippableItem) weapon);
+        }
+    }
+
+    private void equipArmor(final InventoryItem armor) {
+        if (armor instanceof EquippableItem) {
+            this.armor.ifPresent(e -> this.addItem(e));
+            this.armor = Optional.of((EquippableItem) armor);
+        }
+    }
+
+    private void healPlayer(final int intensity) {
+        this.life = this.life + intensity > this.initialLife
+        ? this.initialLife
+        : this.life + intensity;
     }
 
 }
