@@ -37,16 +37,19 @@ public final class CutSceneControllerImpl implements CutSceneController {
     }
 
     @Override
-    public void progress(final GameState nextState) {
+    public void progressGame(final GameState nextState) {
         switch (nextState) {
-            case GAME -> {
-                this.controller.moveToNextRoom();
-                this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
-            }
-            case MENU -> {
-                this.controller.startNewGame();
-                this.controller.getMenuController().showMenu(GameState.MENU, GameState.NONE);
-            }
+            case GAME -> this.controller.moveToNextRoom();
+            case MENU -> this.controller.startNewGame();
+            default -> { }
+        }
+    }
+
+    @Override
+    public void progressView(final GameState nextState) {
+        switch (nextState) {
+            case GAME -> this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
+            case MENU -> this.controller.getMenuController().showMenu(GameState.MENU, GameState.NONE);
             default -> { }
         }
     }

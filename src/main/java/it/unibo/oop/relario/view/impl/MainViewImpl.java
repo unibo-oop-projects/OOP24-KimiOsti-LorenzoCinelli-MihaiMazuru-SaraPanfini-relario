@@ -21,7 +21,6 @@ public final class MainViewImpl implements MainView {
     private final JPanel mainPanel;
     private final MainController mainController;
     private final Map<GameState, JPanel> panels = new EnumMap<>(GameState.class);
-    private GameState currentPanel;
 
     /**
      * Inizializes the frame of the main view.
@@ -32,17 +31,16 @@ public final class MainViewImpl implements MainView {
         this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
         this.frameSetup();
-        this.currentPanel = GameState.MENU;
         this.frame.add(mainPanel);
         this.frame.setVisible(true);
     }
 
     @Override
     public void panelsSetup() {
-        final JPanel startMenuView = new MenuView(
-        this.mainController.getMenuController().getStartMenuElements(), this.mainController);
-        final JPanel inGameMenuView = new MenuView(
-        this.mainController.getMenuController().getInGameMenuElements(), this.mainController);
+        final JPanel startMenuView = new MenuView(this.mainController, 
+            this.mainController.getMenuController().getStartMenuElements());
+        final JPanel inGameMenuView = new MenuView(this.mainController,
+            this.mainController.getMenuController().getInGameMenuElements());
         final JPanel gameView = new GameView(this.mainController);
         final JPanel inventoryView = new InventoryViewImpl(this.mainController);
         final JPanel combatView = new CombatView(this.mainController.getCombatController());
@@ -61,20 +59,13 @@ public final class MainViewImpl implements MainView {
     @Override
     public void showPanel(final GameState panelName) {
         final CardLayout layout = (CardLayout) this.mainPanel.getLayout();
-        this.currentPanel = panelName;
-        layout.show(mainPanel, this.currentPanel.getState());
-
-        this.getPanel(this.currentPanel).requestFocus();
-    } 
+        layout.show(mainPanel, panelName.getState());
+        this.getPanel(panelName).requestFocus();
+    }
 
     @Override
     public JPanel getPanel(final GameState name) {
         return panels.get(name);
-    }
-
-    @Override
-    public GameState getCurrentPanel() {
-        return this.currentPanel;
     }
 
     private void frameSetup() {
