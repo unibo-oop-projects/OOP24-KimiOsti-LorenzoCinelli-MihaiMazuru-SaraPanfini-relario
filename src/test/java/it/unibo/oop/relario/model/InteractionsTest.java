@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
@@ -38,7 +38,12 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  * Test class for the {@link Interactions} class.
  */
 final class InteractionsTest {
+    private static final boolean MOVEMENT = true;
+    private static final boolean INTERACTION = false;
 
+    private final FurnitureFactory ff = new FurnitureFactoryImpl();
+    private final EnemyFactory ef = new EnemyFactoryImpl();
+    private final NpcFactory nf = new NpcFactoryImpl();
     private Dimension dim;
     private Map<Position, LivingBeing> entityMap;
     private Map<Position, Furniture> furnitureMap;
@@ -52,129 +57,13 @@ final class InteractionsTest {
      */
     @BeforeEach
     void setUp() {
-        dim  = new DimensionImpl(10, 15);
-        entityMap = new HashMap<>();
-        furnitureMap = new HashMap<>();
-        obstructingFurniture = new ArrayList<>();
-        interactiveFurniture = new ArrayList<>();
-        obstructingEntity = new ArrayList<>();
-        interactiveEntity = new ArrayList<>();
-        clearMap();
-    }
-
-    /**
-     * Sub-testing for the movement into the borders of the room.
-     */
-    @Disabled
-    void testBorderMovement() {
-        Position pos;
-        Direction dir;
-
-        for (int j = 0; j < dim.getHeight(); j++) {
-            for (int i = 0; i < dim.getWidth(); i++) {
-                pos = new PositionImpl(i, j);
-
-                dir = Direction.UP;
-                movementCheck(pos, dir);
-
-                dir = Direction.RIGHT;
-                movementCheck(pos, dir);
-
-                dir = Direction.LEFT;
-                movementCheck(pos, dir);
-
-                dir = Direction.DOWN;
-                movementCheck(pos, dir);
-            }
-        }
-    }
-
-    /**
-     * Sub-testing for the movement with furniture.
-     */
-    @Disabled
-    void testFurnitureMovement() {
-        furnitureSetup();
-
-        Position pos;
-        Direction dir;
-
-        for (int j = 0; j < dim.getHeight(); j++) {
-            for (int i = 0; i < dim.getWidth(); i++) {
-                pos = new PositionImpl(i, j);
-
-                dir = Direction.UP;
-                movementCheck(pos, dir);
-
-                dir = Direction.LEFT;
-                movementCheck(pos, dir);
-
-                dir = Direction.RIGHT;
-                movementCheck(pos, dir);
-
-                dir = Direction.DOWN;
-                movementCheck(pos, dir);
-            }
-        }
-    }
-
-    /**
-     * Sub-testing for the movement with entities.
-     */
-    @Disabled
-    void testEntityMovement() {
-        entitySetup();
-
-        Position pos;
-        Direction dir;
-
-        for (int j = 0; j < dim.getHeight(); j++) {
-            for (int i = 0; i < dim.getWidth(); i++) {
-                pos = new PositionImpl(i, j);
-
-                dir = Direction.UP;
-                movementCheck(pos, dir);
-
-                dir = Direction.LEFT;
-                movementCheck(pos, dir);
-
-                dir = Direction.RIGHT;
-                movementCheck(pos, dir);
-
-                dir = Direction.DOWN;
-                movementCheck(pos, dir);
-            }
-        }
-    }
-
-    /**
-     * Sub-testing for the general movement.
-     */
-    @Disabled
-    void testMovement() {
-        furnitureSetup();
-        entitySetup();
-
-        Position pos;
-        Direction dir;
-
-        for (int j = 0; j < dim.getHeight(); j++) {
-            for (int i = 0; i < dim.getWidth(); i++) {
-                pos = new PositionImpl(i, j);
-
-                dir = Direction.UP;
-                movementCheck(pos, dir);
-
-                dir = Direction.LEFT;
-                movementCheck(pos, dir);
-
-                dir = Direction.RIGHT;
-                movementCheck(pos, dir);
-
-                dir = Direction.DOWN;
-                movementCheck(pos, dir);
-            }
-        }
+        this.dim  = new DimensionImpl(10, 15);
+        this.entityMap = new HashMap<>();
+        this.furnitureMap = new HashMap<>();
+        this.obstructingFurniture = new ArrayList<>();
+        this.interactiveFurniture = new ArrayList<>();
+        this.obstructingEntity = new ArrayList<>();
+        this.interactiveEntity = new ArrayList<>();
     }
 
     /**
@@ -182,101 +71,23 @@ final class InteractionsTest {
      */
     @Test
     void testCanMove() {
-        testBorderMovement();
-        clearMap();
-        testFurnitureMovement();
-        clearMap();
-        testEntityMovement();
-        clearMap();
-        testMovement();
-    }
+        // test border movement
+        this.forEach(MOVEMENT);
 
-    /**
-     * Sub-testing for the interaction with furniture.
-     */
-    @Disabled
-    void testFurnitureInteraction() {
-        furnitureSetup();
+        // test movement with furniture
+        this.furnitureSetup();
+        this.forEach(MOVEMENT);
 
-        Position pos;
-        Direction dir;
+        // test movement with entities
+        this.clearMap();
+        this.entitySetup();
+        this.forEach(MOVEMENT);
 
-        for (int j = 0; j < dim.getHeight(); j++) {
-            for (int i = 0; i < dim.getWidth(); i++) {
-                pos = new PositionImpl(i, j);
-
-                dir = Direction.UP;
-                interactionCheck(pos, dir);
-
-                dir = Direction.LEFT;
-                interactionCheck(pos, dir);
-
-                dir = Direction.RIGHT;
-                interactionCheck(pos, dir);
-
-                dir = Direction.DOWN;
-                interactionCheck(pos, dir);
-            }
-        }
-    }
-
-    /**
-     * Sub-testing for the interaction with entities.
-     */
-    @Disabled
-    void testEntityInteraction() {
-        entitySetup();
-
-        Position pos;
-        Direction dir;
-
-        for (int j = 0; j < dim.getHeight(); j++) {
-            for (int i = 0; i < dim.getWidth(); i++) {
-                pos = new PositionImpl(i, j);
-
-                dir = Direction.UP;
-                interactionCheck(pos, dir);
-
-                dir = Direction.LEFT;
-                interactionCheck(pos, dir);
-
-                dir = Direction.RIGHT;
-                interactionCheck(pos, dir);
-
-                dir = Direction.DOWN;
-                interactionCheck(pos, dir);
-            }
-        }
-    }
-
-    /**
-     * Sub-testing for the general interaction.
-     */
-    @Disabled
-    void testInteraction() {
-        furnitureSetup();
-        entitySetup();
-
-        Position pos;
-        Direction dir;
-
-        for (int j = 0; j < dim.getHeight(); j++) {
-            for (int i = 0; i < dim.getWidth(); i++) {
-                pos = new PositionImpl(i, j);
-
-                dir = Direction.UP;
-                interactionCheck(pos, dir);
-
-                dir = Direction.LEFT;
-                interactionCheck(pos, dir);
-
-                dir = Direction.RIGHT;
-                interactionCheck(pos, dir);
-
-                dir = Direction.DOWN;
-                interactionCheck(pos, dir);
-            }
-        }
+        // test movement
+        this.clearMap();
+        this.furnitureSetup();
+        this.entitySetup();
+        this.forEach(MOVEMENT);
     }
 
     /**
@@ -284,219 +95,125 @@ final class InteractionsTest {
      */
     @Test
     void testCanInteract() {
-        testFurnitureInteraction();
-        clearMap();
-        testEntityInteraction();
-        clearMap();
-        testInteraction();
+        // test interactions with furniture
+        this.furnitureSetup();
+        this.forEach(INTERACTION);
+
+        // test interactions with entities
+        this.clearMap();
+        this.entitySetup();
+        this.forEach(INTERACTION);
+
+        // test interactions
+        this.clearMap();
+        this.furnitureSetup();
+        this.entitySetup();
+        this.forEach(INTERACTION);
     }
 
     private void furnitureSetup() {
-        final FurnitureFactory ff = new FurnitureFactoryImpl();
-        Position p;
-
         //armorstand
-        p = new PositionImpl(0, 0);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(4, 0);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(8, 0);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(9, 7);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(0, 8);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(3, 9);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(7, 9);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.ARMORSTAND));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
+        Set<Position> positions = Set.of(
+            new PositionImpl(0, 0),
+            new PositionImpl(4, 0),
+            new PositionImpl(8, 0),
+            new PositionImpl(9, 7),
+            new PositionImpl(0, 8),
+            new PositionImpl(3, 9),
+            new PositionImpl(7, 9)
+        );
+        for (final var p : positions) {
+            this.addInteractiveFurniture(p, FurnitureType.ARMORSTAND);
+        }
 
         //statue
-        p = new PositionImpl(2, 0);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
-        obstructingFurniture.add(p);
-        p = new PositionImpl(6, 0);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
-        obstructingFurniture.add(p);
-        p = new PositionImpl(9, 1);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
-        obstructingFurniture.add(p);
-        p = new PositionImpl(9, 9);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
-        obstructingFurniture.add(p);
-        p = new PositionImpl(5, 9);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
-        obstructingFurniture.add(p);
-        p = new PositionImpl(0, 2);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
-        obstructingFurniture.add(p);
-        p = new PositionImpl(0, 6);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.STATUE));
-        obstructingFurniture.add(p);
+        positions = Set.of(
+            new PositionImpl(2, 0),
+            new PositionImpl(6, 0),
+            new PositionImpl(9, 1),
+            new PositionImpl(9, 9),
+            new PositionImpl(5, 9),
+            new PositionImpl(0, 2),
+            new PositionImpl(0, 6)
+        );
+        for (final var p : positions) {
+            this.addObstructingFurniture(p, FurnitureType.STATUE);
+        }
 
         //vase
-        p = new PositionImpl(0, 3);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(0, 5);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(9, 3);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(9, 5);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.VASE));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
+        positions = Set.of(
+            new PositionImpl(0, 3),
+            new PositionImpl(0, 5),
+            new PositionImpl(9, 3),
+            new PositionImpl(9, 5)
+        );
+        for (final var p : positions) {
+            this.addInteractiveFurniture(p, FurnitureType.VASE);
+        }
 
         //carpet
-        p = new PositionImpl(2, 3);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(2, 4);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(2, 5);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-
-        p = new PositionImpl(3, 3);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(3, 4);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(3, 5);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-
-        p = new PositionImpl(4, 3);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(4, 4);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(4, 5);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-
-        p = new PositionImpl(5, 3);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(5, 4);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(5, 5);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-
-        p = new PositionImpl(6, 3);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(6, 4);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(6, 5);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-
-        p = new PositionImpl(7, 3);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(7, 4);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
-        p = new PositionImpl(7, 5);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.CARPET));
-        interactiveFurniture.add(p);
+        positions = Set.of(
+            new PositionImpl(2, 3), new PositionImpl(2, 4), new PositionImpl(2, 5),
+            new PositionImpl(3, 3), new PositionImpl(3, 4), new PositionImpl(3, 5),
+            new PositionImpl(4, 3), new PositionImpl(4, 4), new PositionImpl(4, 5),
+            new PositionImpl(5, 3), new PositionImpl(5, 4), new PositionImpl(5, 5),
+            new PositionImpl(6, 3), new PositionImpl(6, 4), new PositionImpl(6, 5),
+            new PositionImpl(7, 3), new PositionImpl(7, 4), new PositionImpl(7, 5)
+        );
+        for (final var p : positions) {
+            this.addWalkableFurniture(p, FurnitureType.CARPET);
+        }
 
         //chest
-        p = new PositionImpl(3, 1);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.CHEST));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
-        p = new PositionImpl(5, 1);
-        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, FurnitureType.CHEST));
-        obstructingFurniture.add(p);
-        interactiveFurniture.add(p);
+        positions = Set.of(
+            new PositionImpl(3, 1),
+            new PositionImpl(5, 1)
+        );
+        for (final var p : positions) {
+            this.addInteractiveFurniture(p, FurnitureType.CHEST);
+        }
 
         //wardrobe
-        p = new PositionImpl(3, 8);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.WARDROBE));
-        obstructingFurniture.add(p);
-        p = new PositionImpl(5, 8);
-        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, FurnitureType.WARDROBE));
-        obstructingFurniture.add(p);
+        positions = Set.of(
+            new PositionImpl(3, 8),
+            new PositionImpl(5, 8)
+        );
+        for (final var p : positions) {
+            this.addObstructingFurniture(p, FurnitureType.WARDROBE);
+        }
 
         //trapdor
-        p = new PositionImpl(4, 7);
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, FurnitureType.TRAPDOOR));
-        interactiveFurniture.add(p);
-
+        this.addWalkableFurniture(new PositionImpl(4, 7), FurnitureType.TRAPDOOR);
     }
 
     private void entitySetup() {
-        final EnemyFactory ef = new EnemyFactoryImpl();
-        final NpcFactory nf = new NpcFactoryImpl();
-        Position p;
-
         //non interactive npc
-        p = new PositionImpl(1, 1);
-        entityMap.put(p, nf.createDefaultNpc(p));
-        obstructingEntity.add(p);
-        interactiveEntity.add(p);
-        p = new PositionImpl(5, 3);
-        entityMap.put(p, nf.createDefaultNpc(p));
-        obstructingEntity.add(p);
-        interactiveEntity.add(p);
+        Set<Position> positions = Set.of(
+            new PositionImpl(1, 1),
+            new PositionImpl(5, 3)
+        );
+        for (final var p : positions) {
+            this.addNpc(p, false);
+        }
 
         //interactive npc
-        p = new PositionImpl(3, 4);
-        entityMap.put(p, nf.createInteractiveNpc(p));
-        obstructingEntity.add(p);
-        interactiveEntity.add(p);
-        p = new PositionImpl(0, 9);
-        entityMap.put(p, nf.createInteractiveNpc(p));
-        obstructingEntity.add(p);
-        interactiveEntity.add(p);
+        positions = Set.of(
+            new PositionImpl(3, 4),
+            new PositionImpl(0, 9)
+        );
+        for (final var p : positions) {
+            this.addNpc(p, true);
+        }
 
         //enemies
-        p = new PositionImpl(4, 2);
-        entityMap.put(p, ef.createEnemyByType(EnemyType.THIEF, p));
-        obstructingEntity.add(p);
-        interactiveEntity.add(p);
-        p = new PositionImpl(7, 2);
-        entityMap.put(p, ef.createEnemyByType(EnemyType.KNIGHT, p));
-        obstructingEntity.add(p);
-        interactiveEntity.add(p);
-        p = new PositionImpl(4, 8);
-        entityMap.put(p, ef.createEnemyByType(EnemyType.SOLDIER, p));
-        obstructingEntity.add(p);
-        interactiveEntity.add(p);
-        p = new PositionImpl(7, 7);
-        entityMap.put(p, ef.createEnemyByType(EnemyType.WIZARD, p));
-        obstructingEntity.add(p);
-        interactiveEntity.add(p);
+        this.addEnemy(new PositionImpl(4, 2), EnemyType.THIEF);
+        this.addEnemy(new PositionImpl(7, 2), EnemyType.KNIGHT);
+        this.addEnemy(new PositionImpl(4, 8), EnemyType.SOLDIER);
+        this.addEnemy(new PositionImpl(7, 7), EnemyType.WIZARD);
+        this.addEnemy(new PositionImpl(5, 5), EnemyType.BOSS);
 
         //character
-        p = new PositionImpl(0, 4);
+        final var p = new PositionImpl(0, 4);
         entityMap.put(p, new MainCharacterImpl());
         obstructingEntity.add(p);
         interactiveEntity.add(p);
@@ -511,8 +228,51 @@ final class InteractionsTest {
         interactiveEntity.clear();
     }
 
-    private void movementCheck(final Position pos, final Direction dir) {
-        final Position nextPos = dir.move(pos);
+    private void addInteractiveFurniture(final Position p, final FurnitureType type) {
+        furnitureMap.put(p, ff.createInteractiveFurnitureByItem(p, type));
+        obstructingFurniture.add(p);
+        interactiveFurniture.add(p);
+    }
+
+    private void addObstructingFurniture(final Position p, final FurnitureType type) {
+        furnitureMap.put(p, ff.createObstructingFurnitureByItem(p, type));
+        obstructingFurniture.add(p);
+    }
+
+    private void addWalkableFurniture(final Position p, final FurnitureType type) {
+        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, type));
+        interactiveFurniture.add(p);
+    }
+
+    private void addNpc(final Position p, final boolean interactive) {
+        entityMap.put(p, interactive ? nf.createInteractiveNpc(p) : nf.createDefaultNpc(p));
+        obstructingEntity.add(p);
+        interactiveEntity.add(p);
+    }
+
+    private void addEnemy(final Position p, final EnemyType type) {
+        entityMap.put(p, ef.createEnemyByType(type, p));
+        obstructingEntity.add(p);
+        interactiveEntity.add(p);
+    }
+
+    private void forEach(final boolean testType) {
+        for (int j = 0; j < dim.getHeight(); j++) {
+            for (int i = 0; i < dim.getWidth(); i++) {
+                final var pos = new PositionImpl(i, j);
+                for (final var dir : Direction.values()) {
+                    final Position nextPos = dir.move(pos);
+                    if (testType) {
+                        movementCheck(pos, dir, nextPos);
+                    } else {
+                        interactionCheck(pos, dir, nextPos);
+                    }
+                }
+            }
+        }
+    }
+
+    private void movementCheck(final Position pos, final Direction dir, final Position nextPos) {
         if (nextPos.getX() >= 0
         && nextPos.getX() < dim.getWidth()
         && nextPos.getY() >= 0
@@ -525,8 +285,7 @@ final class InteractionsTest {
         }
     }
 
-    private void interactionCheck(final Position pos, final Direction dir) {
-        final Position nextPos = dir.move(pos);
+    private void interactionCheck(final Position pos, final Direction dir, final Position nextPos) {
         if (interactiveEntity.contains(nextPos)
             || interactiveFurniture.contains(nextPos)) {
             assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
