@@ -1,6 +1,5 @@
 package it.unibo.oop.relario.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,7 +17,8 @@ import it.unibo.oop.relario.utils.impl.DimensionImpl;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
-import it.unibo.oop.relario.view.impl.GameView;
+
+/* TODO rewrite test to exploit actual room */
 
 /**
  * The test class for the game's interaction handler.
@@ -43,10 +43,7 @@ final class InteractionsHandlerTest {
         this.controller.getGameController().run(true);
 
         this.controller.getMainView().showPanel(GameState.GAME);
-        final var handler = new InteractionsHandlerImpl(
-            this.controller,
-            (GameView) this.controller.getMainView().getPanel(GameState.GAME)
-        );
+        final var handler = new InteractionsHandlerImpl(this.controller);
 
         final var room = new RoomImpl(
             new MainCharacterImpl(),
@@ -91,6 +88,6 @@ final class InteractionsHandlerTest {
         room.getPlayer().setPosition(new PositionImpl(3, 4));
         handler.handleInteraction(room);
         assertTrue(room.getPlayer().getItems().isEmpty());
-        assertEquals(GameState.COMBAT, this.controller.getMainView().getCurrentPanel());
+
     }
 }

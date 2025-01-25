@@ -17,7 +17,6 @@ import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
-import it.unibo.oop.relario.view.api.MainView;
 
 /*
  * CHECKSTYLE: MagicNumber OFF
@@ -33,7 +32,6 @@ final class InventoryControllerTest {
 
     private InventoryController inventoryController;
     private MainController mainController;
-    private MainView mainView;
 
     /**
      * Sets up the testing.
@@ -41,13 +39,10 @@ final class InventoryControllerTest {
     @BeforeEach
     void setUp() {
         this.mainController = new MainControllerImpl();
-        this.mainView = mainController.getMainView();
         this.inventoryController = mainController.getInventoryController();
         mainController.moveToNextRoom();
 
-        assertEquals(GameState.MENU, this.mainView.getCurrentPanel());
         mainController.getInventoryController().init(GameState.MENU);
-        assertEquals(GameState.INVENTORY, this.mainView.getCurrentPanel());
 
         final var player = mainController.getCurRoom().get().getPlayer();
         final InventoryItemFactory itemFactory = new InventoryItemFactoryImpl();
@@ -187,30 +182,4 @@ final class InventoryControllerTest {
         assertEquals("50", inventoryController.getLife());
     }
 
-
-    /**
-     * Tests the changing of states.
-     */
-    @Test
-    void testStates() {
-        assertEquals(GameState.INVENTORY, this.mainView.getCurrentPanel());
-        this.inventoryController.notify(Event.ESCAPE);
-        assertEquals(GameState.MENU_IN_GAME, this.mainView.getCurrentPanel());
-
-        this.mainController.getMenuController().notify(Event.ESCAPE);
-        assertEquals(GameState.INVENTORY, this.mainView.getCurrentPanel());
-
-        this.inventoryController.notify(Event.INVENTORY);
-        assertEquals(GameState.INVENTORY, this.mainView.getCurrentPanel());
-
-        this.inventoryController.init(GameState.GAME);
-        assertEquals(GameState.INVENTORY, this.mainView.getCurrentPanel());
-        this.inventoryController.notify(Event.INVENTORY);
-        assertEquals(GameState.GAME, this.mainView.getCurrentPanel());
-
-        this.inventoryController.init(GameState.COMBAT);
-        assertEquals(GameState.INVENTORY, this.mainView.getCurrentPanel());
-        this.inventoryController.notify(Event.INVENTORY);
-        assertEquals(GameState.COMBAT, this.mainView.getCurrentPanel());
-    }
 }

@@ -17,16 +17,13 @@ import it.unibo.oop.relario.view.impl.GameView;
 public final class InteractionsHandlerImpl implements InteractionsHandler {
 
     private final MainController controller;
-    private final GameView view;
 
     /**
      * Constructor for the game's interaction handler.
      * @param controller the controller for return calls.
-     * @param view the game view's access point to display the interaction's effects.
      */
-    public InteractionsHandlerImpl(final MainController controller, final GameView view) {
+    public InteractionsHandlerImpl(final MainController controller) {
         this.controller = controller;
-        this.view = view;
     }
 
     @Override
@@ -41,7 +38,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
             )
         ) {
             if (curRoom.getPlayer().getPosition().get().equals(curRoom.getExit())
-                && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted())
+                && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted(curRoom))
             ) {
                 this.controller.getCutSceneController().show(GameState.GAME);
             } else {
@@ -79,7 +76,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void startEnemyCombat(final Enemy enemy, final Room curRoom) {
-        this.controller.getCombatController().initializeCombat(curRoom.getPlayer(), enemy);
+        this.controller.getCombatController().initializeCombat(enemy);
     }
 
     private void interactWithFurniture(final InteractiveFurniture furniture, final Room curRoom) {
@@ -96,7 +93,10 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void showOutputText(final String text) {
-        this.view.showInteractionText(text);
+        final var gameView = this.controller.getMainView().getPanel(GameState.GAME);
+        if (gameView instanceof GameView) {
+            ((GameView) gameView).showInteractionText(text);
+        }
     }
 
     private void resumeGame() {

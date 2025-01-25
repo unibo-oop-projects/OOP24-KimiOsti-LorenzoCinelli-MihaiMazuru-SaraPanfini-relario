@@ -18,20 +18,15 @@ public interface Quest {
 
     /**
      * Checks if the quest is completed.
+     * @param room the room hosting the quest.
      * @return a boolean representing if the quest is completed.
      */
-    boolean isCompleted();
+    boolean isCompleted(Room room);
 
     /**
      * Getter for the type of the entity concerned by the quest.
      * @return the type of the entity concerned by the quest.
      */
     Optional<? extends GameEntityType> getKeyEntityType();
-
-    /**
-     * Getter for the room in which the quest is located.
-     * @return the room where the quest is located.
-     */
-    Room getRoom();
 
 }

@@ -75,32 +75,16 @@ final class InteractionsTest {
                 pos = new PositionImpl(i, j);
 
                 dir = Direction.UP;
-                if (pos.getY() > 0) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.RIGHT;
-                if (pos.getX() < dim.getWidth() - 1) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.LEFT;
-                if (pos.getX() > 0) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.DOWN;
-                if (pos.getY() < dim.getHeight() - 1) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
             }
         }
     }
@@ -114,59 +98,22 @@ final class InteractionsTest {
 
         Position pos;
         Direction dir;
-        Position nextPos;
 
         for (int j = 0; j < dim.getHeight(); j++) {
             for (int i = 0; i < dim.getWidth(); i++) {
                 pos = new PositionImpl(i, j);
 
                 dir = Direction.UP;
-                nextPos = dir.move(pos);
-                if (!obstructingFurniture.contains(nextPos)
-                && nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.LEFT;
-                nextPos = dir.move(pos);
-                if (!obstructingFurniture.contains(nextPos)
-                && nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.RIGHT;
-                nextPos = dir.move(pos);
-                if (!obstructingFurniture.contains(nextPos)
-                && nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.DOWN;
-                nextPos = dir.move(pos);
-                if (!obstructingFurniture.contains(nextPos)
-                && nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
             }
         }
     }
@@ -180,59 +127,22 @@ final class InteractionsTest {
 
         Position pos;
         Direction dir;
-        Position nextPos;
 
         for (int j = 0; j < dim.getHeight(); j++) {
             for (int i = 0; i < dim.getWidth(); i++) {
                 pos = new PositionImpl(i, j);
 
                 dir = Direction.UP;
-                nextPos = dir.move(pos);
-                if (!obstructingEntity.contains(nextPos)
-                && nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.LEFT;
-                nextPos = dir.move(pos);
-                if (!obstructingEntity.contains(nextPos)
-                && nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.RIGHT;
-                nextPos = dir.move(pos);
-                if (!obstructingEntity.contains(nextPos)
-                && nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.DOWN;
-                nextPos = dir.move(pos);
-                if (!obstructingEntity.contains(nextPos)
-                && nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
             }
         }
     }
@@ -247,63 +157,22 @@ final class InteractionsTest {
 
         Position pos;
         Direction dir;
-        Position nextPos;
 
         for (int j = 0; j < dim.getHeight(); j++) {
             for (int i = 0; i < dim.getWidth(); i++) {
                 pos = new PositionImpl(i, j);
 
                 dir = Direction.UP;
-                nextPos = dir.move(pos);
-                if (nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()
-                && !obstructingFurniture.contains(nextPos)
-                && !obstructingEntity.contains(nextPos)) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.LEFT;
-                nextPos = dir.move(pos);
-                if (nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()
-                && !obstructingFurniture.contains(nextPos)
-                && !obstructingEntity.contains(nextPos)) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.RIGHT;
-                nextPos = dir.move(pos);
-                if (nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()
-                && !obstructingFurniture.contains(nextPos)
-                && !obstructingEntity.contains(nextPos)) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
 
                 dir = Direction.DOWN;
-                nextPos = dir.move(pos);
-                if (nextPos.getX() >= 0
-                && nextPos.getX() < dim.getWidth()
-                && nextPos.getY() >= 0
-                && nextPos.getY() < dim.getHeight()
-                && !obstructingFurniture.contains(nextPos)
-                && !obstructingEntity.contains(nextPos)) {
-                    assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
-                }
+                movementCheck(pos, dir);
             }
         }
     }
@@ -331,43 +200,22 @@ final class InteractionsTest {
 
         Position pos;
         Direction dir;
-        Position nextPos;
 
         for (int j = 0; j < dim.getHeight(); j++) {
             for (int i = 0; i < dim.getWidth(); i++) {
                 pos = new PositionImpl(i, j);
 
                 dir = Direction.UP;
-                nextPos = dir.move(pos);
-                if (interactiveFurniture.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.LEFT;
-                nextPos = dir.move(pos);
-                if (interactiveFurniture.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.RIGHT;
-                nextPos = dir.move(pos);
-                if (interactiveFurniture.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.DOWN;
-                nextPos = dir.move(pos);
-                if (interactiveFurniture.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
             }
         }
     }
@@ -381,43 +229,22 @@ final class InteractionsTest {
 
         Position pos;
         Direction dir;
-        Position nextPos;
 
         for (int j = 0; j < dim.getHeight(); j++) {
             for (int i = 0; i < dim.getWidth(); i++) {
                 pos = new PositionImpl(i, j);
 
                 dir = Direction.UP;
-                nextPos = dir.move(pos);
-                if (interactiveEntity.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.LEFT;
-                nextPos = dir.move(pos);
-                if (interactiveEntity.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.RIGHT;
-                nextPos = dir.move(pos);
-                if (interactiveEntity.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.DOWN;
-                nextPos = dir.move(pos);
-                if (interactiveEntity.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
             }
         }
     }
@@ -432,47 +259,22 @@ final class InteractionsTest {
 
         Position pos;
         Direction dir;
-        Position nextPos;
 
         for (int j = 0; j < dim.getHeight(); j++) {
             for (int i = 0; i < dim.getWidth(); i++) {
                 pos = new PositionImpl(i, j);
 
                 dir = Direction.UP;
-                nextPos = dir.move(pos);
-                if (interactiveEntity.contains(nextPos)
-                    || interactiveFurniture.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.LEFT;
-                nextPos = dir.move(pos);
-                if (interactiveEntity.contains(nextPos)
-                    || interactiveFurniture.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.RIGHT;
-                nextPos = dir.move(pos);
-                if (interactiveEntity.contains(nextPos)
-                    || interactiveFurniture.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
 
                 dir = Direction.DOWN;
-                nextPos = dir.move(pos);
-                if (interactiveEntity.contains(nextPos)
-                    || interactiveFurniture.contains(nextPos)) {
-                    assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                } else {
-                    assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
-                }
+                interactionCheck(pos, dir);
             }
         }
     }
@@ -709,4 +511,27 @@ final class InteractionsTest {
         interactiveEntity.clear();
     }
 
+    private void movementCheck(final Position pos, final Direction dir) {
+        final Position nextPos = dir.move(pos);
+        if (nextPos.getX() >= 0
+        && nextPos.getX() < dim.getWidth()
+        && nextPos.getY() >= 0
+        && nextPos.getY() < dim.getHeight()
+        && !obstructingFurniture.contains(nextPos)
+        && !obstructingEntity.contains(nextPos)) {
+            assertTrue(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
+        } else {
+            assertFalse(Interactions.canMove(pos, dir, dim, entityMap, furnitureMap));
+        }
+    }
+
+    private void interactionCheck(final Position pos, final Direction dir) {
+        final Position nextPos = dir.move(pos);
+        if (interactiveEntity.contains(nextPos)
+            || interactiveFurniture.contains(nextPos)) {
+            assertTrue(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+        } else {
+            assertFalse(Interactions.canInteract(pos, dir, entityMap, furnitureMap));
+        }
+    }
 }

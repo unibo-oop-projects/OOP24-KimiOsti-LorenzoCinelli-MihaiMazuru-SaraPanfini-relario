@@ -34,16 +34,6 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
     private static final String ARMOR = "Armatura: ";
     private static final String WEAPON = "Arma: ";
 
-    private final InventoryController inventory;
-
-    /**
-     * Creates an inventory view factory to populate the inventory view. 
-     * @param inventory is the main controller of the game.
-     */
-    public InventoryViewFactoryImpl(final InventoryController inventory) {
-        this.inventory = inventory;
-    }
-
     @Override
     public JPanel createCommandPanel() {
         final var panel = new JPanel();
@@ -57,13 +47,13 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
     }
 
     @Override
-    public JPanel createContentPanel() {
+    public JPanel createContentPanel(final InventoryController inventory) {
         final var panel = new JPanel(new BorderLayout());
         panel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
-        panel.add(createTitlePanel(), BorderLayout.NORTH);
-        panel.add(createListPanel(), BorderLayout.WEST);
-        panel.add(createDescriptionPanel(), BorderLayout.CENTER);
-        panel.add(createEquippedPanel(), BorderLayout.EAST);
+        panel.add(createTitlePanel(inventory), BorderLayout.NORTH);
+        panel.add(createListPanel(inventory), BorderLayout.WEST);
+        panel.add(createDescriptionPanel(inventory), BorderLayout.CENTER);
+        panel.add(createEquippedPanel(inventory), BorderLayout.EAST);
         return panel;
     }
 
@@ -91,9 +81,9 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         return area;
     }
 
-    private JPanel createTitlePanel() {
+    private JPanel createTitlePanel(final InventoryController inventory) {
         final var panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        final var label = new JLabel(TITLE + this.inventory.getLife());
+        final var label = new JLabel(TITLE + inventory.getLife());
         label.setForeground(Constants.TEXT_SCENE_COLOR);
         label.setFont(Constants.FONT);
         panel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
@@ -101,9 +91,9 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         return panel;
     }
 
-    private JPanel createListPanel() {
+    private JPanel createListPanel(final InventoryController inventory) {
         final var panel = createContentSubpanel(ITEM_LIST);
-        final var list = this.inventory.getItemsNames();
+        final var list = inventory.getItemsNames();
         final var radioButtons = new JRadioButton[list.size()];
         final var buttonGroup = new ButtonGroup();
 
@@ -131,10 +121,10 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         return panel;
     }
 
-    private JPanel createDescriptionPanel() {
+    private JPanel createDescriptionPanel(final InventoryController inventory) {
         final var subpanel = new JPanel();
         final var panel = createContentSubpanel(ITEM_DESCRIPTION);
-        final var description = this.inventory.getItemFullDescription();
+        final var description = inventory.getItemFullDescription();
         subpanel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.Y_AXIS));
         subpanel.add(this.addTextArea(description));
@@ -142,10 +132,10 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
         return panel;
     }
 
-    private JPanel createEquippedPanel() {
+    private JPanel createEquippedPanel(final InventoryController inventory) {
         final var panel = createContentSubpanel(EQUIPPED_ITEMS);
-        final var armor = ARMOR + this.inventory.getEquippedArmor();
-        final var weapon = WEAPON + this.inventory.getEquippedWeapon();
+        final var armor = ARMOR + inventory.getEquippedArmor();
+        final var weapon = WEAPON + inventory.getEquippedWeapon();
         final var subpanel = new JPanel();
         subpanel.setBackground(Constants.BACKGROUND_SCENE_COLOR);
         subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.Y_AXIS));

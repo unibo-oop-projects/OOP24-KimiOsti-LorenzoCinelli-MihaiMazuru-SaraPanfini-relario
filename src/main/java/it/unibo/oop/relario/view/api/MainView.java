@@ -26,10 +26,4 @@ public interface MainView {
      */
     JPanel getPanel(GameState name);
 
-    /**
-     * Retrieves the current panel.
-     * @return the current panel.
-     */
-    GameState getCurrentPanel();
-
 }

@@ -22,7 +22,7 @@ public final class MainControllerImpl implements MainController {
     private final CombatController combat;
     private final GameController game;
     private final InventoryController inventory;
-    private final MenuController mainMenu;
+    private final MenuController menu;
     private final CutSceneController cutScene;
     private final MainView view;
     private RoomGenerator roomGenerator;
@@ -38,10 +38,10 @@ public final class MainControllerImpl implements MainController {
         this.combat = new CombatControllerImpl(this);
         this.game = new GameControllerImpl(this);
         this.inventory = new InventoryControllerImpl(this);
-        this.mainMenu = new MenuControllerImpl(this);
+        this.menu = new MenuControllerImpl(this);
         this.cutScene = new CutSceneControllerImpl(this);
         this.view.panelsSetup();
-        this.view.showPanel(GameState.MENU);
+        this.menu.showMenu(GameState.MENU, GameState.NONE);
     }
 
     @Override
@@ -73,7 +73,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public MenuController getMenuController() {
-        return this.mainMenu;
+        return this.menu;
     }
 
     @Override
@@ -91,4 +91,5 @@ public final class MainControllerImpl implements MainController {
         this.roomIndex++;
         this.curRoom = this.roomGenerator.getRoom(roomIndex);
     }
+
 }
