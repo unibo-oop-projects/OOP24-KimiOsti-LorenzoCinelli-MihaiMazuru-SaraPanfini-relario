@@ -41,7 +41,7 @@ public final class GameView extends JPanel {
      */
     public GameView(final MainController controller) {
         this.componentManager = new GameViewComponentManagerImpl();
-        this.commands = List.of("WASD - move / ", "E - interact / ", "I - inventory");
+        this.commands = List.of("WASD - movimento / ", "E - interazione / ", "I - inventario");
 
         this.upperPanel = this.componentManager.getGamePanel();
         this.mapPanel = this.componentManager.getGamePanel();

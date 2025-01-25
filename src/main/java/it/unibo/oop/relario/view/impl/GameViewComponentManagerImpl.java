@@ -15,7 +15,7 @@ import it.unibo.oop.relario.view.api.GameViewComponentManager;
  */
 public final class GameViewComponentManagerImpl implements GameViewComponentManager {
 
-    private static final float TEXT_TO_COMPONENT_RATIO = 0.30f;
+    private static final float TEXT_TO_COMPONENT_RATIO = 0.20f;
 
     @Override
     public JPanel getGamePanel() {
