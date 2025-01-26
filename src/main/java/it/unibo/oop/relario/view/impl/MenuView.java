@@ -8,7 +8,6 @@ import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
-import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,7 +23,7 @@ import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
-import it.unibo.oop.relario.utils.impl.SoundLocators;
+import it.unibo.oop.relario.view.api.SoundHandler;
 
 /**
  * View implementation for the main menu.
@@ -40,7 +39,7 @@ public final class MenuView extends JPanel {
     private static final double VOLUME = 0.5;
 
     private final transient MainController controller;
-    private transient Clip song;
+    private final transient SoundHandler soundHandler;
 
     /**
      * Initializes a new menu view.
@@ -49,6 +48,7 @@ public final class MenuView extends JPanel {
      */
     public MenuView(final MainController controller, final List<MenuElement> elements) {
         this.controller = controller;
+        this.soundHandler = controller.getMainView().getSoundHandler();
         this.setLayout(new GridBagLayout());
         final GridBagConstraints gridc = new GridBagConstraints();
         gridc.gridy = 0;
@@ -76,9 +76,7 @@ public final class MenuView extends JPanel {
      * Starts the menu sound track.
      */
     public void startSoundTrack() {
-        this.song = SoundLocators.getAudio(SONG_URL);
-        SoundLocators.setVolume(this.song, VOLUME);
-        this.song.loop(Clip.LOOP_CONTINUOUSLY);
+        this.soundHandler.startInLoop(SONG_URL, VOLUME);
     }
 
     private JButton createButton(final MenuElement elem) {
@@ -86,7 +84,7 @@ public final class MenuView extends JPanel {
         myButton.setFont(Constants.FONT.deriveFont(FONT_SIZE));
         myButton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
-                final Timer timer = new Timer(Constants.INTRODUCTION_SCENE_TIME, e1 -> this.song.close());
+                final Timer timer = new Timer(Constants.INTRODUCTION_SCENE_TIME, e1 -> this.soundHandler.stop(SONG_URL));
                 timer.setRepeats(false);
                 timer.start();
                 this.controller.getCutSceneController().show(GameState.MENU);
