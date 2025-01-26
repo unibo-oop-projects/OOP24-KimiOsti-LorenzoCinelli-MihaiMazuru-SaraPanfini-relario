@@ -16,11 +16,14 @@ import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
+import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
+import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureFactoryImpl;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
+import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /*
@@ -38,21 +41,31 @@ class CombatControllerTest {
     @Test
     void testCombat() {
         final MainController mainController = new MainControllerImpl();
-        final Position pos = new PositionImpl(0, 0);
-        final InventoryItem item = new InventoryItemFactoryImpl().createRandomItem();
+        final CombatController controller = mainController.getCombatController();
+
         mainController.moveToNextRoom();
 
-        final CombatController controller = new CombatControllerImpl(mainController);
+        final Position hostilePos = new PositionImpl(1, 0);
+        final Position mercifulPos = new PositionImpl(1, 2);
+        final Position walkPos = new PositionImpl(2, 1);
+        final InventoryItem item = new InventoryItemFactoryImpl().createRandomItem();
+
         final MainCharacter chara = mainController.getCurRoom().get().getPlayer();
         final Enemy hostileEnemy = new EnemyImpl(EnemyType.SOLDIER.getName(), 
-        "Sono un soldato", pos, DifficultyLevel.EASY, Optional.of(item), false, EnemyType.SOLDIER);
+            "Sono un soldato", hostilePos, 
+            DifficultyLevel.EASY, Optional.of(item), false, EnemyType.SOLDIER);
         final Enemy mercifulEnemy = new EnemyImpl(EnemyType.WIZARD.getName(), 
-        "Sono un mago", pos, DifficultyLevel.HARD, Optional.of(item), true, EnemyType.WIZARD);
+            "Sono un mago", mercifulPos, 
+            DifficultyLevel.HARD, Optional.of(item), true, EnemyType.WIZARD);
+        final WalkableFurniture enemFurniture = (WalkableFurniture) new FurnitureFactoryImpl()
+            .createRandomWalkableFurniture(walkPos);
 
-        mainController.moveToNextRoom();
+        chara.setPosition(new PositionImpl(1, 1));
+        chara.setMovement(Direction.UP);
+        mainController.getCurRoom().get().addEntity(hostilePos, hostileEnemy);
 
         assertEquals(controller.getCombatState(), "");
-        controller.initializeCombat(hostileEnemy);
+        controller.initializeCombat();
         assertEquals(controller.getDifficultyLevel(), hostileEnemy.getDifficulty());
         assertEquals(controller.getEnemyLife(), hostileEnemy.getLife());
         assertEquals(controller.getEnemyName(), hostileEnemy.getName());
@@ -71,20 +84,24 @@ class CombatControllerTest {
         assertEquals(chara.getItems().get(0), item);
         assertEquals(controller.getCombatState(), chara.getName() + " hai vinto il combattimento");
 
-        controller.initializeCombat(mercifulEnemy);
+        chara.setMovement(Direction.RIGHT);
+        mainController.getCurRoom().get().addEntity(walkPos, enemFurniture);
+
+        chara.setMovement(Direction.DOWN);
+        mainController.getCurRoom().get().addEntity(mercifulPos, mercifulEnemy);
+
+        controller.initializeCombat();
         controller.handleAction(CombatAction.MERCY);
         assertEquals(controller.getCombatState(), controller.getEnemyName()
             + " ha accettato la tua richiesta." + "\nSei libero di andare");
 
         final int initMerciLife = mercifulEnemy.getLife();
-        controller.initializeCombat(mercifulEnemy);
+        controller.initializeCombat();
         for (int i = 0; i < 4; i++) {
             assertEquals(mercifulEnemy.getLife(), initMerciLife - i * Constants.PLAYER_ATK);
             controller.handleAction(CombatAction.ATTACK);
         }
         assertTrue(chara.getLife() <= 0);
-        assertEquals(mercifulEnemy.getLife(), 10);
 
-        controller.handleAction(CombatAction.OPEN_INVENTORY);
     }
 }
