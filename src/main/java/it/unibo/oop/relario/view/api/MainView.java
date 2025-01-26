@@ -26,10 +26,4 @@ public interface MainView {
      */
     JPanel getPanel(GameState name);
 
-    /**
-     * Retrives the sound handler.
-     * @return the game's sound handler.
-     */
-    SoundHandler getSoundHandler();
-
 }

@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.Constants;
-import it.unibo.oop.relario.view.api.SoundHandler;
 
 /**
  * Implementation for the central scene of combat environments.
@@ -26,17 +25,14 @@ public final class CombatScene extends JPanel {
     private static final int INFO_COLS = 3;
 
     private final transient CombatController controller;
-    private final transient SoundHandler soundHandler;
 
     /**
      * Creates the combat scene.
      * @param controller the controller to which content queries are directed.
-     * @param soundHandler the soundHandler of the game.
      */
-    public CombatScene(final CombatController controller, final SoundHandler soundHandler) {
+    public CombatScene(final CombatController controller) {
         this.setLayout(new BorderLayout());
         this.controller = controller;
-        this.soundHandler = soundHandler;
     }
 
     /**
@@ -60,7 +56,7 @@ public final class CombatScene extends JPanel {
             )
         );
         if (direction != AttackDirection.NONE) {
-            final var animation = new CombatAnimationImpl(direction, this.soundHandler);
+            final var animation = new CombatAnimationImpl(direction);
             panel.add(animation);
             animation.start();
         }

@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.CombatController;
-import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.Constants;
@@ -36,16 +35,16 @@ public final class CombatView extends JPanel {
 
     /**
      * Creates the panel showing combat scenes.
-     * @param controller the main controller.
+     * @param controller the controller receiving content queries.
      */
-    public CombatView(final MainController controller) {
+    public CombatView(final CombatController controller) {
         this.setBackground(BACKGROUND_COLOR);
 
-        this.controller = controller.getCombatController();
+        this.controller = controller;
 
         this.upperPadding = new JPanel();
         this.setupPanel(this.upperPadding);
-        this.centralScene = new CombatScene(this.controller, controller.getMainView().getSoundHandler());
+        this.centralScene = new CombatScene(this.controller);
         this.setupPanel(this.centralScene);
         this.commands = this.createCommandPanel();
         this.setupPanel(this.commands);
