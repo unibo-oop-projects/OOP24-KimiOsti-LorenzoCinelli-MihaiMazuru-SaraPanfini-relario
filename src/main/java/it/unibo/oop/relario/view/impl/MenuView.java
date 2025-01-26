@@ -8,11 +8,13 @@ import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.menu.Command;
@@ -22,6 +24,7 @@ import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
+import it.unibo.oop.relario.utils.impl.SoundLocators;
 
 /**
  * View implementation for the main menu.
@@ -32,8 +35,11 @@ public final class MenuView extends JPanel {
     private static final int INSETS = 3;
     private static final double RATIO = 0.5;
     private static final String LOGO = "logo/logo";
+    private static final String SONG_URL = "menu";
     private static final float FONT_SIZE = 28f;
+
     private final transient MainController controller;
+    private transient Clip song;
 
     /**
      * Initializes a new menu view.
@@ -65,11 +71,23 @@ public final class MenuView extends JPanel {
         this.addKeyListener(new GameKeyListener(controller.getMenuController()));
     }
 
+    /**
+     * Starts the menu sound track.
+     */
+    public void startSong() {
+        this.song = SoundLocators.getAudio(SONG_URL);
+        // regola volume
+        this.song.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
     private JButton createButton(final MenuElement elem) {
         final JButton myButton = new JButton(elem.getElemName());
         myButton.setFont(Constants.FONT.deriveFont(FONT_SIZE));
         myButton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
+                final Timer timer = new Timer(Constants.INTRODUCTION_SCENE_TIME, e1 -> this.song.close());
+                timer.setRepeats(false);
+                timer.start();
                 this.controller.getCutSceneController().show(GameState.MENU);
             } else if (e.getActionCommand().equals(Command.CLOSE.getName())) {
                 this.controller.getMenuController().notify(Event.ESCAPE);
