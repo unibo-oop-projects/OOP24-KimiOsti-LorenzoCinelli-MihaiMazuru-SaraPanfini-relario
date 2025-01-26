@@ -39,18 +39,7 @@ public final class LivingBeingsGenerator {
     public void generateLivingBeings(final Room room) {
         final int npcNumber = random.nextInt(CHARACTERS_NUMBER - 2 + 1) + 2;
         final int enemiesNumber = CHARACTERS_NUMBER - npcNumber;
-
         this.addQuestEntities(room);
-
-        /*if (room.getQuest().isPresent()) {
-            final Position questNpcPosition = new PositionImpl(room.getEntry().getX() + 2, room.getEntry().getY() - 1);
-            final Npc questNpc = this.npcFactory.createQuestNpc(questNpcPosition, room.getQuest().get().getDescription());
-            ((NpcImpl) questNpc).setMoving(false);
-            room.addEntity(questNpcPosition, questNpc);
-        }
-        if (room.getQuest().isPresent() && room.getQuest().get().getKeyEntityType().isPresent()) {
-            this.addQuestKeyEntity(room);
-        }*/
         divideRoom(room.getDimension());
         placeCharacters(room, enemiesNumber, this.enemyFactory::createRandomEnemy);
         placeCharacters(room, npcNumber, this.npcFactory::createRandomNpc);
