@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
+import it.unibo.oop.relario.view.api.SoundHandler;
 
 /**
  * Main container for View.
@@ -21,6 +22,7 @@ public final class MainViewImpl implements MainView {
     private final JPanel mainPanel;
     private final MainController mainController;
     private final Map<GameState, JPanel> panels = new EnumMap<>(GameState.class);
+    private final SoundHandler soundHandler;
 
     /**
      * Inizializes the frame of the main view.
@@ -30,6 +32,7 @@ public final class MainViewImpl implements MainView {
         this.mainController = mainController;
         this.mainPanel = new JPanel(new CardLayout());
         this.frame = new JFrame();
+        this.soundHandler = new SoundHandlerImpl();
         this.frameSetup();
         this.frame.add(mainPanel);
         this.frame.setVisible(true);
@@ -66,6 +69,11 @@ public final class MainViewImpl implements MainView {
     @Override
     public JPanel getPanel(final GameState name) {
         return panels.get(name);
+    }
+
+    @Override
+    public SoundHandler getSoundHandler() {
+        return this.soundHandler;
     }
 
     private void frameSetup() {
