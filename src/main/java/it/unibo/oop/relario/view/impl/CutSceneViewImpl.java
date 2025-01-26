@@ -14,8 +14,8 @@ import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
-import it.unibo.oop.relario.utils.impl.SoundLocators;
 import it.unibo.oop.relario.view.api.CutSceneView;
+import it.unibo.oop.relario.view.api.SoundHandler;
 
 /**
  * Implementation of {@link CutSceneView}.
@@ -35,6 +35,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final int NO_INSETS = 0;
     private static final double SCENE_RATIO = 0.6;
     private static final double CHARACTER_RATIO = 0.075;
+    private static final double VOLUME = 1.0;
     private static final String CHARACTER_IMAGE_URL = "cutscene/character";
     private static final String DOOR_SOUND_URL = "door_sound";
     private static final Map<Scene, String> MESSAGES = Map.of(
@@ -58,6 +59,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     );
 
     private final transient CutSceneController controller;
+    private final transient SoundHandler soundHandler;
 
     /**
      * Creates a new cutscene panel.
@@ -65,6 +67,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
      */
     public CutSceneViewImpl(final MainController controller) {
         this.controller = controller.getCutSceneController();
+        this.soundHandler = controller.getMainView().getSoundHandler();
         this.setLayout(new GridBagLayout());
         this.setBackground(Constants.BACKGROUND_SCENE_COLOR);
     }
@@ -80,10 +83,9 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     @Override
     public void showNextRoomScene() {
-        final var audio = SoundLocators.getAudio(DOOR_SOUND_URL);
-        audio.start();
+        this.soundHandler.start(DOOR_SOUND_URL, VOLUME);
         final var timer = new Timer(ROOM_TRANSITION_DELAY, e -> {
-            audio.close();
+            this.soundHandler.stop(DOOR_SOUND_URL);
             this.controller.progressView(GameState.GAME);
         });
         timer.setRepeats(false);
