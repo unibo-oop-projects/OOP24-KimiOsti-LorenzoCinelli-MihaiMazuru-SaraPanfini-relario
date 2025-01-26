@@ -32,6 +32,8 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  */
 final class InteractionsHandlerTest {
 
+    private static final long ROOM_TRANSITION_SLEEP_TIME = 4000;
+
     private final MainController controller;
     private final InteractionsHandler handler;
     private Pair<Position, Npc> itemNpc;
@@ -124,10 +126,10 @@ final class InteractionsHandlerTest {
             this.controller.getCurRoom().get().setQuest(Optional.empty());
             this.handler.handleInteraction(this.controller.getCurRoom().get());
             try {
-                Thread.sleep(4000);
+                Thread.sleep(ROOM_TRANSITION_SLEEP_TIME);
             } catch (InterruptedException e) {
-                assertTrue(false);
-                //intentionally fails the test because this sleep should not be interrupted.
+                assertTrue(false); //NOPMD
+                //suppressed as it intentionally fails the test because this sleep should not be interrupted.
             }
         }
         assertTrue(this.controller.getCurRoom().isEmpty());

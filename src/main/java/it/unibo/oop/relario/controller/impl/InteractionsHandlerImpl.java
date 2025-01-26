@@ -42,7 +42,6 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                 curRoom.getFurniture()
             )
         ) {
-            
             final var entity = curRoom.getCellContent(
                 curRoom.getPlayer().getDirection().move(curRoom.getPlayer().getPosition().get())
             );
