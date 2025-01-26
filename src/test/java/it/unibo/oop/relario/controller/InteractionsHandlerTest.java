@@ -15,6 +15,7 @@ import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.controller.impl.InteractionsHandlerImpl;
 import it.unibo.oop.relario.controller.impl.MainControllerImpl;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
+import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.npc.Npc;
@@ -107,6 +108,8 @@ final class InteractionsHandlerTest {
 
         if (this.enemy != null) {
             this.handler.handleInteraction(this.controller.getCurRoom().get());
+            final Position pos = new PositionImpl(0, 0);
+            this.controller.getCombatController().initializeCombat(new EnemyFactoryImpl().createRandomEnemy(pos));
             this.controller.getCombatController().handleAction(CombatAction.ATTACK);
             assertNotEquals(Constants.PLAYER_LIFE, this.controller.getCurRoom().get().getPlayer().getLife());
             this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
@@ -115,6 +118,8 @@ final class InteractionsHandlerTest {
         if (this.enemyFurniture != null) {
             this.handler.handleInteraction(this.controller.getCurRoom().get());
             final int life = this.controller.getCurRoom().get().getPlayer().getLife();
+            final Position pos = new PositionImpl(0, 0);
+            this.controller.getCombatController().initializeCombat(new EnemyFactoryImpl().createRandomEnemy(pos));
             this.controller.getCombatController().handleAction(CombatAction.ATTACK);
             assertNotEquals(life, this.controller.getCurRoom().get().getPlayer().getLife());
         }
