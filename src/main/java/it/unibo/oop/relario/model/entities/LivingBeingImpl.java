@@ -65,10 +65,6 @@ public abstract class LivingBeingImpl implements LivingBeing {
         return this.direction;
     }
 
-    private void changeDirection() {
-        this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
-    }
-
     /**
      * Sets the moving status of the living being.
      * @param moving true if the entity is moving, false otherwise
@@ -83,6 +79,10 @@ public abstract class LivingBeingImpl implements LivingBeing {
      */
     public void setDirection(final Direction direction) {
         this.direction = direction;
+    }
+
+    private void changeDirection() {
+        this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
     }
 
     private void setPosition(final Position position) {
