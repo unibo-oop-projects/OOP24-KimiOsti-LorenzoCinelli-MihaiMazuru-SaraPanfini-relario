@@ -29,6 +29,11 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     @Override
     public void handleInteraction(final Room curRoom) {
         if (
+            curRoom.getPlayer().getPosition().get().equals(curRoom.getExit())
+            && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted(curRoom))
+        ) {
+            this.controller.getCutSceneController().show(GameState.GAME);
+        } else if (
             curRoom.getPlayer().getPosition().isPresent()
             && Interactions.canInteract(
                 curRoom.getPlayer().getPosition().get(),
@@ -37,24 +42,19 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                 curRoom.getFurniture()
             )
         ) {
-            if (curRoom.getPlayer().getPosition().get().equals(curRoom.getExit())
-                && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted(curRoom))
-            ) {
-                this.controller.getCutSceneController().show(GameState.GAME);
-            } else {
-                final var entity = curRoom.getCellContent(
-                    curRoom.getPlayer().getDirection().move(curRoom.getPlayer().getPosition().get())
-                );
-                if (entity.isPresent()) {
-                    if (entity.get() instanceof Npc) {
-                        this.interactWithNpc((Npc) entity.get(), curRoom);
-                    } else if (entity.get() instanceof Enemy) {
-                        this.startEnemyCombat((Enemy) entity.get());
-                    } else if (entity.get() instanceof InteractiveFurniture) {
-                        this.interactWithFurniture((InteractiveFurniture) entity.get(), curRoom);
-                    } else if (entity.get() instanceof WalkableFurniture) {
-                        this.startEnemyCombat(((WalkableFurniture) entity.get()).removeEnemy());
-                    }
+            
+            final var entity = curRoom.getCellContent(
+                curRoom.getPlayer().getDirection().move(curRoom.getPlayer().getPosition().get())
+            );
+            if (entity.isPresent()) {
+                if (entity.get() instanceof Npc) {
+                    this.interactWithNpc((Npc) entity.get(), curRoom);
+                } else if (entity.get() instanceof Enemy) {
+                    this.startEnemyCombat((Enemy) entity.get());
+                } else if (entity.get() instanceof InteractiveFurniture) {
+                    this.interactWithFurniture((InteractiveFurniture) entity.get(), curRoom);
+                } else if (entity.get() instanceof WalkableFurniture) {
+                    this.startEnemyCombat(((WalkableFurniture) entity.get()).removeEnemy());
                 }
             }
         } else {
