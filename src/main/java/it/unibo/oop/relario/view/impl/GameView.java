@@ -16,6 +16,7 @@ import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.GameTexturesLocator;
 import it.unibo.oop.relario.view.api.GameViewComponentManager;
+import it.unibo.oop.relario.view.api.SoundHandler;
 
 /**
  * View implementations for the exploration phase of the game.
@@ -24,12 +25,15 @@ public final class GameView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final double SCREEN_TO_MAP_RATIO = 1.5;
+    private static final double VOLUME = 0.5;
     private static final int GRID_GAP = 0;
+    private static final String SONG_URL = "game";
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
     private final JPanel lowerPanel;
     private final transient GameViewComponentManager componentManager;
+    private final transient SoundHandler soundHandler;
     private final List<BackgroundTile> background;
     private final List<String> commands;
     private final List<Position> foreground;
@@ -42,6 +46,7 @@ public final class GameView extends JPanel {
      */
     public GameView(final MainController controller) {
         this.componentManager = new GameViewComponentManagerImpl();
+        this.soundHandler = controller.getMainView().getSoundHandler();
         this.commands = List.of("WASD - movimento / ", "E - interazione / ", "I - inventario");
 
         this.upperPanel = this.componentManager.getGamePanel();
@@ -97,6 +102,13 @@ public final class GameView extends JPanel {
      */
     public void showInteractionText(final String text) {
         this.updateComponent(this.lowerPanel, List.of(text));
+    }
+
+    /**
+     * Starts the menu sound track.
+     */
+    public void startSoundTrack() {
+        this.soundHandler.startInLoop(SONG_URL, VOLUME);
     }
 
     private void renderFloor(final Dimension dimension) {
