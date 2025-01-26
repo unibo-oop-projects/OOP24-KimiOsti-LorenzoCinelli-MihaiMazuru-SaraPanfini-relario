@@ -2,6 +2,7 @@ package it.unibo.oop.relario.controller.impl;
 
 import java.awt.Image;
 
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -29,7 +30,7 @@ public final class CombatControllerImpl implements CombatController {
     private static final Integer DELAY_TRANSITION = 4000;
     private final MainView view;
     private final MainController controller;
-    private final CombatView combatView;
+    private CombatView combatView;
     private MainCharacter player;
     private Enemy enemy;
     private String combatState;
@@ -43,17 +44,18 @@ public final class CombatControllerImpl implements CombatController {
         this.view = this.controller.getMainView();
         this.player = null;
         this.enemy = null;
+        this.combatView = null;
         this.combatState = "";
-        this.combatView = (CombatView) this.view.getPanel(GameState.COMBAT);
     }
 
     @Override
     public void initializeCombat(final Enemy enemy) {
         if (this.controller.getCurRoom().isPresent()) {
-            this.player = this.controller.getCurRoom().get().getPlayer();
+            this.player = controller.getCurRoom().get().getPlayer();
             this.enemy = enemy;
+            this.combatView = (CombatView) this.view.getPanel(GameState.COMBAT);
+            SwingUtilities.invokeLater(this::drawNone);
             this.view.showPanel(GameState.COMBAT);
-            this.combatView.update(AttackDirection.NONE);
         }
     }
 
@@ -116,10 +118,10 @@ public final class CombatControllerImpl implements CombatController {
     private void attack(final boolean isPlayerAttacking) {
         if (isPlayerAttacking) {
             this.enemy.attacked(this.player.attack());
-            this.combatView.update(AttackDirection.FROM_PLAYER_TO_ENEMY);
+            SwingUtilities.invokeLater(this::drawFromPlayerToEnemy);
         } else {
             this.player.attacked(this.enemy.getDamage());
-            this.combatView.update(AttackDirection.FROM_ENEMY_TO_PLAYER);
+            SwingUtilities.invokeLater(this::drawFromEnemyToPlayer);
         }
 
         if (enemy.getLife() <= 0) {
@@ -127,7 +129,7 @@ public final class CombatControllerImpl implements CombatController {
                 player.addToInventory(enemy.getReward().get());
             }
             combatState = this.player.getName() + " hai vinto il combattimento";
-            this.combatView.update(AttackDirection.NONE);
+            SwingUtilities.invokeLater(this::drawNone);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getCutSceneController().show(GameState.VICTORY));
             timer.setRepeats(false);
@@ -145,10 +147,10 @@ public final class CombatControllerImpl implements CombatController {
     }
 
     private void mercyRequest() {
-        if (enemy.isMerciful()) {
+        if (this.enemy.isMerciful()) {
             combatState = this.enemy.getName() + " ha accettato la tua richiesta."
             + "\nSei libero di andare";
-            this.combatView.update(AttackDirection.NONE);
+            SwingUtilities.invokeLater(this::drawNone);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getGameController().run(true));
             timer.setRepeats(false);
@@ -157,6 +159,18 @@ public final class CombatControllerImpl implements CombatController {
             //player's skips his turn, he used his turn to ask for mercy
             this.attack(false);
         }
+    }
+
+    private void drawNone() {
+        this.combatView.update(AttackDirection.NONE);
+    }
+
+    private void drawFromPlayerToEnemy() {
+        this.combatView.update(AttackDirection.FROM_PLAYER_TO_ENEMY);
+    }
+
+    private void drawFromEnemyToPlayer() {
+        this.combatView.update(AttackDirection.FROM_ENEMY_TO_PLAYER);
     }
 
 }
