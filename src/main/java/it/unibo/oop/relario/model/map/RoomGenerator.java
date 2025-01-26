@@ -18,7 +18,7 @@ public final class RoomGenerator {
     public static final Dimension DEFAULT_DIMENSION = new DimensionImpl(20, 13);
 
     /** TODO. */
-    public static final int ROOMS_NUMBER = 5;
+    public static final int ROOMS_NUMBER = 4;
 
     private final Position defaultEntry;
     private final Position defaultExit;

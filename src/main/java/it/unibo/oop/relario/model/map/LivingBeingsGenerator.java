@@ -88,10 +88,6 @@ public final class LivingBeingsGenerator {
                 room.addEntity(position, createCharacter.apply(position));
                 this.areas.remove(area);
                 placedCharacters++;
-                attempts = -1;
-            } else if (attempts > LOOP_ATTEMPTS) {
-                attempts = -1;
-                placedCharacters++;
             }
             attempts++;
         }
