@@ -114,6 +114,19 @@ final class InteractionsHandlerTest {
             this.controller.getCombatController().handleAction(CombatAction.ATTACK);
             assertNotEquals(life, this.controller.getCurRoom().get().getPlayer().getLife());
         }
+
+        for (int i = 0; i < 10 && this.controller.getCurRoom().isPresent(); i++) {
+            this.controller.getCurRoom().get().getPlayer().setPosition(
+                this.controller.getCurRoom().get().getExit()
+            );
+            this.handler.handleInteraction(this.controller.getCurRoom().get());
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                assertTrue(false); //intentionally fails the test.
+            }
+        }
+        assertTrue(this.controller.getCurRoom().isEmpty());
     }
 
     private void initValues(final Room room) {
