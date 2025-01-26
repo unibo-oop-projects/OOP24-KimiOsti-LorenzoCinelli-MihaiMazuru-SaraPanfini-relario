@@ -185,10 +185,29 @@ public final class RoomImpl implements Room {
         .boxed().flatMap(x -> IntStream.range(0, this.dimension.getHeight())
         .mapToObj(y -> new PositionImpl(x, y))).collect(Collectors.toMap(pos -> pos,
         pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY
-        : isInnerPerimeter(pos.getX(), pos.getY()) ? CellState.RESTRICTED : CellState.INNER_EMPTY)));
+        : isInnerPerimeter(pos.getX(), pos.getY()) || isCorner(pos) 
+        ? CellState.RESTRICTED : CellState.INNER_EMPTY)));
         this.cellStates.put(this.entry, CellState.RESTRICTED);
         this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() - 1), CellState.RESTRICTED);
         this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() + 1), CellState.RESTRICTED);
+        this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() - 2), CellState.RESTRICTED);
+        this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() + 2), CellState.RESTRICTED);
+    }
+
+    private boolean isCorner(final Position position) {
+        final Position topLeft = new PositionImpl(0, 0);
+        final Position topRight = new PositionImpl(this.dimension.getWidth() - 1, 0);
+        final Position bottomLeft = new PositionImpl(0, this.dimension.getHeight() - 1);
+        final Position bottomRight = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() - 1);
+        return position.equals(topLeft) || position.equals(topRight) || position.equals(bottomLeft) 
+        || position.equals(bottomRight) || isAdjacent(position, topLeft) || isAdjacent(position, topRight)
+        || isAdjacent(position, bottomLeft) || isAdjacent(position, bottomRight);
+    }
+
+    private boolean isAdjacent(final Position pos1, final Position pos2) {
+        final int dx = Math.abs(pos1.getX() - pos2.getX());
+        final int dy = Math.abs(pos1.getX() - pos2.getX());
+        return (dx == 1 && dy == 0) || (dx == 0 && dy == 1);
     }
 
     private boolean isPerimeter(final int x, final int y) {
