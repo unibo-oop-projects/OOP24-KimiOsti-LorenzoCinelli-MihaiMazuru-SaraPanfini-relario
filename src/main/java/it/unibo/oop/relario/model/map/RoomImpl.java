@@ -184,8 +184,8 @@ public final class RoomImpl implements Room {
         this.cellStates.putAll(IntStream.range(0, this.dimension.getWidth())
         .boxed().flatMap(x -> IntStream.range(0, this.dimension.getHeight())
         .mapToObj(y -> new PositionImpl(x, y))).collect(Collectors.toMap(pos -> pos,
-        pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY
-        : isInnerPerimeter(pos.getX(), pos.getY()) || isCorner(pos) 
+        pos -> isPerimeter(pos.getX(), pos.getY()) && !isCorner(pos) ? CellState.PERIMETER_EMPTY
+        : isInnerPerimeter(pos.getX(), pos.getY()) || isCorner(pos)
         ? CellState.RESTRICTED : CellState.INNER_EMPTY)));
         this.cellStates.put(this.entry, CellState.RESTRICTED);
         this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() - 1), CellState.RESTRICTED);
@@ -206,7 +206,7 @@ public final class RoomImpl implements Room {
 
     private boolean isAdjacent(final Position pos1, final Position pos2) {
         final int dx = Math.abs(pos1.getX() - pos2.getX());
-        final int dy = Math.abs(pos1.getX() - pos2.getX());
+        final int dy = Math.abs(pos1.getY() - pos2.getY());
         return (dx == 1 && dy == 0) || (dx == 0 && dy == 1);
     }
 
