@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 
 import it.unibo.oop.relario.controller.api.InteractionsHandler;
@@ -119,11 +121,13 @@ final class InteractionsHandlerTest {
             this.controller.getCurRoom().get().getPlayer().setPosition(
                 this.controller.getCurRoom().get().getExit()
             );
+            this.controller.getCurRoom().get().setQuest(Optional.empty());
             this.handler.handleInteraction(this.controller.getCurRoom().get());
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {
-                assertTrue(false); //intentionally fails the test.
+                assertTrue(false);
+                //intentionally fails the test because this sleep should not be interrupted.
             }
         }
         assertTrue(this.controller.getCurRoom().isEmpty());
