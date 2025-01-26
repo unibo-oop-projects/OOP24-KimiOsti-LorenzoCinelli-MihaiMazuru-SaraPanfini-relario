@@ -80,6 +80,10 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
     }
 
     private void startEnemyCombat() {
+        final var panel = controller.getMainView().getPanel(GameState.GAME);
+        if (panel instanceof GameView) {
+            ((GameView) panel).stopSoundTrack();
+        }
         this.controller.getCombatController().initializeCombat();
     }
 

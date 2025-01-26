@@ -108,8 +108,17 @@ public final class GameView extends JPanel {
      * Starts the menu sound track.
      */
     public void startSoundTrack() {
-        this.song = SoundLocators.getAudio(SONG_URL, VOLUME);
-        this.song.loop(Clip.LOOP_CONTINUOUSLY);
+        if (this.song == null || !this.song.isRunning()) {
+            this.song = SoundLocators.getAudio(SONG_URL, VOLUME);
+            this.song.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+
+    /**
+     * Stops the menu sound track.
+     */
+    public void stopSoundTrack() {
+        this.song.close();
     }
 
     private void renderFloor(final Dimension dimension) {
