@@ -25,6 +25,9 @@ public class SoundHandlerImpl implements SoundHandler {
 
     private final Map<String, Clip> sounds;
     
+    /**
+     * Creates and initializes a sound handler.
+     */
     public SoundHandlerImpl() {
         this.sounds = new HashMap<>();
     }
