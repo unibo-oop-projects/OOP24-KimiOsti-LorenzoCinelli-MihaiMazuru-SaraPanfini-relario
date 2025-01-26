@@ -5,21 +5,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
-import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
-import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
-import it.unibo.oop.relario.model.entities.enemies.EnemyImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
-import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.entities.npc.NpcFactory;
 import it.unibo.oop.relario.model.entities.npc.NpcFactoryImpl;
-import it.unibo.oop.relario.model.entities.npc.NpcImpl;
+import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.DimensionImpl;
+import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
@@ -43,7 +40,9 @@ public final class LivingBeingsGenerator {
         final int npcNumber = random.nextInt(CHARACTERS_NUMBER - 2 + 1) + 2;
         final int enemiesNumber = CHARACTERS_NUMBER - npcNumber;
 
-        if (room.getQuest().isPresent()) {
+        this.addQuestEntities(room);
+
+        /*if (room.getQuest().isPresent()) {
             final Position questNpcPosition = new PositionImpl(room.getEntry().getX() + 2, room.getEntry().getY() - 1);
             final Npc questNpc = this.npcFactory.createQuestNpc(questNpcPosition, room.getQuest().get().getDescription());
             ((NpcImpl) questNpc).setMoving(false);
@@ -51,20 +50,30 @@ public final class LivingBeingsGenerator {
         }
         if (room.getQuest().isPresent() && room.getQuest().get().getKeyEntityType().isPresent()) {
             this.addQuestKeyEntity(room);
-        }
+        }*/
         divideRoom(room.getDimension());
         placeCharacters(room, enemiesNumber, this.enemyFactory::createRandomEnemy);
         placeCharacters(room, npcNumber, this.npcFactory::createRandomNpc);
     }
 
-    private void addQuestKeyEntity(final Room room) {
-        final GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType().get();
-        if (keyEntityType instanceof EnemyType) {
-            final Position enemyPosition = new PositionImpl(room.getExit().getX() - 4, room.getExit().getY());
-            final Enemy enemy = this.enemyFactory.createEnemyByTypeEmpty((EnemyType) keyEntityType, enemyPosition);
-            ((EnemyImpl) enemy).setMoving(false);
-            room.addEntity(enemyPosition, enemy);
+    private void addQuestEntities(final Room room) {
+        if (room.getQuest().isPresent()) {
+            final Quest quest = room.getQuest().get();
+            final Position questNpcPosition = new PositionImpl(room.getEntry().getX() + 2, room.getEntry().getY() - 1);
+            this.addCharacterToRoom(room, Direction.DOWN, 
+            this.npcFactory.createQuestNpc(questNpcPosition, quest.getDescription()));
+            if (quest.getKeyEntityType().isPresent() && quest.getKeyEntityType().get() instanceof EnemyType) {
+                final Position enemyPosition = new PositionImpl(room.getExit().getX() - 4, room.getExit().getY());
+                this.addCharacterToRoom(room, Direction.LEFT, 
+                this.enemyFactory.createEnemyByTypeEmpty((EnemyType) quest.getKeyEntityType().get(), enemyPosition));
+            }
         }
+    }
+
+    private void addCharacterToRoom(final Room room, final Direction direction, final LivingBeing keyCharacter) {
+        ((LivingBeingImpl) keyCharacter).setMoving(false);
+        ((LivingBeingImpl) keyCharacter).setDirection(direction);
+        room.addEntity(keyCharacter.getPosition().get(), keyCharacter);
     }
 
     private void divideRoom(final Dimension dimension) {
