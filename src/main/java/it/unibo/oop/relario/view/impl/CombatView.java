@@ -109,7 +109,7 @@ public final class CombatView extends JPanel {
         mercy.addActionListener(e -> this.controller.handleAction(CombatAction.MERCY));
         final var buttons = List.of(attack, inventory, mercy);
 
-        buttons.forEach(button -> panel.add(button));
+        buttons.forEach(panel::add);
 
         return panel;
     }
