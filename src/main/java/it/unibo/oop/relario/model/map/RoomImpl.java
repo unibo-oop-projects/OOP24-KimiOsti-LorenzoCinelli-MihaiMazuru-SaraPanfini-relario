@@ -13,7 +13,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
-import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
@@ -136,20 +135,23 @@ public final class RoomImpl implements Room {
 
     @Override
     public void update() {
-        final Map<Position, LivingBeing> buffer = new HashMap<>();
+        final Map<Position, LivingBeing> buffer = new HashMap<>(this.population);
+        // final Map<Position, LivingBeing> temp = new HashMap<>(this.population);
         if (!Interactions.canMove(this.player.getPosition().get(), this.player.getDirection(), 
         this.dimension, this.population, this.furniture)) {
             this.player.stop();
         }
         this.player.update();
+        buffer.put(this.player.getPosition().get(), player);
         for (final LivingBeing chara : this.population.values()) {
-            if (!Interactions.canMove(chara.getPosition().get(), chara.getDirection(), 
-            this.dimension, this.population, this.furniture)) {
-                ((LivingBeingImpl) chara).changeDirection();
+            if (Interactions.canMove(chara.getPosition().get(), chara.getDirection(), 
+            this.dimension, buffer, this.furniture)) {
+                buffer.remove(chara.getPosition().get());
+                chara.update();
+                buffer.put(chara.getPosition().get(), chara);
             }
-            chara.update();
-            buffer.put(chara.getPosition().get(), chara);
         }
+        buffer.remove(this.player.getPosition().get());
         this.population = buffer;
     }
 
