@@ -2,7 +2,6 @@ package it.unibo.oop.relario.view.impl;
 
 import java.util.List;
 
-import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -12,8 +11,8 @@ import org.apache.commons.lang3.RandomUtils;
 import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
-import it.unibo.oop.relario.utils.impl.SoundLocators;
 import it.unibo.oop.relario.view.api.CombatAnimation;
+import it.unibo.oop.relario.view.api.SoundHandler;
 
 /**
  * Implementation of {@link CombatAnimation}.
@@ -21,6 +20,7 @@ import it.unibo.oop.relario.view.api.CombatAnimation;
 public final class CombatAnimationImpl extends JLabel implements CombatAnimation {
     private static final long serialVersionUID = 1L;
     private static final int ANIMATION_DURATION = 850;
+    private static final double VOLUME = 1.0;
     private static final double RATIO = 0.6;
     private static final String ATTACK_ANIMATION = "combat/attack_effect";
     private static final String ATTACKED_ANIMATION = "combat/attacked_effect";
@@ -36,15 +36,17 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
         "combat/String_Jab"
     );
 
-    private final transient Clip clip;
+    private final transient SoundHandler soundHandler;
     private final ImageIcon icon;
+    private String currentSound;
 
     /**
      * Creates a new label with the attack animation.
      * @param direction is the direction of the attack.
+     * @param soundHandler the soundHandler of the game.
      */
-    public CombatAnimationImpl(final AttackDirection direction) {
-        this.clip = SoundLocators.getAudio(ATTACK_AUDIO.get(RandomUtils.nextInt(0, ATTACK_AUDIO.size())));
+    public CombatAnimationImpl(final AttackDirection direction, final SoundHandler soundHandler) {
+        this.soundHandler = soundHandler;
         switch (direction) {
             case FROM_ENEMY_TO_PLAYER -> this.icon = ImageLocators.getFixedSizeImage(
                 ATTACKED_ANIMATION, Constants.GIF_EXTENSION, RATIO, RATIO);
@@ -58,7 +60,8 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
     public void start() {
         final Timer timer = new Timer(ANIMATION_DURATION, e -> this.stop());
         timer.setRepeats(false);
-        this.clip.start();
+        this.currentSound = ATTACK_AUDIO.get(RandomUtils.nextInt(0, ATTACK_AUDIO.size()));
+        this.soundHandler.start(this.currentSound, VOLUME);
         timer.start();
         this.setIcon(this.icon);
         this.validate();
@@ -68,6 +71,6 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
         this.removeAll();
         this.repaint();
         this.validate();
-        this.clip.close();
+        this.soundHandler.stop(this.currentSound);
     }
 }
