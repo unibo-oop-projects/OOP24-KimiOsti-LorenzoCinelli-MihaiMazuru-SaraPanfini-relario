@@ -60,7 +60,7 @@ final class InventoryItemTest {
         assertEquals(EffectType.DAMAGE, equippableItem.getEffect());
 
         equippableItem = (EquippableItem) this.inventoryItems.get(3);
-        assertEquals("Armatura", equippableItem.getName());
+        assertEquals("Armatura semplice", equippableItem.getName());
         assertEquals("Armatura di ferro", equippableItem.getDescription());
         assertEquals(InventoryItemType.BASICARMOR, equippableItem.getType());
         assertEquals(4, equippableItem.getIntensity());
