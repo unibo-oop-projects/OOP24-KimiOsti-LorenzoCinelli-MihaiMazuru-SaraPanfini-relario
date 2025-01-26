@@ -69,9 +69,9 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
         if (output.getLoot().isPresent()) {
             if (curRoom.getPlayer().addToInventory(output.getLoot().get())) {
                 npc.confirmLootTaken();
-                this.showOutputText(output.getDialogue());
+                this.showOutputText("<html>" + output.getDialogue() + "<br>+ 1 " + output.getLoot().get().getName() + "<html>");
             } else {
-                this.showOutputText("Sembra che io non abbia spazio per questo oggetto...");
+                this.showOutputText("<html>Sembra che io non abbia pi&ugrave spazio per questo oggetto...<html>");
             }
         } else {
             this.showOutputText(output.getDialogue());
@@ -87,11 +87,13 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
         if (furniture.hasLoot()) {
             final var loot = furniture.dropLoot();
             if (curRoom.getPlayer().addToInventory(loot)) {
-                this.showOutputText("Ecco qualcosa che mi tornerà utile!");
+                this.showOutputText("<html>Ecco qualcosa che mi torner&agrave utile!<br>+ 1 " + loot.getName() + "<html>");
             } else {
-                this.showOutputText("Sembra che io non abbia più spazio per portarmelo dietro...");
+                this.showOutputText("<html>Sembra che io non abbia pi&ugrave spazio per questo oggetto...<html>");
                 furniture.addLoot(loot);
             }
+        } else {
+            this.showOutputText("<html>Qui dentro non c'&egrave niente<html>");
         }
         this.resumeGame();
     }
