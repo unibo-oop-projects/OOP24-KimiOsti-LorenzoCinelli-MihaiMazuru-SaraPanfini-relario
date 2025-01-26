@@ -16,6 +16,7 @@ import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
+import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
@@ -28,6 +29,7 @@ class QuestFactoryTest {
     """;
     private static final InventoryItemType ITEM_TYPE = InventoryItemType.KEY;
     private static final EnemyType ENEMY_TYPE = EnemyType.BOSS;
+    private static final Position ENEMY_POS = new PositionImpl(5, 5);
 
     private final QuestFactory factory;
     private final MainController controller;
@@ -61,12 +63,9 @@ class QuestFactoryTest {
     void testCreateDefeatEnemyQuest() {
         this.addQuest(this.getQuest(QuestType.DEFEAT_ENEMY_QUEST, ENEMY_TYPE));
 
-        final var enemy = new EnemyFactoryImpl().createEnemyByType(ENEMY_TYPE, new PositionImpl(5, 5));
+        final var enemy = new EnemyFactoryImpl().createEnemyByType(ENEMY_TYPE, ENEMY_POS);
         assertFalse(this.controller.getCurRoom().get().getPopulation().containsValue(enemy));
-        this.controller.getCurRoom().get().addEntity(
-            new PositionImpl(5, 5),
-            enemy
-        );
+        this.controller.getCurRoom().get().addEntity(ENEMY_POS, enemy);
         assertTrue(this.controller.getCurRoom().get().getPopulation().containsValue(enemy));
         assertFalse(this.controller.getCurRoom().get().getQuest().get().isCompleted(
             this.controller.getCurRoom().get()
