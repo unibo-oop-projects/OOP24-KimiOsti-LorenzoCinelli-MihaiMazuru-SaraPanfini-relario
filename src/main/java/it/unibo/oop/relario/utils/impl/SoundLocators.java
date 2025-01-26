@@ -22,10 +22,11 @@ public final class SoundLocators {
 
     /**
      * Returns a clip audio of the given name. 
-     * @param name is the name of the file. The extension is .wav,
+     * @param name is the name of the file. The extension is .wav.
+     * @param volume the volume to set the clip. 1.0 corresponds to 100%.
      * @return a reproducible Clip.
      */
-    public static Clip getAudio(final String name) {
+    public static Clip getAudio(final String name, final double volume) {
         final AudioInputStream audioInputStream;
         Clip clip;
         try {
@@ -33,6 +34,7 @@ public final class SoundLocators {
                 new File(Constants.RESOURCES_FOLDER_URL + AUDIO_BASE_URL + name + AUDIO_EXTENSION).getAbsoluteFile()
             );
             clip = AudioSystem.getClip();
+            setVolume(clip, volume);
             clip.open(audioInputStream);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             clip = null;
@@ -40,12 +42,7 @@ public final class SoundLocators {
         return clip;
     }
 
-    /**
-     * Sets the volume of the given clip.
-     * @param clip the clip to set the volume.
-     * @param volume the volume to set to the clip. 1.0 corresponds to 100%.
-     */
-    public static void setVolume(final Clip clip, final double volume) {
+    private static void setVolume(final Clip clip, final double volume) {
         if (volume < 0f || volume > 1f) {
             throw new IllegalArgumentException("Volume not valid: " + volume);
         }

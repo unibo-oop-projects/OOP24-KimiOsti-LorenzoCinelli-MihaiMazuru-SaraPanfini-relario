@@ -76,8 +76,7 @@ public final class MenuView extends JPanel {
      * Starts the menu sound track.
      */
     public void startSoundTrack() {
-        this.song = SoundLocators.getAudio(SONG_URL);
-        SoundLocators.setVolume(this.song, VOLUME);
+        this.song = SoundLocators.getAudio(SONG_URL, VOLUME);
         this.song.loop(Clip.LOOP_CONTINUOUSLY);
     }
 

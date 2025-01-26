@@ -33,6 +33,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final int ROOM_TRANSITION_DELAY = 3000;
     private static final int INSETS = 10;
     private static final int NO_INSETS = 0;
+    private static final double VOLUME = 1.0;
     private static final double SCENE_RATIO = 0.6;
     private static final double CHARACTER_RATIO = 0.075;
     private static final String CHARACTER_IMAGE_URL = "cutscene/character";
@@ -80,7 +81,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     @Override
     public void showNextRoomScene() {
-        final var audio = SoundLocators.getAudio(DOOR_SOUND_URL);
+        final var audio = SoundLocators.getAudio(DOOR_SOUND_URL, VOLUME);
         audio.start();
         final var timer = new Timer(ROOM_TRANSITION_DELAY, e -> {
             audio.close();
