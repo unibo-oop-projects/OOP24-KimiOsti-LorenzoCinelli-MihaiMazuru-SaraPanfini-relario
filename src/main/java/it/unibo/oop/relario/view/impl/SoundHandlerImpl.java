@@ -18,21 +18,20 @@ import it.unibo.oop.relario.view.api.SoundHandler;
 /**
  * Implementation of {@link SoundHandler}.
  */
-public class SoundHandlerImpl implements SoundHandler {
+public final class SoundHandlerImpl implements SoundHandler {
     private static final float VOLUME_CONVERSION_CONSTANT = 20f;
     private static final String AUDIO_BASE_URL = "audio/";
     private static final String AUDIO_EXTENSION = ".wav";
 
     private final Map<String, Clip> sounds;
-    
+
     /**
      * Creates and initializes a sound handler.
      */
     public SoundHandlerImpl() {
         this.sounds = new HashMap<>();
     }
-    
-    
+
     @Override
     public void start(final String name, final double volume) {
         this.addAudio(name, volume);
@@ -46,24 +45,23 @@ public class SoundHandlerImpl implements SoundHandler {
     }
 
     @Override
-    public void stop(String name) {
+    public void stop(final String name) {
         this.sounds.get(name).close();
         this.sounds.remove(name);
     }
 
     private void addAudio(final String name, final double volume) {
         final AudioInputStream audioInputStream;
-        Clip clip;
         try {
             audioInputStream = AudioSystem.getAudioInputStream(
                 new File(Constants.RESOURCES_FOLDER_URL + AUDIO_BASE_URL + name + AUDIO_EXTENSION).getAbsoluteFile()
             );
-            clip = AudioSystem.getClip();
+            final Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             setVolume(clip, volume);
             this.sounds.put(name, clip);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            clip = null;
+            e.addSuppressed(e);
         }
     }
 
@@ -74,5 +72,4 @@ public class SoundHandlerImpl implements SoundHandler {
         final FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(VOLUME_CONVERSION_CONSTANT * (float) Math.log10(volume));
     }
-    
 }
