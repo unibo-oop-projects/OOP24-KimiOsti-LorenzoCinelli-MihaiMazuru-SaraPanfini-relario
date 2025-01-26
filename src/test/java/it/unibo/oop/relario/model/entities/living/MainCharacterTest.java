@@ -48,18 +48,23 @@ class MainCharacterTest {
             chara.getItems()
         );
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Constants.PLAYER_INVENTORY_CAPACITY - 3; i++) {
             assertTrue(chara.addToInventory(itemFactory.createRandomItem()));
         }
         assertFalse(chara.addToInventory(itemFactory.createRandomItem()));
 
+        assertTrue(chara.getEquippedArmor().isEmpty());
+        assertTrue(chara.getEquippedWeapon().isEmpty());
+
         final int baseAtk = chara.attack();
         assertTrue(chara.useItem(weapon));
+        assertTrue(chara.getEquippedWeapon().isPresent());
         assertEquals(weapon, chara.getEquippedWeapon().get());
         assertEquals(chara.attack(), baseAtk + weapon.getIntensity());
         assertTrue(chara.addToInventory(itemFactory.createRandomItem()));
 
         assertTrue(chara.useItem(armor));
+        assertTrue(chara.getEquippedArmor().isPresent());
         assertEquals(armor, chara.getEquippedArmor().get());
         chara.attacked(Constants.PLAYER_LIFE);
         assertEquals(armor.getIntensity(), chara.getLife());
@@ -127,6 +132,9 @@ class MainCharacterTest {
         final InventoryItem oldTutu = new InventoryItemFactoryImpl().createItem(InventoryItemType.BASICARMOR);
         chara.addToInventory(oldTutu);
         chara.useItem(oldTutu);
+
+        chara.attacked(oldTutu.getIntensity() - 1);
+        assertEquals(Constants.PLAYER_LIFE, chara.getLife());
 
         for (int i = 0; i < 3; i++) {
             chara.attacked(Constants.PLAYER_LIFE / 3);

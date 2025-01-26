@@ -17,14 +17,11 @@ import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
-import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemFactoryImpl;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
-import it.unibo.oop.relario.view.api.MainView;
-import it.unibo.oop.relario.view.impl.MainViewImpl;
 
 /*
  * CHECKSTYLE: MagicNumber OFF
@@ -41,13 +38,12 @@ class CombatControllerTest {
     @Test
     void testCombat() {
         final MainController mainController = new MainControllerImpl();
-        final MainView view = new MainViewImpl(mainController);
-        view.panelsSetup();
         final Position pos = new PositionImpl(0, 0);
         final InventoryItem item = new InventoryItemFactoryImpl().createRandomItem();
+        mainController.moveToNextRoom();
 
         final CombatController controller = new CombatControllerImpl(mainController);
-        final MainCharacter chara = new MainCharacterImpl();
+        final MainCharacter chara = mainController.getCurRoom().get().getPlayer();
         final Enemy hostileEnemy = new EnemyImpl(EnemyType.SOLDIER.getName(), 
         "Sono un soldato", pos, DifficultyLevel.EASY, Optional.of(item), false, EnemyType.SOLDIER);
         final Enemy mercifulEnemy = new EnemyImpl(EnemyType.WIZARD.getName(), 
@@ -62,7 +58,7 @@ class CombatControllerTest {
         assertEquals(controller.getEnemyName(), hostileEnemy.getName());
         assertEquals(controller.getPlayerLife(), chara.getLife());
 
-        final int initCharaLife = Constants.PLAYER_LIFE;
+        final int initCharaLife = chara.getLife();
         final int initEnemyLife = hostileEnemy.getLife();
 
         controller.handleAction(CombatAction.MERCY);

@@ -50,8 +50,8 @@ public final class CombatScene extends JPanel {
         );
         final var panel = this.getEnemyImagePanel(
             this.controller.getEnemyTexture().getScaledInstance(
-                (int) (this.getWidth() * TEXTURE_TO_PANEL_RATIO),
-                (int) (this.getHeight() * TEXTURE_TO_PANEL_RATIO),
+                (int) (this.getPreferredSize().getWidth() * TEXTURE_TO_PANEL_RATIO),
+                (int) (this.getPreferredSize().getHeight() * TEXTURE_TO_PANEL_RATIO),
                 Image.SCALE_SMOOTH
             )
         );

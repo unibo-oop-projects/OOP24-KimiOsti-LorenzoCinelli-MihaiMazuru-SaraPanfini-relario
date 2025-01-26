@@ -25,7 +25,6 @@ public final class GameView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final double SCREEN_TO_MAP_RATIO = 1.5;
     private static final int GRID_GAP = 0;
-    private static final int GRID_DIMENSION_IN_TILE = 1;
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
@@ -117,7 +116,6 @@ public final class GameView extends JPanel {
         for (int y = 0; y < dimension.getHeight(); y++) {
             for (int x = 0; x < dimension.getWidth(); x++) {
                 final var tile = this.componentManager.getBackgroundTile(texture, this.tileDimension);
-                tile.setLayout(new GridLayout(GRID_DIMENSION_IN_TILE, GRID_DIMENSION_IN_TILE, GRID_GAP, GRID_GAP));
                 this.background.add(
                     this.computeIndex(x, y),
                     tile

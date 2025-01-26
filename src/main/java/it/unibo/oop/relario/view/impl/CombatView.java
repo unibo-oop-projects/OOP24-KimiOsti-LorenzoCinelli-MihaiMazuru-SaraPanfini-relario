@@ -50,8 +50,6 @@ public final class CombatView extends JPanel {
         this.setupPanel(this.commands);
         this.message = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.setupPanel(this.message);
-
-        this.resizePanels();
     }
 
     /**
@@ -59,6 +57,7 @@ public final class CombatView extends JPanel {
      * @param direction the direction of the attack.
      */
     public void update(final AttackDirection direction) {
+        this.resizePanels();
         this.centralScene.update(direction);
         this.updateMessage(this.controller.getCombatState());
     }
@@ -74,7 +73,7 @@ public final class CombatView extends JPanel {
             (int) (this.getHeight() / SCREEN_TO_SCENE_RATIO)
         ));
         final var sideComponentDim = new Dimension(
-            (int) this.centralScene.getPreferredSize().getWidth(),
+            this.getWidth(),
             (int) (this.getHeight() - this.centralScene.getPreferredSize().getHeight() * SIDE_COMPONENTS_RATIO)
         );
         this.upperPadding.setPreferredSize(sideComponentDim);
@@ -102,20 +101,26 @@ public final class CombatView extends JPanel {
 
     private JPanel createCommandPanel() {
         final var panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        final var attack = new JButton("Attacca");
+        final var attack = this.getCustomButton("Attacca");
         attack.addActionListener(e -> this.controller.handleAction(CombatAction.ATTACK));
-        final var inventory = new JButton("Inventario");
+        final var inventory = this.getCustomButton("Inventario");
         inventory.addActionListener(e -> this.controller.handleAction(CombatAction.OPEN_INVENTORY));
-        final var mercy = new JButton("Chiedi pietà");
+        final var mercy = this.getCustomButton("Chiedi pieta'");
         mercy.addActionListener(e -> this.controller.handleAction(CombatAction.MERCY));
         final var buttons = List.of(attack, inventory, mercy);
 
-        buttons.forEach(e -> {
-            panel.add(e);
-            e.setFont(Constants.FONT);
-        });
+        buttons.forEach(panel::add);
 
         return panel;
+    }
+
+    private JButton getCustomButton(final String text) {
+        final var button = new JButton();
+        button.setFont(Constants.FONT);
+        button.setBackground(Constants.BACKGROUND_SCENE_COLOR);
+        button.setForeground(Constants.TEXT_SCENE_COLOR);
+        button.setText(text);
+        return button;
     }
 
 }

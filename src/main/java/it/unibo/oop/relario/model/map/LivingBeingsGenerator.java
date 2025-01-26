@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
-import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
@@ -13,9 +12,11 @@ import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.npc.NpcFactory;
 import it.unibo.oop.relario.model.entities.npc.NpcFactoryImpl;
+import it.unibo.oop.relario.model.quest.Quest;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.DimensionImpl;
+import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
 /**
@@ -38,26 +39,30 @@ public final class LivingBeingsGenerator {
     public void generateLivingBeings(final Room room) {
         final int npcNumber = random.nextInt(CHARACTERS_NUMBER - 2 + 1) + 2;
         final int enemiesNumber = CHARACTERS_NUMBER - npcNumber;
-
-        if (room.getQuest().isPresent()) {
-            final Position questNpcPosition = new PositionImpl(room.getEntry().getX() + 2, room.getEntry().getY() - 1);
-            room.addEntity(questNpcPosition, 
-            this.npcFactory.createQuestNpc(questNpcPosition, room.getQuest().get().getDescription()));
-        }
-        if (room.getQuest().isPresent() && room.getQuest().get().getKeyEntityType().isPresent()) {
-            this.addQuestKeyEntity(room);
-        }
+        this.addQuestEntities(room);
         divideRoom(room.getDimension());
         placeCharacters(room, enemiesNumber, this.enemyFactory::createRandomEnemy);
         placeCharacters(room, npcNumber, this.npcFactory::createRandomNpc);
     }
 
-    private void addQuestKeyEntity(final Room room) {
-        final GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType().get();
-        if (keyEntityType instanceof EnemyType) {
-            final Position enemyPosition = new PositionImpl(room.getExit().getX() - 4, room.getExit().getY());
-            room.addEntity(enemyPosition, this.enemyFactory.createEnemyByTypeEmpty((EnemyType) keyEntityType, enemyPosition));
+    private void addQuestEntities(final Room room) {
+        if (room.getQuest().isPresent()) {
+            final Quest quest = room.getQuest().get();
+            final Position questNpcPosition = new PositionImpl(room.getEntry().getX() + 2, room.getEntry().getY() - 1);
+            this.addCharacterToRoom(room, Direction.DOWN, 
+            this.npcFactory.createQuestNpc(questNpcPosition, quest.getDescription()));
+            if (quest.getKeyEntityType().isPresent() && quest.getKeyEntityType().get() instanceof EnemyType) {
+                final Position enemyPosition = new PositionImpl(room.getExit().getX() - 4, room.getExit().getY());
+                this.addCharacterToRoom(room, Direction.LEFT, 
+                this.enemyFactory.createEnemyByTypeEmpty((EnemyType) quest.getKeyEntityType().get(), enemyPosition));
+            }
         }
+    }
+
+    private void addCharacterToRoom(final Room room, final Direction direction, final LivingBeing keyCharacter) {
+        ((LivingBeingImpl) keyCharacter).setMoving(false);
+        ((LivingBeingImpl) keyCharacter).setDirection(direction);
+        room.addEntity(keyCharacter.getPosition().get(), keyCharacter);
     }
 
     private void divideRoom(final Dimension dimension) {
@@ -74,13 +79,12 @@ public final class LivingBeingsGenerator {
     LivingBeing> createCharacter) {
         int placedCharacters = 0;
         int attempts = 0;
-        while (placedCharacters < charactersNumber) {
-            final Position position = getRandomPositionInArea(this.areas.get(placedCharacters));
-            if (room.isPositionValid(position) && isAreaPositionValid(position, this.areas.get(placedCharacters))) {
+        while (placedCharacters < charactersNumber && attempts < LOOP_ATTEMPTS) {
+            final Area area = this.areas.get(random.nextInt(areas.size()));
+            final Position position = getRandomPositionInArea(area);
+            if (room.isPositionValid(position) && isAreaPositionValid(position, area)) {
                 room.addEntity(position, createCharacter.apply(position));
-                placedCharacters++;
-            } else if (attempts > LOOP_ATTEMPTS) {
-                attempts = 0;
+                this.areas.remove(area);
                 placedCharacters++;
             }
             attempts++;
@@ -89,9 +93,10 @@ public final class LivingBeingsGenerator {
 
     private boolean isAreaPositionValid(final Position position, final Area area) {
         return position.getX() + LivingBeingImpl.DIRECTION_RANGE
-        < area.initialPosition().getX() + area.dimension().getWidth() - 1
+        < area.initialPosition().getX() + area.dimension().getWidth() - 2
         && position.getX() - LivingBeingImpl.DIRECTION_RANGE > area.initialPosition().getX() + 1
-        && position.getY() > area.initialPosition.getY() + 1 && position.getY() < area.dimension().getHeight() - 1;
+        && position.getY() > area.initialPosition.getY() + 1 && position.getY() < area.initialPosition.getY() 
+        + area.dimension().getHeight() - 2;
     }
 
     private Position getRandomPositionInArea(final Area area) {

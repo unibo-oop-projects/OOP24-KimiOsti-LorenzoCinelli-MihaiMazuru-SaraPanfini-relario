@@ -34,7 +34,10 @@ public final class NpcImpl extends LivingBeingImpl implements Npc {
     @Override
     public InteractionOutput interact() {
         this.hasInteracted = true;
-        return new InteractionOutput(this.behavior.getDialogue(hasLoot), loot);
+        return new InteractionOutput(
+            this.behavior.getDialogue(hasLoot),
+            hasLoot ? loot : Optional.empty()
+        );
     }
 
     @Override
