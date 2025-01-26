@@ -34,8 +34,8 @@ public final class SoundLocators {
                 new File(Constants.RESOURCES_FOLDER_URL + AUDIO_BASE_URL + name + AUDIO_EXTENSION).getAbsoluteFile()
             );
             clip = AudioSystem.getClip();
-            setVolume(clip, volume);
             clip.open(audioInputStream);
+            setVolume(clip, volume);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             clip = null;
         }
