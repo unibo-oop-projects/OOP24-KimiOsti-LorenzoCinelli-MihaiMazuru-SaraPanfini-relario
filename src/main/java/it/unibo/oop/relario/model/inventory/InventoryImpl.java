@@ -51,7 +51,8 @@ public final class InventoryImpl implements Inventory {
     @Override
     public void attacked(final int damage) {
         final var resistance = this.life + (this.armor.isPresent() ? this.armor.get().getIntensity() : 0);
-        this.life = resistance > damage ? resistance - damage : 0;
+        this.life = resistance < damage ? 0
+        : resistance - damage > this.life ? this.life : resistance - damage;
         armor.ifPresent(e -> {
             e.decreaseDurability();
             if (e.getDurability() == 0) {

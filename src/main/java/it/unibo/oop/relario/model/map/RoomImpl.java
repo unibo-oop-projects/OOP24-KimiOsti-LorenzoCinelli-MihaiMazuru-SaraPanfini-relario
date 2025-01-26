@@ -13,7 +13,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.LivingBeing;
-import it.unibo.oop.relario.model.entities.LivingBeingImpl;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
@@ -136,20 +135,23 @@ public final class RoomImpl implements Room {
 
     @Override
     public void update() {
-        final Map<Position, LivingBeing> buffer = new HashMap<>();
+        final Map<Position, LivingBeing> buffer = new HashMap<>(this.population);
+        // final Map<Position, LivingBeing> temp = new HashMap<>(this.population);
         if (!Interactions.canMove(this.player.getPosition().get(), this.player.getDirection(), 
         this.dimension, this.population, this.furniture)) {
             this.player.stop();
         }
         this.player.update();
+        buffer.put(this.player.getPosition().get(), player);
         for (final LivingBeing chara : this.population.values()) {
-            if (!Interactions.canMove(chara.getPosition().get(), chara.getDirection(), 
-            this.dimension, this.population, this.furniture)) {
-                ((LivingBeingImpl) chara).changeDirection();
+            if (Interactions.canMove(chara.getPosition().get(), chara.getDirection(), 
+            this.dimension, buffer, this.furniture)) {
+                buffer.remove(chara.getPosition().get());
+                chara.update();
+                buffer.put(chara.getPosition().get(), chara);
             }
-            chara.update();
-            buffer.put(chara.getPosition().get(), chara);
         }
+        buffer.remove(this.player.getPosition().get());
         this.population = buffer;
     }
 
@@ -182,11 +184,30 @@ public final class RoomImpl implements Room {
         this.cellStates.putAll(IntStream.range(0, this.dimension.getWidth())
         .boxed().flatMap(x -> IntStream.range(0, this.dimension.getHeight())
         .mapToObj(y -> new PositionImpl(x, y))).collect(Collectors.toMap(pos -> pos,
-        pos -> isPerimeter(pos.getX(), pos.getY()) ? CellState.PERIMETER_EMPTY
-        : isInnerPerimeter(pos.getX(), pos.getY()) ? CellState.RESTRICTED : CellState.INNER_EMPTY)));
+        pos -> isPerimeter(pos.getX(), pos.getY()) && !isCorner(pos) ? CellState.PERIMETER_EMPTY
+        : isInnerPerimeter(pos.getX(), pos.getY()) || isCorner(pos)
+        ? CellState.RESTRICTED : CellState.INNER_EMPTY)));
         this.cellStates.put(this.entry, CellState.RESTRICTED);
         this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() - 1), CellState.RESTRICTED);
         this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() + 1), CellState.RESTRICTED);
+        this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() - 2), CellState.RESTRICTED);
+        this.cellStates.put(new PositionImpl(this.entry.getX(), this.entry.getY() + 2), CellState.RESTRICTED);
+    }
+
+    private boolean isCorner(final Position position) {
+        final Position topLeft = new PositionImpl(0, 0);
+        final Position topRight = new PositionImpl(this.dimension.getWidth() - 1, 0);
+        final Position bottomLeft = new PositionImpl(0, this.dimension.getHeight() - 1);
+        final Position bottomRight = new PositionImpl(this.dimension.getWidth() - 1, this.dimension.getHeight() - 1);
+        return position.equals(topLeft) || position.equals(topRight) || position.equals(bottomLeft) 
+        || position.equals(bottomRight) || isAdjacent(position, topLeft) || isAdjacent(position, topRight)
+        || isAdjacent(position, bottomLeft) || isAdjacent(position, bottomRight);
+    }
+
+    private boolean isAdjacent(final Position pos1, final Position pos2) {
+        final int dx = Math.abs(pos1.getX() - pos2.getX());
+        final int dy = Math.abs(pos1.getY() - pos2.getY());
+        return (dx == 1 && dy == 0) || (dx == 0 && dy == 1);
     }
 
     private boolean isPerimeter(final int x, final int y) {

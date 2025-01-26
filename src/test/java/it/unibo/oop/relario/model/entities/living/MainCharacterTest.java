@@ -128,6 +128,9 @@ class MainCharacterTest {
         chara.addToInventory(oldTutu);
         chara.useItem(oldTutu);
 
+        chara.attacked(oldTutu.getIntensity() - 1);
+        assertEquals(Constants.PLAYER_LIFE, chara.getLife());
+
         for (int i = 0; i < 3; i++) {
             chara.attacked(Constants.PLAYER_LIFE / 3);
             assertTrue(chara.getLife() > 0);

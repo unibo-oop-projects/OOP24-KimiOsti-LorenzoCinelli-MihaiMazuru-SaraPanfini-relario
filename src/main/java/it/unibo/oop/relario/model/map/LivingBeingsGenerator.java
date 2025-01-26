@@ -8,11 +8,15 @@ import java.util.function.Function;
 import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.LivingBeingImpl;
+import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactory;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
+import it.unibo.oop.relario.model.entities.enemies.EnemyImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
+import it.unibo.oop.relario.model.entities.npc.Npc;
 import it.unibo.oop.relario.model.entities.npc.NpcFactory;
 import it.unibo.oop.relario.model.entities.npc.NpcFactoryImpl;
+import it.unibo.oop.relario.model.entities.npc.NpcImpl;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.DimensionImpl;
@@ -41,8 +45,9 @@ public final class LivingBeingsGenerator {
 
         if (room.getQuest().isPresent()) {
             final Position questNpcPosition = new PositionImpl(room.getEntry().getX() + 2, room.getEntry().getY() - 1);
-            room.addEntity(questNpcPosition, 
-            this.npcFactory.createQuestNpc(questNpcPosition, room.getQuest().get().getDescription()));
+            final Npc questNpc = this.npcFactory.createQuestNpc(questNpcPosition, room.getQuest().get().getDescription());
+            ((NpcImpl) questNpc).setMoving(false);
+            room.addEntity(questNpcPosition, questNpc);
         }
         if (room.getQuest().isPresent() && room.getQuest().get().getKeyEntityType().isPresent()) {
             this.addQuestKeyEntity(room);
@@ -56,7 +61,9 @@ public final class LivingBeingsGenerator {
         final GameEntityType keyEntityType = room.getQuest().get().getKeyEntityType().get();
         if (keyEntityType instanceof EnemyType) {
             final Position enemyPosition = new PositionImpl(room.getExit().getX() - 4, room.getExit().getY());
-            room.addEntity(enemyPosition, this.enemyFactory.createEnemyByTypeEmpty((EnemyType) keyEntityType, enemyPosition));
+            final Enemy enemy = this.enemyFactory.createEnemyByTypeEmpty((EnemyType) keyEntityType, enemyPosition);
+            ((EnemyImpl) enemy).setMoving(false);
+            room.addEntity(enemyPosition, enemy);
         }
     }
 

@@ -15,6 +15,8 @@ public abstract class LivingBeingImpl implements LivingBeing {
     /** The number of updates after which the character changes direction. */
     public static final int DIRECTION_RANGE = 2;
 
+    private static final int UPDATE_FREQUENCY = 8;
+
     private boolean moving;
     private final String name;
     private Position position;
@@ -48,11 +50,13 @@ public abstract class LivingBeingImpl implements LivingBeing {
     public final void update() {
         if (moving) {
             counter++;
-            if (counter > DIRECTION_RANGE) {
+            if (counter % UPDATE_FREQUENCY == 0) {
+                setPosition(this.direction.move(position));
+            }
+            if (counter >= DIRECTION_RANGE * UPDATE_FREQUENCY) {
                 changeDirection();
-                counter = 1;
-            } 
-            setPosition(this.direction.move(position));
+                counter = 0;
+            }
         }
     }
 
@@ -61,10 +65,7 @@ public abstract class LivingBeingImpl implements LivingBeing {
         return this.direction;
     }
 
-    /**
-     * Allows to change the direction of the living beings.
-     */
-    public final void changeDirection() {
+    private final void changeDirection() {
         this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
     }
 
