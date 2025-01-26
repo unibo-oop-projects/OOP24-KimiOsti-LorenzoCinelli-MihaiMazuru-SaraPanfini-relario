@@ -44,7 +44,7 @@ public class QuestManager {
         this.roomQuests.put(SECOND_ROOM, new Pair<>(QuestType.COLLECTION_QUEST, Optional.of(InventoryItemType.KEY)));
         this.questDescriptions.put(SECOND_ROOM, """
                 <html>La chiave per aprire la porta &egrave scomparsa!<br>
-                Sono sicuro che &egrave da qualche parte qui vicino.<br>
+                Sono sicuro che sia da qualche parte qui vicino.<br>
                 Ti prego, puoi aiutarmi a trovarla?<html>
                 """);
         this.roomQuests.put(THIRD_ROOM, new Pair<>(QuestType.NPC_INTERACT_QUEST, Optional.empty()));
@@ -67,7 +67,9 @@ public class QuestManager {
      * @param indexRoom the room's index.
      */
     public void assignQuest(final Room room, final int indexRoom) {
-        final Pair<QuestType, Optional<GameEntityType>> quest = this.roomQuests.get(indexRoom);
+        final Pair<QuestType, Optional<GameEntityType>> quest = this.roomQuests.get(indexRoom) == null
+        ? new Pair<>(QuestType.NO_QUEST, Optional.empty())
+        : this.roomQuests.get(indexRoom);
         room.setQuest(quest.getX().equals(QuestType.NO_QUEST) ? Optional.empty() 
         : Optional.of(this.questFactory.createQuestByType(questDescriptions.get(indexRoom), quest.getX(), quest.getY())));
     }
