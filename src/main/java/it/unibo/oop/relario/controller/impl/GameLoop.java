@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.swing.SwingUtilities;
 
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.view.impl.GameView;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameState;
@@ -40,6 +41,7 @@ public final class GameLoop extends Thread {
             if (currCycleTS - prevCycleTS >= Constants.REFRESH_TIME) {
                 prevCycleTS = currCycleTS;
                 model.get().update();
+                SwingUtilities.invokeLater(this::renderTexts);
                 SwingUtilities.invokeLater(this::renderForegroundScene);
             } else {
                 try {
@@ -77,6 +79,17 @@ public final class GameLoop extends Thread {
             final var population = new HashMap<>(model.get().getPopulation());
             population.put(model.get().getPlayer().getPosition().get(), model.get().getPlayer());
             ((GameView) gameView).renderTextures(GameTexturesLocator.processModel(population));
+        }
+    }
+
+    private void renderTexts() {
+        final var gameView = this.controller.getMainView().getPanel(GameState.GAME);
+        final var model = this.controller.getCurRoom();
+        if (!Interactions.canInteract(
+            model.get().getPlayer().getPosition().get(), 
+            model.get().getPlayer().getDirection(), 
+            model.get().getPopulation(), model.get().getFurniture())) {
+                ((GameView) gameView).showInteractionText("");
         }
     }
 
