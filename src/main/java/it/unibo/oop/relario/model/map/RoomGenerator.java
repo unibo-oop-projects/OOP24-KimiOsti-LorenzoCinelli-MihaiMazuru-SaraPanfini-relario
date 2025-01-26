@@ -17,8 +17,7 @@ public final class RoomGenerator {
     /** The default dimension of a room. */
     public static final Dimension DEFAULT_DIMENSION = new DimensionImpl(20, 13);
 
-    /** TODO. */
-    public static final int ROOMS_NUMBER = 4;
+    private static final int ROOMS_NUMBER = 4;
 
     private final Position defaultEntry;
     private final Position defaultExit;
@@ -50,9 +49,10 @@ public final class RoomGenerator {
     }
 
     /**
-     * 
-     * @param indexRoom
-     * @return TODO
+     * Retrieves a room by its index.
+     * If the index is valid, a new room is created.
+     * @param indexRoom index of the room that has to be created
+     * @return an optional containing the new room, or empty if the index is not valid
      */
     public Optional<Room> getRoom(final int indexRoom) {
         return indexRoom <= ROOMS_NUMBER ? Optional.of(createNewRoom(indexRoom)) : Optional.empty();

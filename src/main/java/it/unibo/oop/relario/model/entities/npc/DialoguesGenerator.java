@@ -23,7 +23,7 @@ public final class DialoguesGenerator {
         this.random = new Random();
         this.dialogues.put(DialogueType.DEFAULT, new ArrayList<>(Arrays.asList(
             "<html>Oggi &egrave una bella giornata!<html>", "Sono impegnato, non mi disturbare.", 
-            "Hai tutto ci&ograve che ti serve per superare questa sfida.", 
+            "<html>Hai tutto ci&ograve che ti serve per superare questa sfida.<html>", 
             "<html>Non sei il primo a passare di qui, chiss&agrave dove sono finiti gli altri...<html>", 
             "<html>Questo castello era diverso un tempo, ma ora &egrave solo ombre e polvere.<html>",
             "A volte guardo il soffitto e mi chiedo... chi lo ha pulito l'ultima volta?",

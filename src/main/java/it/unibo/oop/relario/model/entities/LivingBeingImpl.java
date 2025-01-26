@@ -77,6 +77,14 @@ public abstract class LivingBeingImpl implements LivingBeing {
         this.moving = moving;
     }
 
+    /**
+     * Sets the direction of the living being.
+     * @param direction the direction that has to be set
+     */
+    public void setDirection(final Direction direction) {
+        this.direction = direction;
+    }
+
     private void setPosition(final Position position) {
         this.position = position;
     }
