@@ -65,7 +65,7 @@ public abstract class LivingBeingImpl implements LivingBeing {
         return this.direction;
     }
 
-    private final void changeDirection() {
+    private void changeDirection() {
         this.direction = this.direction.equals(Direction.RIGHT) ? Direction.LEFT : Direction.RIGHT;
     }
 
