@@ -16,7 +16,6 @@ import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.npc.Npc;
-import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.map.Room;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
@@ -31,14 +30,13 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  */
 final class InteractionsHandlerTest {
 
-    private MainController controller;
-    private InteractionsHandler handler;
+    private final MainController controller;
+    private final InteractionsHandler handler;
     private Pair<Position, Npc> itemNpc;
     private Pair<Position, Enemy> enemy;
     private Pair<Position, InteractiveFurniture> itemFurniture;
     private Pair<Position, WalkableFurniture> enemyFurniture;
     private Pair<Position, WalkableFurniture> emptyWalkableFurniture;
-    private InventoryItem item;
 
     InteractionsHandlerTest() {
         controller = new MainControllerImpl();
@@ -63,7 +61,6 @@ final class InteractionsHandlerTest {
                 new PositionImpl(this.itemNpc.getX().getX() - 1, this.itemNpc.getX().getY())
             );
             assertTrue(this.itemNpc.getY().interact().getLoot().isPresent());
-            item = this.itemNpc.getY().interact().getLoot().get();
             this.handler.handleInteraction(this.controller.getCurRoom().get());
             assertFalse(this.controller.getCurRoom().get().getPlayer().getItems().isEmpty());
             assertTrue(this.controller.getCurRoom().get().getPlayer().discardItem(
@@ -79,7 +76,7 @@ final class InteractionsHandlerTest {
             this.controller.getCurRoom().get().getPlayer().setPosition(
                 new PositionImpl(this.itemFurniture.getX().getX() - 1, this.itemFurniture.getX().getY())
             );
-            item = this.itemFurniture.getY().dropLoot();
+            final var item = this.itemFurniture.getY().dropLoot();
             this.itemFurniture.getY().addLoot(item);
             assertTrue(this.itemFurniture.getY().hasLoot());
             this.handler.handleInteraction(this.controller.getCurRoom().get());
