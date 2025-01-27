@@ -64,7 +64,7 @@ public final class CombatView extends JPanel {
      */
     public void update(final AttackDirection direction) {
         this.resizePanels();
-        /*this.centralScene.update(direction);*/
+        this.combatScene.update(direction);
         this.updateMessage(this.controller.getCombatState());
     }
 
