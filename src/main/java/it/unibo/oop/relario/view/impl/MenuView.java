@@ -36,7 +36,7 @@ public final class MenuView extends JPanel {
     private static final int INSETS = 3;
     private static final double RATIO = 0.5;
     private static final String LOGO = "logo/logo";
-    private static final String SONG_URL = "menu";
+    private static final String SONG_URL = "soundtrack/menu";
     private static final float FONT_SIZE = 28f;
     private static final float FONT_GUIDE_SIZE = 6f;
     private static final double VOLUME = 0.5;

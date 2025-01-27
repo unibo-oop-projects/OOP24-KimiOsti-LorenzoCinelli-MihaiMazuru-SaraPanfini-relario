@@ -30,8 +30,8 @@ public final class CombatView extends JPanel {
     private static final double SIDE_COMPONENTS_RATIO = 0.25;
     private static final double FONT_TO_PANEL_RATIO = 0.25;
     private static final double VOLUME = 0.5;
-    private static final String FIGHT_SONG_URL = "combat/../combat/boss";
-    private static final String BOSS_FIGHT_SONG_URL = "combat/boss";
+    private static final String FIGHT_SONG_URL = "combat/../soundtrack//boss_battle";
+    private static final String BOSS_FIGHT_SONG_URL = "soundtrack/boss_battle";
 
     private final transient CombatController controller;
     private final JPanel upperPadding;

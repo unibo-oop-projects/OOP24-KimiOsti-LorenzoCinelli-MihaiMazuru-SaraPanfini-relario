@@ -28,7 +28,7 @@ public final class GameView extends JPanel {
     private static final double SCREEN_TO_MAP_RATIO = 1.5;
     private static final double VOLUME = 0.5;
     private static final int GRID_GAP = 0;
-    private static final String SONG_URL = "game";
+    private static final String SONG_URL = "soundtrack/game";
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
