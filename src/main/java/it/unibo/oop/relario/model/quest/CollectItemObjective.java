@@ -3,6 +3,7 @@ package it.unibo.oop.relario.model.quest;
 import java.util.Optional;
 
 import it.unibo.oop.relario.model.GameEntityType;
+import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.model.map.Room;
@@ -19,7 +20,8 @@ public final class CollectItemObjective implements ObjectiveStrategy {
      * @param keyItemType the type of the item to be collected.
      */
     public CollectItemObjective(final Optional<GameEntityType> keyItemType) {
-        if (keyItemType.isPresent() && keyItemType.get() instanceof InventoryItemType) {
+        if (keyItemType.isPresent() && keyItemType.get() instanceof InventoryItemType it
+            && it.getEffect().equals(EffectType.QUEST)) {
             this.keyItemType = Optional.of((InventoryItemType) keyItemType.get());
         } else {
             throw new IllegalArgumentException();

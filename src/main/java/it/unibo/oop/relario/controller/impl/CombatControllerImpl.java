@@ -67,6 +67,7 @@ public final class CombatControllerImpl implements CombatController {
 
             this.combatView = (CombatView) this.view.getPanel(GameState.COMBAT);
             SwingUtilities.invokeLater(this::drawNone);
+            this.combatView.startSoundTrack(this.enemy.getType());
             this.view.showPanel(GameState.COMBAT);
         }
     }
@@ -147,20 +148,22 @@ public final class CombatControllerImpl implements CombatController {
             combatState = this.player.getName() + " hai vinto il combattimento";
 
             SwingUtilities.invokeLater(this::drawNone);
-            if (enemy.getType().equals(EnemyType.BOSS)) {
-                final var timer = new Timer(DELAY_TRANSITION, 
-                e -> this.controller.getCutSceneController().show(GameState.VICTORY));
-                timer.setRepeats(false);
-                timer.start();
-            } else {
-                final var timer = new Timer(DELAY_TRANSITION, 
-                e -> this.controller.getGameController().run(true));
-                timer.setRepeats(false);
-                timer.start();
-            }
+            final var timer = new Timer(DELAY_TRANSITION, e -> {
+                this.combatView.stopSoundTrack();
+                if (enemy.getType().equals(EnemyType.BOSS)) {
+                    this.controller.getCutSceneController().show(GameState.VICTORY);
+                } else {
+                    this.controller.getGameController().run(true);
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
+
         } else if (player.getLife() <= 0) {
-            final var timer = new Timer(DELAY_TRANSITION, 
-                e -> this.controller.getCutSceneController().show(GameState.GAME_OVER));
+            final var timer = new Timer(DELAY_TRANSITION, e -> {
+                this.combatView.stopSoundTrack();
+                this.controller.getCutSceneController().show(GameState.GAME_OVER);
+            });
             timer.setRepeats(false);
             timer.start();
 
@@ -175,8 +178,10 @@ public final class CombatControllerImpl implements CombatController {
             + "\nSei libero di andare";
 
             SwingUtilities.invokeLater(this::drawNone);
-            final var timer = new Timer(DELAY_TRANSITION, 
-                e -> this.controller.getGameController().run(true));
+            final var timer = new Timer(DELAY_TRANSITION, e -> {
+                this.combatView.stopSoundTrack();
+                this.controller.getGameController().run(true);
+            });
             timer.setRepeats(false);
             timer.start();
         } else {

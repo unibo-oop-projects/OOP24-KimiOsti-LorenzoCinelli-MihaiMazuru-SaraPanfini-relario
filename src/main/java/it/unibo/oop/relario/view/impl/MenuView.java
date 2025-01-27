@@ -39,6 +39,7 @@ public final class MenuView extends JPanel {
     private static final String SONG_URL = "menu";
     private static final float FONT_SIZE = 28f;
     private static final float FONT_GUIDE_SIZE = 6f;
+    private static final double VOLUME = 0.5;
 
     private final transient MainController controller;
     private transient Clip song;
@@ -76,9 +77,8 @@ public final class MenuView extends JPanel {
     /**
      * Starts the menu sound track.
      */
-    public void startSong() {
-        this.song = SoundLocators.getAudio(SONG_URL);
-        // regola volume
+    public void startSoundTrack() {
+        this.song = SoundLocators.getAudio(SONG_URL, VOLUME);
         this.song.loop(Clip.LOOP_CONTINUOUSLY);
     }
 

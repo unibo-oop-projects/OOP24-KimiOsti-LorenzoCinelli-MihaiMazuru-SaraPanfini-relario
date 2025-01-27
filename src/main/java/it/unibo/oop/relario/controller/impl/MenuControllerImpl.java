@@ -37,7 +37,7 @@ public final class MenuControllerImpl implements MenuController {
         this.prevState = prevState;
         final var panel = this.view.getPanel(menuType);
         if (menuType.equals(GameState.MENU) && panel instanceof MenuView) {
-            ((MenuView) panel).startSong();
+            ((MenuView) panel).startSoundTrack();
         }
         this.view.showPanel(menuType);
     }

@@ -9,6 +9,7 @@ import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
 import it.unibo.oop.relario.view.api.MainView;
+import it.unibo.oop.relario.view.impl.GameView;
 
 /**
  * Implementation for the Game Controller.
@@ -63,6 +64,10 @@ public final class GameControllerImpl implements GameController {
 
     private void startGameLoop() {
         this.mainView.showPanel(GameState.GAME);
+        final var panel = this.mainView.getPanel(GameState.GAME);
+        if (panel instanceof GameView) {
+            ((GameView) panel).startSoundTrack();
+        }
         this.gameLoop = new GameLoop(this.controller);
         this.gameLoop.start();
     }

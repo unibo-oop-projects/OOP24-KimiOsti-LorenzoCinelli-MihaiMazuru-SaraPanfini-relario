@@ -6,6 +6,7 @@ import java.util.Map;
 import java.awt.GridLayout;
 import java.awt.Image;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -15,6 +16,7 @@ import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.GameKeyListener;
 import it.unibo.oop.relario.utils.impl.GameTexturesLocator;
+import it.unibo.oop.relario.utils.impl.SoundLocators;
 import it.unibo.oop.relario.view.api.GameViewComponentManager;
 
 /**
@@ -24,12 +26,15 @@ public final class GameView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final double SCREEN_TO_MAP_RATIO = 1.5;
+    private static final double VOLUME = 0.5;
     private static final int GRID_GAP = 0;
+    private static final String SONG_URL = "game";
 
     private final JPanel upperPanel;
     private final JPanel mapPanel;
     private final JPanel lowerPanel;
     private final transient GameViewComponentManager componentManager;
+    private transient Clip song;
     private final List<BackgroundTile> background;
     private final List<String> commands;
     private final List<Position> foreground;
@@ -97,6 +102,23 @@ public final class GameView extends JPanel {
      */
     public void showInteractionText(final String text) {
         this.updateComponent(this.lowerPanel, List.of(text));
+    }
+
+    /**
+     * Starts the menu sound track.
+     */
+    public void startSoundTrack() {
+        if (this.song == null || !this.song.isRunning()) {
+            this.song = SoundLocators.getAudio(SONG_URL, VOLUME);
+            this.song.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+
+    /**
+     * Stops the menu sound track.
+     */
+    public void stopSoundTrack() {
+        this.song.close();
     }
 
     private void renderFloor(final Dimension dimension) {
