@@ -32,7 +32,7 @@ public final class Constants {
     /**
      * Duration of the introduction scene time.
      */
-    public static final int INTRODUCTION_SCENE_TIME = 15_000;
+    public static final int INTRODUCTION_SCENE_TIME = 10_000;
 
     /**
      * The game's resources container folder.
