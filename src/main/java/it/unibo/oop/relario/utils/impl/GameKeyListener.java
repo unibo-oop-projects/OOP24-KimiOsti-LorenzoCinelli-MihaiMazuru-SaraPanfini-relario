@@ -37,10 +37,15 @@ public final class GameKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(final KeyEvent e) {
-        if (this.isValidKey(e.getKeyCode())) {
+        if (this.isMovementKey(e.getKeyCode())) {
             this.observer.notify(Event.RELEASED);
         }
     } 
+
+    private boolean isMovementKey(final int keyCode) {
+        return keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_A
+            || keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_D;
+    }
 
     /**
      * Checks if the key pressed is a valid key.
