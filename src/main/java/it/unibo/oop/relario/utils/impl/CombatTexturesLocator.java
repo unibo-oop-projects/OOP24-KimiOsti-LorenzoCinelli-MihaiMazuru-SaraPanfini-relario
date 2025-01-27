@@ -20,7 +20,8 @@ public final class CombatTexturesLocator {
      */
     public static Image getTexture(final Enemy enemy) {
         return Toolkit.getDefaultToolkit().getImage(
-            new StringBuilder(Constants.COMBAT_TEXTURES_URL)
+            new StringBuilder(Constants.RESOURCES_FOLDER_URL)
+            .append(Constants.COMBAT_TEXTURES_URL)
             .append(enemy.getName().toLowerCase(Locale.ITALIAN))
             .append(Constants.TEXTURES_EXTENSION)
             .toString()
