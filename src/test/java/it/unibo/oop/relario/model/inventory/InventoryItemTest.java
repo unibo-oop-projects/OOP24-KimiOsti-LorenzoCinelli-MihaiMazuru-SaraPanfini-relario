@@ -26,10 +26,10 @@ final class InventoryItemTest {
      */
     @BeforeEach
     void setUp() {
-        this.inventoryItems.add(new InventoryItemImpl("Cibo curativo", InventoryItemType.APPLE, 1));
-        this.inventoryItems.add(new InventoryItemImpl("Moneta antica", InventoryItemType.COIN, 0));
-        this.inventoryItems.add(new EquippableItem("Arma affilata", InventoryItemType.SWORD, 5, 3));
-        this.inventoryItems.add(new EquippableItem("Armatura di ferro", InventoryItemType.BASICARMOR, 4, 2));
+        this.inventoryItems.add(new InventoryItemImpl("Mela", "Cibo curativo", InventoryItemType.APPLE, 1));
+        this.inventoryItems.add(new InventoryItemImpl("Moneta", "Moneta antica", InventoryItemType.COIN, 0));
+        this.inventoryItems.add(new EquippableItem("Spada", "Arma affilata", InventoryItemType.SWORD, 5, 3));
+        this.inventoryItems.add(new EquippableItem("Armatura semplice", "Armatura di ferro", InventoryItemType.BASICARMOR, 4, 2));
     }
 
     /**

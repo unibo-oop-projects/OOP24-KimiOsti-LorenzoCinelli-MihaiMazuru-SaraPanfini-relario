@@ -11,17 +11,20 @@ import it.unibo.oop.relario.utils.api.Position;
 
 public class InventoryItemImpl implements InventoryItem {
 
+    private final String name;
     private final String description;
     private final int intensity;
     private final InventoryItemType type;
 
     /**
      * Constructs an inventory item, with the specified name, description, type and intensity.
+     * @param name of the inventory item
      * @param description of the inventory item
      * @param type of the inventory item
      * @param intensity of the inventory item
      */
-    public InventoryItemImpl(final String description, final InventoryItemType type, final int intensity) {
+    public InventoryItemImpl(final String name, final String description, final InventoryItemType type, final int intensity) {
+        this.name = name;
         this.description = description;
         this.type = type;
         this.intensity = intensity;
@@ -29,7 +32,7 @@ public class InventoryItemImpl implements InventoryItem {
 
     @Override
     public final String getName() {
-        return this.type.getName();
+        return this.name;
     }
 
     @Override

@@ -11,14 +11,15 @@ public class EquippableItem extends InventoryItemImpl {
 
     /**
      * Constructs an equippable item with the specified name, description, type, intensitity and durability.
+     * @param name of the item
      * @param description of the item
      * @param type of the item
      * @param intensity of the item's effect
      * @param durability of the item, that states how long it can be used
      */
-    public EquippableItem(final String description, final InventoryItemType type, 
+    public EquippableItem(final String name, final String description, final InventoryItemType type, 
     final int intensity, final int durability) {
-        super(description, type, intensity);
+        super(name, description, type, intensity);
         this.durability = durability;
     }
 
