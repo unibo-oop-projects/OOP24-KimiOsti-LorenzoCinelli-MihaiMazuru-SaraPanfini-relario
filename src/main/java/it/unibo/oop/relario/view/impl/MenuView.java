@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Label;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public final class MenuView extends JPanel {
     private static final String LOGO = "logo/logo";
     private static final String SONG_URL = "menu";
     private static final float FONT_SIZE = 28f;
+    private static final float FONT_GUIDE_SIZE = 6f;
 
     private final transient MainController controller;
     private transient Clip song;
@@ -89,6 +91,11 @@ public final class MenuView extends JPanel {
                 timer.setRepeats(false);
                 timer.start();
                 this.controller.getCutSceneController().show(GameState.MENU);
+            } else if (e.getActionCommand().equals(Command.INFO.getName())) {
+                final Label l = new Label("How to play the game");
+                l.setFont(Constants.FONT.deriveFont(FONT_GUIDE_SIZE));
+                JOptionPane.showConfirmDialog(this, l, 
+                "Guide", JOptionPane.CLOSED_OPTION);
             } else if (e.getActionCommand().equals(Command.CLOSE.getName())) {
                 this.controller.getMenuController().notify(Event.ESCAPE);
             } else if (e.getActionCommand().equals(Command.QUIT.getName())) {
