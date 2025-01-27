@@ -38,8 +38,8 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final double CHARACTER_RATIO = 0.075;
     private static final String CHARACTER_IMAGE_URL = "cutscene/character";
     private static final String DOOR_SOUND_URL = "cutscene/door_sound";
-    private static final String DEFEAT_SOUND_URL = "cutscene/door_sound";
-    private static final String VICTORY_SOUND_URL = "cutscene/door_sound";
+    private static final String DEFEAT_SOUND_URL = "cutscene/defeat_sound";
+    private static final String VICTORY_SOUND_URL = "cutscene/victory_sound";
     private static final Map<Scene, String> MESSAGES = Map.of(
         Scene.INTRODUCTION, """
         <html>Il vecchio re di Relario sentiva vicino il momento della sua fine,<br>
