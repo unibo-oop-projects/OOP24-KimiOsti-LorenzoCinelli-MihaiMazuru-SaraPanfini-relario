@@ -5,6 +5,7 @@ import java.util.Optional;
 import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
+import it.unibo.oop.relario.model.inventory.EffectType;
 import it.unibo.oop.relario.model.map.Room;
 
 /**
@@ -19,7 +20,8 @@ public final class DefeatEnemyObjective implements ObjectiveStrategy {
      * @param keyEnemyType the type of the enemy that has to be defeated.
      */
     public DefeatEnemyObjective(final Optional<GameEntityType> keyEnemyType) {
-        if (keyEnemyType.isPresent() && keyEnemyType.get() instanceof EnemyType) {
+        if (keyEnemyType.isPresent() && keyEnemyType.get() instanceof EnemyType en
+            && en.getEffect().equals(EffectType.QUEST)) {
             this.keyEnemyType = Optional.of((EnemyType) keyEnemyType.get());
         } else {
             throw new IllegalArgumentException();

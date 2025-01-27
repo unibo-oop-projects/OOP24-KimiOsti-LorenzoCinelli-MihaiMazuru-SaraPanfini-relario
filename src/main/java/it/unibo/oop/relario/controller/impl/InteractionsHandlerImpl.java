@@ -49,12 +49,12 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                 if (entity.get() instanceof Npc) {
                     this.interactWithNpc((Npc) entity.get(), curRoom);
                 } else if (entity.get() instanceof Enemy) {
-                    this.startEnemyCombat((Enemy) entity.get());
+                    this.startEnemyCombat();
                 } else if (entity.get() instanceof InteractiveFurniture) {
                     this.interactWithFurniture((InteractiveFurniture) entity.get(), curRoom);
                 } else if (entity.get() instanceof WalkableFurniture
                     && ((WalkableFurniture) entity.get()).hasEnemy()) {
-                    this.startEnemyCombat(((WalkableFurniture) entity.get()).removeEnemy());
+                    this.startEnemyCombat();
                 } else {
                     this.resumeGame();
                 }
@@ -79,8 +79,8 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
         this.resumeGame();
     }
 
-    private void startEnemyCombat(final Enemy enemy) {
-        this.controller.getCombatController().initializeCombat(enemy);
+    private void startEnemyCombat() {
+        this.controller.getCombatController().initializeCombat();
     }
 
     private void interactWithFurniture(final InteractiveFurniture furniture, final Room curRoom) {
