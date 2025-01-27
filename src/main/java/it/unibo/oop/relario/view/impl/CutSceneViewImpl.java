@@ -38,6 +38,8 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     private static final double CHARACTER_RATIO = 0.075;
     private static final String CHARACTER_IMAGE_URL = "cutscene/character";
     private static final String DOOR_SOUND_URL = "door_sound";
+    private static final String DEFEAT_SOUND_URL = "door_sound";
+    private static final String VICTORY_SOUND_URL = "door_sound";
     private static final Map<Scene, String> MESSAGES = Map.of(
         Scene.INTRODUCTION, """
         <html>Il vecchio re di Relario sentiva vicino il momento della sua fine,<br>
@@ -99,7 +101,12 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showVictoryScene() {
         this.sceneLoader(Scene.VICTORY);
-        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progressView(GameState.MENU));
+        final var audio = SoundLocators.getAudio(VICTORY_SOUND_URL, VOLUME);
+        audio.start();
+        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> {
+            audio.close();
+            this.controller.progressView(GameState.MENU);
+        });
         timer.setRepeats(false);
         timer.start();
         this.controller.progressGame(GameState.MENU);
@@ -108,7 +115,12 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     @Override
     public void showDefeatScene() {
         this.sceneLoader(Scene.DEFEAT);
-        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> this.controller.progressView(GameState.MENU));
+        final var audio = SoundLocators.getAudio(DEFEAT_SOUND_URL, VOLUME);
+        audio.start();
+        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> {
+            audio.close();
+            this.controller.progressView(GameState.MENU);
+        });
         timer.setRepeats(false);
         timer.start();
         this.controller.progressGame(GameState.MENU);
