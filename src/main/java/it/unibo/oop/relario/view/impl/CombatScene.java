@@ -55,14 +55,8 @@ public final class CombatScene extends JPanel {
     public void update(final AttackDirection direction) {
         this.resizePanels();
         this.updateEnemyInfo();
-        this.updateEnemyTexture();
+        this.updateEnemyTexture(direction);
         this.updatePlayerInfo();
-        /*
-        if (direction != AttackDirection.NONE) {
-            final var animation = new CombatAnimationImpl(direction);
-            panel.add(animation);
-            animation.start();
-        }*/
     }
 
     private JPanel getInfoPanel() {
@@ -109,12 +103,17 @@ public final class CombatScene extends JPanel {
         );
     }
 
-    private void updateEnemyTexture() {
+    private void updateEnemyTexture(final AttackDirection direction) {
         final int textureDimension = (int) Math.min(
             this.enemyTextureContainer.getPreferredSize().getHeight() / EMPTY_SPACE_TO_TEXTURE_RATIO,
             this.enemyTextureContainer.getPreferredSize().getWidth() / EMPTY_SPACE_TO_TEXTURE_RATIO
         );
         this.enemyTextureContainer.removeAll();
+        if (direction != AttackDirection.NONE) {
+            final var animation = new CombatAnimationImpl(direction);
+            this.enemyTextureContainer.add(animation);
+            animation.start();
+        }
         this.enemyTextureContainer.add(
             new ForegroundTile(
             this.controller.getEnemyTexture().getScaledInstance(
