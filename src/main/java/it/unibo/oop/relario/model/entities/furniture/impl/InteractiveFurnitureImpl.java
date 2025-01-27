@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.inventory.InventoryItem;
-import it.unibo.oop.relario.model.inventory.InventoryItemImpl;
 import it.unibo.oop.relario.utils.api.Position;
 
 /**
@@ -13,6 +12,7 @@ import it.unibo.oop.relario.utils.api.Position;
 public final class InteractiveFurnitureImpl extends FurnitureImpl implements InteractiveFurniture {
 
     private Optional<InventoryItem> loot;
+    private boolean hasLoot;
 
     /**
      * Initializes a new interactive furniture item. It's purely decorative.
@@ -26,23 +26,23 @@ public final class InteractiveFurnitureImpl extends FurnitureImpl implements Int
     final FurnitureType type, final InventoryItem loot) {
         super(pos, name, description, type);
         this.loot = Optional.of(loot);
+        this.hasLoot = true;
     }
 
     @Override
     public InventoryItem dropLoot() {
-        final InventoryItem lootCopy = new InventoryItemImpl(this.loot.get().getDescription(), 
-        this.loot.get().getType(), this.loot.get().getIntensity());
-        this.loot = Optional.empty();
-        return lootCopy;
+        this.hasLoot = false;
+        return this.loot.get();
     }
 
     @Override
     public boolean hasLoot() {
-        return !loot.isEmpty();
+        return this.hasLoot;
     } 
 
     @Override
     public void addLoot(final InventoryItem loot) {
+        this.hasLoot = true;
         this.loot = Optional.of(loot);
     }
 
