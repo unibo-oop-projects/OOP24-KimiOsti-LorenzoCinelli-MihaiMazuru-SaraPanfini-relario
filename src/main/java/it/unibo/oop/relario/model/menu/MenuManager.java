@@ -18,8 +18,10 @@ public class MenuManager {
         this.inGameMenu = new MenuImpl();
 
         this.startMenu.addElem(new MenuElement(Command.PLAY));
+        this.startMenu.addElem(new MenuElement(Command.INFO));
         this.startMenu.addElem(new MenuElement(Command.QUIT));
         this.inGameMenu.addElem(new MenuElement(Command.CLOSE));
+        this.inGameMenu.addElem(new MenuElement(Command.INFO));
         this.inGameMenu.addElem(new MenuElement(Command.QUIT));
     }
 
