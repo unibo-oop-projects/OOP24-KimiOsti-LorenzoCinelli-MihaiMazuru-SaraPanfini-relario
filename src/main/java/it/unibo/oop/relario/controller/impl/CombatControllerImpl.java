@@ -10,6 +10,7 @@ import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
+import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.utils.impl.AttackDirection;
@@ -146,7 +147,11 @@ public final class CombatControllerImpl implements CombatController {
             SwingUtilities.invokeLater(this::drawNone);
             final var timer = new Timer(DELAY_TRANSITION, e -> {
                 this.combatView.stopSoundTrack();
-                this.controller.getCutSceneController().show(GameState.VICTORY);
+                if (enemy.getType().equals(EnemyType.BOSS)) {
+                    this.controller.getCutSceneController().show(GameState.VICTORY);
+                } else {
+                    this.controller.getGameController().run(true);
+                }
             });
             timer.setRepeats(false);
             timer.start();
