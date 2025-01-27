@@ -20,7 +20,7 @@ import it.unibo.oop.relario.model.menu.Command;
 class MenuControllerTest {
 
     /**
-     * Tests the menu controller method notify and its getters.
+     * Tests the menu controller's getters.
      */
     @Test
     void testMenuController() {
@@ -28,12 +28,14 @@ class MenuControllerTest {
         final MenuController controller = new MenuControllerImpl(mainController);
 
         mainController.moveToNextRoom();
-        assertEquals(controller.getInGameMenuElements().size(), 2);
+        assertEquals(controller.getInGameMenuElements().size(), 3);
         assertEquals(controller.getInGameMenuElements().get(0).getElemCommad(), Command.CLOSE);
-        assertEquals(controller.getInGameMenuElements().get(1).getElemCommad(), Command.QUIT);
-        assertEquals(controller.getStartMenuElements().size(), 2);
+        assertEquals(controller.getInGameMenuElements().get(1).getElemCommad(), Command.INFO);
+        assertEquals(controller.getInGameMenuElements().get(2).getElemCommad(), Command.QUIT);
+        assertEquals(controller.getStartMenuElements().size(), 3);
         assertEquals(controller.getStartMenuElements().get(0).getElemCommad(), Command.PLAY);
-        assertEquals(controller.getStartMenuElements().get(1).getElemCommad(), Command.QUIT);
+        assertEquals(controller.getStartMenuElements().get(1).getElemCommad(), Command.INFO);
+        assertEquals(controller.getStartMenuElements().get(2).getElemCommad(), Command.QUIT);
 
     }
 }

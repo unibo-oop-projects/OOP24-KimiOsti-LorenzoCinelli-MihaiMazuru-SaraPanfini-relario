@@ -8,8 +8,11 @@ public enum Command {
     /** Starts a new game. */
     PLAY("Play"),
 
-    /** Quit he game. */
+    /** Quit the game. */
     QUIT("Quit"),
+
+    /** Guide on how to play the game. */
+    INFO("Info"),
 
     /** Close the menu. */
     CLOSE("Close");
