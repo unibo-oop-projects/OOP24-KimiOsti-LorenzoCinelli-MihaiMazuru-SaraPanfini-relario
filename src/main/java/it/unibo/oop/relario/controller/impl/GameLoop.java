@@ -85,7 +85,7 @@ public final class GameLoop extends Thread {
     private void renderTexts() {
         final var gameView = this.controller.getMainView().getPanel(GameState.GAME);
         final var model = this.controller.getCurRoom();
-        if (!Interactions.canInteract(
+        if (gameView instanceof GameView && !Interactions.canInteract(
             model.get().getPlayer().getPosition().get(), 
             model.get().getPlayer().getDirection(), 
             model.get().getPopulation(), model.get().getFurniture())) {
