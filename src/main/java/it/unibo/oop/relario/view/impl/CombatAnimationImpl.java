@@ -34,7 +34,7 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
         "combat/Side_Cleave",
         "combat/Side_Swing",
         "combat/Slash",
-        "combat/String_Jab"
+        "combat/Strong_Jab"
     );
 
     private transient Clip clip;
