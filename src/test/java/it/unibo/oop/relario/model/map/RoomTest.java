@@ -22,8 +22,6 @@ import it.unibo.oop.relario.utils.impl.DimensionImpl;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.PositionImpl;
 
-/* TODO aggiungere in initialization il test sulle caselle disponibili + rivedere test update*/
-
 /**
  * Tester class for {@link Room}.
  */
@@ -45,15 +43,57 @@ class RoomTest {
     }
 
     @Test
-    void testRoomInitialisation() {
+    void testRoomUpdate() {
+        this.testRoomInitialisation();
+        this.testRoomEntities();
+        this.testRoomFurniture();
+
+        this.room.getPlayer().stop();
+
+        for (int i = 0; i < REFRESHES; i++) {
+            this.room.update();
+        }
+
+        final int x = this.room.getDimension().getWidth() / 2;
+        for (int y = 0; y < this.room.getDimension().getHeight(); y++) {
+            assertTrue(room.getCellContent(new PositionImpl(x, y)).isPresent());
+            assertTrue(room.getCellContent(new PositionImpl(x + 1, y)).isPresent());
+        }
+
+        assertTrue(this.room.getPlayer().getPosition().isPresent());
+        assertEquals(ENTRY, this.room.getPlayer().getPosition().get());
+
+        assertEquals(this.room.getDimension().getHeight(), this.room.getPopulation().size());
+        assertEquals(this.room.getDimension().getHeight(), this.room.getFurniture().size());
+
+        this.room.getPlayer().setMovement(Direction.DOWN);
+        this.room.update();
+        assertTrue(this.room.getPlayer().getPosition().isPresent());
+        assertEquals(
+            new PositionImpl(ENTRY.getX(), ENTRY.getY() + 1),
+            room.getPlayer().getPosition().get()
+        );
+    }
+
+    private void testRoomInitialisation() {
         assertEquals(MAIN_CHARA, this.room.getPlayer());
         assertTrue(this.room.getQuest().isEmpty());
         assertEquals(ROOM_DIMENSION, this.room.getDimension());
         assertEquals(0, this.room.getPopulation().size());
         assertEquals(0, this.room.getFurniture().size());
-        for (int i = 0; i < this.room.getDimension().getWidth(); i++) {
-            for (int j = 0; j < this.room.getDimension().getHeight(); j++) {
-                assertTrue(this.room.getCellContent(new PositionImpl(i, j)).isEmpty());
+        for (int x = 0; x < this.room.getDimension().getWidth(); x++) {
+            for (int y = 0; y < this.room.getDimension().getHeight(); y++) {
+                assertTrue(this.room.getCellContent(new PositionImpl(x, y)).isEmpty());
+                assertTrue(
+                    ((x <= 1 || x >= this.room.getDimension().getWidth() - 2)
+                    && (y <= 1 || y >= this.room.getDimension().getHeight() - 2))
+                    || x == ENTRY.getX() && y >= ENTRY.getY() - 2 && y <= ENTRY.getY() + 2
+                    || x > 1 && x < this.room.getDimension().getWidth() - 2
+                    && (y == 1 || y == this.room.getDimension().getHeight() - 2)
+                    || y > 1 && y < this.room.getDimension().getHeight() - 2
+                    && (x == 1 || x == this.room.getDimension().getWidth() - 2)
+                    || this.room.isCellAvailable(new PositionImpl(x, y))
+                );
             }
         }
         this.room.setQuest(Optional.of(
@@ -69,8 +109,7 @@ class RoomTest {
         assertTrue(this.room.getQuest().get().isCompleted(this.room));
     }
 
-    @Test
-    void testRoomEntities() {
+    private void testRoomEntities() {
         final var x = this.room.getDimension().getWidth() / 2;
         for (int y = 0; y < this.room.getDimension().getHeight(); y++) {
             this.room.addEntity(
@@ -93,8 +132,7 @@ class RoomTest {
         assertEquals(this.room.getDimension().getHeight(), this.room.getPopulation().size());
     }
 
-    @Test
-    void testRoomFurniture() {
+    private void testRoomFurniture() {
         final var x = (this.room.getDimension().getWidth() / 2) + 1;
         for (int y = 0; y < this.room.getDimension().getHeight(); y++) {
             this.room.addEntity(
@@ -108,23 +146,5 @@ class RoomTest {
         this.room.getFurniture().forEach(
             (position, furniture) -> assertEquals(furniture, this.room.getCellContent(position).get())
         );
-    }
-
-    @Test
-    void testRoomUpdate() {
-        this.room.getPlayer().stop();
-
-        for (int i = 0; i < REFRESHES; i++) {
-            this.room.update();
-        }
-
-        int x = (this.room.getDimension().getWidth() / 2);
-        for (int y = 0; y < this.room.getDimension().getHeight(); y++) {
-            assertTrue(room.getCellContent(new PositionImpl(x, y)).isPresent());
-            assertTrue(room.getCellContent(new PositionImpl(x + 1, y)).isPresent());
-        }
-
-        assertEquals(this.room.getDimension().getHeight(), this.room.getPopulation().size());
-        assertEquals(this.room.getDimension().getHeight(), this.room.getFurniture().size());
     }
 }
