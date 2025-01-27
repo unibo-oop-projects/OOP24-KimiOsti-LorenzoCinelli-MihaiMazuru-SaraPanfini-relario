@@ -30,12 +30,13 @@ public final class CollectItemObjective implements ObjectiveStrategy {
 
     @Override
     public boolean check(final Room room) {
-        return room
-        .getPlayer()
-        .getItems()
-        .stream()
-        .map(InventoryItem::getType)
-        .anyMatch(t -> t.equals(this.keyItemType.get()));
+        final Optional<InventoryItem> keyItem = room.getPlayer().getItems().stream()
+        .filter(i -> i.getType().equals(this.keyItemType.get())).findAny(); 
+        if (keyItem.isPresent()) {
+            room.getPlayer().discardItem(keyItem.get());
+            return true;
+        }
+        return false;
     }
 
     @Override
