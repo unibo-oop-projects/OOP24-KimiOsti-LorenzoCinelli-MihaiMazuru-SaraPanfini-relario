@@ -56,12 +56,15 @@ public final class CombatControllerImpl implements CombatController {
             final var curRoom = this.controller.getCurRoom().get();
             this.player = curRoom.getPlayer();
             final var entity = curRoom.getCellContent(
-                this.player.getDirection().move(this.player.getPosition().get()));
+                this.player.getDirection().move(this.player.getPosition().get())
+            );
+
             if (entity.get() instanceof Enemy) {
                 this.enemy = (Enemy) entity.get();
             } else if (entity.get() instanceof WalkableFurniture) {
                 this.enemy = ((WalkableFurniture) entity.get()).removeEnemy();
             }
+
             this.combatView = (CombatView) this.view.getPanel(GameState.COMBAT);
             SwingUtilities.invokeLater(this::drawNone);
             this.combatView.startSoundTrack(this.enemy.getType());
@@ -171,7 +174,7 @@ public final class CombatControllerImpl implements CombatController {
 
     private void mercyRequest() {
         if (this.enemy.isMerciful()) {
-            combatState = this.enemy.getName() + " ha accettato la tua richiesta."
+            combatState = this.getEnemyName() + " ha accettato la tua richiesta."
             + "\nSei libero di andare";
 
             SwingUtilities.invokeLater(this::drawNone);
