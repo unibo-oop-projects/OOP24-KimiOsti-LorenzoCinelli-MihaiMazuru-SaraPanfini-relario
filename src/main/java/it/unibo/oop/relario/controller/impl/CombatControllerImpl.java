@@ -10,6 +10,7 @@ import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
+import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.utils.impl.AttackDirection;
@@ -143,11 +144,17 @@ public final class CombatControllerImpl implements CombatController {
             combatState = this.player.getName() + " hai vinto il combattimento";
 
             SwingUtilities.invokeLater(this::drawNone);
-            final var timer = new Timer(DELAY_TRANSITION, 
+            if (enemy.getType().equals(EnemyType.BOSS)) {
+                final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getCutSceneController().show(GameState.VICTORY));
-            timer.setRepeats(false);
-            timer.start();
-
+                timer.setRepeats(false);
+                timer.start();
+            } else {
+                final var timer = new Timer(DELAY_TRANSITION, 
+                e -> this.controller.getGameController().run(true));
+                timer.setRepeats(false);
+                timer.start();
+            }
         } else if (player.getLife() <= 0) {
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getCutSceneController().show(GameState.GAME_OVER));
