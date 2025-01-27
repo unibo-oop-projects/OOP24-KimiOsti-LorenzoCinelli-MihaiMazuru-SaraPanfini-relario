@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.List;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -12,8 +13,10 @@ import javax.swing.JPanel;
 
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.impl.CombatAction;
+import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.Constants;
+import it.unibo.oop.relario.utils.impl.SoundLocators;
 
 /**
  * View implementation for the combat phase of the game.
@@ -26,12 +29,16 @@ public final class CombatView extends JPanel {
     private static final double SCREEN_TO_SCENE_RATIO = 1.5;
     private static final double SIDE_COMPONENTS_RATIO = 0.25;
     private static final double FONT_TO_PANEL_RATIO = 0.25;
+    private static final double VOLUME = 0.5;
+    private static final String FIGHT_SONG_URL = "combat/../combat/boss";
+    private static final String BOSS_FIGHT_SONG_URL = "combat/boss";
 
     private final transient CombatController controller;
     private final JPanel upperPadding;
     private final CombatScene centralScene;
     private final JPanel commands;
     private final JPanel message;
+    private transient Clip song;
 
     /**
      * Creates the panel showing combat scenes.
@@ -60,6 +67,23 @@ public final class CombatView extends JPanel {
         this.resizePanels();
         this.centralScene.update(direction);
         this.updateMessage(this.controller.getCombatState());
+    }
+
+    /**
+     * Starts the menu sound track.
+     * @param type is the type of enemy in the fight.
+     */
+    public void startSoundTrack(final EnemyType type) {
+        final String url = type.equals(EnemyType.BOSS) ? BOSS_FIGHT_SONG_URL : FIGHT_SONG_URL;
+        this.song = SoundLocators.getAudio(url, VOLUME);
+        this.song.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    /**
+     * Stops the menu sound track.
+     */
+    public void stopSoundTrack() {
+        this.song.close();
     }
 
     private void setupPanel(final JPanel panel) {
