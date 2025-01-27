@@ -13,6 +13,7 @@ import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyImpl;
+import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureType;
 import it.unibo.oop.relario.model.entities.furniture.impl.InteractiveFurnitureImpl;
@@ -30,7 +31,6 @@ class FurnitureTest {
 
     private static final String NAME = "furniture";
     private static final String DESC = "descrizione della furniture";
-
     private Position pos;
 
     /**
@@ -52,13 +52,8 @@ class FurnitureTest {
         final WalkableFurniture furnEnemy = new WalkableFurnitureImpl(pos, NAME, DESC, 
             FurnitureType.TRAPDOOR, enem);
 
-        assertEquals(furn.getDescription(), DESC);
-        assertEquals(furn.getName(), NAME);
-        assertNotNull(furn.getPosition().get());
-        assertEquals(furn.getPosition().get().getX(), 0);
-        assertEquals(furn.getPosition().get().getY(), 0);
-        assertNotEquals(furn.getPosition(), pos);
-        assertEquals(furn.getType(), FurnitureType.CARPET);
+        this.checkGetters(furn, FurnitureType.CARPET);
+
         assertFalse(furn.hasEnemy());
         assertTrue(furn.isInteractive());
         assertTrue(furn.isWalkable());
@@ -77,13 +72,8 @@ class FurnitureTest {
         final InteractiveFurniture furn = new InteractiveFurnitureImpl(pos, NAME, DESC, 
             FurnitureType.CHEST, item);
 
-        assertEquals(furn.getDescription(), DESC);
-        assertEquals(furn.getName(), NAME);
-        assertNotNull(furn.getPosition().get());
-        assertEquals(furn.getPosition().get().getX(), 0);
-        assertEquals(furn.getPosition().get().getY(), 0);
-        assertNotEquals(furn.getPosition(), pos);
-        assertEquals(furn.getType(), FurnitureType.CHEST);
+        this.checkGetters(furn, FurnitureType.CHEST);
+
         assertTrue(furn.hasLoot());
         furn.dropLoot();
         assertFalse(furn.hasLoot());
@@ -101,14 +91,19 @@ class FurnitureTest {
         final ObstructingFurniture furn = new ObstructingFurniture(pos, NAME, DESC, 
             FurnitureType.STATUE);
 
+        this.checkGetters(furn, FurnitureType.STATUE);
+
+        assertFalse(furn.isInteractive());
+        assertFalse(furn.isWalkable());
+    }
+
+    private void checkGetters(final Furniture furn, final FurnitureType type) {
         assertEquals(furn.getDescription(), DESC);
         assertEquals(furn.getName(), NAME);
         assertNotNull(furn.getPosition().get());
         assertEquals(furn.getPosition().get().getX(), 0);
         assertEquals(furn.getPosition().get().getY(), 0);
         assertNotEquals(furn.getPosition(), pos);
-        assertEquals(furn.getType(), FurnitureType.STATUE);
-        assertFalse(furn.isInteractive());
-        assertFalse(furn.isWalkable());
+        assertEquals(furn.getType(), type);
     }
 }

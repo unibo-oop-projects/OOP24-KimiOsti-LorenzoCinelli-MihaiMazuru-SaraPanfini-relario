@@ -4,7 +4,6 @@ import java.awt.Image;
 
 import it.unibo.oop.relario.controller.impl.CombatAction;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
-import it.unibo.oop.relario.model.entities.enemies.Enemy;
 
 /**
  * Controller for managing cambat options.
@@ -12,9 +11,8 @@ import it.unibo.oop.relario.model.entities.enemies.Enemy;
 public interface CombatController {
     /**
      * Initializes combat. 
-     * @param enemy is the fighter facing the main character.
      */
-    void initializeCombat(Enemy enemy);
+    void initializeCombat();
 
     /**
      * Retrieves combat state.

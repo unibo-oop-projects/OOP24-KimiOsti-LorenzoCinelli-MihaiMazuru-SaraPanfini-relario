@@ -79,7 +79,7 @@ public final class GameControllerImpl implements GameController {
     private void handleMovement(final Event e) {
         if (e.equals(Event.RELEASED)) {
             this.controller.getCurRoom().get().getPlayer().stop();
-        } else {
+        } else if (this.inputToDirection.get(e) != null) {
             this.controller.getCurRoom().get().getPlayer().setMovement(
                 this.inputToDirection.get(e)
             );

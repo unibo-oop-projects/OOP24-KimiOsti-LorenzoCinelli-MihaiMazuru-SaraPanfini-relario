@@ -10,6 +10,8 @@ import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.MainController;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
+import it.unibo.oop.relario.model.entities.enemies.EnemyType;
+import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.living.MainCharacter;
 import it.unibo.oop.relario.utils.impl.AttackDirection;
 import it.unibo.oop.relario.utils.impl.CombatTexturesLocator;
@@ -49,10 +51,20 @@ public final class CombatControllerImpl implements CombatController {
     }
 
     @Override
-    public void initializeCombat(final Enemy enemy) {
+    public void initializeCombat() {
         if (this.controller.getCurRoom().isPresent()) {
-            this.player = controller.getCurRoom().get().getPlayer();
-            this.enemy = enemy;
+            final var curRoom = this.controller.getCurRoom().get();
+            this.player = curRoom.getPlayer();
+            final var entity = curRoom.getCellContent(
+                this.player.getDirection().move(this.player.getPosition().get())
+            );
+
+            if (entity.get() instanceof Enemy) {
+                this.enemy = (Enemy) entity.get();
+            } else if (entity.get() instanceof WalkableFurniture) {
+                this.enemy = ((WalkableFurniture) entity.get()).removeEnemy();
+            }
+
             this.combatView = (CombatView) this.view.getPanel(GameState.COMBAT);
             SwingUtilities.invokeLater(this::drawNone);
             this.view.showPanel(GameState.COMBAT);
@@ -86,12 +98,16 @@ public final class CombatControllerImpl implements CombatController {
 
     @Override
     public String getItem() {
-        return this.player.getEquippedWeapon().get().getName();
+        return this.player.getEquippedWeapon().isPresent()
+            ? this.player.getEquippedArmor().get().getName()
+            : "Nessuna arma equipaggiata";
     }
 
     @Override
     public String getArmor() {
-        return this.player.getEquippedArmor().get().getName();
+        return this.player.getEquippedArmor().isPresent() 
+            ? this.player.getEquippedArmor().get().getName()
+            : "Nessuna armatura equipaggiata";
     }
 
     @Override
@@ -129,12 +145,19 @@ public final class CombatControllerImpl implements CombatController {
                 player.addToInventory(enemy.getReward().get());
             }
             combatState = this.player.getName() + " hai vinto il combattimento";
-            SwingUtilities.invokeLater(this::drawNone);
-            final var timer = new Timer(DELAY_TRANSITION, 
-                e -> this.controller.getCutSceneController().show(GameState.VICTORY));
-            timer.setRepeats(false);
-            timer.start();
 
+            SwingUtilities.invokeLater(this::drawNone);
+            if (enemy.getType().equals(EnemyType.BOSS)) {
+                final var timer = new Timer(DELAY_TRANSITION, 
+                e -> this.controller.getCutSceneController().show(GameState.VICTORY));
+                timer.setRepeats(false);
+                timer.start();
+            } else {
+                final var timer = new Timer(DELAY_TRANSITION, 
+                e -> this.controller.getGameController().run(true));
+                timer.setRepeats(false);
+                timer.start();
+            }
         } else if (player.getLife() <= 0) {
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getCutSceneController().show(GameState.GAME_OVER));
@@ -148,8 +171,9 @@ public final class CombatControllerImpl implements CombatController {
 
     private void mercyRequest() {
         if (this.enemy.isMerciful()) {
-            combatState = this.enemy.getName() + " ha accettato la tua richiesta."
+            combatState = this.getEnemyName() + " ha accettato la tua richiesta."
             + "\nSei libero di andare";
+
             SwingUtilities.invokeLater(this::drawNone);
             final var timer = new Timer(DELAY_TRANSITION, 
                 e -> this.controller.getGameController().run(true));
