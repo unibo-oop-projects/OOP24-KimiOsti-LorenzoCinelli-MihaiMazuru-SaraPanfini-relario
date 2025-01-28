@@ -2,7 +2,6 @@ package it.unibo.oop.relario.controller.impl;
 
 import it.unibo.oop.relario.controller.api.InteractionsHandler;
 import it.unibo.oop.relario.controller.api.MainController;
-import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
@@ -33,15 +32,7 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
             && (curRoom.getQuest().isEmpty() || curRoom.getQuest().get().isCompleted(curRoom))
         ) {
             this.controller.getCutSceneController().show(GameState.GAME);
-        } else if (
-            curRoom.getPlayer().getPosition().isPresent()
-            && Interactions.canInteract(
-                curRoom.getPlayer().getPosition().get(),
-                curRoom.getPlayer().getDirection(),
-                curRoom.getPopulation(),
-                curRoom.getFurniture()
-            )
-        ) {
+        } else {
             final var entity = curRoom.getCellContent(
                 curRoom.getPlayer().getDirection().move(curRoom.getPlayer().getPosition().get())
             );
@@ -58,9 +49,9 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                 } else {
                     this.resumeGame();
                 }
+            } else {
+                this.resumeGame();
             }
-        } else {
-            this.resumeGame();
         }
     }
 

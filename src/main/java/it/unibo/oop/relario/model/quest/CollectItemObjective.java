@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import it.unibo.oop.relario.model.GameEntityType;
 import it.unibo.oop.relario.model.inventory.EffectType;
-import it.unibo.oop.relario.model.inventory.InventoryItem;
 import it.unibo.oop.relario.model.inventory.InventoryItemType;
 import it.unibo.oop.relario.model.map.Room;
 
@@ -30,13 +29,7 @@ public final class CollectItemObjective implements ObjectiveStrategy {
 
     @Override
     public boolean check(final Room room) {
-        final Optional<InventoryItem> keyItem = room.getPlayer().getItems().stream()
-        .filter(i -> i.getType().equals(this.keyItemType.get())).findAny(); 
-        if (keyItem.isPresent()) {
-            room.getPlayer().discardItem(keyItem.get());
-            return true;
-        }
-        return false;
+        return room.getPlayer().getItems().stream().anyMatch(i -> i.getType().equals(this.keyItemType.get()));
     }
 
     @Override
