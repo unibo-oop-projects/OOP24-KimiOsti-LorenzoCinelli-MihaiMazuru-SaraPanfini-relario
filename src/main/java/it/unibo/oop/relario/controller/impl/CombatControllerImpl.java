@@ -150,7 +150,7 @@ public final class CombatControllerImpl implements CombatController {
             if (enemy.getType().equals(EnemyType.BOSS)) {
                 this.timer(e -> {
                     this.combatView.stopSoundTrack();
-                    this.controller.getCutSceneController().show(GameState.VICTORY);
+                    this.controller.getCutSceneController().show(GameState.VICTORY_BAD);
                 });
             } else {
                 if (this.entity instanceof WalkableFurniture) {
@@ -181,7 +181,11 @@ public final class CombatControllerImpl implements CombatController {
             SwingUtilities.invokeLater(this::drawNone);
             this.timer(e -> {
                 this.combatView.stopSoundTrack();
-                this.controller.getGameController().run(true);
+                if (this.enemy.getType().equals(EnemyType.BOSS)) {
+                    this.controller.getCutSceneController().show(GameState.VICTORY_GOOD);
+                } else {
+                    this.controller.getGameController().run(true);
+                }
             });
         } else {
             //player's skips his turn, he used his turn to ask for mercy
