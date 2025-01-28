@@ -82,7 +82,7 @@ class CombatControllerTest {
         controller.handleAction(CombatAction.ATTACK);
         assertTrue(hostileEnemy.getLife() < 0);
         assertEquals(chara.getItems().get(0), item);
-        assertEquals(controller.getCombatState(), chara.getName() + " hai vinto il combattimento");
+        assertEquals(controller.getCombatState(), "Hai vinto il combattimento");
 
         chara.setMovement(Direction.RIGHT);
         mainController.getCurRoom().get().addEntity(walkPos, enemFurniture);
@@ -92,8 +92,7 @@ class CombatControllerTest {
 
         controller.initializeCombat();
         controller.handleAction(CombatAction.MERCY);
-        assertEquals(controller.getCombatState(), controller.getEnemyName()
-            + " ha accettato la tua richiesta." + "\nSei libero di andare");
+        assertEquals(controller.getCombatState(), "Sei stato risparmiato");
 
         final int initMerciLife = mercifulEnemy.getLife();
         controller.initializeCombat();
