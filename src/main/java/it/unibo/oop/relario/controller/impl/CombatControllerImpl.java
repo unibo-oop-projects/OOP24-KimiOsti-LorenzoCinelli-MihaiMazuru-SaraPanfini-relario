@@ -144,7 +144,6 @@ public final class CombatControllerImpl implements CombatController {
                 player.addToInventory(enemy.getReward().get());
             }
             combatState = "Hai vinto il combattimento";
-            SwingUtilities.invokeLater(this::drawNone);
 
             if (enemy.getType().equals(EnemyType.BOSS)) {
                 this.timer(e -> {
@@ -165,7 +164,6 @@ public final class CombatControllerImpl implements CombatController {
             });
         } else if (isPlayerAttacking) {
             this.timer(e -> {
-                this.combatView.stopSoundTrack();
                 this.attack(false);
             });
         }
@@ -183,7 +181,6 @@ public final class CombatControllerImpl implements CombatController {
             //player's skips his turn, he used his turn to ask for mercy
             combatState = "Combatti codardo!";
             this.timer(e -> {
-                this.combatView.stopSoundTrack();
                 this.attack(false);
             });
         }
