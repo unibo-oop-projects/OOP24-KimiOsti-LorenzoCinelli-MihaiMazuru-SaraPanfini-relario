@@ -29,7 +29,8 @@ public final class CutSceneControllerImpl implements CutSceneController {
         switch (state) {
             case MENU -> cutSceneView.showStartScene();
             case GAME -> cutSceneView.showNextRoomScene();
-            case VICTORY -> cutSceneView.showVictoryScene();
+            case VICTORY_GOOD -> cutSceneView.showVictoryScene(true);
+            case VICTORY_BAD -> cutSceneView.showVictoryScene(false);
             case GAME_OVER -> cutSceneView.showDefeatScene();
             default -> { }
         }
