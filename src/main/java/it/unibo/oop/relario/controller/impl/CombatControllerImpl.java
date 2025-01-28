@@ -31,9 +31,10 @@ public final class CombatControllerImpl implements CombatController {
     private MainCharacter player;
     private Enemy enemy;
     private String combatState;
+    private boolean isFighting;
 
     /**
-     * Saves reference of main controller.
+     * Saves reference to main controller.
      * @param controller is the main controller.
      */
     public CombatControllerImpl(final MainController controller) {
@@ -43,6 +44,7 @@ public final class CombatControllerImpl implements CombatController {
         this.enemy = null;
         this.combatView = null;
         this.combatState = "";
+        this.isFighting = false;
     }
 
     @Override
@@ -50,17 +52,17 @@ public final class CombatControllerImpl implements CombatController {
         if (this.controller.getCurRoom().isPresent()) {
             this.player = this.controller.getCurRoom().get().getPlayer();
             final var entity = this.controller.getCurRoom().get().getCellContent(
-                this.player.getDirection().move(this.player.getPosition().get()));
-
+                this.player.getDirection().move(this.player.getPosition().get())
+            );
             this.enemy = entity.get() instanceof Enemy ? (Enemy) entity.get() 
                 : entity.get() instanceof WalkableFurniture 
                 ? ((WalkableFurniture) entity.get()).removeEnemy() : null;
-
             final var tempView = this.view.getPanel(GameState.COMBAT);
             if (tempView instanceof CombatView) {
                 this.combatView = (CombatView) tempView;
             }
-            this.combatState = "Clicca un bottone per fare una mossa";
+            this.isFighting = true;
+            this.combatState = "Clicca un bottone per fare una mossa.";
             SwingUtilities.invokeLater(this::drawNone);
             this.combatView.startSoundTrack(this.enemy.getType());
             this.view.showPanel(GameState.COMBAT);
@@ -113,18 +115,22 @@ public final class CombatControllerImpl implements CombatController {
 
     @Override
     public void resumeCombat() {
+        isFighting = true;
         SwingUtilities.invokeLater(this::drawNone);
         this.view.showPanel(GameState.COMBAT);
     }
 
     @Override
     public void handleAction(final CombatAction combat) {
-        switch (combat) {
-            case ATTACK -> this.attack(true);
-            case MERCY -> this.mercyRequest();
-            case OPEN_INVENTORY -> 
-                this.controller.getInventoryController().init(GameState.COMBAT);
-            default -> { }
+        if (isFighting) {
+            isFighting = false;
+            switch (combat) {
+                case ATTACK -> this.attack(true);
+                case MERCY -> this.mercyRequest();
+                case OPEN_INVENTORY -> 
+                    this.controller.getInventoryController().init(GameState.COMBAT);
+                default -> { }
+            }
         }
     }
 
@@ -135,7 +141,8 @@ public final class CombatControllerImpl implements CombatController {
             SwingUtilities.invokeLater(this::drawFromPlayerToEnemy);
         } else {
             this.player.attacked(this.enemy.getDamage());
-            this.combatState = "Il nemico ha fatto la sua mossa";
+            isFighting = true;
+            this.combatState = "Il nemico ha fatto la sua mossa. E' di nuovo il tuo turno.";
             SwingUtilities.invokeLater(this::drawFromEnemyToPlayer);
         }
 
@@ -171,7 +178,7 @@ public final class CombatControllerImpl implements CombatController {
 
     private void mercyRequest() {
         if (this.enemy.isMerciful()) {
-            combatState = "Sei stato risparmiato";
+            combatState = "Sei stato risparmiato.";
             SwingUtilities.invokeLater(this::drawNone);
             this.timer(e -> {
                 this.combatView.stopSoundTrack();
@@ -180,6 +187,7 @@ public final class CombatControllerImpl implements CombatController {
         } else {
             //player's skips his turn, he used his turn to ask for mercy
             combatState = "Combatti codardo!";
+            SwingUtilities.invokeLater(this::drawNone);
             this.timer(e -> {
                 this.attack(false);
             });
