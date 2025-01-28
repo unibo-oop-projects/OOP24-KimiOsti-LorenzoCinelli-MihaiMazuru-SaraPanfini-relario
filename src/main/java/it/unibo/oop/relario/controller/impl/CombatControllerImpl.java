@@ -172,8 +172,9 @@ public final class CombatControllerImpl implements CombatController {
             this.timer(e -> {
                 this.attack(false);
             });
+        } else {
+            isFighting = true;
         }
-        isFighting = true;
     }
 
     private void mercyRequest() {
