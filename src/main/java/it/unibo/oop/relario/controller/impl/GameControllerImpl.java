@@ -43,7 +43,7 @@ public final class GameControllerImpl implements GameController {
     public void run(final boolean isExploring) {
         if (this.gameLoop == null || this.gameLoop.isInterrupted()) {
             if (!isExploring) {
-                this.changeGameState(GameState.GAME_OVER);
+                this.endGame();
             } else {
                 this.startGameLoop();
             }
