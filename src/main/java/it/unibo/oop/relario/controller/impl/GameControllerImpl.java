@@ -114,7 +114,7 @@ public final class GameControllerImpl implements GameController {
 
     private void endGame() {
         if (this.controller.getCurRoom().isEmpty()) {
-            this.controller.getCutSceneController().show(GameState.VICTORY);
+            this.controller.getCutSceneController().show(GameState.VICTORY_GOOD);
         } else {
             this.controller.getCutSceneController().show(GameState.GAME_OVER);
         }
