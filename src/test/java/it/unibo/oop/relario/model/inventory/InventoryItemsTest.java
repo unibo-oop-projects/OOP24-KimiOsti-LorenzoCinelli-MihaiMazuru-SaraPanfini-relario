@@ -34,22 +34,22 @@ final class InventoryItemsTest {
         desc.add("Una mela fresca e succosa, perfetta per recuperare un po' di energia\nEffetto: Cura 3");
 
         list.add(itemFactory.createItem(InventoryItemType.BASICARMOR));
-        desc.add("Un'armatura leggera che offre protezione di base\nEffetto: Protezione 5\nDurabilità: 3");
+        desc.add("Un'armatura leggera che offre protezione di base\nEffetto: Protezione 5\nDurabilita': 3");
 
         list.add(itemFactory.createItem(InventoryItemType.BOW));
-        desc.add("Arco leggero e preciso, ideale per attacchi a lunga distanza\nEffetto: Danno 8\nDurabilità: 5");
+        desc.add("Arco leggero e preciso, ideale per attacchi a lunga distanza\nEffetto: Danno 8\nDurabilita': 5");
 
         list.add(itemFactory.createItem(InventoryItemType.COIN));
         desc.add("Una moneta luccicante\nEffetto: Nessuno");
 
         list.add(itemFactory.createItem(InventoryItemType.DAGGER));
-        desc.add("Un'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilità: 3");
+        desc.add("Un'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilita': 3");
 
         list.add(itemFactory.createItem(InventoryItemType.GEMSTONE));
         desc.add("Una gemma scintillante di rara bellezza\nEffetto: Nessuno");
 
         list.add(itemFactory.createItem(InventoryItemType.HAMMER));
-        desc.add("Un'arma pesante e devastante, progettata per infliggere danni enormi\nEffetto: Danno 15\nDurabilità: 8");
+        desc.add("Un'arma pesante e devastante, progettata per infliggere danni enormi\nEffetto: Danno 15\nDurabilita': 8");
 
         list.add(itemFactory.createItem(InventoryItemType.KEY));
         desc.add("Chiave antica per aprire un passaggio\nEffetto: Risolve una quest");
@@ -58,10 +58,10 @@ final class InventoryItemsTest {
         desc.add("Un liquido rosso che ripristina rapidamente la salute\nEffetto: Cura 10");
 
         list.add(itemFactory.createItem(InventoryItemType.SHIELD));
-        desc.add("Uno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilità: 5");
+        desc.add("Uno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilita': 5");
 
         list.add(itemFactory.createItem(InventoryItemType.SWORD));
-        desc.add("Spada affilata, perfetta per attacchi rapidi e precisi\nEffetto: Danno 10\nDurabilità: 10");
+        desc.add("Spada affilata, perfetta per attacchi rapidi e precisi\nEffetto: Danno 10\nDurabilita': 10");
     }
 
     /**

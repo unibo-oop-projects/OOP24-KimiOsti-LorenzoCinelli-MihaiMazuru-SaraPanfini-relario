@@ -36,11 +36,11 @@ final class InventoryControllerTest {
         InventoryItemType.GEMSTONE,
         "Una gemma scintillante di rara bellezza\nEffetto: Nessuno",
         InventoryItemType.BASICARMOR,
-        "Un'armatura leggera che offre protezione di base\nEffetto: Protezione 5\nDurabilità: 3",
+        "Un'armatura leggera che offre protezione di base\nEffetto: Protezione 5\nDurabilita': 3",
         InventoryItemType.DAGGER,
-        "Un'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilità: 3",
+        "Un'arma leggera e affilata, perfetta per attacchi rapidi e furtivi\nEffetto: Danno 5\nDurabilita': 3",
         InventoryItemType.SHIELD,
-        "Uno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilità: 5"
+        "Uno scudo robusto e affidabile, capace di bloccare colpi potenti\nEffetto: Protezione 10\nDurabilita': 5"
     );
 
     private InventoryController inventoryController;
