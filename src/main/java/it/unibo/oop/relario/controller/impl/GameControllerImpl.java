@@ -5,6 +5,7 @@ import java.util.Map;
 import it.unibo.oop.relario.controller.api.GameController;
 import it.unibo.oop.relario.controller.api.InteractionsHandler;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.model.Interactions;
 import it.unibo.oop.relario.utils.impl.Direction;
 import it.unibo.oop.relario.utils.impl.Event;
 import it.unibo.oop.relario.utils.impl.GameState;
@@ -40,10 +41,12 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void run(final boolean isExploring) {
-        if (!isExploring) {
-            this.changeGameState(GameState.GAME_OVER);
-        } else {
-            this.startGameLoop();
+        if (this.gameLoop == null || this.gameLoop.isInterrupted()) {
+            if (!isExploring) {
+                this.changeGameState(GameState.GAME_OVER);
+            } else {
+                this.startGameLoop();
+            }
         }
     }
 
@@ -51,10 +54,12 @@ public final class GameControllerImpl implements GameController {
     public void notify(final Event e) {
         switch (e) {
             case INTERACT -> {
-                this.gameLoop.interrupt();
-                this.interactionsHandler.handleInteraction(
-                    this.controller.getCurRoom().get()
-                );
+                if (this.canInteract()) {
+                    this.gameLoop.interrupt();
+                    this.interactionsHandler.handleInteraction(
+                        this.controller.getCurRoom().get()
+                    );
+                }
             }
             case INVENTORY -> this.changeGameState(GameState.INVENTORY);
             case ESCAPE -> this.changeGameState(GameState.MENU_IN_GAME);
@@ -79,6 +84,22 @@ public final class GameControllerImpl implements GameController {
             case MENU_IN_GAME -> this.controller.getMenuController().showMenu(GameState.MENU_IN_GAME, GameState.GAME);
             default -> this.endGame();
         }
+    }
+
+    private boolean canInteract() {
+        return this.controller.getCurRoom().get().getPlayer().getPosition().isPresent()
+            && (
+                (this.controller.getCurRoom().get().getExit().equals(
+                    this.controller.getCurRoom().get().getPlayer().getPosition().get()
+                ) && (this.controller.getCurRoom().get().getQuest().isEmpty()
+                || this.controller.getCurRoom().get().getQuest().get().isCompleted(this.controller.getCurRoom().get()))
+                ) || Interactions.canInteract(
+                    this.controller.getCurRoom().get().getPlayer().getPosition().get(),
+                    this.controller.getCurRoom().get().getPlayer().getDirection(),
+                    this.controller.getCurRoom().get().getPopulation(),
+                    this.controller.getCurRoom().get().getFurniture()
+                )
+            );
     }
 
     private void handleMovement(final Event e) {
