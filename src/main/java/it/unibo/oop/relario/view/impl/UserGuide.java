@@ -2,9 +2,8 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -22,8 +21,6 @@ public final class UserGuide extends JFrame {
     private static final long serialVersionUID = 1L;
     private static final String FRAME_NAME = "Guida Utente";
     private static final String GUIDE_TITLE = "GUIDA UTENTE";
-    private static final String ERROR_TITLE = "ERRORE";
-    private static final String ERROR_CONTENT = "Errore nella lettura del file.";
     private static final double SCREEN_TO_GUIDE_RATIO = 2;
     private static final float TITLE_FONT_SIZE = 20f;
     private static final float TEXT_FONT_SIZE = 16f;
@@ -51,24 +48,11 @@ public final class UserGuide extends JFrame {
     }
 
     private void addGuideToContainer() {
-        final var userGuide = new File(Constants.USER_GUIDE_URL);
-        if (userGuide.canRead()) {
-            final String guideContent;
-            try {
-                guideContent = Files.readString(userGuide.toPath());
-                this.guideContainer.add(this.formatAsTitle(GUIDE_TITLE));
-                this.guideContainer.add(this.formatAsText(guideContent));
-            } catch (IOException e) {
-                this.showError();
-            }
-        } else {
-            this.showError();
-        }
-    }
-
-    private void showError() {
-        this.guideContainer.add(this.formatAsTitle(ERROR_TITLE));
-        this.guideContainer.add(this.formatAsText(ERROR_CONTENT));
+        this.guideContainer.add(this.formatAsTitle(GUIDE_TITLE));
+        final var reader = new BufferedReader(new InputStreamReader(
+            ClassLoader.getSystemResourceAsStream(Constants.USER_GUIDE_URL)
+        ));
+        reader.lines().forEach(line -> this.guideContainer.add(this.formatAsText(line)));
     }
 
     private JLabel formatAsTitle(final String text) {
