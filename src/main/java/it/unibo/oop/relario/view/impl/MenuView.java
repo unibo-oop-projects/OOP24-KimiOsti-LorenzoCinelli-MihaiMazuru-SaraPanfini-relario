@@ -58,7 +58,7 @@ public final class MenuView extends JPanel {
         gridc.fill = GridBagConstraints.CENTER;
 
         if (elements.get(0).getElemCommad().equals(Command.PLAY)) {
-            final ImageIcon image = ImageLocators.getFixedSizeImage(LOGO, Constants.IMAGE_EXTENSION, RATIO, RATIO);
+            final ImageIcon image = ImageLocators.getFixedSizeImage(LOGO, RATIO, RATIO);
             final JLabel logo = new JLabel(image);
             this.add(logo, gridc);
         }
