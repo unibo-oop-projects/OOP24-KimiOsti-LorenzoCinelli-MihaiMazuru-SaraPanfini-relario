@@ -137,12 +137,11 @@ public final class CombatControllerImpl implements CombatController {
     private void attack(final boolean isPlayerAttacking) {
         if (isPlayerAttacking) {
             this.enemy.attacked(this.player.attack());
-            this.combatState = "Colpo andato a segno";
+            this.combatState = "Colpo andato a segno.";
             SwingUtilities.invokeLater(this::drawFromPlayerToEnemy);
         } else {
             this.player.attacked(this.enemy.getDamage());
-            isFighting = true;
-            this.combatState = "Il nemico ha fatto la sua mossa. E' di nuovo il tuo turno.";
+            this.combatState = "<html>Il nemico ha fatto la sua mossa.<br> E' di nuovo il tuo turno.<html>";
             SwingUtilities.invokeLater(this::drawFromEnemyToPlayer);
         }
 
@@ -174,6 +173,7 @@ public final class CombatControllerImpl implements CombatController {
                 this.attack(false);
             });
         }
+        isFighting = true;
     }
 
     private void mercyRequest() {

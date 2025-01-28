@@ -43,9 +43,13 @@ public final class InteractionsHandlerImpl implements InteractionsHandler {
                     this.startEnemyCombat();
                 } else if (entity.get() instanceof InteractiveFurniture) {
                     this.interactWithFurniture((InteractiveFurniture) entity.get(), curRoom);
-                } else if (entity.get() instanceof WalkableFurniture
-                    && ((WalkableFurniture) entity.get()).hasEnemy()) {
-                    this.startEnemyCombat();
+                } else if (entity.get() instanceof WalkableFurniture) {
+                    if (((WalkableFurniture) entity.get()).hasEnemy()) {
+                        this.startEnemyCombat();
+                    } else {
+                        this.showOutputText("<html> Qui non c'e' nessuno<html>");
+                        this.resumeGame();
+                    }
                 } else {
                     this.resumeGame();
                 }
