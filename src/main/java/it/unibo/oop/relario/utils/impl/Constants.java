@@ -40,11 +40,6 @@ public final class Constants {
     public static final int COMBAT_ANIMATION_TIME = 850;
 
     /**
-     * The game's resources container folder.
-     */
-    public static final String RESOURCES_FOLDER_URL = "src/main/resources/";
-
-    /**
      * Image files extension.
      */
     public static final String IMAGE_EXTENSION = ".png";
@@ -95,7 +90,7 @@ public final class Constants {
     /**
      * URL for the game's user guide content.
      */
-    public static final String USER_GUIDE_URL = RESOURCES_FOLDER_URL + "userguide/userguide.txt";
+    public static final String USER_GUIDE_URL = "userguide/userguide.txt";
 
     private Constants() {
         throw new UnsupportedOperationException();

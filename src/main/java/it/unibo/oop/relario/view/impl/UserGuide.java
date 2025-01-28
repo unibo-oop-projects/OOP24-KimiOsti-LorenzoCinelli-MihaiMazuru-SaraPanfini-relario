@@ -2,9 +2,10 @@ package it.unibo.oop.relario.view.impl;
 
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -51,24 +52,17 @@ public final class UserGuide extends JFrame {
     }
 
     private void addGuideToContainer() {
-        final var userGuide = new File(Constants.USER_GUIDE_URL);
-        if (userGuide.canRead()) {
-            final String guideContent;
-            try {
-                guideContent = Files.readString(userGuide.toPath());
-                this.guideContainer.add(this.formatAsTitle(GUIDE_TITLE));
-                this.guideContainer.add(this.formatAsText(guideContent));
-            } catch (IOException e) {
-                this.showError();
-            }
-        } else {
-            this.showError();
+        try (var reader = new BufferedReader(new InputStreamReader(
+                ClassLoader.getSystemResourceAsStream(Constants.USER_GUIDE_URL),
+                StandardCharsets.UTF_8
+        ))) {
+            this.guideContainer.add(this.formatAsTitle(GUIDE_TITLE));
+            reader.lines().forEach(line -> this.guideContainer.add(this.formatAsText(line)));
+        } catch (IOException e) {
+            this.guideContainer.removeAll();
+            this.guideContainer.add(this.formatAsTitle(ERROR_TITLE));
+            this.guideContainer.add(this.formatAsText(ERROR_CONTENT));
         }
-    }
-
-    private void showError() {
-        this.guideContainer.add(this.formatAsTitle(ERROR_TITLE));
-        this.guideContainer.add(this.formatAsText(ERROR_CONTENT));
     }
 
     private JLabel formatAsTitle(final String text) {

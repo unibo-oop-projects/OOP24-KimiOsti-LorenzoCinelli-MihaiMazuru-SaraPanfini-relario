@@ -25,9 +25,8 @@ public final class GameTexturesLocator {
      * @return an image representing the floor texture.
      */
     public static Image getFloorTexture() {
-        return Toolkit.getDefaultToolkit().getImage(
-            new StringBuilder(Constants.RESOURCES_FOLDER_URL)
-            .append(Constants.GAME_TEXTURES_URL)
+        return getImage(
+            new StringBuilder(Constants.GAME_TEXTURES_URL)
             .append(Constants.FURNITURE_TEXTURES_URL)
             .append("floor")
             .append(Constants.TEXTURES_EXTENSION)
@@ -57,9 +56,8 @@ public final class GameTexturesLocator {
     }
 
     private static Image getFurnitureTexture(final Furniture furnitureItem) {
-        return Toolkit.getDefaultToolkit().getImage(
-            new StringBuilder(Constants.RESOURCES_FOLDER_URL)
-            .append(Constants.GAME_TEXTURES_URL)
+        return getImage(
+            new StringBuilder(Constants.GAME_TEXTURES_URL)
             .append(Constants.FURNITURE_TEXTURES_URL)
             .append(furnitureItem.getType().getName().toLowerCase(Locale.ENGLISH))
             .append(Constants.TEXTURES_EXTENSION)
@@ -68,8 +66,7 @@ public final class GameTexturesLocator {
     }
 
     private static Image getLivingBeingTexture(final LivingBeing livingBeing, final Direction direction) {
-        final StringBuilder imgURL = new StringBuilder(Constants.RESOURCES_FOLDER_URL)
-        .append(Constants.GAME_TEXTURES_URL)
+        final StringBuilder imgURL = new StringBuilder(Constants.GAME_TEXTURES_URL)
         .append(Constants.LIVING_TEXTURES_URL);
 
         if (livingBeing instanceof MainCharacter) {
@@ -88,6 +85,11 @@ public final class GameTexturesLocator {
         }
         imgURL.append(Constants.TEXTURES_EXTENSION);
 
-        return Toolkit.getDefaultToolkit().getImage(imgURL.toString());
+        return getImage(imgURL.toString());
+    }
+
+    private static Image getImage(final String fileName) {
+        final var url = ClassLoader.getSystemResource(fileName);
+        return Toolkit.getDefaultToolkit().getImage(url);
     }
 }

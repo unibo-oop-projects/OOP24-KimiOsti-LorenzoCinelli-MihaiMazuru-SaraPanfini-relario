@@ -21,7 +21,9 @@ public final class ImageLocators {
      * @return the image icon of the resource in path.
      */
     public static ImageIcon getFixedSizeImage(final String path, final double horizontalRatio, final double verticalRatio) {
-        final String url = Constants.RESOURCES_FOLDER_URL + IMAGE_BASE_URL + path + Constants.IMAGE_EXTENSION;
+        final var url = ClassLoader.getSystemResource(
+            IMAGE_BASE_URL + path + Constants.IMAGE_EXTENSION
+        );
         final var toolKit = Toolkit.getDefaultToolkit();
         final Image img = toolKit.getImage(url).getScaledInstance(
             (int) (toolKit.getScreenSize().getWidth() * horizontalRatio),
@@ -36,7 +38,7 @@ public final class ImageLocators {
      * @return an image icon containing the gif of the resource path.
      */
     public static ImageIcon getGif(final String path) {
-        final String url = Constants.RESOURCES_FOLDER_URL + IMAGE_BASE_URL + path + Constants.GIF_EXTENSION;
+        final var url = ClassLoader.getSystemResource(IMAGE_BASE_URL + path + Constants.GIF_EXTENSION);
         return new ImageIcon(url);
     }
 }

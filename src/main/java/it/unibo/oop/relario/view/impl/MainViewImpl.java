@@ -74,6 +74,7 @@ public final class MainViewImpl implements MainView {
         this.frame.setLayout(new BorderLayout());
         this.frame.setLocationByPlatform(true);
         this.frame.setFocusable(true);
+        this.frame.setResizable(false);
     }
 
     /**
