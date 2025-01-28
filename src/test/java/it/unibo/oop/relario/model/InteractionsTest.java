@@ -18,6 +18,7 @@ import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.furniture.api.FurnitureFactory;
+import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureFactoryImpl;
 import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureType;
 import it.unibo.oop.relario.model.entities.living.MainCharacterImpl;
@@ -240,8 +241,12 @@ final class InteractionsTest {
     }
 
     private void addWalkableFurniture(final Position p, final FurnitureType type) {
-        furnitureMap.put(p, ff.createWalkableFurnitureByItem(p, type));
+        final var furniture = ff.createWalkableFurnitureByItem(p, type);
+        furnitureMap.put(p, furniture);
         interactiveFurniture.add(p);
+        if (!(furniture instanceof WalkableFurniture) || !((WalkableFurniture) furniture).hasEnemy()) {
+            interactiveFurniture.remove(p);
+        }
     }
 
     private void addNpc(final Position p, final boolean interactive) {

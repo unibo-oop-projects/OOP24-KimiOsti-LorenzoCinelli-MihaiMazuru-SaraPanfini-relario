@@ -92,6 +92,11 @@ public final class Constants {
      */
     public static final Font FONT = new Font(Font.MONOSPACED, Font.TRUETYPE_FONT, 16);
 
+    /**
+     * URL for the game's user guide content.
+     */
+    public static final String USER_GUIDE_URL = RESOURCES_FOLDER_URL + "userguide/userguide.txt";
+
     private Constants() {
         throw new UnsupportedOperationException();
     }
