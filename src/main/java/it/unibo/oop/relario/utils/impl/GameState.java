@@ -23,8 +23,11 @@ public enum GameState {
     /** Game over. */
     GAME_OVER("GameOver"),
 
-    /** End game. */
-    VICTORY("Victory"),
+    /** Positive ending of the game. */
+    VICTORY_GOOD("Victory"),
+
+    /** Negative ending of the game. */
+    VICTORY_BAD("BadVictory"),
 
     /** Cut scene. */
     CUT_SCENE("CutScene"),
