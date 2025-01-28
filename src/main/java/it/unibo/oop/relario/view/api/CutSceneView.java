@@ -17,8 +17,9 @@ public interface CutSceneView {
 
     /**
      * Shows the victory scene of the game.
+     * @param isGoodEnding is used to choose between the good or bad ending.
      */
-    void showVictoryScene();
+    void showVictoryScene(boolean isGoodEnding);
 
     /**
      * Shows the defeat scene of the game.

@@ -24,7 +24,8 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private enum Scene {
         INTRODUCTION,
-        VICTORY,
+        VICTORY_GOOD,
+        VICTORY_BAD,
         DEFEAT;
     }
 
@@ -48,15 +49,20 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
         del suo castello avrebbe ereditato il suo titolo.<br>
         Relano decide di tentare nell'impresa.</html>
         """,
-        Scene.VICTORY, """
+        Scene.VICTORY_GOOD, """
         <html><center>HAI VINTO<br>
-        Hai ufficialmente ereditato il trono di Relario!</center></html>
+        Un regno di pace vede oggi la luce a Relario!</center></html>
+        """,
+        Scene.VICTORY_BAD, """
+        <html><center>HAI VINTO<br>
+        Un trono conquistato con violenza potr&agrave portare solo dolore ai suoi sudditi...</center></html>
         """,
         Scene.DEFEAT, "<html><center>HAI PERSO</center></html>"
     );
     private static final Map<Scene, String> URL = Map.of(
         Scene.INTRODUCTION, "cutscene/castle_zoom",
-        Scene.VICTORY, "cutscene/throne",
+        Scene.VICTORY_GOOD, "cutscene/throne_good",
+        Scene.VICTORY_BAD, "cutscene/throne_corrupted",
         Scene.DEFEAT, "cutscene/skull"
     );
 
@@ -99,8 +105,10 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     }
 
     @Override
-    public void showVictoryScene() {
-        this.sceneLoader(Scene.VICTORY);
+    public void showVictoryScene(final boolean isGoodEnding) {
+        this.sceneLoader(
+            isGoodEnding ? Scene.VICTORY_GOOD : Scene.VICTORY_BAD
+        );
         final var audio = SoundLocators.getAudio(VICTORY_SOUND_URL, VOLUME);
         audio.start();
         final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> {
