@@ -4,6 +4,7 @@ import java.util.Map;
 
 import it.unibo.oop.relario.model.entities.LivingBeing;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
+import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.utils.api.Dimension;
 import it.unibo.oop.relario.utils.api.Position;
 import it.unibo.oop.relario.utils.impl.Direction;
@@ -64,7 +65,10 @@ public final class Interactions {
 
     private static boolean isPositionWithInteractiveFurniture(final Position pos, 
     final Map<Position, Furniture> furnitureMap) {
-        return furnitureMap.containsKey(pos) && furnitureMap.get(pos).isInteractive();
+        return furnitureMap.containsKey(pos) 
+        && (furnitureMap.get(pos).isInteractive()
+        || (furnitureMap.get(pos) instanceof WalkableFurniture 
+        && ((WalkableFurniture) furnitureMap.get(pos)).hasEnemy()));
     }
 
 }
