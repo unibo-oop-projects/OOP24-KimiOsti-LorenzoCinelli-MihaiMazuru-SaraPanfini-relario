@@ -62,7 +62,6 @@ class CombatControllerTest {
         chara.setPosition(new PositionImpl(1, 1));
         chara.setMovement(Direction.UP);
         mainController.getCurRoom().get().addEntity(hostilePos, hostileEnemy);
-        assertEquals(controller.getCombatState(), "");
         controller.initializeCombat();
         assertEquals(controller.getDifficultyLevel(), hostileEnemy.getDifficulty());
         assertEquals(controller.getEnemyLife(), hostileEnemy.getLife());

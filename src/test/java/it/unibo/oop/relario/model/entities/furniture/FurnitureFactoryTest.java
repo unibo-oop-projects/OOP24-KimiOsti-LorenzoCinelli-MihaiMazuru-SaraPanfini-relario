@@ -115,8 +115,8 @@ class FurnitureFactoryTest {
         final Enemy enemy = new EnemyFactoryImpl().createRandomEnemy(pos);
         final WalkableFurniture furn = (WalkableFurniture) 
             this.factory.createWalkableFurnitureEnemy(pos, enemy);
-
-        assertEquals(furn.removeEnemy(), enemy);
+        furn.removeEnemy();
+        assertFalse(furn.hasEnemy());
 
         final InteractiveFurniture furniture = (InteractiveFurniture) 
             this.factory.createInteractiveFurnitureLoot(pos, InventoryItemType.APPLE);

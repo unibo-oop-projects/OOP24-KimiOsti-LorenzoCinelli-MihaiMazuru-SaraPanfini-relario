@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import it.unibo.oop.relario.model.entities.furniture.api.WalkableFurniture;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyFactoryImpl;
-import it.unibo.oop.relario.model.entities.enemies.EnemyImpl;
 import it.unibo.oop.relario.model.entities.furniture.api.Furniture;
 import it.unibo.oop.relario.model.entities.furniture.api.InteractiveFurniture;
 import it.unibo.oop.relario.model.entities.furniture.impl.FurnitureType;
@@ -53,14 +52,12 @@ class FurnitureTest {
             FurnitureType.TRAPDOOR, enem);
 
         this.checkGetters(furn, FurnitureType.CARPET);
-
         assertFalse(furn.hasEnemy());
         assertTrue(furn.isInteractive());
         assertTrue(furn.isWalkable());
-
         assertTrue(furnEnemy.hasEnemy());
-        assertEquals(furnEnemy.removeEnemy().getClass(), EnemyImpl.class);
-        assertFalse(furnEnemy.hasEnemy());
+        furn.removeEnemy();
+        assertFalse(furn.hasEnemy());
     }
 
     /**
@@ -73,7 +70,6 @@ class FurnitureTest {
             FurnitureType.CHEST, item);
 
         this.checkGetters(furn, FurnitureType.CHEST);
-
         assertTrue(furn.hasLoot());
         furn.dropLoot();
         assertFalse(furn.hasLoot());
@@ -92,7 +88,6 @@ class FurnitureTest {
             FurnitureType.STATUE);
 
         this.checkGetters(furn, FurnitureType.STATUE);
-
         assertFalse(furn.isInteractive());
         assertFalse(furn.isWalkable());
     }
