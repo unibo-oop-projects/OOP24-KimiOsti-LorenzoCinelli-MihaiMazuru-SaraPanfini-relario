@@ -83,7 +83,7 @@ public final class EnemyFactoryImpl implements EnemyFactory {
         final EnemyConfig config = enemiesData.get(type);
         final boolean isMerciful; 
         if (type.equals(EnemyType.BOSS)) {
-            isMerciful = false;
+            isMerciful = true;
         } else {
             isMerciful = random.nextBoolean();
         }
