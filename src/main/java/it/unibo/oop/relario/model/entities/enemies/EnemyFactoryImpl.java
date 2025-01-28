@@ -81,7 +81,12 @@ public final class EnemyFactoryImpl implements EnemyFactory {
 
     private Enemy createEnemy(final Position position, final EnemyType type, final Optional<InventoryItem> reward) {
         final EnemyConfig config = enemiesData.get(type);
-        final boolean isMerciful = type.equals(EnemyType.BOSS) ? false : random.nextBoolean();
+        final boolean isMerciful; 
+        if (type.equals(EnemyType.BOSS)) {
+            isMerciful = false;
+        } else {
+            isMerciful = random.nextBoolean();
+        }
         return new EnemyImpl(config.name(), config.description(), position, 
         config.difficulty, reward, isMerciful, type);
     }

@@ -10,7 +10,7 @@ import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
  */
 public interface CombatController {
     /**
-     * Initializes combat. 
+     * Initializes combat.
      */
     void initializeCombat();
 
@@ -69,7 +69,7 @@ public interface CombatController {
     void handleAction(CombatAction action);
 
     /**
-     * Shows the combat view.
+     * Shows and updates combat view.
      */
     void resumeCombat();
 

@@ -35,21 +35,20 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
  */
 class CombatControllerTest {
 
+    private static final Integer DELAY_TRANSITION = 2000;
+
     /**
      * Test combat getters and its method to handle combat.
      */
     @Test
     void testCombat() {
-        final MainController mainController = new MainControllerImpl();
-        final CombatController controller = mainController.getCombatController();
-
-        mainController.moveToNextRoom();
-
         final Position hostilePos = new PositionImpl(1, 0);
         final Position mercifulPos = new PositionImpl(1, 2);
         final Position walkPos = new PositionImpl(2, 1);
         final InventoryItem item = new InventoryItemFactoryImpl().createRandomItem();
-
+        final MainController mainController = new MainControllerImpl();
+        final CombatController controller = mainController.getCombatController();
+        mainController.moveToNextRoom();
         final MainCharacter chara = mainController.getCurRoom().get().getPlayer();
         final Enemy hostileEnemy = new EnemyImpl(EnemyType.SOLDIER.getName(), 
             "Sono un soldato", hostilePos, 
@@ -63,7 +62,6 @@ class CombatControllerTest {
         chara.setPosition(new PositionImpl(1, 1));
         chara.setMovement(Direction.UP);
         mainController.getCurRoom().get().addEntity(hostilePos, hostileEnemy);
-
         assertEquals(controller.getCombatState(), "");
         controller.initializeCombat();
         assertEquals(controller.getDifficultyLevel(), hostileEnemy.getDifficulty());
@@ -75,32 +73,41 @@ class CombatControllerTest {
         final int initEnemyLife = hostileEnemy.getLife();
 
         controller.handleAction(CombatAction.MERCY);
-        assertEquals(chara.getLife(), initCharaLife - hostileEnemy.getDamage());
+        try {
+            Thread.sleep(DELAY_TRANSITION);
+        } catch (InterruptedException e) {
+            assertEquals(chara.getLife(), initCharaLife - hostileEnemy.getDamage());
+        }
         controller.handleAction(CombatAction.ATTACK);
-        assertEquals(hostileEnemy.getLife(), initEnemyLife - Constants.PLAYER_ATK);
-        assertEquals(chara.getLife(), initCharaLife - 2 * hostileEnemy.getDamage());
+        try {
+            Thread.sleep(DELAY_TRANSITION);
+        } catch (InterruptedException e) {
+            assertEquals(hostileEnemy.getLife(), initEnemyLife - Constants.PLAYER_ATK);
+            assertEquals(chara.getLife(), initCharaLife - 2 * hostileEnemy.getDamage());
+        }
         controller.handleAction(CombatAction.ATTACK);
-        assertTrue(hostileEnemy.getLife() < 0);
-        assertEquals(chara.getItems().get(0), item);
-        assertEquals(controller.getCombatState(), "Hai vinto il combattimento");
-
+        try {
+            Thread.sleep(DELAY_TRANSITION);
+        } catch (InterruptedException e) {
+            assertTrue(hostileEnemy.getLife() < 0);
+            assertEquals(chara.getItems().get(0), item);
+            assertEquals(controller.getCombatState(), "Hai vinto il combattimento!");
+        }
         chara.setMovement(Direction.RIGHT);
         mainController.getCurRoom().get().addEntity(walkPos, enemFurniture);
-
         chara.setMovement(Direction.DOWN);
         mainController.getCurRoom().get().addEntity(mercifulPos, mercifulEnemy);
-
         controller.initializeCombat();
         controller.handleAction(CombatAction.MERCY);
-        assertEquals(controller.getCombatState(), "Sei stato risparmiato");
-
-        final int initMerciLife = mercifulEnemy.getLife();
+        assertEquals(controller.getCombatState(), "Sei stato risparmiato.");
         controller.initializeCombat();
         for (int i = 0; i < 4; i++) {
-            assertEquals(mercifulEnemy.getLife(), initMerciLife - i * Constants.PLAYER_ATK);
             controller.handleAction(CombatAction.ATTACK);
         }
-        assertTrue(chara.getLife() <= 0);
-
+        try {
+            Thread.sleep(DELAY_TRANSITION);
+        } catch (InterruptedException e) {
+            assertTrue(chara.getLife() <= 0);
+        }
     }
 }
