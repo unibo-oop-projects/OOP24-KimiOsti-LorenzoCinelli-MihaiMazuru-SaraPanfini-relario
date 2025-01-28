@@ -1,6 +1,5 @@
 package it.unibo.oop.relario.utils.impl;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
@@ -31,7 +30,7 @@ public final class SoundLocators {
         Clip clip;
         try {
             audioInputStream = AudioSystem.getAudioInputStream(
-                new File(Constants.RESOURCES_FOLDER_URL + AUDIO_BASE_URL + name + AUDIO_EXTENSION).getAbsoluteFile()
+                ClassLoader.getSystemResource(AUDIO_BASE_URL + name + AUDIO_EXTENSION)
             );
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
