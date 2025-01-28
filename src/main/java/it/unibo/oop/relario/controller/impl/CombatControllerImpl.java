@@ -8,6 +8,7 @@ import javax.swing.Timer;
 
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.controller.api.MainController;
+import it.unibo.oop.relario.model.entities.Entity;
 import it.unibo.oop.relario.model.entities.enemies.DifficultyLevel;
 import it.unibo.oop.relario.model.entities.enemies.Enemy;
 import it.unibo.oop.relario.model.entities.enemies.EnemyType;
@@ -32,6 +33,7 @@ public final class CombatControllerImpl implements CombatController {
     private Enemy enemy;
     private String combatState;
     private boolean isFighting;
+    private Entity entity;
 
     /**
      * Saves reference to main controller.
@@ -40,23 +42,17 @@ public final class CombatControllerImpl implements CombatController {
     public CombatControllerImpl(final MainController controller) {
         this.controller = controller;
         this.view = this.controller.getMainView();
-        this.player = null;
-        this.enemy = null;
-        this.combatView = null;
-        this.combatState = "";
-        this.isFighting = false;
     }
 
     @Override
     public void initializeCombat() {
         if (this.controller.getCurRoom().isPresent()) {
             this.player = this.controller.getCurRoom().get().getPlayer();
-            final var entity = this.controller.getCurRoom().get().getCellContent(
-                this.player.getDirection().move(this.player.getPosition().get())
-            );
-            this.enemy = entity.get() instanceof Enemy ? (Enemy) entity.get() 
-                : entity.get() instanceof WalkableFurniture 
-                ? ((WalkableFurniture) entity.get()).removeEnemy() : null;
+            this.entity = this.controller.getCurRoom().get().getCellContent(
+                this.player.getDirection().move(this.player.getPosition().get())).get();
+            this.enemy = this.entity instanceof Enemy ? (Enemy) this.entity
+                : this.entity instanceof WalkableFurniture 
+                ? ((WalkableFurniture) this.entity).getEnemy() : null;
             final var tempView = this.view.getPanel(GameState.COMBAT);
             if (tempView instanceof CombatView) {
                 this.combatView = (CombatView) tempView;
@@ -157,7 +153,11 @@ public final class CombatControllerImpl implements CombatController {
                     this.controller.getCutSceneController().show(GameState.VICTORY);
                 });
             } else {
-                this.controller.getCurRoom().get().removeEnemy(this.enemy.getPosition().get());
+                if (this.entity instanceof WalkableFurniture) {
+                    ((WalkableFurniture) this.entity).removeEnemy();
+                } else if (this.entity instanceof Enemy) {
+                    this.controller.getCurRoom().get().removeEnemy(this.enemy.getPosition().get());
+                }
                 this.timer(e -> {
                     this.combatView.stopSoundTrack();
                     this.controller.getGameController().run(true);
@@ -169,9 +169,7 @@ public final class CombatControllerImpl implements CombatController {
                 this.controller.getCutSceneController().show(GameState.GAME_OVER);
             });
         } else if (isPlayerAttacking) {
-            this.timer(e -> {
-                this.attack(false);
-            });
+            this.timer(e -> this.attack(false));
         } else {
             isFighting = true;
         }
@@ -189,9 +187,7 @@ public final class CombatControllerImpl implements CombatController {
             //player's skips his turn, he used his turn to ask for mercy
             combatState = "Combatti codardo!";
             SwingUtilities.invokeLater(this::drawNone);
-            this.timer(e -> {
-                this.attack(false);
-            });
+            this.timer(e -> this.attack(false));
         }
     }
 
