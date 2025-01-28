@@ -1,0 +1,25 @@
+<html>
+<br>Durante il gioco l'utente deve attraversare delle stanze,
+<br>in cui deve completare eventuali quest.
+
+<br><br>Nei menu, come nel combattimento, l'input viene accettato
+<br>tramite mouse, con dei clic sui bottoni che rappresentano
+<br>l'azione desiderata.
+
+<br><br>Durante l'esplorazione, il giocatore si sposta con WASD,
+<br>interagisce con la cella che guarda con E e apre l'inventario
+<br>con I.
+<br>Per superare ciascuna stanza, deve completare la quest(se
+<br>presente) che gli viene presentata dall'NPC fermo all'entrata.
+<br>Dopo aver completato la quest, deve raggiungere il tappeto
+<br>situato a destra della stanza, e interagire da sopra la casella
+<br>al suo entremo destro per proseguire nella stanza successiva.
+
+<br><br>All'interno dell'inventario, gli oggetti vengono scelti
+<br>con le frecce verticali, e si possono equipaggiare con ENTER
+<br>oppure scartare con BACKSPACE. Un oggetto che non abbia
+<br>effetto, quando usato, viene "consumato" e non risulta quindi
+<br>pi&ugrave disponibile.
+
+<br><br>Ora buon gioco!
+</html>

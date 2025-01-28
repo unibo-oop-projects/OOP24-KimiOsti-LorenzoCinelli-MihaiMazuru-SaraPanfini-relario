@@ -69,9 +69,9 @@ public final class GameView extends JPanel {
      */
     public void renderBackground(final Dimension dimension, final Map<Position, Image> textures) {
         this.mapDimension = dimension;
-        this.tileDimension = this.min(
-            (int) (this.getHeight() / SCREEN_TO_MAP_RATIO / this.mapDimension.getHeight()),
-            (int) (this.getWidth() / SCREEN_TO_MAP_RATIO / this.mapDimension.getWidth())
+        this.tileDimension = (int) Math.min(
+            this.getHeight() / SCREEN_TO_MAP_RATIO / this.mapDimension.getHeight(),
+            this.getWidth() / SCREEN_TO_MAP_RATIO / this.mapDimension.getWidth()
         );
         this.renderFloor(dimension);
         this.renderBackgroundTextures(textures);
@@ -194,10 +194,6 @@ public final class GameView extends JPanel {
     private void refresh(final JComponent component) {
         component.revalidate();
         component.repaint();
-    }
-
-    private int min(final int x, final int y) {
-        return x < y ? x : y;
     }
 
     private int computeIndex(final int x, final int y) {

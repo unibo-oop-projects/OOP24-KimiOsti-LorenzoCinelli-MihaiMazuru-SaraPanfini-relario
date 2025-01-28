@@ -49,7 +49,7 @@ public final class InventoryItems {
 
     private static String getDurability(final InventoryItem item) {
         if (item instanceof EquippableItem) {
-            return "\nDurabilità: " + ((EquippableItem) item).getDurability();
+            return "\nDurabilita\': " + ((EquippableItem) item).getDurability();
         } else {
             return "";
         }

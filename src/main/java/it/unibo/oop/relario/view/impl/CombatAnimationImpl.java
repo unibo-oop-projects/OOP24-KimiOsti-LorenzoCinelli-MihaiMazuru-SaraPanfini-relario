@@ -20,9 +20,7 @@ import it.unibo.oop.relario.view.api.CombatAnimation;
  */
 public final class CombatAnimationImpl extends JLabel implements CombatAnimation {
     private static final long serialVersionUID = 1L;
-    private static final int ANIMATION_DURATION = 850;
     private static final double VOLUME = 1.0;
-    private static final double RATIO = 0.6;
     private static final String ATTACK_ANIMATION = "combat/attack_effect";
     private static final String ATTACKED_ANIMATION = "combat/attacked_effect";
     private static final List<String> ATTACK_AUDIO = List.of(
@@ -46,17 +44,15 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
      */
     public CombatAnimationImpl(final AttackDirection direction) {
         switch (direction) {
-            case FROM_ENEMY_TO_PLAYER -> this.icon = ImageLocators.getFixedSizeImage(
-                ATTACKED_ANIMATION, Constants.GIF_EXTENSION, RATIO, RATIO);
-            case FROM_PLAYER_TO_ENEMY -> this.icon = ImageLocators.getFixedSizeImage(
-                ATTACK_ANIMATION, Constants.GIF_EXTENSION, RATIO, RATIO);
+            case FROM_ENEMY_TO_PLAYER -> this.icon = ImageLocators.getGif(ATTACKED_ANIMATION);
+            case FROM_PLAYER_TO_ENEMY -> this.icon = ImageLocators.getGif(ATTACK_ANIMATION);
             default -> this.icon = null;
         }
     }
 
     @Override
     public void start() {
-        final Timer timer = new Timer(ANIMATION_DURATION, e -> this.stop());
+        final Timer timer = new Timer(Constants.COMBAT_ANIMATION_TIME, e -> this.clip.close());
         timer.setRepeats(false);
         this.clip = SoundLocators.getAudio(
             ATTACK_AUDIO.get(RandomUtils.nextInt(0, ATTACK_AUDIO.size())),
@@ -65,12 +61,5 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
         timer.start();
         this.setIcon(this.icon);
         this.validate();
-    }
-
-    private void stop() {
-        this.removeAll();
-        this.repaint();
-        this.validate();
-        this.clip.close();
     }
 }

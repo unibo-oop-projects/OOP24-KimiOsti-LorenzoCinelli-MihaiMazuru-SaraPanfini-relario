@@ -35,6 +35,11 @@ public final class Constants {
     public static final int INTRODUCTION_SCENE_TIME = 10_000;
 
     /**
+     * Duration of the animation in combat.
+     */
+    public static final int COMBAT_ANIMATION_TIME = 850;
+
+    /**
      * The game's resources container folder.
      */
     public static final String RESOURCES_FOLDER_URL = "src/main/resources/";
@@ -86,6 +91,11 @@ public final class Constants {
      * The font of the game view.
      */
     public static final Font FONT = new Font(Font.MONOSPACED, Font.TRUETYPE_FONT, 16);
+
+    /**
+     * URL for the game's user guide content.
+     */
+    public static final String USER_GUIDE_URL = RESOURCES_FOLDER_URL + "userguide/userguide.txt";
 
     private Constants() {
         throw new UnsupportedOperationException();

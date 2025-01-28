@@ -105,7 +105,7 @@ public final class InventoryViewFactoryImpl implements InventoryViewFactory {
             radioButtons[i].setFont(Constants.FONT);
             radioButtons[i].setForeground(Constants.TEXT_SCENE_COLOR);
             radioButtons[i].setBackground(Constants.BACKGROUND_SCENE_COLOR);
-            radioButtons[i].setFocusable(false);
+            radioButtons[i].setEnabled(false);
             panel.add(radioButtons[i]);
         }
         if (radioButtons.length > 0) {
