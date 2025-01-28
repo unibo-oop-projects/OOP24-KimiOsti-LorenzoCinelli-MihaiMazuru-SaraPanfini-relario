@@ -10,6 +10,7 @@ import javax.swing.Timer;
 import org.apache.commons.lang3.RandomUtils;
 
 import it.unibo.oop.relario.utils.impl.AttackDirection;
+import it.unibo.oop.relario.utils.impl.Constants;
 import it.unibo.oop.relario.utils.impl.ImageLocators;
 import it.unibo.oop.relario.utils.impl.SoundLocators;
 import it.unibo.oop.relario.view.api.CombatAnimation;
@@ -19,7 +20,6 @@ import it.unibo.oop.relario.view.api.CombatAnimation;
  */
 public final class CombatAnimationImpl extends JLabel implements CombatAnimation {
     private static final long serialVersionUID = 1L;
-    private static final int ANIMATION_DURATION = 850;
     private static final double VOLUME = 1.0;
     private static final String ATTACK_ANIMATION = "combat/attack_effect";
     private static final String ATTACKED_ANIMATION = "combat/attacked_effect";
@@ -52,7 +52,7 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
 
     @Override
     public void start() {
-        final Timer timer = new Timer(ANIMATION_DURATION, e -> this.stop());
+        final Timer timer = new Timer(Constants.COMBAT_ANIMATION_TIME, e -> this.clip.close());
         timer.setRepeats(false);
         this.clip = SoundLocators.getAudio(
             ATTACK_AUDIO.get(RandomUtils.nextInt(0, ATTACK_AUDIO.size())),
@@ -61,12 +61,5 @@ public final class CombatAnimationImpl extends JLabel implements CombatAnimation
         timer.start();
         this.setIcon(this.icon);
         this.validate();
-    }
-
-    private void stop() {
-        this.removeAll();
-        this.repaint();
-        this.validate();
-        this.clip.close();
     }
 }

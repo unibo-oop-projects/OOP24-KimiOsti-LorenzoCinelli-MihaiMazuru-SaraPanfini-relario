@@ -6,6 +6,7 @@ import java.awt.Image;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import it.unibo.oop.relario.controller.api.CombatController;
 import it.unibo.oop.relario.utils.impl.AttackDirection;
@@ -113,6 +114,9 @@ public final class CombatScene extends JPanel {
             final var animation = new CombatAnimationImpl(direction);
             this.enemyTextureContainer.add(animation);
             animation.start();
+            final Timer timer = new Timer(Constants.COMBAT_ANIMATION_TIME, e -> this.enemyTextureContainer.remove(animation));
+            timer.setRepeats(false);
+            timer.start();
         }
         this.enemyTextureContainer.add(
             new ForegroundTile(
