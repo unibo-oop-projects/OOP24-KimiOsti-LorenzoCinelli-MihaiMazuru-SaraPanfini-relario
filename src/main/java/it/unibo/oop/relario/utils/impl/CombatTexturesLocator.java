@@ -19,12 +19,12 @@ public final class CombatTexturesLocator {
      * @return the texture representing the given enemy.
      */
     public static Image getTexture(final Enemy enemy) {
-        return Toolkit.getDefaultToolkit().getImage(
-            new StringBuilder(Constants.RESOURCES_FOLDER_URL)
-            .append(Constants.COMBAT_TEXTURES_URL)
+        final var url = ClassLoader.getSystemResource(
+            new StringBuilder(Constants.COMBAT_TEXTURES_URL)
             .append(enemy.getName().toLowerCase(Locale.ITALIAN))
             .append(Constants.TEXTURES_EXTENSION)
             .toString()
         );
+        return Toolkit.getDefaultToolkit().getImage(url);
     }
 }
