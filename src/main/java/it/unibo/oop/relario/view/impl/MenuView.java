@@ -56,7 +56,7 @@ public final class MenuView extends JPanel {
         gridc.fill = GridBagConstraints.CENTER;
 
         if (elements.get(0).getElemCommad().equals(Command.PLAY)) {
-            final ImageIcon image = ImageLocators.getFixedSizeImage(LOGO, Constants.IMAGE_EXTENSION, RATIO, RATIO);
+            final ImageIcon image = ImageLocators.getFixedSizeImage(LOGO, RATIO, RATIO);
             final JLabel logo = new JLabel(image);
             this.add(logo, gridc);
         }
@@ -83,6 +83,7 @@ public final class MenuView extends JPanel {
     private JButton createButton(final MenuElement elem) {
         final JButton myButton = new JButton(elem.getElemName());
         myButton.setFont(Constants.FONT.deriveFont(FONT_SIZE));
+        myButton.setBackground(Color.lightGray);
         myButton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
                 final Timer timer = new Timer(Constants.INTRODUCTION_SCENE_TIME, e1 -> this.song.close());

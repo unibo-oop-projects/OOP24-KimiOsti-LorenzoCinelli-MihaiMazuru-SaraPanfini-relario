@@ -128,7 +128,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
     private void sceneLoader(final Scene scene) {
         this.removeAll();
-        final var image = ImageLocators.getFixedSizeImage(URL.get(scene), Constants.IMAGE_EXTENSION, SCENE_RATIO, SCENE_RATIO);
+        final var image = ImageLocators.getFixedSizeImage(URL.get(scene), SCENE_RATIO, SCENE_RATIO);
         this.add(new JLabel(image));
 
         final var labelConstraints = new GridBagConstraints();
@@ -137,8 +137,7 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
 
         final var label = new JLabel();
         if (scene == Scene.INTRODUCTION) {
-            final var playerImage = ImageLocators.getFixedSizeImage(CHARACTER_IMAGE_URL, Constants.IMAGE_EXTENSION,
-                CHARACTER_RATIO, CHARACTER_RATIO);
+            final var playerImage = ImageLocators.getFixedSizeImage(CHARACTER_IMAGE_URL, CHARACTER_RATIO, CHARACTER_RATIO);
             label.setIcon(playerImage);
         }
         label.setText(MESSAGES.get(scene));

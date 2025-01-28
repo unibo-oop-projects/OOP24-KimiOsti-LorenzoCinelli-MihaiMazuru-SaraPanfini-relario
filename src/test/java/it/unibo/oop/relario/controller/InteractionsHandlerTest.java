@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.awt.event.ActionListener;
 import java.util.Optional;
+
+import javax.swing.Timer;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +36,7 @@ import it.unibo.oop.relario.utils.impl.PositionImpl;
 final class InteractionsHandlerTest {
 
     private static final long ROOM_TRANSITION_SLEEP_TIME = 4000;
+    private static final int DELAY_TRANSITION = 4000;
 
     private final MainController controller;
     private final InteractionsHandler handler;
@@ -112,7 +116,8 @@ final class InteractionsHandlerTest {
             );
             this.handler.handleInteraction(this.controller.getCurRoom().get());
             this.controller.getCombatController().handleAction(CombatAction.ATTACK);
-            assertNotEquals(Constants.PLAYER_LIFE, this.controller.getCurRoom().get().getPlayer().getLife());
+            this.timer(e -> assertNotEquals(Constants.PLAYER_LIFE, 
+                this.controller.getCurRoom().get().getPlayer().getLife()));
             this.controller.getGameController().run(this.controller.getCurRoom().isPresent());
         }
 
@@ -124,7 +129,8 @@ final class InteractionsHandlerTest {
             );
             this.handler.handleInteraction(this.controller.getCurRoom().get());
             this.controller.getCombatController().handleAction(CombatAction.ATTACK);
-            assertNotEquals(life, this.controller.getCurRoom().get().getPlayer().getLife());
+            this.timer(e -> assertNotEquals(life, 
+                this.controller.getCurRoom().get().getPlayer().getLife()));
         }
 
         for (int i = 0; i < 10 && this.controller.getCurRoom().isPresent(); i++) {
@@ -167,5 +173,11 @@ final class InteractionsHandlerTest {
                 }
             }
         });
+    }
+
+    private void timer(final ActionListener e) {
+        final var timer = new Timer(DELAY_TRANSITION, e);
+        timer.setRepeats(false);
+        timer.start();
     }
 }

@@ -35,6 +35,11 @@ public final class Constants {
     public static final int INTRODUCTION_SCENE_TIME = 10_000;
 
     /**
+     * Duration of the animation in combat.
+     */
+    public static final int COMBAT_ANIMATION_TIME = 850;
+
+    /**
      * The game's resources container folder.
      */
     public static final String RESOURCES_FOLDER_URL = "src/main/resources/";
