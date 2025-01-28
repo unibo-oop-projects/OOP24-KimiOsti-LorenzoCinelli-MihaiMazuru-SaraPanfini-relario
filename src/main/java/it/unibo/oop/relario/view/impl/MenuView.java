@@ -85,6 +85,7 @@ public final class MenuView extends JPanel {
     private JButton createButton(final MenuElement elem) {
         final JButton myButton = new JButton(elem.getElemName());
         myButton.setFont(Constants.FONT.deriveFont(FONT_SIZE));
+        myButton.setBackground(Color.lightGray);
         myButton.addActionListener(e -> {
             if (e.getActionCommand().equals(Command.PLAY.getName())) {
                 final Timer timer = new Timer(Constants.INTRODUCTION_SCENE_TIME, e1 -> this.song.close());
