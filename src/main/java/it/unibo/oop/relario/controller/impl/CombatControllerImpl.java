@@ -189,6 +189,7 @@ public final class CombatControllerImpl implements CombatController {
         } else {
             //player's skips his turn, he used his turn to ask for mercy
             combatState = "Combatti codardo!";
+            SwingUtilities.invokeLater(this::drawNone);
             this.timer(e -> {
                 this.combatView.stopSoundTrack();
                 this.attack(false);
