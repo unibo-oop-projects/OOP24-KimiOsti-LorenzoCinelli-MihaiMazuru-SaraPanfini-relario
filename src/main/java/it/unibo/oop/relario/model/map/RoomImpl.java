@@ -136,7 +136,6 @@ public final class RoomImpl implements Room {
     @Override
     public void update() {
         final Map<Position, LivingBeing> buffer = new HashMap<>(this.population);
-        // final Map<Position, LivingBeing> temp = new HashMap<>(this.population);
         if (!Interactions.canMove(this.player.getPosition().get(), this.player.getDirection(), 
         this.dimension, this.population, this.furniture)) {
             this.player.stop();
