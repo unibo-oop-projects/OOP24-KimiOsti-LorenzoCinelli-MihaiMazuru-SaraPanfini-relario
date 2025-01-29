@@ -21,3 +21,4 @@ effetto, quando usato, viene "consumato" e non risulta quindi
 piu' disponibile.
 <html><br></html>
 Ora buon gioco!
+E attento alle tue scelte...
