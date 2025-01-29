@@ -74,6 +74,7 @@ public final class MainViewImpl implements MainView {
         this.frame.setLayout(new BorderLayout());
         this.frame.setLocationByPlatform(true);
         this.frame.setFocusable(true);
+        this.frame.setUndecorated(true);
         this.frame.setResizable(false);
     }
 
@@ -83,6 +84,7 @@ public final class MainViewImpl implements MainView {
     private void panelsSetFocusable() {
         for (final var p: panels.values()) {
             p.setFocusable(true);
+            p.setFocusTraversalKeysEnabled(false);
             final String s = panels.entrySet().stream()
                 .filter(e -> e.getValue().equals(p))
                 .map(Map.Entry::getKey)
