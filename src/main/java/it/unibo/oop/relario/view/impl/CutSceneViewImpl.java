@@ -105,25 +105,19 @@ public final class CutSceneViewImpl extends JPanel implements CutSceneView {
     }
 
     @Override
-    public void showVictoryScene(final boolean isGoodEnding) {
-        this.sceneLoader(
-            isGoodEnding ? Scene.VICTORY_GOOD : Scene.VICTORY_BAD
-        );
-        final var audio = SoundLocators.getAudio(VICTORY_SOUND_URL, VOLUME);
-        audio.start();
-        final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> {
-            audio.close();
-            this.controller.progressView(GameState.MENU);
-        });
-        timer.setRepeats(false);
-        timer.start();
-        this.controller.progressGame(GameState.MENU);
-    }
-
-    @Override
-    public void showDefeatScene() {
-        this.sceneLoader(Scene.DEFEAT);
-        final var audio = SoundLocators.getAudio(DEFEAT_SOUND_URL, VOLUME);
+    public void showFinalScene(final GameState state) {
+        final Scene scene;
+        String url = VICTORY_SOUND_URL;
+        switch (state) {
+            case VICTORY_GOOD -> scene = Scene.VICTORY_GOOD;
+            case VICTORY_BAD -> scene = Scene.VICTORY_BAD;
+            default -> {
+                scene = Scene.DEFEAT;
+                url = DEFEAT_SOUND_URL;
+            }
+        }
+        this.sceneLoader(scene);
+        final var audio = SoundLocators.getAudio(url, VOLUME);
         audio.start();
         final var timer = new Timer(SCENE_TRANSITION_DELAY, e -> {
             audio.close();

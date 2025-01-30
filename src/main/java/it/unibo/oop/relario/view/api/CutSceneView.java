@@ -1,5 +1,7 @@
 package it.unibo.oop.relario.view.api;
 
+import it.unibo.oop.relario.utils.impl.GameState;
+
 /**
  * Interface for the view of cut scene.
  */
@@ -16,13 +18,8 @@ public interface CutSceneView {
     void showNextRoomScene();
 
     /**
-     * Shows the victory scene of the game.
-     * @param isGoodEnding is used to choose between the good or bad ending.
+     * Shows the final scene of the game depending on the final state.
+     * @param state the final state of the game.
      */
-    void showVictoryScene(boolean isGoodEnding);
-
-    /**
-     * Shows the defeat scene of the game.
-     */
-    void showDefeatScene();
+    void showFinalScene(GameState state);
 }
